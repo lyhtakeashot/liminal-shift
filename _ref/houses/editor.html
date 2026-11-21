@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>房屋布局编辑器 · Shift</title>
+<style>
+:root{--bg:#191814;--panel:#24221d;--line:#3a352c;--txt:#e6dfd0;--dim:#9a9284;--accent:#e0bb74;--sel:#e8543f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:13px/1.5 "Microsoft YaHei",system-ui,sans-serif}
+#top{display:flex;gap:8px;align-items:center;padding:8px 12px;background:#201e19;border-bottom:1px solid var(--line);flex-wrap:wrap}
+#top h1{font-size:15px;margin:0 12px 0 0;color:var(--accent)}
+select,input,button{background:#2e2b24;color:var(--txt);border:1px solid var(--line);border-radius:4px;padding:4px 7px;font:inherit}
+button{cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:#7a5a24;border-color:var(--accent)}
+#wrap{display:flex;height:calc(100vh - 48px)}
+#left{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;align-items:center}
+#tools{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap;justify-content:center}
+#tools button.on{background:#7a5a24;border-color:var(--accent)}
+#canvasBox{position:relative;border:1px solid var(--line);background:#111}
+canvas{display:block;cursor:crosshair}
+#right{width:340px;min-width:340px;border-left:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:12px}
+#right h2{font-size:14px;color:var(--accent);margin:0 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px}
+.sec{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.sec h3{font-size:12px;color:var(--dim);margin:0 0 7px;text-transform:uppercase;letter-spacing:1px}
+.row{display:flex;align-items:center;gap:6px;margin:4px 0}
+.row label{width:74px;color:var(--dim);flex-shrink:0}
+.row input[type=range]{flex:1;min-width:0}
+.row input[type=number]{width:52px;text-align:center}
+.row input[type=text]{flex:1;min-width:0}
+.row input[type=checkbox]{width:auto}
+.listitem{display:flex;justify-content:space-between;align-items:center;padding:3px 6px;margin:2px 0;background:#2e2b24;border:1px solid transparent;border-radius:3px;cursor:pointer}
+.listitem.sel{border-color:var(--sel)}
+.listitem .del{color:#c05050;padding:0 5px}
+.hint{color:var(--dim);font-size:11px}
+#msg{padding:3px 8px;color:#8fd08a;min-width:120px}
+#msg.err{color:#e88}
+.tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:11px;margin-right:4px}
+</style>
+</head>
+<body>
+<div id="top">
+  <h1>🏠 房屋布局编辑器</h1>
+  <select id="houseSel"></select>
+  <label class="hint">格子</label><input id="cellSel" type="range" min="16" max="46" value="28" style="width:90px">
+  <span id="msg"></span>
+  <button id="saveBtn" class="primary">💾 保存 JSON</button>
+  <button id="regenBtn">🔄 重新出图</button>
+  <button id="reloadBtn">↩ 放弃改动重载</button>
+</div>
+<div id="wrap">
+  <div id="left">
+    <div id="tools">
+      <button data-tool="select" class="on">选择/拖动</button>
+      <button data-tool="wall">画墙</button>
+      <button data-tool="door">放门</button>
+      <button data-tool="gate">放院门</button>
+      <button data-tool="room">画房间</button>
+      <button data-tool="furn">画家具</button>
+      <span class="hint" id="toolHint">点选元素后用右侧滑块调坐标，或直接拖动</span>
+    </div>
+    <div id="canvasBox"><canvas id="cv"></canvas></div>
+  </div>
+  <div id="right">
+    <h2>属性面板</h2>
+    <div id="props"></div>
+    <div class="sec"><h3>元素列表</h3><div id="elemList"></div></div>
+    <div class="sec"><h3>说明</h3>
+      <div class="hint">
+        一格=16px。橙框=可检视线索。<br>
+        墙线只支持水平/垂直；拖动墙时自动限制方向。<br>
+        家具/房间/门/墙都可增删。改动先点「保存 JSON」，再点「重新出图」生成 PNG。<br>
+        图片按帧输出到 <code>_ref/art/A*_****/</code>。
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const C={bg:"#111",grid:"#2a2721",wall:"#8c6b4a",wallTop:"#c9a878",door:"#e0b25a",gate:"#9a6a3a",
+  yard:"#3b3a2e",furn:"#c8b48f",furnEdge:"#e8d7b2",clue:"#d98b45",yardFurn:"#a9b58a",
+  sel:"#e8543f",player:"#ee5a44",
+  room:{bed:"#9c8468",hall:"#cbb997",store:"#8d9a6f",kitchen:"#bdd0b0",account:"#a8c0d0",yard:"#3b3a2e",shop:"#b99aa6",class:"#9dbacd",mill:"#b5a878"}};
+const FRAME_OF={lu_house:"A1",mill_a1:"A1",shen_a1:"A1",zhou_house:"A1",mill_a2:"A2",shen_a2:"A2",lu_a2:"A2",zhou_a2:"A2",shen_a3:"A3",shen_a4:"A4",market:"A4",toyshop:"A5",school:"A5"};
+const FRAME_NAME={A1:"A1 · 1926",A2:"A2 · 1951",A3:"A3 · 1976",A4:"A4 · 2001",A5:"A5 · 2026"};
+let DATA=[], cur=null, tool="select", sel=null, CELL=28, hitList=[], drag=null;
+const $=id=>document.getElementById(id);
+
+function msg(t,err){const m=$("msg");m.textContent=t;m.className=err?"err":"";}
+
+async function load(){
+  const r=await fetch("/api/data"); DATA=await r.json();
+  buildHouseSel(); if(DATA.length) selectHouse(DATA[0].id);
+  msg("已载入 "+DATA.length+" 栋");
+}
+function buildHouseSel(){
+  const s=$("houseSel"); s.innerHTML="";
+  const groups={}; DATA.forEach(h=>{const f=FRAME_OF[h.id]||"?";(groups[f]=groups[f]||[]).push(h);});
+  Object.keys(FRAME_NAME).concat(Object.keys(groups).filter(k=>!FRAME_NAME[k])).forEach(f=>{
+    if(!groups[f])return; const og=document.createElement("optgroup"); og.label=FRAME_NAME[f]||f;
+    groups[f].forEach(h=>{const o=document.createElement("option");o.value=h.id;o.textContent=h.name+" ("+h.id+")";og.appendChild(o);});
+    s.appendChild(og);
+  });
+}
+function selectHouse(id){
+  cur=DATA.find(h=>h.id===id)||null; sel=null; $("houseSel").value=id; draw(); renderProps(); renderList();
+}
+
+// ---- 坐标抽象：返回 {arr, fields, labels, kind} ----
+function shapeOf(kind,idx){
+  if(!cur)return null;
+  switch(kind){
+    case "lot": return {arr:cur.lot, fields:[0,1,2,3], labels:["X0","Y0","X1","Y1"]};
+    case "wing": return {arr:cur.wings[idx], fields:[0,1,2,3], labels:["X","Y","W","H"]};
+    case "partition": return {arr:cur.partitions[idx], fields:[0,1,2,3], labels:["X1","Y1","X2","Y2"]};
+    case "door": return {arr:cur.doors[idx], fields:[0,1], labels:["X","Y"]};
+    case "gate": return {arr:cur.gate[idx], fields:[0,1], labels:["X","Y"]};
+    case "room": return {arr:cur.rooms[idx], fields:[0,1,2,3], labels:["X0","Y0","X1","Y1"]};
+    case "furn": return {arr:cur.furniture[idx].rect, fields:[0,1,2,3], labels:["X","Y","W","H"]};
+  }
+  return null;
+}
+function maxOf(label){
+  if(!cur)return 99; const [,,x1,y1]=cur.lot;
+  return (label.startsWith("X")?x1:y1)+2;
+}
+
+// ---- 绘制 ----
+function draw(){
+  const cv=$("cv"),ctx=cv.getContext("2d");
+  if(!cur){cv.width=200;cv.height=100;return;}
+  const [x0,y0,x1,y1]=cur.lot, gw=x1-x0+1, gh=y1-y0+1;
+  cv.width=gw*CELL; cv.height=gh*CELL;
+  ctx.fillStyle=C.bg; ctx.fillRect(0,0,cv.width,cv.height);
+  const px=g=>(g-x0)*CELL, py=g=>(g-y0)*CELL;
+  hitList=[];
+
+  // 网格 + 院子底
+  ctx.fillStyle=C.yard; ctx.fillRect(0,0,cv.width,cv.height);
+  ctx.strokeStyle=C.grid; ctx.lineWidth=1;
+  for(let i=0;i<=gw;i++){ctx.beginPath();ctx.moveTo(i*CELL+.5,0);ctx.lineTo(i*CELL+.5,cv.height);ctx.stroke();}
+  for(let j=0;j<=gh;j++){ctx.beginPath();ctx.moveTo(0,j*CELL+.5);ctx.lineTo(cv.width,j*CELL+.5);ctx.stroke();}
+
+  // 房间色块
+  (cur.rooms||[]).forEach((r,i)=>{
+    const [a,b,c,d,name,ck]=r; ctx.fillStyle=C.room[ck]||"#6b5842";
+    ctx.fillRect(px(a),py(b),(c-a+1)*CELL,(d-b+1)*CELL);
+    hitList.push({kind:"room",idx:i,x:px(a),y:py(b),w:(c-a+1)*CELL,h:(d-b+1)*CELL,label:name});
+  });
+  // 翼（地板范围描边）
+  (cur.wings||[]).forEach((w,i)=>{
+    ctx.strokeStyle="#c9a878";ctx.lineWidth=2;
+    ctx.strokeRect(px(w[0])+1,py(w[1])+1,w[2]*CELL-2,w[3]*CELL-2);
+    hitList.push({kind:"wing",idx:i,x:px(w[0]),y:py(w[1]),w:w[2]*CELL,h:w[3]*CELL,label:"翼"});
+  });
+  // 外墙（翼轮廓格）
+  const interior=new Set();
+  (cur.wings||[]).forEach(w=>{for(let j=w[1]+1;j<w[1]+w[3]-1;j++)for(let i=w[0]+1;i<w[0]+w[2]-1;i++)interior.add(i+","+j);});
+  ctx.fillStyle=C.wall;
+  for(let j=y0;j<=y1;j++)for(let i=x0;i<=x1;i++){
+    if(interior.has(i+","+j))continue;
+    const near=[[1,0],[-1,0],[0,1],[0,-1]].some(([di,dj])=>interior.has((i+di)+","+(j+dj)));
+    if(near)ctx.fillRect(px(i),py(j),CELL-1,CELL-1);
+  }
+  // 隔墙
+  (cur.partitions||[]).forEach((p,i)=>{
+    const [a,b,c,d]=p; ctx.fillStyle=C.wall; ctx.fillStyle=C.wallTop;
+    if(a===c){ctx.fillRect(px(a),py(Math.min(b,d)),CELL-1,(Math.abs(d-b)+1)*CELL-1);}
+    else{ctx.fillRect(px(Math.min(a,c)),py(b),(Math.abs(c-a)+1)*CELL-1,CELL-1);}
+    hitList.push({kind:"partition",idx:i,line:p,label:"墙"});
+  });
+  // 门 / 院门
+  (cur.gate||[]).forEach((g,i)=>{drawDot(g,C.gate,"院");hitList.push({kind:"gate",idx:i,x:px(g[0]),y:py(g[1]),w:CELL,h:CELL,label:"院门"});});
+  (cur.doors||[]).forEach((g,i)=>{drawDot(g,C.door,"门");hitList.push({kind:"door",idx:i,x:px(g[0]),y:py(g[1]),w:CELL,h:CELL,label:"门"});});
+  function drawDot(g,col,t){ctx.fillStyle=col;ctx.fillRect(px(g[0])+1,py(g[1])+1,CELL-3,CELL-3);
+    ctx.fillStyle="#201e19";ctx.font=(CELL*0.5)+"px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(t,px(g[0])+CELL/2,py(g[1])+CELL/2);}
+
+  // 家具
+  (cur.furniture||[]).forEach((f,i)=>{
+    const [a,b,w,h]=f.rect, yard=f.zone==="yard";
+    ctx.fillStyle=f.clue?C.clue:(yard?C.yardFurn:C.furn);
+    ctx.fillRect(px(a)+1,py(b)+1,w*CELL-3,h*CELL-3);
+    ctx.strokeStyle=f.clue?"#7a3d12":"#5a4e38";ctx.lineWidth=1;
+    ctx.strokeRect(px(a)+1.5,py(b)+1.5,w*CELL-4,h*CELL-4);
+    if(CELL>=22){ctx.fillStyle="#201e19";ctx.font="10px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
+      const nm=f.short||f.name;ctx.fillText(nm.length>5?nm.slice(0,5):nm,px(a)+w*CELL/2,py(b)+h*CELL/2);}
+    hitList.push({kind:"furn",idx:i,x:px(a),y:py(b),w:w*CELL,h:h*CELL,label:f.name});
+  });
+  // 房间名（top 或中心，简化：居中偏上）
+  (cur.rooms||[]).forEach(r=>{
+    const [a,b,c,d,name]=r;ctx.fillStyle="rgba(30,26,18,.72)";
+    const tw=name.length*13+8, cx=px(a)+(c-a+1)*CELL/2, cy=py(b)+14;
+    ctx.fillRect(cx-tw/2,cy-11,tw,17);ctx.fillStyle="#f0e6d0";ctx.font="12px sans-serif";
+    ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(name,cx,cy-2);
+  });
+  // 主角参照（右下角）
+  const pp=autoPlayer(); if(pp){ctx.fillStyle=C.player;ctx.fillRect(px(pp[0])+3,py(pp[1])+1,CELL-7,CELL*2-3);}
+
+  // 选中高亮
+  if(sel){const sh=shapeOf(sel.kind,sel.idx);if(sh){
+    if(sel.kind==="partition"){
+      const [a,b,c,d]=sh.arr;ctx.strokeStyle=C.sel;ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(px(a)+CELL/2,py(b)+CELL/2);ctx.lineTo(px(c)+CELL/2,py(d)+CELL/2);ctx.stroke();
+    }else{
+      const [a,b]=[sh.arr[sh.fields[0]],sh.arr[sh.fields[1]]];
+      let w,h;if(sel.kind==="door"||sel.kind==="gate"){w=h=1;}else{w=sh.arr[sh.fields[2]];h=sh.arr[sh.fields[3]];}
+      ctx.strokeStyle=C.sel;ctx.lineWidth=3;ctx.strokeRect(px(a)-1,py(b)-1,w*CELL+2,h*CELL+2);
+    }
+  }}
+}
+function autoPlayer(){
+  const [x0,y0,x1,y1]=cur.lot;
+  const occ=(i,j)=>cur.furniture.some(f=>{const[a,b,w,h]=f.rect;return a<=i&&i<a+w&&b<=j&&j<b+h;});
+  for(let j=y1;j>=y0;j--)for(let i=x1;i>=x0;i--){
+    const ch=cellChar(i,j);
+    if((ch===" "||ch===".")&&!occ(i,j))return [i,j];
+  }
+  return null;
+}
+function cellChar(gi,gj){
+  const [x0,y0,x1,y1]=cur.lot;
+  const interior=new Set();(cur.wings||[]).forEach(w=>{for(let j=w[1]+1;j<w[1]+w[3]-1;j++)for(let i=w[0]+1;i<w[0]+w[2]-1;i++)interior.add(i+","+j);});
+  const part=new Set();(cur.partitions||[]).forEach(p=>{const[a,b,c,d]=p;if(a===c){for(let y=Math.min(b,d);y<=Math.max(b,d);y++)part.add(a+","+y);}else{for(let x=Math.min(a,c);x<=Math.max(a,c);x++)part.add(x+","+b);}});
+  const k=gi+","+gj;
+  if((cur.gate||[]).some(g=>g[0]===gi&&g[1]===gj))return "G";
+  if((cur.doors||[]).some(g=>g[0]===gi&&g[1]===gj))return "D";
+  if(part.has(k)||wallNear(gi,gj,interior))return "#";
+  if(interior.has(k))return ".";
+  return " ";
+}
+function wallNear(i,j,interior){return [[1,0],[-1,0],[0,1],[0,-1]].some(([di,dj])=>interior.has((i+di)+","+(j+dj)));}
+
+// ---- 命中测试：从上到下 ----
+function hitAt(mx,my){
+  for(let k=hitList.length-1;k>=0;k--){
+    const h=hitList[k];
+    if(h.line){
+      const [a,b,c,d]=h.line,x0=cur.lot[0],y0=cur.lot[1];
+      const p1=[(a-x0+.5)*CELL,(b-y0+.5)*CELL],p2=[(c-x0+.5)*CELL,(d-y0+.5)*CELL];
+      if(segDist(mx,my,p1,p2)<CELL*0.45)return h;
+    }else if(mx>=h.x&&mx<=h.x+h.w&&my>=h.y&&my<=h.y+h.h)return h;
+  }
+  return null;
+}
+function segDist(px,py,a,b){const dx=b[0]-a[0],dy=b[1]-a[1],L=dx*dx+dy*dy;if(!L)return Math.hypot(px-a[0],py-a[1]);let t=((px-a[0])*dx+(py-a[1])*dy)/L;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(a[0]+t*dx),py-(a[1]+t*dy));}
+const toGrid=(mx,my)=>[Math.floor(mx/CELL)+cur.lot[0],Math.floor(my/CELL)+cur.lot[1]];
+
+// ---- 鼠标交互 ----
+const cv=$("cv");
+cv.addEventListener("mousedown",e=>{
+  if(!cur)return;const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,[gx,gy]=toGrid(mx,my);
+  if(tool==="select"){
+    const h=hitAt(mx,my);sel=h?{kind:h.kind,idx:h.idx}:null;renderProps();renderList();draw();
+    if(sel){const sh=shapeOf(sel.kind,sel.idx);drag={mx,my,orig:sh.arr.slice(),gx,gy,line:sel.kind==="partition"?sh.arr.slice():null};}
+  }else if(tool==="door"||tool==="gate"){
+    const arr=tool==="door"?cur.doors:cur.gate;arr.push([gx,gy]);sel={kind:tool,idx:arr.length-1};afterEdit();
+  }else{
+    drag={mx,my,gx,gy,drawing:true,tool}; // 画墙/房间/家具：拖出范围
+  }
+});
+cv.addEventListener("mousemove",e=>{
+  if(!drag||!cur)return;const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,[gx,gy]=toGrid(mx,my);
+  if(drag.drawing){
+    // 预览：临时画一个虚框
+    const [x0,y0]=cur.lot;const ctx=cv.getContext("2d");
+    draw();
+    ctx.strokeStyle="#6fd3ff";ctx.lineWidth=2;ctx.setLineDash([5,4]);
+    ctx.strokeRect((Math.min(drag.gx,gx)-x0)*CELL+1,(Math.min(drag.gy,gy)-y0)*CELL+1,(Math.abs(gx-drag.gx)+1)*CELL-2,(Math.abs(gy-drag.gy)+1)*CELL-2);
+    ctx.setLineDash([]);
+    return;
+  }
+  const sh=shapeOf(sel.kind,sel.idx);if(!sh)return;
+  const dx=gx-drag.gx,dy=gy-drag.gy;
+  if(drag.line){
+    const [a,b,c,d]=drag.orig;
+    if(a===c){sh.arr[1]=b+dy;sh.arr[3]=d+dy;}else{sh.arr[0]=a+dx;sh.arr[2]=c+dx;} // 墙只沿垂直方向平移
+  }else{
+    sh.fields.forEach((f,i)=>{sh.arr[f]=drag.orig[i]+(i%2===0?dx:dy);});
+  }
+  draw();syncPanelValues();
+});
+window.addEventListener("mouseup",e=>{
+  if(!drag||!cur)return;
+  if(drag.drawing){
+    const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,[gx,gy]=toGrid(mx,my);
+    const x=Math.min(drag.gx,gx),y=Math.min(drag.gy,gy),w=Math.abs(gx-drag.gx)+1,h=Math.abs(gy-drag.gy)+1;
+    if(drag.tool==="wall"){
+      // 取水平或垂直：以较长边为准
+      if(w>=h){const yy=Math.round((y+gy)/2);cur.partitions.push([x,yy,gx,yy]);sel={kind:"partition",idx:cur.partitions.length-1};}
+      else{const xx=Math.round((x+gx)/2);cur.partitions.push([xx,y,xx,gy]);sel={kind:"partition",idx:cur.partitions.length-1};}
+    }else if(drag.tool==="room"){
+      cur.rooms.push([x,y,gx,gy,"新房间","hall"]);sel={kind:"room",idx:cur.rooms.length-1};
+    }else if(drag.tool==="furn"){
+      cur.furniture.push({name:"新家具",short:"家具",rect:[x,y,w,h],note:"",clue:false,zone:"house",yard_building:false});sel={kind:"furn",idx:cur.furniture.length-1};
+    }
+  }
+  drag=null;afterEdit();
+});
+function afterEdit(){draw();renderProps();renderList();msg("已改动（记得保存）");}
+
+// ---- 属性面板 ----
+function renderProps(){
+  const box=$("props");box.innerHTML="";
+  if(!cur||!sel){box.innerHTML='<p class="hint">在画布上点选一个元素，或用上方工具新建。</p>';return;}
+  const sh=shapeOf(sel.kind,sel.idx);if(!sh){sel=null;return renderProps();}
+  const titles={lot:"占地范围 lot",wing:"建筑翼",partition:"隔墙",door:"房门",gate:"院门",room:"房间",furn:"家具"};
+  box.innerHTML='<div class="sec"><h3>'+(titles[sel.kind]||sel.kind)+' #'+sel.idx+'</h3></div>';
+  sh.fields.forEach((f,i)=>{
+    const lab=sh.labels[i],mx=maxOf(lab);
+    const row=document.createElement("div");row.className="row";
+    row.innerHTML='<label>'+lab+'</label><input type="range" min="0" max="'+mx+'" value="'+sh.arr[f]+'"><input type="number" min="0" max="'+mx+'" value="'+sh.arr[f]+'">';
+    const rg=row.querySelector("input[type=range]"),nm=row.querySelector("input[type=number]");
+    const set=v=>{v=Math.max(0,Math.min(mx,parseInt(v)||0));sh.arr[f]=v;rg.value=v;nm.value=v;draw();renderList();};
+    rg.oninput=()=>set(rg.value);nm.onchange=()=>set(nm.value);
+    box.appendChild(row);
+  });
+  // 房间专属：名字/配色/top
+  if(sel.kind==="room"){const r=cur.rooms[sel.idx];
+    const r1=document.createElement("div");r1.className="row";r1.innerHTML='<label>名称</label><input type="text" value="'+(r[4]||"")+'">';
+    r1.querySelector("input").onchange=e=>{r[4]=e.target.value;draw();renderList();};box.appendChild(r1);
+    const r2=document.createElement("div");r2.className="row";r2.innerHTML='<label>配色</label><select>'+Object.keys(C.room).map(k=>'<option'+(k===r[5]?' selected':'')+'>'+k+'</option>').join("")+'</select>';
+    r2.querySelector("select").onchange=e=>{r[5]=e.target.value;draw();};box.appendChild(r2);
+    const r3=document.createElement("div");r3.className="row";r3.innerHTML='<label>名置顶</label><input type="checkbox"'+(r[6]==="top"?" checked":"")+'>';
+    r3.querySelector("input").onchange=e=>{if(e.target.checked)r[6]="top";else r.splice(6,1);draw();};box.appendChild(r3);
+  }
+  // 家具专属
+  if(sel.kind==="furn"){const f=cur.furniture[sel.idx];
+    [["名称","name"],["简称","short"],["备注","note"]].forEach(([lab,key])=>{
+      const row=document.createElement("div");row.className="row";row.innerHTML='<label>'+lab+'</label><input type="text" value="'+(f[key]||"").replace(/"/g,"&quot;")+'">';
+      row.querySelector("input").onchange=e=>{f[key]=e.target.value;draw();renderList();};box.appendChild(row);
+    });
+    const r4=document.createElement("div");r4.className="row";r4.innerHTML='<label>线索</label><input type="checkbox"'+(f.clue?" checked":"")+'>';
+    r4.querySelector("input").onchange=e=>{f.clue=e.target.checked;draw();};box.appendChild(r4);
+    const r5=document.createElement("div");r5.className="row";r5.innerHTML='<label>院子</label><input type="checkbox"'+(f.zone==="yard"?" checked":"")+'>';
+    r5.querySelector("input").onchange=e=>{f.zone=e.target.checked?"yard":"house";draw();};box.appendChild(r5);
+  }
+  // 删除（lot 不可删）
+  if(sel.kind!=="lot"){
+    const del=document.createElement("button");del.textContent="🗑 删除此元素";del.style.marginTop="8px";del.style.color="#e88";
+    del.onclick=()=>{
+      const arr={wing:cur.wings,partition:cur.partitions,door:cur.doors,gate:cur.gate,room:cur.rooms,furn:cur.furniture}[sel.kind];
+      arr.splice(sel.idx,1);sel=null;afterEdit();
+    };box.appendChild(del);
+  }
+}
+function syncPanelValues(){ // 拖动时同步滑块显示
+  const rows=$("props").querySelectorAll(".row");
+  if(!sel)return;const sh=shapeOf(sel.kind,sel.idx);if(!sh)return;
+  sh.fields.forEach((f,i)=>{const row=rows[i];if(!row)return;const rg=row.querySelector("input[type=range]"),nm=row.querySelector("input[type=number]");
+    if(rg)rg.value=sh.arr[f];if(nm)nm.value=sh.arr[f];});
+}
+function renderList(){
+  const box=$("elemList");box.innerHTML="";
+  const groups=[["lot","占地",[{}]],["wing","翼",cur.wings],["partition","墙",cur.partitions],
+    ["door","门",cur.doors],["gate","院门",cur.gate],["room","房间",cur.rooms],["furn","家具",cur.furniture]];
+  groups.forEach(([kind,label,arr])=>{
+    arr.forEach((it,i)=>{
+      let name=label+" "+i;
+      if(kind==="room")name=it[4];if(kind==="furn")name=it.name;
+      const d=document.createElement("div");d.className="listitem"+((sel&&sel.kind===kind&&sel.idx===i)?" sel":"");
+      d.innerHTML='<span><span class="tag">'+label+'</span>'+name+'</span>';
+      d.onclick=()=>{sel={kind,idx:i};draw();renderProps();renderList();};
+      box.appendChild(d);
+    });
+  });
+  if(!cur)box.innerHTML="";
+}
+
+// ---- 工具切换 ----
+document.querySelectorAll("#tools button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#tools button").forEach(x=>x.classList.remove("on"));b.classList.add("on");tool=b.dataset.tool;
+  const hints={select:"点选元素后用右侧滑块调坐标，或直接拖动",wall:"在画布上拖出一条水平/垂直墙",door:"点一格放房门",gate:"点一格放院门",room:"拖出矩形新建房间",furn:"拖出矩形新建家具"};
+  $("toolHint").textContent=hints[tool];
+});
+$("cellSel").oninput=e=>{CELL=+e.target.value;draw();};
+$("houseSel").onchange=e=>selectHouse(e.target.value);
+$("reloadBtn").onclick=()=>{load();};
+$("saveBtn").onclick=async()=>{
+  const r=await fetch("/api/data",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(DATA)});
+  const j=await r.json();msg(j.ok?("已保存 "+j.count+" 栋"):("保存失败: "+j.error),!j.ok);
+};
+$("regenBtn").onclick=async()=>{
+  msg("正在生成...");
+  const r=await fetch("/api/regen",{method:"POST"});const j=await r.json();
+  if(j.ok){msg("✅ 出图成功");alert("出图成功！\n\n"+j.out.slice(-800));}
+  else{msg("出图失败",true);alert("出图失败：\n"+j.out+"\n"+ (j.error||""));}
+};
+load();
+</script>
+</body>
+</html>

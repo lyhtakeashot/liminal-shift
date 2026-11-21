@@ -1,0 +1,132 @@
+﻿编号,类别,文件 id,资产名,格宽,格高,像素宽,像素高,交付路径,出现在,实例数,线索,说明
+B,外观·base,lu_house_base,lu_house 的 base,20,14,320,224,assets/village/houses/lu/a1_base.png,lu_house,1,,画布 = 320×224 px（占地 20×13 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,lu_house_roof,lu_house 的 roof,20,14,320,224,assets/village/houses/lu/a1_roof.png,lu_house,1,,画布 = 320×224 px（占地 20×13 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明
+B,外观·base,mill_a1_base,mill_a1 的 base,18,14,288,224,assets/village/houses/mill/a1_base.png,mill_a1,1,,画布 = 288×224 px（占地 18×13 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,mill_a1_roof,mill_a1 的 roof,18,14,288,224,assets/village/houses/mill/a1_roof.png,mill_a1,1,,画布 = 288×224 px（占地 18×13 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明
+B,外观·base,shen_a1_base,shen_a1 的 base,20,14,320,224,assets/village/houses/shen/a1_base.png,shen_a1,1,,画布 = 320×224 px（占地 20×13 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,shen_a1_roof,shen_a1 的 roof,20,14,320,224,assets/village/houses/shen/a1_roof.png,shen_a1,1,,画布 = 320×224 px（占地 20×13 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明
+B,外观·base,zhou_house_base,zhou_house 的 base,12,8,192,128,assets/village/houses/zhou/a1_base.png,zhou_house,1,,画布 = 192×128 px（占地 12×7 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,zhou_house_roof,zhou_house 的 roof,12,8,192,128,assets/village/houses/zhou/a1_roof.png,zhou_house,1,,画布 = 192×128 px（占地 12×7 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 8×6 有像素，其余透明
+B,外观·base,mill_a2_base,mill_a2 的 base,18,14,288,224,assets/village/houses/mill/a2_base.png,mill_a2,1,,画布 = 288×224 px（占地 18×13 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,mill_a2_roof,mill_a2 的 roof,18,14,288,224,assets/village/houses/mill/a2_roof.png,mill_a2,1,,画布 = 288×224 px（占地 18×13 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明
+B,外观·base,shen_a2_base,shen_a2 的 base,23,18,368,288,assets/village/houses/shen/a2_base.png,shen_a2,1,,画布 = 368×288 px（占地 23×17 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,shen_a2_roof,shen_a2 的 roof,23,18,368,288,assets/village/houses/shen/a2_roof.png,shen_a2,1,,画布 = 368×288 px（占地 23×17 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 23×17 有像素，其余透明
+B,外观·base,lu_a2_base,lu_a2 的 base,20,14,320,224,assets/village/houses/lu/a2_base.png,lu_a2,1,,画布 = 320×224 px（占地 20×13 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,lu_a2_roof,lu_a2 的 roof,20,14,320,224,assets/village/houses/lu/a2_roof.png,lu_a2,1,,画布 = 320×224 px（占地 20×13 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明
+B,外观·base,zhou_a2_base,zhou_a2 的 base,12,8,192,128,assets/village/houses/zhou/a2_base.png,zhou_a2,1,,画布 = 192×128 px（占地 12×7 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,zhou_a2_roof,zhou_a2 的 roof,12,8,192,128,assets/village/houses/zhou/a2_roof.png,zhou_a2,1,,画布 = 192×128 px（占地 12×7 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 8×6 有像素，其余透明
+B,外观·base,mill_a3_base,mill_a3 的 base,18,18,288,288,assets/village/houses/mill/a3_base.png,mill_a3,1,,画布 = 288×288 px（占地 18×17 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,mill_a3_roof,mill_a3 的 roof,18,18,288,288,assets/village/houses/mill/a3_roof.png,mill_a3,1,,画布 = 288×288 px（占地 18×17 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明
+B,外观·base,shen_a3_base,shen_a3 的 base,28,25,448,400,assets/village/houses/shen/a3_base.png,shen_a3,1,,画布 = 448×400 px（占地 28×24 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,shen_a3_roof,shen_a3 的 roof,28,25,448,400,assets/village/houses/shen/a3_roof.png,shen_a3,1,,画布 = 448×400 px（占地 28×24 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 28×24 有像素，其余透明
+B,外观·base,zhou_a3_base,zhou_a3 的 base,12,8,192,128,assets/village/houses/zhou/a3_base.png,zhou_a3,1,,画布 = 192×128 px（占地 12×7 格 + 顶部一行立面）；地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度
+R,外观·roof,zhou_a3_roof,zhou_a3 的 roof,12,8,192,128,assets/village/houses/zhou/a3_roof.png,zhou_a3,1,,画布 = 192×128 px（占地 12×7 格 + 顶部一行立面）；屋面 + 檐口；画布与 base 同宽同高，只有屋本体 8×6 有像素，其余透明
+B,外观·base,lu_a3_base,lu_a3 的 base,20,14,320,224,assets/village/houses/lu/a3_base.png,lu_a3,1,,画布 = 320×224 px（占地 20×13 格 + 顶部一行立面）；废墟态：残墙基 + 夯土地基 + 杂草底；墙缺失处留透明，不画屋顶；顶部多出的一格是残墙立起的高度
+P01,家具·室内,deng_1x1,凳,1,1,16,16,assets/village/props/deng_1x1.png,mill_a1/shen_a1/zhou_house/mill_a2/shen_a2/zhou_a2/shen_a3,11,,账房 · 账桌旁 | 堂屋 · 八仙桌旁
+P02,家具·院子,shuigang_1x1,水缸,1,1,16,16,assets/village/props/shuigang_1x1.png,lu_house/shen_a1/zhou_house/shen_a2/lu_a2/zhou_a2/zhou_a3,8,,院子 · 接雨水 | 灶间 · 蓄水
+P03,家具·室内,liangdun_2x2,粮囤,2,2,32,32,assets/village/props/liangdun_2x2.png,mill_a1/mill_a2/shen_a2/mill_a3,7,,仓储 | 仓房 · 谷
+P04,家具·室内,yigui_1x2,衣柜,1,2,16,32,assets/village/props/yigui_1x2.png,lu_house/shen_a1/zhou_house/shen_a2/zhou_a2/shen_a3/zhou_a3,7,,"卧客一体 · 贴西墙 (1,3) | 主卧 · 贴东墙"
+P05,家具·院子,maofang_3x2,茅房,3,2,48,32,assets/village/props/maofang_3x2.png,lu_house/shen_a1/zhou_house/lu_a2/zhou_a2/zhou_a3,6,,屋外独立茅房 | 屋外独立茅房 · 塌了半边
+P06,家具·院子,chaidui_1x1,柴堆,1,1,16,16,assets/village/props/chaidui_1x1.png,lu_house/shen_a1/zhou_house/shen_a2/zhou_a2,5,,院子 | 院子 · 柴
+P07,家具·院子,maokeng_1x1,茅坑,1,1,16,16,assets/village/props/maokeng_1x1.png,lu_house/shen_a1/zhou_house/lu_a2/zhou_a2,5,,茅房内
+P08,家具·室内,shujia_1x2,书架,1,2,16,32,assets/village/props/shujia_1x2.png,shen_a3,4,,书房 · 靠左墙（净房|书房那道墙） | 书房 · 靠右墙
+P09,家具·室内,danrenchuang_2x1,单人床,2,1,32,16,assets/village/props/danrenchuang_2x1.png,lu_house/shen_a1/shen_a2/shen_a3,4,,横向靠北墙 | 少东房 · 横向贴北墙
+P10,家具·室内,shuangrenchuang_3x3,双人床,3,3,48,48,assets/village/props/shuangrenchuang_3x3.png,shen_a2/shen_a3,4,,长辈房 · 沈万山夫妇｜3×3 富家床 | 主卧 · 沈守业夫妇｜3×3
+P11,家具·室内,muxiang_1x1,木箱,1,1,16,16,assets/village/props/muxiang_1x1.png,shen_a3,4,,储物间 · 木箱（南排） | 储物间 · 木箱（北排）
+P12,家具·室内,jiutan_1x1,酒坛,1,1,16,16,assets/village/props/jiutan_1x1.png,shen_a3,4,,储物间 · 陶瓷酒坛（南排，非欧洲橡木桶） | 储物间 · 陶瓷酒坛（南排）
+P13,家具·室内,changdeng_1x2,长凳,1,2,16,32,assets/village/props/changdeng_1x2.png,shen_a2/shen_a3,4,,八仙桌 · 西 | 八仙桌 · 东
+P14,家具·室内,changdeng_2x1,长凳,2,1,32,16,assets/village/props/changdeng_2x1.png,shen_a2/shen_a3,4,,八仙桌 · 北 | 八仙桌 · 南
+P15,家具·室内,baxianzhuo_2x3,八仙桌,2,3,32,48,assets/village/props/baxianzhuo_2x3.png,lu_house/shen_a1/lu_a2,3,,没人搬得动，桌面积了一层灰
+P16,家具·室内,shuangrenchuang_2x2,双人床,2,2,32,32,assets/village/props/shuangrenchuang_2x2.png,lu_house/shen_a1/lu_a2,3,,穷家 2×2 | 床架还在，草垫烂成一堆
+P17,家具·室内,gui_1x2,柜,1,2,16,32,assets/village/props/gui_1x2.png,lu_house/shen_a2/shen_a3,3,,贴东墙 | 长辈房 · 贴东墙
+P18,家具·室内,zaotai_1x4,灶台,1,4,16,64,assets/village/props/zaotai_1x4.png,lu_house/shen_a1/lu_a2,3,,竖向靠东墙 | 砌死在墙里 · 锅早被拿走了
+P19,家具·室内,zhiwutai_1x1,置物台,1,1,16,16,assets/village/props/zhiwutai_1x1.png,zhou_house/shen_a2/zhou_a2,3,,放菜板菜刀 · 贴柴火灶 | 灶间 · 菜板菜刀
+P20,家具·室内,laojing_1x1,老井,1,1,16,16,assets/village/props/laojing_1x1.png,mill_a1/mill_a2/mill_a3,3,◆,磨坊院内旧井 · 1926 村里的吃水井，路为它绕弯；此时还在用 | 磨坊院内旧井 · 1951 沈守业填井盖石板（陆敬之在下面）；村里在路另一头另打新井
+P21,家具·室内,zhangzhuo_1x4,账桌,1,4,16,64,assets/village/props/zhangzhuo_1x4.png,mill_a1/mill_a2/mill_a3,3,◆,假《水簿》A1-A2；真本在沈万山身上（占日后暗龛位） | 墙前(东) · 假《水簿》A1-A2
+P22,家具·室内,shuzhuo_1x1,书桌,1,1,16,16,assets/village/props/shuzhuo_1x1.png,shen_a1/shen_a2,2,◆,少东房 | 长辈房 · 贴东墙 · 沈万山记账那张；真本他随身带着
+P23,家具·室内,shuzhuo_1x2,书桌,1,2,16,32,assets/village/props/shuzhuo_1x2.png,shen_a2/shen_a3,2,,子女房 · 贴东墙
+P24,家具·室内,baxianzhuo_2x2,八仙桌,2,2,32,32,assets/village/props/baxianzhuo_2x2.png,shen_a2/shen_a3,2,,"堂屋 · 待客 · 组合中心 | 堂屋 · 会客中心 · 西移 1 格给门(13,11)让净空"
+P25,家具·室内,danrenchuang_1x2,单人床,1,2,16,32,assets/village/props/danrenchuang_1x2.png,zhou_house/zhou_a2,2,,"竖向贴西墙 (1,1)-(1,2)"
+P26,家具·室内,qiangji_ankan_1x4,墙基暗龛,1,4,16,64,assets/village/props/qiangji_ankan_1x4.png,mill_a2/mill_a3,2,◆,墙后(西) · 真《水簿》油布包 A3 出土 | 墙后(西) · A2 空龛，A3 真《水簿》油布包从这里出土，龛已空
+P27,家具·室内,xiaozhuo_2x1,小桌,2,1,32,16,assets/village/props/xiaozhuo_2x1.png,zhou_house/zhou_a2,2,◆,"贴北墙 (2,1)-(3,1) · 抽屉藏周有田往来账(位置待定)"
+P28,家具·室内,pingfeng_1x2,屏风,1,2,16,32,assets/village/props/pingfeng_1x2.png,shen_a2/shen_a3,2,,净房 · 挡视线
+P29,家具·室内,jiu_muxiang_1x1,旧木箱,1,1,16,16,assets/village/props/jiu_muxiang_1x1.png,lu_house/zhou_a3,2,◆,夫妻房 · 可检视线索 | 长工遗物 · 里头没值钱东西
+P30,家具·室内,tiaoan_1x3,条案,1,3,16,48,assets/village/props/tiaoan_1x3.png,shen_a2/shen_a3,2,,堂屋西山墙 · 竖向长条桌，摆瓶、座钟、镜 | 堂屋西山墙 · 竖向长条桌
+P31,家具·室内,gui_2x1,柜,2,1,32,16,assets/village/props/gui_2x1.png,shen_a2/shen_a3,2,,子女房 · 贴南墙
+P32,家具·室内,chaihuozao_1x1,柴火灶,1,1,16,16,assets/village/props/chaihuozao_1x1.png,zhou_house/zhou_a2,2,,1×1 一口锅 · 灶间北侧
+P33,家具·室内,shuipen_1x1,水盆,1,1,16,16,assets/village/props/shuipen_1x1.png,shen_a2/shen_a3,2,,净房 · 洗手 | 净房 · 洗漱
+P34,家具·室内,paiwei_1x1,牌位,1,1,16,16,assets/village/props/paiwei_1x1.png,shen_a2/shen_a3,2,,堂屋西山墙北端 · 木牌，面向东 | 堂屋西山墙北端
+P35,家具·室内,shimo_2x4,石磨,2,4,32,64,assets/village/props/shimo_2x4.png,mill_a1/mill_a2,2,◆,挪到大厅西侧当视觉核心；上磨盘后刻「沈氏丰源·一九五七」 | 上磨盘刻「沈氏丰源·一九五七」
+P36,家具·室内,zuzong_paiwei_2x3,祖宗牌位,2,3,32,48,assets/village/props/zuzong_paiwei_2x3.png,lu_house/shen_a1,2,,横向贴南墙
+P37,家具·院子,huapen_1x1,花盆,1,1,16,16,assets/village/props/huapen_1x1.png,shen_a3,2,,天井 · 石榴 | 天井 · 月季
+P38,家具·室内,tengyi_1x1,藤椅,1,1,16,16,assets/village/props/tengyi_1x1.png,shen_a3,2,,东连廊 · 藤椅纳凉（x=22 墙放回来，从 x21 退开） | 凹廊·西 · 纳凉
+P39,家具·室内,shujia_2x2,书架,2,2,32,32,assets/village/props/shujia_2x2.png,shen_a1,1,,少东房 · 横向
+P40,家具·室内,shuzhuo_2x1,书桌,2,1,32,16,assets/village/props/shuzhuo_2x1.png,shen_a3,1,,书房 · 书架右侧，粮站站长的账/信
+P41,家具·室内,bianmin_tai_2x1,便民服务台,2,1,32,16,assets/village/props/bianmin_tai_2x1.png,mill_a3,1,,入库口旁 · 凉茶桶+防暑药，交粮排队农民歇脚处（拆墙后移来）
+P42,家具·室内,daota_zaotai_1x4,倒塌的灶台残砖,1,4,16,64,assets/village/props/daota_zaotai_1x4.png,lu_a3,1,,砌死在墙里的灶台也塌成一堆残砖
+P43,家具·院子,nongjujia_2x1,农具架,2,1,32,16,assets/village/props/nongjujia_2x1.png,shen_a2,1,,院子 · 锄镰
+P44,家具·室内,deng_1x3,凳,1,3,16,48,assets/village/props/deng_1x3.png,mill_a3,1,,账房 · 账桌前
+P45,家具·室内,danjuji_suanpan_2x1,单据柜+算盘,2,1,32,16,assets/village/props/danjuji_suanpan_2x1.png,mill_a3,1,,账房北墙 · 单据柜横放靠墙，柜面上摆算盘（一体道具，美术可见，不做交互）
+P46,家具·院子,tuyuancang_3x3,土圆仓,3,3,48,48,assets/village/props/tuyuancang_3x3.png,mill_a3,1,,晒谷场西北 · 草泥结构土圆仓，1970s 粮站标配（安乡 1973 年全县 240 栋），储粮用
+P47,家具·室内,tupi_zaotai_2x1,土坯灶台,2,1,32,16,assets/village/props/tupi_zaotai_2x1.png,zhou_a3,1,,砌死在墙里 · 灶膛早凉了
+P48,家具·室内,tangwu_diji_2x3,堂屋地基痕迹,2,3,32,48,assets/village/props/tangwu_diji_2x3.png,lu_a3,1,◆,原堂屋 · 扒开荒草还能看出夯土地基的占地轮廓（非物件，时间长了自然留下）
+P49,家具·室内,xiao_yigui_1x2,小衣柜,1,2,16,32,assets/village/props/xiao_yigui_1x2.png,shen_a1,1,,少东房 · 由 1×2 缩为 1×1
+P50,家具·院子,tingshu_2x2,庭树,2,2,32,32,assets/village/props/tingshu_2x2.png,shen_a3,1,,天井 · 一棵石榴树，大户人家庭院的排场
+P51,家具·院子,qizhi_shimo_2x2,弃置石磨,2,2,32,32,assets/village/props/qizhi_shimo_2x2.png,mill_a3,1,◆,上磨盘刻「沈氏丰源·一九五七」；粮站不磨面，改建时挪到晒谷场角落废弃，A4 拆粮站才搬去超市门厅
+P52,家具·室内,gongtong_1x1,恭桶,1,1,16,16,assets/village/props/gongtong_1x1.png,shen_a2,1,,净房 · 木桶内衬灰，每日倒
+P53,家具·室内,tangcipen_1x1,搪瓷盆,1,1,16,16,assets/village/props/tangcipen_1x1.png,shen_a3,1,,灶间 · 洗菜搪瓷盆（大件明面）
+P54,家具·室内,jiu_muchuang_1x2,旧木床,1,2,16,32,assets/village/props/jiu_muchuang_1x2.png,zhou_a3,1,,床架还在 · 草席烂成一堆
+P55,家具·室内,shaixi_2x1,晒席,2,1,32,16,assets/village/props/shaixi_2x1.png,mill_a3,1,,粮仓 · 晒谷席，收购的粮食先摊开验晒
+P56,家具·室内,mutiaoban_jimapai_2x1,木跳板+记码牌,2,1,32,16,assets/village/props/mutiaoban_jimapai_2x1.png,mill_a3,1,,粮仓北口 · 挑粮上仓的木跳板，旁挂入库记数码单牌（拆墙后移来）
+P57,家具·室内,tiaodeng_1x1,条凳,1,1,16,16,assets/village/props/tiaodeng_1x1.png,zhou_a3,1,,账桌前 · 坐了二十四年的那条凳
+P58,家具·室内,anban_2x1,案板,2,1,32,16,assets/village/props/anban_2x1.png,shen_a3,1,,灶间 · 案板上插着菜刀（唯一明面的小件组合）
+P59,家具·室内,yi_1x1,椅,1,1,16,16,assets/village/props/yi_1x1.png,shen_a3,1,,书房 · 书桌前
+P60,家具·室内,dunbianqi_1x2,水冲蹲便器,1,2,16,32,assets/village/props/dunbianqi_1x2.png,shen_a3,1,,净房 · 高水箱蹲坑，瓷砖贴面（1976 干部宿舍/体面户配置，非旱厕恭桶）
+P61,家具·室内,shuichi_1x1,水池,1,1,16,16,assets/village/props/shuichi_1x1.png,shen_a3,1,,灶间 · 自来水池（大件明面）
+P62,家具·院子,shuini_fengceng_1x1,水泥封层,1,1,16,16,assets/village/props/shuini_fengceng_1x1.png,mill_a3,1,◆,晒谷场 · 三层水泥，外乡石匠方师傅看见挖到井，被沈德昌封在这里
+P63,家具·室内,xishoupen_1x1,洗手盆,1,1,16,16,assets/village/props/xishoupen_1x1.png,shen_a3,1,,净房 · 搪瓷洗手盆，盆前墙上挂镜（镜子不另占格）
+P64,家具·室内,liushai_1x1,溜筛,1,1,16,16,assets/village/props/liushai_1x1.png,mill_a3,1,,粮仓北口 · 筛除杂质整粮工具（拆墙后从收购厅南排移来）
+P65,家具·院子,denglong_1x1,灯笼,1,1,16,16,assets/village/props/denglong_1x1.png,shen_a3,1,,凹廊·东 · 廊下挂灯
+P66,家具·室内,denglong_1x4,灯笼,1,4,16,64,assets/village/props/denglong_1x4.png,shen_a3,1,,"东连廊 · 廊下挂灯（避开门(19,11)净空）"
+P67,家具·室内,zaotai_1x2,灶台,1,2,16,32,assets/village/props/zaotai_1x2.png,shen_a2,1,,灶间 · 竖向贴东墙
+P68,家具·室内,penjing_1x1,盆景,1,1,16,16,assets/village/props/penjing_1x1.png,shen_a3,1,,西连廊 · 松桩盆景
+P69,家具·院子,penjing_1x4,盆景,1,4,16,64,assets/village/props/penjing_1x4.png,shen_a3,1,,凹廊·北 · 松桩
+P70,家具·院子,shizhuo_2x1,石桌,2,1,32,16,assets/village/props/shizhuo_2x1.png,shen_a3,1,,天井 · 石凳
+P71,家具·室内,wangui_1x2,碗柜,1,2,16,32,assets/village/props/wangui_1x2.png,shen_a3,1,,灶间 · 锅铲/淘米盆等小件统一收进柜
+P72,家具·室内,bangcheng_2x1,磅秤,2,1,32,16,assets/village/props/bangcheng_2x1.png,mill_a3,1,,收购厅北墙 · 大磅秤过磅记码（司磅员）
+P73,家具·室内,luokuang_1x1,箩筐,1,1,16,16,assets/village/props/luokuang_1x1.png,mill_a3,1,,粮仓 · 装粮箩筐
+P74,家具·室内,liangdun_1x1,粮囤,1,1,16,16,assets/village/props/liangdun_1x1.png,shen_a2,1,,仓房 · 麦
+P75,家具·室内,zhenglong_1x1,蒸笼,1,1,16,16,assets/village/props/zhenglong_1x1.png,shen_a3,1,,灶间 · 竹制蒸笼（大件明面）
+P76,家具·室内,tengyi_1x4,藤椅,1,4,16,64,assets/village/props/tengyi_1x4.png,shen_a3,1,,西连廊 · 藤椅纳凉
+P77,家具·室内,fengwomeilu_1x4,蜂窝煤炉,1,4,16,64,assets/village/props/fengwomeilu_1x4.png,shen_a3,1,◆,灶间 · 1976 镇上家庭烧蜂窝煤（大件明面）
+P78,家具·室内,zhangzhuo_2x1,账桌,2,1,32,16,assets/village/props/zhangzhuo_2x1.png,zhou_a3,1,◆,周有田的账桌 · 抽屉夹层藏着往来账（A5 才出土）
+P79,家具·室内,tieguo_1x1,铁锅,1,1,16,16,assets/village/props/tieguo_1x1.png,shen_a3,1,,灶间 · 章丘铁锅，70 年代家用主炊具（大件明面）
+P80,家具·室内,fengche_2x1,风车,2,1,32,16,assets/village/props/fengche_2x1.png,mill_a3,1,,收购厅 · 扬谷去杂，不合格的粮食先过风车
+P81,家具·室内,yanliangtai_2x1,验粮台+取样铁管,2,1,32,16,assets/village/props/yanliangtai_2x1.png,mill_a3,1,,收购厅北墙 · 检验员用带槽铁管插粮袋取样，牙磕验干湿
+P82,家具·室内,yanliangqi_1x1,验粮器,1,1,16,16,assets/village/props/yanliangqi_1x1.png,mill_a3,1,,粮仓 · 扦样验粮器具
+P83,家具·院子,jilong_2x1,鸡笼,2,1,32,16,assets/village/props/jilong_2x1.png,shen_a2,1,,院子 · 养鸡
+P84,家具·室内,madai_1x1,麻袋,1,1,16,16,assets/village/props/madai_1x1.png,mill_a3,1,,粮仓 · 装粮麻袋
+S,场景,river_a1,河（含河岸、水面）,100,13,1600,208,assets/village/scene/river_a1.png,A1,1,,全宽 100 格；最深 13 格（208 px）
+S,场景,dam,石坝,8,4,128,64,assets/village/scene/dam.png,A1,1,,三帧同形同尺寸，共用 1 张
+S,场景,stele,界碑（周界半截石碑）,1,1,16,16,assets/village/scene/stele.png,A1,1,,原件 8×16 px，装进 1×1 格画布（图上 8px 宽）
+S,场景,road_curved,主路（宽 3 格）,100,9,1600,144,assets/village/scene/road_curved_tiles.png,A1,1,,弯道（A1/A2 同走向，两侧会收边到 1~2 格）；路宽 3 格 = 48px（逐列实测众数），共 300 个路面格；出 16px 瓦片集（直/弯/丁字/十字）
+S,场景,field_a1,碎田（零散小块）,21,12,336,192,assets/village/scene/field_patch_tiles.png,A1,1,,28 块，单块 4×1、5×1、6×1 等 5 种格；出 16px 土/田埂瓦片
+S,场景,well_old_a1,老井,2,2,32,32,assets/village/scene/well_old_a1.png,A1,1,,4 态：开挖 / 封盖 / 锁死 / 水泥封；本帧 2×2 格用其中一态
+S,场景,tree_a1,老槐,2,2,32,32,assets/village/scene/tree_a1.png,A1,1,,4 态：树苗 / 中 / 大 / 树桩；本帧 2×2 格
+S,场景,ground_tile_a1,地面底瓦,1,1,16,16,assets/village/scene/ground_a1_tiles.png,A1,1,,可平铺 16×16 地面（草地/土），帧底色 #6e7a4c
+S,场景,river_a2,河（含河岸、水面）,100,13,1600,208,assets/village/scene/river_a2.png,A2,1,,全宽 100 格；最深 13 格（208 px）
+S,场景,dam,石坝,8,4,128,64,assets/village/scene/dam.png,A2,1,,三帧同形同尺寸，共用 1 张
+S,场景,stele,界碑（周界半截石碑）,1,1,16,16,assets/village/scene/stele.png,A2,1,,原件 8×16 px，装进 1×1 格画布（图上 8px 宽）
+S,场景,road_curved,主路（宽 3 格）,100,9,1600,144,assets/village/scene/road_curved_tiles.png,A2,1,,弯道（A1/A2 同走向，两侧会收边到 1~2 格）；路宽 3 格 = 48px（逐列实测众数），共 300 个路面格；出 16px 瓦片集（直/弯/丁字/十字）
+S,场景,field_a2,整块大田,16,12,256,192,assets/village/scene/field_a2.png,A2,1,,16×12 格；A2 与 A3 同尺寸、同田埂，只差土色
+S,场景,well_old_a2,老井（石板）,2,2,32,32,assets/village/scene/well_old_a2.png,A2,1,,4 态：开挖 / 封盖 / 锁死 / 水泥封；本帧 2×2 格用其中一态
+S,场景,tree_a2,老槐,4,4,64,64,assets/village/scene/tree_a2.png,A2,1,,4 态：树苗 / 中 / 大 / 树桩；本帧 4×4 格
+S,场景,ground_tile_a2,地面底瓦,1,1,16,16,assets/village/scene/ground_a2_tiles.png,A2,1,,可平铺 16×16 地面（草地/土），帧底色 #68744a
+S,场景,river_a3,河（含河岸、水面）,100,13,1600,208,assets/village/scene/river_a3.png,A3,1,,全宽 100 格；最深 13 格（208 px）
+S,场景,dam,石坝,8,4,128,64,assets/village/scene/dam.png,A3,1,,三帧同形同尺寸，共用 1 张
+S,场景,stele,界碑（周界半截石碑）,1,1,16,16,assets/village/scene/stele.png,A3,1,,原件 8×16 px，装进 1×1 格画布（图上 8px 宽）
+S,场景,road_straight,主路（宽 3 格）,100,3,1600,48,assets/village/scene/road_straight_tiles.png,A3,1,,直道（A3 起取直）；路宽 3 格 = 48px（逐列实测众数），共 300 个路面格；出 16px 瓦片集（直/弯/丁字/十字）
+S,场景,field_a3,整块大田,16,12,256,192,assets/village/scene/field_a3.png,A3,1,,16×12 格；A2 与 A3 同尺寸、同田埂，只差土色
+S,场景,well_old_a3,老井（水泥）,2,2,32,32,assets/village/scene/well_old_a3.png,A3,1,,4 态：开挖 / 封盖 / 锁死 / 水泥封；本帧 2×2 格用其中一态
+S,场景,tree_a3,老槐,6,6,96,96,assets/village/scene/tree_a3.png,A3,1,,4 态：树苗 / 中 / 大 / 树桩；本帧 6×6 格
+S,场景,ground_tile_a3,地面底瓦,1,1,16,16,assets/village/scene/ground_a3_tiles.png,A3,1,,可平铺 16×16 地面（草地/土），帧底色 #6a6a44

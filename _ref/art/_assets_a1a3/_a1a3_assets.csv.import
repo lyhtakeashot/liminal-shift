@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dwumie3qjnhmm"
+
+[deps]
+
+files=["res://_ref/art/_assets_a1a3/_a1a3_assets.类别.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.文件 id.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.资产名.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.格宽.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.格高.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.像素宽.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.像素高.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.交付路径.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.出现在.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.实例数.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.线索.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.说明.translation"]
+
+source_file="res://_ref/art/_assets_a1a3/_a1a3_assets.csv"
+dest_files=["res://_ref/art/_assets_a1a3/_a1a3_assets.类别.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.文件 id.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.资产名.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.格宽.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.格高.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.像素宽.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.像素高.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.交付路径.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.出现在.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.实例数.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.线索.translation", "res://_ref/art/_assets_a1a3/_a1a3_assets.说明.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

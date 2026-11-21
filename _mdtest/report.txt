@@ -1,0 +1,24 @@
+=== BBCode 逐项测试 ===
+color_only     解析后=红色文字测试                   残留标签=否
+strike_only    解析后=前面删除的文字后面                残留标签=否
+italic_only    解析后=斜体文字                     残留标签=否
+nested_colors  解析后=外层内层红回到外层                残留标签=否
+interleaved    解析后=正文划掉继续                   残留标签=否
+bg             解析后=底色测试                     残留标签=否
+shake          解析后=抖动                       残留标签=否
+wave           解析后=波浪                       残留标签=否
+tornado        解析后=龙卷                       残留标签=否
+fade           解析后=渐隐                       残留标签=否
+rainbow        解析后=彩虹                       残留标签=否
+pulse          解析后=脉动                       残留标签=否
+dropcap        解析后=首字下沉                     残留标签=否
+center         解析后=居中                       残留标签=否
+indent         解析后=	缩进一行                    残留标签=否
+uc             解析后=下划线                      残留标签=否
+mono           解析后=等宽                       残留标签=否
+font_size      解析后=大字                       残留标签=否
+opentype       解析后=[opentype features=liga]连字[/opentype] 残留标签=是
+escape         解析后=[不解析]                    残留标签=是
+
+PNG saved: res://_mdtest/tags.png
+CJK test: 中文渲染正常

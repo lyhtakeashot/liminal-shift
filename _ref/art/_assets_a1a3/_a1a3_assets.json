@@ -1,0 +1,3197 @@
+{
+ "shell": [
+  {
+   "id": "lu_house_base",
+   "code": "B",
+   "house": "lu_house",
+   "frame": "A1",
+   "layer": "base",
+   "w": 20,
+   "h": 13,
+   "px": [
+    320,
+    208
+   ],
+   "cw": 20,
+   "ch": 14,
+   "cpx": [
+    320,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/lu/a1_base.png",
+   "uses": 1,
+   "houses": [
+    "lu_house"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "lu_house_roof",
+   "code": "R",
+   "house": "lu_house",
+   "frame": "A1",
+   "layer": "roof",
+   "w": 20,
+   "h": 13,
+   "px": [
+    320,
+    208
+   ],
+   "cw": 20,
+   "ch": 14,
+   "cpx": [
+    320,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/lu/a1_roof.png",
+   "uses": 1,
+   "houses": [
+    "lu_house"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明"
+  },
+  {
+   "id": "mill_a1_base",
+   "code": "B",
+   "house": "mill_a1",
+   "frame": "A1",
+   "layer": "base",
+   "w": 18,
+   "h": 13,
+   "px": [
+    288,
+    208
+   ],
+   "cw": 18,
+   "ch": 14,
+   "cpx": [
+    288,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/mill/a1_base.png",
+   "uses": 1,
+   "houses": [
+    "mill_a1"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "mill_a1_roof",
+   "code": "R",
+   "house": "mill_a1",
+   "frame": "A1",
+   "layer": "roof",
+   "w": 18,
+   "h": 13,
+   "px": [
+    288,
+    208
+   ],
+   "cw": 18,
+   "ch": 14,
+   "cpx": [
+    288,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/mill/a1_roof.png",
+   "uses": 1,
+   "houses": [
+    "mill_a1"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明"
+  },
+  {
+   "id": "shen_a1_base",
+   "code": "B",
+   "house": "shen_a1",
+   "frame": "A1",
+   "layer": "base",
+   "w": 20,
+   "h": 13,
+   "px": [
+    320,
+    208
+   ],
+   "cw": 20,
+   "ch": 14,
+   "cpx": [
+    320,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/shen/a1_base.png",
+   "uses": 1,
+   "houses": [
+    "shen_a1"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "shen_a1_roof",
+   "code": "R",
+   "house": "shen_a1",
+   "frame": "A1",
+   "layer": "roof",
+   "w": 20,
+   "h": 13,
+   "px": [
+    320,
+    208
+   ],
+   "cw": 20,
+   "ch": 14,
+   "cpx": [
+    320,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/shen/a1_roof.png",
+   "uses": 1,
+   "houses": [
+    "shen_a1"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明"
+  },
+  {
+   "id": "zhou_house_base",
+   "code": "B",
+   "house": "zhou_house",
+   "frame": "A1",
+   "layer": "base",
+   "w": 12,
+   "h": 7,
+   "px": [
+    192,
+    112
+   ],
+   "cw": 12,
+   "ch": 8,
+   "cpx": [
+    192,
+    128
+   ],
+   "wing": [
+    8,
+    6
+   ],
+   "path": "assets/village/houses/zhou/a1_base.png",
+   "uses": 1,
+   "houses": [
+    "zhou_house"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "zhou_house_roof",
+   "code": "R",
+   "house": "zhou_house",
+   "frame": "A1",
+   "layer": "roof",
+   "w": 12,
+   "h": 7,
+   "px": [
+    192,
+    112
+   ],
+   "cw": 12,
+   "ch": 8,
+   "cpx": [
+    192,
+    128
+   ],
+   "wing": [
+    8,
+    6
+   ],
+   "path": "assets/village/houses/zhou/a1_roof.png",
+   "uses": 1,
+   "houses": [
+    "zhou_house"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 8×6 有像素，其余透明"
+  },
+  {
+   "id": "mill_a2_base",
+   "code": "B",
+   "house": "mill_a2",
+   "frame": "A2",
+   "layer": "base",
+   "w": 18,
+   "h": 13,
+   "px": [
+    288,
+    208
+   ],
+   "cw": 18,
+   "ch": 14,
+   "cpx": [
+    288,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/mill/a2_base.png",
+   "uses": 1,
+   "houses": [
+    "mill_a2"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "mill_a2_roof",
+   "code": "R",
+   "house": "mill_a2",
+   "frame": "A2",
+   "layer": "roof",
+   "w": 18,
+   "h": 13,
+   "px": [
+    288,
+    208
+   ],
+   "cw": 18,
+   "ch": 14,
+   "cpx": [
+    288,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/mill/a2_roof.png",
+   "uses": 1,
+   "houses": [
+    "mill_a2"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明"
+  },
+  {
+   "id": "shen_a2_base",
+   "code": "B",
+   "house": "shen_a2",
+   "frame": "A2",
+   "layer": "base",
+   "w": 23,
+   "h": 17,
+   "px": [
+    368,
+    272
+   ],
+   "cw": 23,
+   "ch": 18,
+   "cpx": [
+    368,
+    288
+   ],
+   "wing": [
+    23,
+    17
+   ],
+   "path": "assets/village/houses/shen/a2_base.png",
+   "uses": 1,
+   "houses": [
+    "shen_a2"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "shen_a2_roof",
+   "code": "R",
+   "house": "shen_a2",
+   "frame": "A2",
+   "layer": "roof",
+   "w": 23,
+   "h": 17,
+   "px": [
+    368,
+    272
+   ],
+   "cw": 23,
+   "ch": 18,
+   "cpx": [
+    368,
+    288
+   ],
+   "wing": [
+    23,
+    17
+   ],
+   "path": "assets/village/houses/shen/a2_roof.png",
+   "uses": 1,
+   "houses": [
+    "shen_a2"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 23×17 有像素，其余透明"
+  },
+  {
+   "id": "lu_a2_base",
+   "code": "B",
+   "house": "lu_a2",
+   "frame": "A2",
+   "layer": "base",
+   "w": 20,
+   "h": 13,
+   "px": [
+    320,
+    208
+   ],
+   "cw": 20,
+   "ch": 14,
+   "cpx": [
+    320,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/lu/a2_base.png",
+   "uses": 1,
+   "houses": [
+    "lu_a2"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "lu_a2_roof",
+   "code": "R",
+   "house": "lu_a2",
+   "frame": "A2",
+   "layer": "roof",
+   "w": 20,
+   "h": 13,
+   "px": [
+    320,
+    208
+   ],
+   "cw": 20,
+   "ch": 14,
+   "cpx": [
+    320,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/lu/a2_roof.png",
+   "uses": 1,
+   "houses": [
+    "lu_a2"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明"
+  },
+  {
+   "id": "zhou_a2_base",
+   "code": "B",
+   "house": "zhou_a2",
+   "frame": "A2",
+   "layer": "base",
+   "w": 12,
+   "h": 7,
+   "px": [
+    192,
+    112
+   ],
+   "cw": 12,
+   "ch": 8,
+   "cpx": [
+    192,
+    128
+   ],
+   "wing": [
+    8,
+    6
+   ],
+   "path": "assets/village/houses/zhou/a2_base.png",
+   "uses": 1,
+   "houses": [
+    "zhou_a2"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "zhou_a2_roof",
+   "code": "R",
+   "house": "zhou_a2",
+   "frame": "A2",
+   "layer": "roof",
+   "w": 12,
+   "h": 7,
+   "px": [
+    192,
+    112
+   ],
+   "cw": 12,
+   "ch": 8,
+   "cpx": [
+    192,
+    128
+   ],
+   "wing": [
+    8,
+    6
+   ],
+   "path": "assets/village/houses/zhou/a2_roof.png",
+   "uses": 1,
+   "houses": [
+    "zhou_a2"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 8×6 有像素，其余透明"
+  },
+  {
+   "id": "mill_a3_base",
+   "code": "B",
+   "house": "mill_a3",
+   "frame": "A3",
+   "layer": "base",
+   "w": 18,
+   "h": 17,
+   "px": [
+    288,
+    272
+   ],
+   "cw": 18,
+   "ch": 18,
+   "cpx": [
+    288,
+    288
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/mill/a3_base.png",
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "mill_a3_roof",
+   "code": "R",
+   "house": "mill_a3",
+   "frame": "A3",
+   "layer": "roof",
+   "w": 18,
+   "h": 17,
+   "px": [
+    288,
+    272
+   ],
+   "cw": 18,
+   "ch": 18,
+   "cpx": [
+    288,
+    288
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/mill/a3_roof.png",
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 15×11 有像素，其余透明"
+  },
+  {
+   "id": "shen_a3_base",
+   "code": "B",
+   "house": "shen_a3",
+   "frame": "A3",
+   "layer": "base",
+   "w": 28,
+   "h": 24,
+   "px": [
+    448,
+    384
+   ],
+   "cw": 28,
+   "ch": 25,
+   "cpx": [
+    448,
+    400
+   ],
+   "wing": [
+    28,
+    24
+   ],
+   "path": "assets/village/houses/shen/a3_base.png",
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "shen_a3_roof",
+   "code": "R",
+   "house": "shen_a3",
+   "frame": "A3",
+   "layer": "roof",
+   "w": 28,
+   "h": 24,
+   "px": [
+    448,
+    384
+   ],
+   "cw": 28,
+   "ch": 25,
+   "cpx": [
+    448,
+    400
+   ],
+   "wing": [
+    28,
+    24
+   ],
+   "path": "assets/village/houses/shen/a3_roof.png",
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 28×24 有像素，其余透明"
+  },
+  {
+   "id": "zhou_a3_base",
+   "code": "B",
+   "house": "zhou_a3",
+   "frame": "A3",
+   "layer": "base",
+   "w": 12,
+   "h": 7,
+   "px": [
+    192,
+    112
+   ],
+   "cw": 12,
+   "ch": 8,
+   "cpx": [
+    192,
+    128
+   ],
+   "wing": [
+    8,
+    6
+   ],
+   "path": "assets/village/houses/zhou/a3_base.png",
+   "uses": 1,
+   "houses": [
+    "zhou_a3"
+   ],
+   "clue_houses": [],
+   "desc": "地板 + 墙内侧 + 南立面 + 墙顶面 + 院子地面（无屋顶）；顶部多出的一格是墙立起来的高度"
+  },
+  {
+   "id": "zhou_a3_roof",
+   "code": "R",
+   "house": "zhou_a3",
+   "frame": "A3",
+   "layer": "roof",
+   "w": 12,
+   "h": 7,
+   "px": [
+    192,
+    112
+   ],
+   "cw": 12,
+   "ch": 8,
+   "cpx": [
+    192,
+    128
+   ],
+   "wing": [
+    8,
+    6
+   ],
+   "path": "assets/village/houses/zhou/a3_roof.png",
+   "uses": 1,
+   "houses": [
+    "zhou_a3"
+   ],
+   "clue_houses": [],
+   "desc": "屋面 + 檐口；画布与 base 同宽同高，只有屋本体 8×6 有像素，其余透明"
+  },
+  {
+   "id": "lu_a3_base",
+   "code": "B",
+   "house": "lu_a3",
+   "frame": "A3",
+   "layer": "base",
+   "w": 20,
+   "h": 13,
+   "px": [
+    320,
+    208
+   ],
+   "cw": 20,
+   "ch": 14,
+   "cpx": [
+    320,
+    224
+   ],
+   "wing": [
+    15,
+    11
+   ],
+   "path": "assets/village/houses/lu/a3_base.png",
+   "uses": 1,
+   "houses": [
+    "lu_a3"
+   ],
+   "clue_houses": [],
+   "desc": "废墟态：残墙基 + 夯土地基 + 杂草底；墙缺失处留透明，不画屋顶；顶部多出的一格是残墙立起的高度"
+  }
+ ],
+ "props": [
+  {
+   "id": "deng_1x1",
+   "name": "凳",
+   "short": "凳",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 11,
+   "houses": [
+    "mill_a1",
+    "shen_a1",
+    "zhou_house",
+    "mill_a2",
+    "shen_a2",
+    "zhou_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/deng_1x1.png",
+   "notes": [
+    "账房 · 账桌旁",
+    "堂屋 · 八仙桌旁",
+    "堂屋",
+    "卧室兼客厅 · (3,2)",
+    "主卧 · 窗下",
+    "净房 · 更衣"
+   ],
+   "code": "P01"
+  },
+  {
+   "id": "shuigang_1x1",
+   "name": "水缸",
+   "short": "水缸",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 8,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "zhou_house",
+    "shen_a2",
+    "lu_a2",
+    "zhou_a2",
+    "zhou_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shuigang_1x1.png",
+   "notes": [
+    "院子 · 接雨水",
+    "灶间 · 蓄水",
+    "院子 · 蓄水",
+    "院子 · 缸沿豁了一块口",
+    "缸沿豁了口 · 院子角落"
+   ],
+   "code": "P02"
+  },
+  {
+   "id": "liangdun_2x2",
+   "name": "粮囤",
+   "short": "粮囤",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 7,
+   "houses": [
+    "mill_a1",
+    "mill_a2",
+    "shen_a2",
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/liangdun_2x2.png",
+   "notes": [
+    "仓储",
+    "仓房 · 谷",
+    "粮仓 · 收购来的粮食"
+   ],
+   "code": "P03"
+  },
+  {
+   "id": "yigui_1x2",
+   "name": "衣柜",
+   "short": "衣柜",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 7,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "zhou_house",
+    "shen_a2",
+    "zhou_a2",
+    "shen_a3",
+    "zhou_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/yigui_1x2.png",
+   "notes": [
+    "卧客一体 · 贴西墙 (1,3)",
+    "主卧 · 贴东墙",
+    "搬不走的旧衣柜 · 空了"
+   ],
+   "code": "P04"
+  },
+  {
+   "id": "maofang_3x2",
+   "name": "茅房",
+   "short": "茅房",
+   "w": 3,
+   "h": 2,
+   "px": [
+    48,
+    32
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": true,
+   "uses": 6,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "zhou_house",
+    "lu_a2",
+    "zhou_a2",
+    "zhou_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/maofang_3x2.png",
+   "notes": [
+    "屋外独立茅房",
+    "屋外独立茅房 · 塌了半边"
+   ],
+   "code": "P05"
+  },
+  {
+   "id": "chaidui_1x1",
+   "name": "柴堆",
+   "short": "柴堆",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 5,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "zhou_house",
+    "shen_a2",
+    "zhou_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/chaidui_1x1.png",
+   "notes": [
+    "院子",
+    "院子 · 柴"
+   ],
+   "code": "P06"
+  },
+  {
+   "id": "maokeng_1x1",
+   "name": "茅坑",
+   "short": "茅坑",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 5,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "zhou_house",
+    "lu_a2",
+    "zhou_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/maokeng_1x1.png",
+   "notes": [
+    "茅房内"
+   ],
+   "code": "P07"
+  },
+  {
+   "id": "shujia_1x2",
+   "name": "书架",
+   "short": "书架",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 4,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shujia_1x2.png",
+   "notes": [
+    "书房 · 靠左墙（净房|书房那道墙）",
+    "书房 · 靠右墙",
+    "书房 · 左侧书架之南",
+    "书房 · 右侧书架之南"
+   ],
+   "code": "P08"
+  },
+  {
+   "id": "danrenchuang_2x1",
+   "name": "单人床",
+   "short": "单人床",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 4,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/danrenchuang_2x1.png",
+   "notes": [
+    "横向靠北墙",
+    "少东房 · 横向贴北墙",
+    "子女房 · 沈德昌 11 岁｜横向贴北墙",
+    "子女房 · 横向贴北墙"
+   ],
+   "code": "P09"
+  },
+  {
+   "id": "shuangrenchuang_3x3",
+   "name": "双人床",
+   "short": "双人床",
+   "w": 3,
+   "h": 3,
+   "px": [
+    48,
+    48
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 4,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shuangrenchuang_3x3.png",
+   "notes": [
+    "长辈房 · 沈万山夫妇｜3×3 富家床",
+    "主卧 · 沈守业夫妇｜3×3",
+    "长辈房 · 3×3 富家床",
+    "主卧 · 3×3"
+   ],
+   "code": "P10"
+  },
+  {
+   "id": "muxiang_1x1",
+   "name": "木箱",
+   "short": "木箱",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 4,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/muxiang_1x1.png",
+   "notes": [
+    "储物间 · 木箱（南排）",
+    "储物间 · 木箱（北排）"
+   ],
+   "code": "P11"
+  },
+  {
+   "id": "jiutan_1x1",
+   "name": "酒坛",
+   "short": "酒坛",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 4,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/jiutan_1x1.png",
+   "notes": [
+    "储物间 · 陶瓷酒坛（南排，非欧洲橡木桶）",
+    "储物间 · 陶瓷酒坛（南排）",
+    "储物间 · 陶瓷酒坛（北排）"
+   ],
+   "code": "P12"
+  },
+  {
+   "id": "changdeng_1x2",
+   "name": "长凳",
+   "short": "长凳",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 4,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/changdeng_1x2.png",
+   "notes": [
+    "八仙桌 · 西",
+    "八仙桌 · 东"
+   ],
+   "code": "P13"
+  },
+  {
+   "id": "changdeng_2x1",
+   "name": "长凳",
+   "short": "长凳",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 4,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/changdeng_2x1.png",
+   "notes": [
+    "八仙桌 · 北",
+    "八仙桌 · 南"
+   ],
+   "code": "P14"
+  },
+  {
+   "id": "baxianzhuo_2x3",
+   "name": "八仙桌",
+   "short": "八仙桌",
+   "w": 2,
+   "h": 3,
+   "px": [
+    32,
+    48
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 3,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "lu_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/baxianzhuo_2x3.png",
+   "notes": [
+    "没人搬得动，桌面积了一层灰"
+   ],
+   "code": "P15"
+  },
+  {
+   "id": "shuangrenchuang_2x2",
+   "name": "双人床",
+   "short": "双人床",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 3,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "lu_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shuangrenchuang_2x2.png",
+   "notes": [
+    "穷家 2×2",
+    "床架还在，草垫烂成一堆"
+   ],
+   "code": "P16"
+  },
+  {
+   "id": "gui_1x2",
+   "name": "柜",
+   "short": "柜",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 3,
+   "houses": [
+    "lu_house",
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/gui_1x2.png",
+   "notes": [
+    "贴东墙",
+    "长辈房 · 贴东墙"
+   ],
+   "code": "P17"
+  },
+  {
+   "id": "zaotai_1x4",
+   "name": "灶台",
+   "short": "灶台",
+   "w": 1,
+   "h": 4,
+   "px": [
+    16,
+    64
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 3,
+   "houses": [
+    "lu_house",
+    "shen_a1",
+    "lu_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/zaotai_1x4.png",
+   "notes": [
+    "竖向靠东墙",
+    "砌死在墙里 · 锅早被拿走了"
+   ],
+   "code": "P18"
+  },
+  {
+   "id": "zhiwutai_1x1",
+   "name": "置物台",
+   "short": "置物台",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 3,
+   "houses": [
+    "zhou_house",
+    "shen_a2",
+    "zhou_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/zhiwutai_1x1.png",
+   "notes": [
+    "放菜板菜刀 · 贴柴火灶",
+    "灶间 · 菜板菜刀"
+   ],
+   "code": "P19"
+  },
+  {
+   "id": "laojing_1x1",
+   "name": "老井",
+   "short": "老井",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 3,
+   "houses": [
+    "mill_a1",
+    "mill_a2",
+    "mill_a3"
+   ],
+   "clue_houses": [
+    "mill_a1",
+    "mill_a2",
+    "mill_a3"
+   ],
+   "path": "assets/village/props/laojing_1x1.png",
+   "notes": [
+    "磨坊院内旧井 · 1926 村里的吃水井，路为它绕弯；此时还在用",
+    "磨坊院内旧井 · 1951 沈守业填井盖石板（陆敬之在下面）；村里在路另一头另打新井",
+    "晒谷场中央旧井 · 1926 路为它绕弯；1951 填井盖石板（陆敬之在下面），A3 挖地基挖到"
+   ],
+   "code": "P20"
+  },
+  {
+   "id": "zhangzhuo_1x4",
+   "name": "账桌",
+   "short": "账桌",
+   "w": 1,
+   "h": 4,
+   "px": [
+    16,
+    64
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 3,
+   "houses": [
+    "mill_a1",
+    "mill_a2",
+    "mill_a3"
+   ],
+   "clue_houses": [
+    "mill_a1",
+    "mill_a2",
+    "mill_a3"
+   ],
+   "path": "assets/village/props/zhangzhuo_1x4.png",
+   "notes": [
+    "假《水簿》A1-A2；真本在沈万山身上（占日后暗龛位）",
+    "墙前(东) · 假《水簿》A1-A2",
+    "墙前(东) · 假《水簿》仍摆着 A1-A3"
+   ],
+   "code": "P21"
+  },
+  {
+   "id": "shuzhuo_1x1",
+   "name": "书桌",
+   "short": "书桌",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a1",
+    "shen_a2"
+   ],
+   "clue_houses": [
+    "shen_a2"
+   ],
+   "path": "assets/village/props/shuzhuo_1x1.png",
+   "notes": [
+    "少东房",
+    "长辈房 · 贴东墙 · 沈万山记账那张；真本他随身带着"
+   ],
+   "code": "P22"
+  },
+  {
+   "id": "shuzhuo_1x2",
+   "name": "书桌",
+   "short": "书桌",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shuzhuo_1x2.png",
+   "notes": [
+    "子女房 · 贴东墙"
+   ],
+   "code": "P23"
+  },
+  {
+   "id": "baxianzhuo_2x2",
+   "name": "八仙桌",
+   "short": "八仙桌",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/baxianzhuo_2x2.png",
+   "notes": [
+    "堂屋 · 待客 · 组合中心",
+    "堂屋 · 会客中心 · 西移 1 格给门(13,11)让净空"
+   ],
+   "code": "P24"
+  },
+  {
+   "id": "danrenchuang_1x2",
+   "name": "单人床",
+   "short": "单人床",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "zhou_house",
+    "zhou_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/danrenchuang_1x2.png",
+   "notes": [
+    "竖向贴西墙 (1,1)-(1,2)"
+   ],
+   "code": "P25"
+  },
+  {
+   "id": "qiangji_ankan_1x4",
+   "name": "墙基暗龛",
+   "short": "暗龛",
+   "w": 1,
+   "h": 4,
+   "px": [
+    16,
+    64
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "mill_a2",
+    "mill_a3"
+   ],
+   "clue_houses": [
+    "mill_a2",
+    "mill_a3"
+   ],
+   "path": "assets/village/props/qiangji_ankan_1x4.png",
+   "notes": [
+    "墙后(西) · 真《水簿》油布包 A3 出土",
+    "墙后(西) · A2 空龛，A3 真《水簿》油布包从这里出土，龛已空"
+   ],
+   "code": "P26"
+  },
+  {
+   "id": "xiaozhuo_2x1",
+   "name": "小桌",
+   "short": "小桌",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "zhou_house",
+    "zhou_a2"
+   ],
+   "clue_houses": [
+    "zhou_house",
+    "zhou_a2"
+   ],
+   "path": "assets/village/props/xiaozhuo_2x1.png",
+   "notes": [
+    "贴北墙 (2,1)-(3,1) · 抽屉藏周有田往来账(位置待定)"
+   ],
+   "code": "P27"
+  },
+  {
+   "id": "pingfeng_1x2",
+   "name": "屏风",
+   "short": "屏风",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/pingfeng_1x2.png",
+   "notes": [
+    "净房 · 挡视线"
+   ],
+   "code": "P28"
+  },
+  {
+   "id": "jiu_muxiang_1x1",
+   "name": "旧木箱",
+   "short": "木箱",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "lu_house",
+    "zhou_a3"
+   ],
+   "clue_houses": [
+    "lu_house"
+   ],
+   "path": "assets/village/props/jiu_muxiang_1x1.png",
+   "notes": [
+    "夫妻房 · 可检视线索",
+    "长工遗物 · 里头没值钱东西"
+   ],
+   "code": "P29"
+  },
+  {
+   "id": "tiaoan_1x3",
+   "name": "条案",
+   "short": "条案",
+   "w": 1,
+   "h": 3,
+   "px": [
+    16,
+    48
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tiaoan_1x3.png",
+   "notes": [
+    "堂屋西山墙 · 竖向长条桌，摆瓶、座钟、镜",
+    "堂屋西山墙 · 竖向长条桌"
+   ],
+   "code": "P30"
+  },
+  {
+   "id": "gui_2x1",
+   "name": "柜",
+   "short": "柜",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/gui_2x1.png",
+   "notes": [
+    "子女房 · 贴南墙"
+   ],
+   "code": "P31"
+  },
+  {
+   "id": "chaihuozao_1x1",
+   "name": "柴火灶",
+   "short": "柴火灶",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "zhou_house",
+    "zhou_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/chaihuozao_1x1.png",
+   "notes": [
+    "1×1 一口锅 · 灶间北侧"
+   ],
+   "code": "P32"
+  },
+  {
+   "id": "shuipen_1x1",
+   "name": "水盆",
+   "short": "水盆",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shuipen_1x1.png",
+   "notes": [
+    "净房 · 洗手",
+    "净房 · 洗漱"
+   ],
+   "code": "P33"
+  },
+  {
+   "id": "paiwei_1x1",
+   "name": "牌位",
+   "short": "牌位",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a2",
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/paiwei_1x1.png",
+   "notes": [
+    "堂屋西山墙北端 · 木牌，面向东",
+    "堂屋西山墙北端"
+   ],
+   "code": "P34"
+  },
+  {
+   "id": "shimo_2x4",
+   "name": "石磨",
+   "short": "石磨",
+   "w": 2,
+   "h": 4,
+   "px": [
+    32,
+    64
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "mill_a1",
+    "mill_a2"
+   ],
+   "clue_houses": [
+    "mill_a1",
+    "mill_a2"
+   ],
+   "path": "assets/village/props/shimo_2x4.png",
+   "notes": [
+    "挪到大厅西侧当视觉核心；上磨盘后刻「沈氏丰源·一九五七」",
+    "上磨盘刻「沈氏丰源·一九五七」"
+   ],
+   "code": "P35"
+  },
+  {
+   "id": "zuzong_paiwei_2x3",
+   "name": "祖宗牌位",
+   "short": "牌位",
+   "w": 2,
+   "h": 3,
+   "px": [
+    32,
+    48
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "lu_house",
+    "shen_a1"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/zuzong_paiwei_2x3.png",
+   "notes": [
+    "横向贴南墙"
+   ],
+   "code": "P36"
+  },
+  {
+   "id": "huapen_1x1",
+   "name": "花盆",
+   "short": "花盆",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/huapen_1x1.png",
+   "notes": [
+    "天井 · 石榴",
+    "天井 · 月季"
+   ],
+   "code": "P37"
+  },
+  {
+   "id": "tengyi_1x1",
+   "name": "藤椅",
+   "short": "藤椅",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 2,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tengyi_1x1.png",
+   "notes": [
+    "东连廊 · 藤椅纳凉（x=22 墙放回来，从 x21 退开）",
+    "凹廊·西 · 纳凉"
+   ],
+   "code": "P38"
+  },
+  {
+   "id": "shujia_2x2",
+   "name": "书架",
+   "short": "书架",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a1"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shujia_2x2.png",
+   "notes": [
+    "少东房 · 横向"
+   ],
+   "code": "P39"
+  },
+  {
+   "id": "shuzhuo_2x1",
+   "name": "书桌",
+   "short": "书桌",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shuzhuo_2x1.png",
+   "notes": [
+    "书房 · 书架右侧，粮站站长的账/信"
+   ],
+   "code": "P40"
+  },
+  {
+   "id": "bianmin_tai_2x1",
+   "name": "便民服务台",
+   "short": "服务台",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/bianmin_tai_2x1.png",
+   "notes": [
+    "入库口旁 · 凉茶桶+防暑药，交粮排队农民歇脚处（拆墙后移来）"
+   ],
+   "code": "P41"
+  },
+  {
+   "id": "daota_zaotai_1x4",
+   "name": "倒塌的灶台残砖",
+   "short": "灶台残砖",
+   "w": 1,
+   "h": 4,
+   "px": [
+    16,
+    64
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "lu_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/daota_zaotai_1x4.png",
+   "notes": [
+    "砌死在墙里的灶台也塌成一堆残砖"
+   ],
+   "code": "P42"
+  },
+  {
+   "id": "nongjujia_2x1",
+   "name": "农具架",
+   "short": "农具架",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/nongjujia_2x1.png",
+   "notes": [
+    "院子 · 锄镰"
+   ],
+   "code": "P43"
+  },
+  {
+   "id": "deng_1x3",
+   "name": "凳",
+   "short": "凳",
+   "w": 1,
+   "h": 3,
+   "px": [
+    16,
+    48
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/deng_1x3.png",
+   "notes": [
+    "账房 · 账桌前"
+   ],
+   "code": "P44"
+  },
+  {
+   "id": "danjuji_suanpan_2x1",
+   "name": "单据柜+算盘",
+   "short": "单据柜",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/danjuji_suanpan_2x1.png",
+   "notes": [
+    "账房北墙 · 单据柜横放靠墙，柜面上摆算盘（一体道具，美术可见，不做交互）"
+   ],
+   "code": "P45"
+  },
+  {
+   "id": "tuyuancang_3x3",
+   "name": "土圆仓",
+   "short": "土圆仓",
+   "w": 3,
+   "h": 3,
+   "px": [
+    48,
+    48
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tuyuancang_3x3.png",
+   "notes": [
+    "晒谷场西北 · 草泥结构土圆仓，1970s 粮站标配（安乡 1973 年全县 240 栋），储粮用"
+   ],
+   "code": "P46"
+  },
+  {
+   "id": "tupi_zaotai_2x1",
+   "name": "土坯灶台",
+   "short": "灶台",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "zhou_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tupi_zaotai_2x1.png",
+   "notes": [
+    "砌死在墙里 · 灶膛早凉了"
+   ],
+   "code": "P47"
+  },
+  {
+   "id": "tangwu_diji_2x3",
+   "name": "堂屋地基痕迹",
+   "short": "堂屋地基",
+   "w": 2,
+   "h": 3,
+   "px": [
+    32,
+    48
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "lu_a3"
+   ],
+   "clue_houses": [
+    "lu_a3"
+   ],
+   "path": "assets/village/props/tangwu_diji_2x3.png",
+   "notes": [
+    "原堂屋 · 扒开荒草还能看出夯土地基的占地轮廓（非物件，时间长了自然留下）"
+   ],
+   "code": "P48"
+  },
+  {
+   "id": "xiao_yigui_1x2",
+   "name": "小衣柜",
+   "short": "小衣柜",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a1"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/xiao_yigui_1x2.png",
+   "notes": [
+    "少东房 · 由 1×2 缩为 1×1"
+   ],
+   "code": "P49"
+  },
+  {
+   "id": "tingshu_2x2",
+   "name": "庭树",
+   "short": "树",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tingshu_2x2.png",
+   "notes": [
+    "天井 · 一棵石榴树，大户人家庭院的排场"
+   ],
+   "code": "P50"
+  },
+  {
+   "id": "qizhi_shimo_2x2",
+   "name": "弃置石磨",
+   "short": "石磨",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [
+    "mill_a3"
+   ],
+   "path": "assets/village/props/qizhi_shimo_2x2.png",
+   "notes": [
+    "上磨盘刻「沈氏丰源·一九五七」；粮站不磨面，改建时挪到晒谷场角落废弃，A4 拆粮站才搬去超市门厅"
+   ],
+   "code": "P51"
+  },
+  {
+   "id": "gongtong_1x1",
+   "name": "恭桶",
+   "short": "恭桶",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/gongtong_1x1.png",
+   "notes": [
+    "净房 · 木桶内衬灰，每日倒"
+   ],
+   "code": "P52"
+  },
+  {
+   "id": "tangcipen_1x1",
+   "name": "搪瓷盆",
+   "short": "瓷盆",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tangcipen_1x1.png",
+   "notes": [
+    "灶间 · 洗菜搪瓷盆（大件明面）"
+   ],
+   "code": "P53"
+  },
+  {
+   "id": "jiu_muchuang_1x2",
+   "name": "旧木床",
+   "short": "木床",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "zhou_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/jiu_muchuang_1x2.png",
+   "notes": [
+    "床架还在 · 草席烂成一堆"
+   ],
+   "code": "P54"
+  },
+  {
+   "id": "shaixi_2x1",
+   "name": "晒席",
+   "short": "晒席",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shaixi_2x1.png",
+   "notes": [
+    "粮仓 · 晒谷席，收购的粮食先摊开验晒"
+   ],
+   "code": "P55"
+  },
+  {
+   "id": "mutiaoban_jimapai_2x1",
+   "name": "木跳板+记码牌",
+   "short": "跳板",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/mutiaoban_jimapai_2x1.png",
+   "notes": [
+    "粮仓北口 · 挑粮上仓的木跳板，旁挂入库记数码单牌（拆墙后移来）"
+   ],
+   "code": "P56"
+  },
+  {
+   "id": "tiaodeng_1x1",
+   "name": "条凳",
+   "short": "条凳",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "zhou_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tiaodeng_1x1.png",
+   "notes": [
+    "账桌前 · 坐了二十四年的那条凳"
+   ],
+   "code": "P57"
+  },
+  {
+   "id": "anban_2x1",
+   "name": "案板",
+   "short": "案板",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/anban_2x1.png",
+   "notes": [
+    "灶间 · 案板上插着菜刀（唯一明面的小件组合）"
+   ],
+   "code": "P58"
+  },
+  {
+   "id": "yi_1x1",
+   "name": "椅",
+   "short": "椅",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/yi_1x1.png",
+   "notes": [
+    "书房 · 书桌前"
+   ],
+   "code": "P59"
+  },
+  {
+   "id": "dunbianqi_1x2",
+   "name": "水冲蹲便器",
+   "short": "蹲便器",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/dunbianqi_1x2.png",
+   "notes": [
+    "净房 · 高水箱蹲坑，瓷砖贴面（1976 干部宿舍/体面户配置，非旱厕恭桶）"
+   ],
+   "code": "P60"
+  },
+  {
+   "id": "shuichi_1x1",
+   "name": "水池",
+   "short": "水池",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shuichi_1x1.png",
+   "notes": [
+    "灶间 · 自来水池（大件明面）"
+   ],
+   "code": "P61"
+  },
+  {
+   "id": "shuini_fengceng_1x1",
+   "name": "水泥封层",
+   "short": "封层",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [
+    "mill_a3"
+   ],
+   "path": "assets/village/props/shuini_fengceng_1x1.png",
+   "notes": [
+    "晒谷场 · 三层水泥，外乡石匠方师傅看见挖到井，被沈德昌封在这里"
+   ],
+   "code": "P62"
+  },
+  {
+   "id": "xishoupen_1x1",
+   "name": "洗手盆",
+   "short": "洗手盆",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/xishoupen_1x1.png",
+   "notes": [
+    "净房 · 搪瓷洗手盆，盆前墙上挂镜（镜子不另占格）"
+   ],
+   "code": "P63"
+  },
+  {
+   "id": "liushai_1x1",
+   "name": "溜筛",
+   "short": "溜筛",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/liushai_1x1.png",
+   "notes": [
+    "粮仓北口 · 筛除杂质整粮工具（拆墙后从收购厅南排移来）"
+   ],
+   "code": "P64"
+  },
+  {
+   "id": "denglong_1x1",
+   "name": "灯笼",
+   "short": "灯笼",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/denglong_1x1.png",
+   "notes": [
+    "凹廊·东 · 廊下挂灯"
+   ],
+   "code": "P65"
+  },
+  {
+   "id": "denglong_1x4",
+   "name": "灯笼",
+   "short": "灯笼",
+   "w": 1,
+   "h": 4,
+   "px": [
+    16,
+    64
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/denglong_1x4.png",
+   "notes": [
+    "东连廊 · 廊下挂灯（避开门(19,11)净空）"
+   ],
+   "code": "P66"
+  },
+  {
+   "id": "zaotai_1x2",
+   "name": "灶台",
+   "short": "灶台",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/zaotai_1x2.png",
+   "notes": [
+    "灶间 · 竖向贴东墙"
+   ],
+   "code": "P67"
+  },
+  {
+   "id": "penjing_1x1",
+   "name": "盆景",
+   "short": "盆景",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/penjing_1x1.png",
+   "notes": [
+    "西连廊 · 松桩盆景"
+   ],
+   "code": "P68"
+  },
+  {
+   "id": "penjing_1x4",
+   "name": "盆景",
+   "short": "盆景",
+   "w": 1,
+   "h": 4,
+   "px": [
+    16,
+    64
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/penjing_1x4.png",
+   "notes": [
+    "凹廊·北 · 松桩"
+   ],
+   "code": "P69"
+  },
+  {
+   "id": "shizhuo_2x1",
+   "name": "石桌",
+   "short": "石桌",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/shizhuo_2x1.png",
+   "notes": [
+    "天井 · 石凳"
+   ],
+   "code": "P70"
+  },
+  {
+   "id": "wangui_1x2",
+   "name": "碗柜",
+   "short": "碗柜",
+   "w": 1,
+   "h": 2,
+   "px": [
+    16,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/wangui_1x2.png",
+   "notes": [
+    "灶间 · 锅铲/淘米盆等小件统一收进柜"
+   ],
+   "code": "P71"
+  },
+  {
+   "id": "bangcheng_2x1",
+   "name": "磅秤",
+   "short": "磅秤",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/bangcheng_2x1.png",
+   "notes": [
+    "收购厅北墙 · 大磅秤过磅记码（司磅员）"
+   ],
+   "code": "P72"
+  },
+  {
+   "id": "luokuang_1x1",
+   "name": "箩筐",
+   "short": "箩筐",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/luokuang_1x1.png",
+   "notes": [
+    "粮仓 · 装粮箩筐"
+   ],
+   "code": "P73"
+  },
+  {
+   "id": "liangdun_1x1",
+   "name": "粮囤",
+   "short": "粮囤",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/liangdun_1x1.png",
+   "notes": [
+    "仓房 · 麦"
+   ],
+   "code": "P74"
+  },
+  {
+   "id": "zhenglong_1x1",
+   "name": "蒸笼",
+   "short": "蒸笼",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/zhenglong_1x1.png",
+   "notes": [
+    "灶间 · 竹制蒸笼（大件明面）"
+   ],
+   "code": "P75"
+  },
+  {
+   "id": "tengyi_1x4",
+   "name": "藤椅",
+   "short": "藤椅",
+   "w": 1,
+   "h": 4,
+   "px": [
+    16,
+    64
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tengyi_1x4.png",
+   "notes": [
+    "西连廊 · 藤椅纳凉"
+   ],
+   "code": "P76"
+  },
+  {
+   "id": "fengwomeilu_1x4",
+   "name": "蜂窝煤炉",
+   "short": "煤炉",
+   "w": 1,
+   "h": 4,
+   "px": [
+    16,
+    64
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [
+    "shen_a3"
+   ],
+   "path": "assets/village/props/fengwomeilu_1x4.png",
+   "notes": [
+    "灶间 · 1976 镇上家庭烧蜂窝煤（大件明面）"
+   ],
+   "code": "P77"
+  },
+  {
+   "id": "zhangzhuo_2x1",
+   "name": "账桌",
+   "short": "账桌",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "zhou_a3"
+   ],
+   "clue_houses": [
+    "zhou_a3"
+   ],
+   "path": "assets/village/props/zhangzhuo_2x1.png",
+   "notes": [
+    "周有田的账桌 · 抽屉夹层藏着往来账（A5 才出土）"
+   ],
+   "code": "P78"
+  },
+  {
+   "id": "tieguo_1x1",
+   "name": "铁锅",
+   "short": "铁锅",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/tieguo_1x1.png",
+   "notes": [
+    "灶间 · 章丘铁锅，70 年代家用主炊具（大件明面）"
+   ],
+   "code": "P79"
+  },
+  {
+   "id": "fengche_2x1",
+   "name": "风车",
+   "short": "风车",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/fengche_2x1.png",
+   "notes": [
+    "收购厅 · 扬谷去杂，不合格的粮食先过风车"
+   ],
+   "code": "P80"
+  },
+  {
+   "id": "yanliangtai_2x1",
+   "name": "验粮台+取样铁管",
+   "short": "验粮台",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/yanliangtai_2x1.png",
+   "notes": [
+    "收购厅北墙 · 检验员用带槽铁管插粮袋取样，牙磕验干湿"
+   ],
+   "code": "P81"
+  },
+  {
+   "id": "yanliangqi_1x1",
+   "name": "验粮器",
+   "short": "验粮器",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/yanliangqi_1x1.png",
+   "notes": [
+    "粮仓 · 扦样验粮器具"
+   ],
+   "code": "P82"
+  },
+  {
+   "id": "jilong_2x1",
+   "name": "鸡笼",
+   "short": "鸡笼",
+   "w": 2,
+   "h": 1,
+   "px": [
+    32,
+    16
+   ],
+   "layer": "props",
+   "zone": "yard",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "shen_a2"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/jilong_2x1.png",
+   "notes": [
+    "院子 · 养鸡"
+   ],
+   "code": "P83"
+  },
+  {
+   "id": "madai_1x1",
+   "name": "麻袋",
+   "short": "麻袋",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 1,
+   "houses": [
+    "mill_a3"
+   ],
+   "clue_houses": [],
+   "path": "assets/village/props/madai_1x1.png",
+   "notes": [
+    "粮仓 · 装粮麻袋"
+   ],
+   "code": "P84"
+  }
+ ],
+ "scene": [
+  {
+   "id": "river_a1",
+   "code": "S",
+   "name": "河（含河岸、水面）",
+   "frame": "A1",
+   "w": 100,
+   "h": 13,
+   "px": [
+    1600,
+    208
+   ],
+   "path": "assets/village/scene/river_a1.png",
+   "note": "全宽 100 格；最深 13 格（208 px）"
+  },
+  {
+   "id": "dam",
+   "code": "S",
+   "name": "石坝",
+   "frame": "A1",
+   "w": 8,
+   "h": 4,
+   "px": [
+    128,
+    64
+   ],
+   "path": "assets/village/scene/dam.png",
+   "note": "三帧同形同尺寸，共用 1 张"
+  },
+  {
+   "id": "stele",
+   "code": "S",
+   "name": "界碑（周界半截石碑）",
+   "frame": "A1",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "path": "assets/village/scene/stele.png",
+   "note": "原件 8×16 px，装进 1×1 格画布（图上 8px 宽）"
+  },
+  {
+   "id": "road_curved",
+   "code": "S",
+   "name": "主路（宽 3 格）",
+   "frame": "A1",
+   "w": 100,
+   "h": 9,
+   "px": [
+    1600,
+    144
+   ],
+   "path": "assets/village/scene/road_curved_tiles.png",
+   "note": "弯道（A1/A2 同走向，两侧会收边到 1~2 格）；路宽 3 格 = 48px（逐列实测众数），共 300 个路面格；出 16px 瓦片集（直/弯/丁字/十字）"
+  },
+  {
+   "id": "field_a1",
+   "code": "S",
+   "name": "碎田（零散小块）",
+   "frame": "A1",
+   "w": 21,
+   "h": 12,
+   "px": [
+    336,
+    192
+   ],
+   "path": "assets/village/scene/field_patch_tiles.png",
+   "note": "28 块，单块 4×1、5×1、6×1 等 5 种格；出 16px 土/田埂瓦片"
+  },
+  {
+   "id": "well_old_a1",
+   "code": "S",
+   "name": "老井",
+   "frame": "A1",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "path": "assets/village/scene/well_old_a1.png",
+   "note": "4 态：开挖 / 封盖 / 锁死 / 水泥封；本帧 2×2 格用其中一态"
+  },
+  {
+   "id": "tree_a1",
+   "code": "S",
+   "name": "老槐",
+   "frame": "A1",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "path": "assets/village/scene/tree_a1.png",
+   "note": "4 态：树苗 / 中 / 大 / 树桩；本帧 2×2 格"
+  },
+  {
+   "id": "ground_tile_a1",
+   "code": "S",
+   "name": "地面底瓦",
+   "frame": "A1",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "path": "assets/village/scene/ground_a1_tiles.png",
+   "note": "可平铺 16×16 地面（草地/土），帧底色 #6e7a4c"
+  },
+  {
+   "id": "river_a2",
+   "code": "S",
+   "name": "河（含河岸、水面）",
+   "frame": "A2",
+   "w": 100,
+   "h": 13,
+   "px": [
+    1600,
+    208
+   ],
+   "path": "assets/village/scene/river_a2.png",
+   "note": "全宽 100 格；最深 13 格（208 px）"
+  },
+  {
+   "id": "dam",
+   "code": "S",
+   "name": "石坝",
+   "frame": "A2",
+   "w": 8,
+   "h": 4,
+   "px": [
+    128,
+    64
+   ],
+   "path": "assets/village/scene/dam.png",
+   "note": "三帧同形同尺寸，共用 1 张"
+  },
+  {
+   "id": "stele",
+   "code": "S",
+   "name": "界碑（周界半截石碑）",
+   "frame": "A2",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "path": "assets/village/scene/stele.png",
+   "note": "原件 8×16 px，装进 1×1 格画布（图上 8px 宽）"
+  },
+  {
+   "id": "road_curved",
+   "code": "S",
+   "name": "主路（宽 3 格）",
+   "frame": "A2",
+   "w": 100,
+   "h": 9,
+   "px": [
+    1600,
+    144
+   ],
+   "path": "assets/village/scene/road_curved_tiles.png",
+   "note": "弯道（A1/A2 同走向，两侧会收边到 1~2 格）；路宽 3 格 = 48px（逐列实测众数），共 300 个路面格；出 16px 瓦片集（直/弯/丁字/十字）"
+  },
+  {
+   "id": "field_a2",
+   "code": "S",
+   "name": "整块大田",
+   "frame": "A2",
+   "w": 16,
+   "h": 12,
+   "px": [
+    256,
+    192
+   ],
+   "path": "assets/village/scene/field_a2.png",
+   "note": "16×12 格；A2 与 A3 同尺寸、同田埂，只差土色"
+  },
+  {
+   "id": "well_old_a2",
+   "code": "S",
+   "name": "老井（石板）",
+   "frame": "A2",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "path": "assets/village/scene/well_old_a2.png",
+   "note": "4 态：开挖 / 封盖 / 锁死 / 水泥封；本帧 2×2 格用其中一态"
+  },
+  {
+   "id": "tree_a2",
+   "code": "S",
+   "name": "老槐",
+   "frame": "A2",
+   "w": 4,
+   "h": 4,
+   "px": [
+    64,
+    64
+   ],
+   "path": "assets/village/scene/tree_a2.png",
+   "note": "4 态：树苗 / 中 / 大 / 树桩；本帧 4×4 格"
+  },
+  {
+   "id": "ground_tile_a2",
+   "code": "S",
+   "name": "地面底瓦",
+   "frame": "A2",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "path": "assets/village/scene/ground_a2_tiles.png",
+   "note": "可平铺 16×16 地面（草地/土），帧底色 #68744a"
+  },
+  {
+   "id": "river_a3",
+   "code": "S",
+   "name": "河（含河岸、水面）",
+   "frame": "A3",
+   "w": 100,
+   "h": 13,
+   "px": [
+    1600,
+    208
+   ],
+   "path": "assets/village/scene/river_a3.png",
+   "note": "全宽 100 格；最深 13 格（208 px）"
+  },
+  {
+   "id": "dam",
+   "code": "S",
+   "name": "石坝",
+   "frame": "A3",
+   "w": 8,
+   "h": 4,
+   "px": [
+    128,
+    64
+   ],
+   "path": "assets/village/scene/dam.png",
+   "note": "三帧同形同尺寸，共用 1 张"
+  },
+  {
+   "id": "stele",
+   "code": "S",
+   "name": "界碑（周界半截石碑）",
+   "frame": "A3",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "path": "assets/village/scene/stele.png",
+   "note": "原件 8×16 px，装进 1×1 格画布（图上 8px 宽）"
+  },
+  {
+   "id": "road_straight",
+   "code": "S",
+   "name": "主路（宽 3 格）",
+   "frame": "A3",
+   "w": 100,
+   "h": 3,
+   "px": [
+    1600,
+    48
+   ],
+   "path": "assets/village/scene/road_straight_tiles.png",
+   "note": "直道（A3 起取直）；路宽 3 格 = 48px（逐列实测众数），共 300 个路面格；出 16px 瓦片集（直/弯/丁字/十字）"
+  },
+  {
+   "id": "field_a3",
+   "code": "S",
+   "name": "整块大田",
+   "frame": "A3",
+   "w": 16,
+   "h": 12,
+   "px": [
+    256,
+    192
+   ],
+   "path": "assets/village/scene/field_a3.png",
+   "note": "16×12 格；A2 与 A3 同尺寸、同田埂，只差土色"
+  },
+  {
+   "id": "well_old_a3",
+   "code": "S",
+   "name": "老井（水泥）",
+   "frame": "A3",
+   "w": 2,
+   "h": 2,
+   "px": [
+    32,
+    32
+   ],
+   "path": "assets/village/scene/well_old_a3.png",
+   "note": "4 态：开挖 / 封盖 / 锁死 / 水泥封；本帧 2×2 格用其中一态"
+  },
+  {
+   "id": "tree_a3",
+   "code": "S",
+   "name": "老槐",
+   "frame": "A3",
+   "w": 6,
+   "h": 6,
+   "px": [
+    96,
+    96
+   ],
+   "path": "assets/village/scene/tree_a3.png",
+   "note": "4 态：树苗 / 中 / 大 / 树桩；本帧 6×6 格"
+  },
+  {
+   "id": "ground_tile_a3",
+   "code": "S",
+   "name": "地面底瓦",
+   "frame": "A3",
+   "w": 1,
+   "h": 1,
+   "px": [
+    16,
+    16
+   ],
+   "path": "assets/village/scene/ground_a3_tiles.png",
+   "note": "可平铺 16×16 地面（草地/土），帧底色 #6a6a44"
+  }
+ ]
+}

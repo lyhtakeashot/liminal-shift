@@ -1,0 +1,153 @@
+{
+  "world": { "width": 1600, "height": 900 },
+  "safe_top": 18,
+  "safe_bottom": 334,
+  "start_pos": [700, 560],
+  "frames": [
+    {
+      "id": "a1_1926",
+      "year": 1926,
+      "ground": "#6e7a4c",
+      "shapes": [
+        { "type": "rect", "rect": [0, 0, 1600, 112], "color": "#3f5f6e", "label": "河", "solid": true },
+        { "type": "rect", "rect": [196, 34, 120, 62], "color": "#6a5648", "label": "坝", "solid": true },
+
+        { "type": "path", "points": [[0, 560], [840, 560], [900, 624], [960, 560], [1600, 560]], "width": 36, "color": "#8a7a5a", "label": "路" },
+        { "type": "path", "points": [[464, 240], [560, 240], [560, 560]], "width": 36, "color": "#8a7a5a", "label": "支路" },
+
+        { "type": "rect", "rect": [1000, 130, 240, 176], "color": "#7d8a3e", "label": "田·东" },
+        { "type": "rect", "rect": [1272, 130, 240, 176], "color": "#7d8a3e", "label": "田·西" },
+
+        { "type": "house", "id": "mill_a1", "pos": [160, 112], "solid": true },
+        { "type": "house", "id": "shen_a1", "pos": [160, 340], "solid": true },
+        { "type": "house", "id": "zhou_house", "pos": [600, 400], "solid": true },
+        { "type": "house", "id": "lu_house", "pos": [1120, 340], "solid": true },
+
+        { "type": "circle", "center": [900, 545], "radius": 16, "color": "#141414", "label": "老井", "solid": true },
+        { "type": "circle", "center": [852, 505], "radius": 9, "color": "#3f6b3a", "label": "老槐" },
+        { "type": "rect", "rect": [696, 594, 8, 16], "color": "#8a8278", "label": "碑", "solid": true }
+      ],
+      "hotspots": [
+        { "pos": [900, 545], "title": "老井", "reach": 40, "text": "井口是木架，绳子在井沿上磨出一道沟。水面离地不到一尺。" },
+        { "pos": [1100, 220], "title": "田·东", "reach": 44, "text": "两片田，土是干的。田埂上的草被踩出一条路，通向磨坊。" },
+        { "pos": [1392, 218], "title": "田·西", "reach": 44, "text": "靠西那片田，地势低些。田埂上有新踩的脚印，往坝那边去。" },
+        { "pos": [196, 92], "title": "坝", "reach": 70, "text": "一道石坝横在河身里。水面在坝前抬高了几寸，从坝顶漫过去。" },
+        { "pos": [700, 602], "title": "界碑", "reach": 34, "text": "半截石碑，埋在土里一尺。字被凿过，只剩两个：「周界」。石头这一面朝北，刻的那一面朝着沈家的屋。" },
+        { "pos": [852, 505], "title": "老槐", "reach": 34, "text": "老槐树，今年刚栽下。树干还细，根边堆着新土。" }
+      ]
+    },
+
+    {
+      "id": "a2_1951",
+      "year": 1951,
+      "ground": "#68744a",
+      "shapes": [],
+      "hotspots": [
+        { "pos": [400, 172], "title": "磨坊 · 柜台", "text": "同一本账簿，续了二十五年。字还是那么整齐。二月那页多出一行：未告陆家。" },
+        { "pos": [430, 190], "title": "老井 · 石板", "reach": 40, "text": "井口盖了一块石板，四边和地面齐平。石板接缝里的土是新的。" },
+        { "pos": [300, 254], "title": "新井", "reach": 40, "text": "路另一头多了一口井。井沿的砖还是白的，砖缝没长草。" },
+        { "pos": [142, 272], "title": "陆家 · 空屋", "reach": 40, "text": "门板从外面钉死了。窗纸被从里面撕开一个口子，口子朝下。" }
+      ]
+    },
+
+    {
+      "id": "a3_1976",
+      "year": 1976,
+      "ground": "#6a6a44",
+      "shapes": [
+        { "type": "rect", "rect": [0, 18, 640, 40], "color": "#4a6a60", "label": "河" },
+        { "type": "rect", "rect": [60, 26, 46, 24], "color": "#5a5248", "label": "旧坝", "solid": true },
+
+        { "type": "path", "points": [[0, 190], [352, 190], [392, 240], [452, 248], [500, 240], [536, 190], [640, 190]], "width": 22, "color": "#8a7a5a", "label": "路" },
+
+        { "type": "rect", "rect": [80, 84, 130, 70], "color": "#6b6440", "label": "田·半荒" },
+        { "type": "rect", "rect": [222, 84, 130, 70], "color": "#6b6440", "label": "田·半荒" },
+
+        { "type": "rect", "rect": [388, 92, 88, 96], "color": "#7a7266", "label": "粮站", "solid": true },
+        { "type": "rect", "rect": [420, 182, 40, 8], "color": "#9a9a94", "label": "水泥" },
+        { "type": "circle", "center": [300, 254], "radius": 11, "color": "#33332e", "label": "新井·封", "solid": true },
+        { "type": "circle", "center": [368, 170], "radius": 12, "color": "#3f6b3a", "label": "槐" },
+
+        { "type": "rect", "rect": [108, 274, 68, 48], "color": "#5a563a", "label": "陆家·地基" },
+        { "type": "rect", "rect": [192, 274, 68, 48], "color": "#6b5236", "label": "沈家", "solid": true },
+        { "type": "rect", "rect": [276, 274, 68, 48], "color": "#7a5a3c", "label": "长工", "solid": true },
+        { "type": "rect", "rect": [48, 326, 96, 6], "color": "#6a5a3a", "solid": true },
+        { "type": "rect", "rect": [156, 326, 96, 6], "color": "#6a5a3a", "solid": true },
+        { "type": "rect", "rect": [356, 300, 10, 22], "color": "#8a8278", "label": "碑", "solid": true }
+      ],
+      "hotspots": [
+        { "pos": [500, 152], "title": "粮站 · 墙基", "text": "墙基的砖是新砌的，向西多出三尺。砖缝里的水泥还没完全变色。" },
+        { "pos": [430, 202], "title": "老井 · 三层水泥", "reach": 44, "text": "三层水泥。最上一层和地面几乎一样平，边上留了一道没抹完的缝。" },
+        { "pos": [436, 84], "title": "粮站 · 门牌", "reach": 30, "text": "门上钉着一块牌子：丰源粮食收购站。牌子比门新。" }
+      ]
+    },
+
+    {
+      "id": "a4_2001",
+      "year": 2001,
+      "ground": "#6f6a52",
+      "shapes": [
+        { "type": "rect", "rect": [0, 18, 640, 40], "color": "#4a6458", "label": "河" },
+        { "type": "rect", "rect": [60, 26, 46, 24], "color": "#5a5248", "label": "旧坝", "solid": true },
+
+        { "type": "path", "points": [[0, 190], [352, 190], [392, 240], [452, 248], [500, 240], [536, 190], [640, 190]], "width": 18, "color": "#7a7050", "label": "旧弯道" },
+        { "type": "rect", "rect": [0, 177, 640, 26], "color": "#5a5a5a", "label": "新路" },
+
+        { "type": "rect", "rect": [80, 84, 130, 70], "color": "#8a7a52", "label": "荒" },
+        { "type": "rect", "rect": [222, 84, 130, 70], "color": "#8a7a52", "label": "荒" },
+
+        { "type": "rect", "rect": [388, 92, 76, 62], "color": "#6a6258", "label": "粮站·拆" },
+        { "type": "rect", "rect": [494, 88, 132, 96], "color": "#6a6a70", "label": "超市·在建", "solid": true },
+        { "type": "circle", "center": [500, 196], "radius": 4, "color": "#3a3a3a" },
+        { "type": "circle", "center": [546, 196], "radius": 4, "color": "#3a3a3a" },
+        { "type": "circle", "center": [612, 196], "radius": 4, "color": "#3a3a3a" },
+        { "type": "circle", "center": [300, 254], "radius": 11, "color": "#33332e", "label": "新井·废", "solid": true },
+        { "type": "circle", "center": [368, 170], "radius": 16, "color": "#3f6b3a", "label": "槐" },
+
+        { "type": "rect", "rect": [108, 274, 68, 48], "color": "#5a563a" },
+        { "type": "rect", "rect": [192, 274, 68, 48], "color": "#6b5236", "label": "沈家·塌", "solid": true },
+        { "type": "rect", "rect": [276, 274, 68, 48], "color": "#7a5a3c", "label": "长工", "solid": true },
+        { "type": "rect", "rect": [48, 326, 96, 6], "color": "#6a5a3a", "solid": true },
+        { "type": "rect", "rect": [156, 326, 96, 6], "color": "#6a5a3a", "solid": true },
+        { "type": "rect", "rect": [356, 300, 10, 22], "color": "#8a8278", "label": "碑", "solid": true }
+      ],
+      "hotspots": [
+        { "pos": [540, 206], "title": "超市 · 工地", "text": "地基挖开了。桩位图钉在木板上，桩位全都画在四周，中间空着一大块。" },
+        { "pos": [430, 190], "title": "取直的路", "reach": 40, "text": "新铺的沥青。旧的弯道还在旁边，长满了草。取直那一截，正好从一块石板上过。" },
+        { "pos": [452, 258], "title": "旧路基", "reach": 40, "text": "取直截断的地方，断面露出三层：土、石灰、一层薄水泥。水泥面有裂缝，缝里灌过三次沥青。" }
+      ]
+    },
+
+    {
+      "id": "a5_2026",
+      "year": 2026,
+      "ground": "#7a7a76",
+      "shapes": [
+        { "type": "rect", "rect": [0, 18, 640, 40], "color": "#46605a", "label": "河" },
+
+        { "type": "rect", "rect": [0, 177, 640, 26], "color": "#5c5c5c", "label": "路" },
+        { "type": "rect", "rect": [417, 58, 26, 276], "color": "#5c5c5c" },
+
+        { "type": "rect", "rect": [80, 84, 130, 70], "color": "#6e6e6a", "label": "空地" },
+        { "type": "rect", "rect": [240, 84, 130, 70], "color": "#5c5c5c", "label": "车位" },
+
+        { "type": "rect", "rect": [60, 264, 170, 60], "color": "#b0a888", "label": "小学", "solid": true },
+        { "type": "rect", "rect": [470, 92, 150, 92], "color": "#8a8a92", "label": "超市", "solid": true },
+        { "type": "rect", "rect": [452, 240, 62, 46], "color": "#a07a5a", "label": "玩具店", "solid": true },
+
+        { "type": "circle", "center": [430, 190], "radius": 17, "color": "#6f6f6f", "label": "补丁" },
+        { "type": "rect", "rect": [446, 206, 9, 9], "color": "#3a3a3a", "label": "灯", "solid": true },
+        { "type": "circle", "center": [368, 170], "radius": 21, "color": "#3f6b3a", "label": "老槐", "solid": true },
+        { "type": "circle", "center": [366, 254], "radius": 7, "color": "#55555a", "label": "井盖" },
+        { "type": "rect", "rect": [232, 286, 10, 22], "color": "#8a8278", "label": "碑", "solid": true }
+      ],
+      "hotspots": [
+        { "pos": [430, 190], "title": "圆形补丁", "reach": 40, "text": "十字路口正中一块圆形沥青补丁，颜色比周围深一点。边缘又裂了，又在补。" },
+        { "pos": [368, 170], "title": "老槐树", "reach": 46, "text": "树干朝西北歪。树根把超市门口的地砖拱起来两寸，砖缝里塞满了落叶。" },
+        { "pos": [483, 238], "title": "玩具店", "reach": 44, "text": "招牌下面一行小字：本店由沈氏物业出租。柜台底下一摞纸，最上面一张写着「叁元」。" },
+        { "pos": [366, 254], "title": "井盖 · 排水管", "reach": 34, "text": "井盖掀开半寸。下面的管子是弯的，弯的方向朝着旧的弯道。" },
+        { "pos": [237, 286], "title": "小学围墙 · 界碑", "reach": 34, "text": "半截石碑嵌在小学围墙里，砌进了墙。字磨得只剩两个：「周界」。接缝的水泥是新的，石头是旧的。" }
+      ]
+    }
+  ]
+}

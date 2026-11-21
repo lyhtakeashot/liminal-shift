@@ -1,0 +1,121 @@
+{
+  "world": { "width": 1600, "height": 900 },
+  "safe_top": 18,
+  "safe_bottom": 334,
+  "start_pos": [700, 560],
+  "frames": [
+    {
+      "id": "a1_1926",
+      "year": 1926,
+      "ground": "#6e7a4c",
+      "shapes": [
+        { "type": "rect", "rect": [0, 0, 1600, 112], "color": "#3f5f6e", "label": "河", "solid": true },
+        { "type": "rect", "rect": [196, 34, 120, 62], "color": "#6a5648", "label": "坝", "solid": true },
+
+        { "type": "path", "points": [[0, 560], [840, 560], [900, 624], [960, 560], [1600, 560]], "width": 36, "color": "#8a7a5a", "label": "路" },
+        { "type": "path", "points": [[464, 240], [560, 240], [560, 560]], "width": 36, "color": "#8a7a5a", "label": "支路" },
+
+        { "type": "rect", "rect": [1000, 130, 240, 176], "color": "#7d8a3e", "label": "田·东" },
+        { "type": "rect", "rect": [1272, 130, 240, 176], "color": "#7d8a3e", "label": "田·西" },
+
+        { "type": "house", "id": "mill_a1", "pos": [160, 112], "solid": true },
+        { "type": "house", "id": "shen_a1", "pos": [160, 340], "solid": true },
+        { "type": "house", "id": "zhou_house", "pos": [600, 400], "solid": true },
+        { "type": "house", "id": "lu_house", "pos": [1120, 340], "solid": true },
+
+        { "type": "circle", "center": [900, 545], "radius": 16, "color": "#141414", "label": "老井", "solid": true },
+        { "type": "circle", "center": [852, 505], "radius": 9, "color": "#3f6b3a", "label": "老槐" },
+        { "type": "rect", "rect": [696, 594, 8, 16], "color": "#8a8278", "label": "碑", "solid": true }
+      ],
+      "hotspots": [
+        { "pos": [900, 545], "title": "老井", "reach": 40, "text": "井口是木架，绳子在井沿上磨出一道沟。水面离地不到一尺。" },
+        { "pos": [1100, 220], "title": "田·东", "reach": 44, "text": "两片田，土是干的。田埂上的草被踩出一条路，通向磨坊。" },
+        { "pos": [1392, 218], "title": "田·西", "reach": 44, "text": "靠西那片田，地势低些。田埂上有新踩的脚印，往坝那边去。" },
+        { "pos": [196, 92], "title": "坝", "reach": 70, "text": "一道石坝横在河身里。水面在坝前抬高了几寸，从坝顶漫过去。" },
+        { "pos": [700, 602], "title": "界碑", "reach": 34, "text": "半截石碑，埋在土里一尺。字被凿过，只剩两个：「周界」。石头这一面朝北，刻的那一面朝着沈家的屋。" },
+        { "pos": [852, 505], "title": "老槐", "reach": 34, "text": "老槐树，今年刚栽下。树干还细，根边堆着新土。" }
+      ]
+    },
+
+    {
+      "id": "a2_1951",
+      "year": 1951,
+      "ground": "#68744a",
+      "shapes": [
+        { "type": "rect", "rect": [0, 0, 1600, 112], "color": "#3f5f6e", "label": "河", "solid": true },
+        { "type": "rect", "rect": [196, 34, 120, 62], "color": "#6a5648", "label": "坝", "solid": true },
+
+        { "type": "path", "points": [[0, 640], [840, 640], [900, 704], [960, 640], [1600, 640]], "width": 36, "color": "#8a7a5a", "label": "路" },
+        { "type": "path", "points": [[464, 240], [560, 240], [560, 640]], "width": 36, "color": "#8a7a5a", "label": "支路" },
+
+        { "type": "rect", "rect": [1000, 130, 240, 176], "color": "#78863c", "label": "田·东" },
+        { "type": "rect", "rect": [1272, 130, 240, 176], "color": "#78863c", "label": "田·西" },
+
+        { "type": "house", "id": "mill_a2", "pos": [800, 400], "solid": true },
+        { "type": "house", "id": "shen_a2", "pos": [160, 340], "solid": true },
+        { "type": "house", "id": "zhou_a2", "pos": [600, 400], "solid": true },
+        { "type": "house", "id": "lu_a2", "pos": [1120, 340], "solid": true },
+
+        { "type": "circle", "center": [900, 545], "radius": 16, "color": "#4a4a42", "label": "老井·封" },
+        { "type": "circle", "center": [300, 700], "radius": 11, "color": "#141414", "label": "新井", "solid": true },
+        { "type": "circle", "center": [840, 495], "radius": 12, "color": "#3f6b3a", "label": "老槐·斜" },
+        { "type": "rect", "rect": [696, 594, 8, 16], "color": "#8a8278", "label": "碑", "solid": true }
+      ],
+      "hotspots": [
+        { "pos": [900, 545], "title": "老井 · 石板", "reach": 40, "text": "井口盖了一块石板，四边和地面几乎齐平。石板接缝里的土是新的。" },
+        { "pos": [300, 700], "title": "新井", "reach": 44, "text": "路的另一头打了一口新井。井沿的砖还是白的，砖缝还没长草。" },
+        { "pos": [840, 495], "title": "老槐", "reach": 40, "text": "老槐树，二十五岁。树干朝远离井的方向歪过去——井那侧的地面，像是塌下去了一点。" },
+        { "pos": [700, 664], "title": "界碑", "reach": 34, "text": "半截石碑，埋在路边的土里。字被凿过，只剩两个：「周界」。" },
+        { "pos": [1520, 700], "title": "田·东", "reach": 44, "text": "田还在种。田埂上有人走过的痕迹，往老井方向去。" }
+      ]
+    },
+
+    {
+      "id": "a3_1976",
+      "year": 1976,
+      "ground": "#6a6a44",
+      "shapes": [
+        { "type": "rect", "rect": [0, 0, 1600, 112], "color": "#4a6a60", "label": "河", "solid": true },
+        { "type": "rect", "rect": [196, 34, 120, 62], "color": "#5a5248", "label": "旧坝", "solid": true },
+
+        { "type": "path", "points": [[0, 700], [840, 700], [900, 764], [960, 700], [1600, 700]], "width": 36, "color": "#8a7a5a", "label": "路" },
+        { "type": "path", "points": [[464, 240], [560, 240], [560, 700]], "width": 36, "color": "#8a7a5a", "label": "支路" },
+
+        { "type": "rect", "rect": [1000, 130, 240, 176], "color": "#6b6440", "label": "田·东·半荒" },
+        { "type": "rect", "rect": [1272, 130, 240, 176], "color": "#6b6440", "label": "田·西·半荒" },
+
+        { "type": "house", "id": "shen_a3", "pos": [160, 340], "solid": true },
+        { "type": "house", "id": "zhou_a3", "pos": [630, 350], "solid": true },
+        { "type": "house", "id": "mill_a3", "pos": [830, 390], "solid": true },
+        { "type": "house", "id": "lu_a3", "pos": [1140, 340], "solid": true },
+
+        { "type": "circle", "center": [900, 545], "radius": 16, "color": "#33332e", "label": "老井·三层水泥", "solid": true },
+        { "type": "circle", "center": [828, 483], "radius": 14, "color": "#3f6b3a", "label": "老槐·斜" },
+        { "type": "rect", "rect": [620, 640, 8, 16], "color": "#8a8278", "label": "碑", "solid": true }
+      ],
+      "hotspots": [
+        { "pos": [900, 545], "title": "老井 · 三层水泥", "reach": 44, "text": "三层水泥。最上一层和地面几乎一样平，边上留了一道没抹完的缝。缝里能看见底下的石板角。" },
+        { "pos": [828, 483], "title": "老槐", "reach": 40, "text": "老槐树，四十九岁。树干朝西北歪出去，井那侧的地面塌下去一块，树根有一半露在土外面。" },
+        { "pos": [624, 648], "title": "界碑", "reach": 34, "text": "半截石碑，埋在路边的土里。字被凿过，只剩两个：「周界」。石头面上长了一层青苔。" },
+        { "pos": [1120, 218], "title": "田 · 半荒", "reach": 48, "text": "田里的草比庄稼高。田埂塌了几段，没人补。靠路那头还种着一小片，靠里那头全是荒草。" },
+        { "pos": [464, 400], "title": "支路口", "reach": 40, "text": "路面压出两道车辙，往粮站方向去。辙印是新的，边上的土还没被雨打平。" }
+      ]
+    },
+
+    {
+      "id": "a4_2001",
+      "year": 2001,
+      "ground": "#6f6a52",
+      "shapes": [],
+      "hotspots": []
+    },
+
+    {
+      "id": "a5_2026",
+      "year": 2026,
+      "ground": "#7a7a76",
+      "shapes": [],
+      "hotspots": []
+    }
+  ]
+}
