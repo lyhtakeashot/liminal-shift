@@ -9,10 +9,10 @@ A1–A3 美术资产拆解图 + 总需求清单生成器
   _ref/art/_assets_a1a3/_a1a3_assets.csv         总需求清单（Excel 可直接开）
   _ref/art/_assets_a1a3/_a1a3_assets.json        同一份数据的机器可读版
 
-口径（2026-11-21 定）：
-  1 格 = 16×16 px，所有资产画布尺寸都是 16 的整数倍。
-  外观层 = 整栋单图（base / roof 各 1 张，每栋每帧 2 张），不做 16px 瓦片拼接。
-  家具层 = 逐件一个文件，全部对齐 16px 网格（1×1 … 3×3 九档），跨栋共享 props/。
+口径（2026-11-21 TILE 16→32 定）：
+  1 格 = 32×32 px，所有资产画布尺寸都是 32 的整数倍。
+  外观层 = 整栋单图（base / roof 各 1 张，每栋每帧 2 张），不做 32px 瓦片拼接。
+  家具层 = 逐件一个文件，全部对齐 32px 网格（1×1 … 3×3 九档），跨栋共享 props/。
   场景层 = 河/坝/路/田/井/树/碑，按 frames.json 的实际几何出尺寸。
 
 真相源：_ref/houses/houses_data.json（房型/家具）、data/frames.json（场景）。
@@ -33,10 +33,15 @@ OUT = os.path.join(REF, "art", "_assets_a1a3")
 DATA_PATH = os.path.join(HERE, "houses_data.json")
 FRAMES_PATH = os.path.join(ROOT, "data", "frames.json")
 
-TILE = 16
+TILE = 32
 W = 1520
 MARGIN = 44
 ROW = 26
+
+# 世界 px 尺寸（TILE 16→32：格数不变，像素翻倍）。真实值以 frames.json 的 world 为准，
+# 这里是给「场景对比图」排版用的标称值。
+WORLD_W = 3200
+WORLD_H = 1800
 
 FONTS_R = ["C:/Windows/Fonts/msyh.ttc", "C:/Windows/Fonts/simhei.ttf"]
 FONTS_B = ["C:/Windows/Fonts/msyhbd.ttc", "C:/Windows/Fonts/msyh.ttc",
@@ -282,7 +287,7 @@ def build_registry(houses):
         fam, ffr = FAMILY[hid]
         # 画布口径（house-spec §4.8.5 / 伪 3D 投影）：高度比占地多一格。
         # w/h/px 继续表示**占地**（[A] 格图和碰撞都要用），画布另用 cw/ch/cpx。
-        # 多出的 16px 在**画布顶部**，是墙 + 屋顶立起来的高度；画布底边仍与 lot 底边对齐。
+        # 多出的 TILE(32px) 在**画布顶部**，是墙 + 屋顶立起来的高度；画布底边仍与 lot 底边对齐。
         cw, ch = gw, gh + 1
         cpx = [cw * TILE, ch * TILE]
         shells.append({
@@ -329,7 +334,7 @@ def scene_assets(frames):
             out.append(dict(id="river_%s" % fr.lower(), code="S",
                             name="河（含河岸、水面）", frame=fr,
                             w=100, h=int(math.ceil(depth_px / TILE)),
-                            px=[1600, int(math.ceil(depth_px / TILE)) * TILE],
+                            px=[100 * TILE, int(math.ceil(depth_px / TILE)) * TILE],
                             path="assets/village/scene/river_%s.png" % fr.lower(),
                             note="全宽 100 格；最深 %d 格（%d px）"
                                  % (int(math.ceil(depth_px / TILE)), int(math.ceil(depth_px / TILE)) * TILE)))
@@ -376,7 +381,7 @@ def scene_assets(frames):
                             px=[rx1 - rx0, ry1 - ry0],
                             path="assets/village/scene/%s_tiles.png" % rid,
                             note="%s；路宽 %d 格 = %dpx（逐列实测众数），共 %d 个路面格；"
-                                 "出 16px 瓦片集（直/弯/丁字/十字）"
+                                 "出 32px 瓦片集（直/弯/丁字/十字）"
                                  % ("弯道（A1/A2 同走向，两侧会收边到 1~2 格）" if curved
                                     else "直道（A3 起取直）",
                                     road_g, road_g * TILE, len(cells))))
@@ -398,7 +403,7 @@ def scene_assets(frames):
                                 h=int(math.ceil((y1 - y0) / TILE)),
                                 px=[x1 - x0, y1 - y0],
                                 path="assets/village/scene/field_patch_tiles.png",
-                                note="%d 块，单块 %s格；出 16px 土/田埂瓦片" % (len(plain), sizetxt)))
+                                note="%d 块，单块 %s格；出 32px 土/田埂瓦片" % (len(plain), sizetxt)))
             else:
                 r = plain[0]
                 out.append(dict(id="field_%s" % fr.lower(), code="S", name="整块大田", frame=fr,
@@ -432,7 +437,7 @@ def scene_assets(frames):
         out.append(dict(id="ground_tile_%s" % fr.lower(), code="S", name="地面底瓦", frame=fr,
                         w=1, h=1, px=[TILE, TILE],
                         path="assets/village/scene/ground_%s_tiles.png" % fr.lower(),
-                        note="可平铺 16×16 地面（草地/土），帧底色 %s" % g))
+                        note="可平铺 32×32 地面（草地/土），帧底色 %s" % g))
     return out
 
 
@@ -502,10 +507,10 @@ def _shell_note(is_ruin):
     if is_ruin:
         return ("废墟态只交付 1 张：没有屋顶所以不交 roof。缺墙的位置必须透明，"
                 "让场景底图的地面透出来。画布仍比占地高一格 —— 残墙也要向上立起来。")
-    return ("画布比占地高 16px：屋顶与墙顶面要向上溢出画布一格，画布不带这一格会被裁掉一条"
+    return ("画布比占地高 32px：屋顶与墙顶面要向上溢出画布一格，画布不带这一格会被裁掉一条"
             "（不报错、验收也看不出来，跑起来才发现要重画）。多出的一格在顶部，"
             "画布底边仍与占地底边对齐，锚点仍是底部中心。base / roof 必须同宽同高同锚点"
-            "（高度都是 占地高 + 16），玩家走进占地矩形时 roof 整层淡出、base 留在原地。")
+            "（高度都是 占地高 + 32），玩家走进占地矩形时 roof 整层淡出、base 留在原地。")
 
 
 def render_house(hs, by_id, props_of_house):
@@ -607,7 +612,7 @@ def render_house(hs, by_id, props_of_house):
     d.text((MARGIN, 22), "%s · 资产拆解图" % hs["name"], font=font(30, True), fill=C["text"])
     d.text((MARGIN, 70),
            "占地 %d×%d 格 = %d×%d px ｜ 屋本体 %d×%d 格 ｜ 外观画布 %d×%d px（顶部多一格立面）｜ "
-           "1 格 = 16×16 px ｜ 640×360 · 3x 整数缩放"
+           "1 格 = 32×32 px ｜ 视口 640×360 · 窗口 2× 整数缩放"
            % (gw, gh, gw * TILE, gh * TILE, bw, bh, gw * TILE, (gh + 1) * TILE),
            font=font(15), fill=C["key"])
     d.text((MARGIN, 96),
@@ -626,7 +631,7 @@ def render_house(hs, by_id, props_of_house):
 
     # ---------- 网格 ----------
     ox, oy = grid_left, grid_top
-    d.text((MARGIN, yA), "[A] 占地格图（每格 = 16px；编号对应下表「编号」列）",
+    d.text((MARGIN, yA), "[A] 占地格图（每格 = 32px；编号对应下表「编号」列）",
            font=font(17, True), fill=C["key"])
     d.rectangle([ox, oy, ox + gw * S, oy + gh * S], outline=C["lot"], width=3)
 
@@ -785,7 +790,7 @@ def render_house(hs, by_id, props_of_house):
 
     # ---------- 外观层 ----------
     cw, ch = gw, gh + 1           # 画布：宽 = 占地宽，高 = 占地高 + 1 格（伪 3D 立面抬升）
-    d.text((MARGIN, yB), "[B] 外观层 · 整栋单图（画布 = 占地宽 × (占地高 + 16)px，"
+    d.text((MARGIN, yB), "[B] 外观层 · 整栋单图（画布 = 占地宽 × (占地高 + 32)px，"
                          "多出的一格在顶部是墙与屋顶；锚点底部中心，四周留 2px 透明边）",
            font=font(17, True), fill=C["key"])
     if is_ruin:
@@ -815,7 +820,7 @@ def render_house(hs, by_id, props_of_house):
         d.text((MARGIN + 6, yB_note + i * 19), ln, font=font(13), fill=C["dim"])
 
     # ---------- 家具层 ----------
-    d.text((MARGIN, yC), "[C] 家具层 · 逐件一个文件（16px 网格，九档 1×1 … 3×3）",
+    d.text((MARGIN, yC), "[C] 家具层 · 逐件一个文件（32px 网格，九档 1×1 … 3×3）",
            font=font(17, True), fill=C["key"])
     d.text((MARGIN + 6, yC + 26),
            "交付目录 assets/village/props/<文件 id>.png ｜ 全项目共享，同一 id 只画一次 ｜ "
@@ -849,11 +854,13 @@ def render_house(hs, by_id, props_of_house):
 # ----------------------------------------------------------------- 场景对比图
 def render_scene(frames, scene, hsize=None):
     hsize = hsize or {}
-    SC = 0.30  # 世界 px → 图上 px
     pad = 28
     cols = 3
-    cell_w = int(1600 * SC)
-    cell_h = int(900 * SC)
+    # 世界 px → 图上 px：按画布可用宽度反推，跟着 world 尺寸走
+    # （TILE 16→32 后世界 3200×1800，写死 0.30 会让三帧横向溢出一倍）
+    SC = float(W - 2 * MARGIN - (cols - 1) * pad) / float(cols * WORLD_W)
+    cell_w = int(WORLD_W * SC)
+    cell_h = int(WORLD_H * SC)
     header_h = 150
     table_top = header_h + cell_h + 90
     rows = [[a["code"], a["id"], a["name"], a["frame"],
@@ -864,8 +871,8 @@ def render_scene(frames, scene, hsize=None):
     img = Image.new("RGB", (W, H), C["bg"])
     d = ImageDraw.Draw(img)
     d.text((MARGIN, 26), "A1–A3 场景元素拆解图（三帧对比）", font=font(30, True), fill=C["text"])
-    d.text((MARGIN, 74), "全部尺寸按 data/frames.json 实际几何换算 ｜ 1 格 = 16×16 px ｜ "
-                         "世界 1600×900 px = 100×56.25 格",
+    d.text((MARGIN, 74), "全部尺寸按 data/frames.json 实际几何换算 ｜ 1 格 = 32×32 px ｜ "
+                         "世界 3200×1800 px = 100×56.25 格",
            font=font(15), fill=C["key"])
     d.text((MARGIN, 100), "河 / 坝 / 路 / 田 / 老井 / 老槐 / 界碑 三帧同区位对比；"
                           "同形不同色的可共用底图 + tint，清单里已注明。",

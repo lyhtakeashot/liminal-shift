@@ -11,7 +11,7 @@
   3. A1 田零散不规则 → A2 起归并成规整大田
   4. 磨坊位置随上述调整
 
-设计（格坐标，1 格 = 16px）：
+设计（格坐标，1 格 = 32px）：
   河道：常规深 4~8 格起伏；磨坊处（x36..57）凹到 13 格 = 引水湾
   磨坊：(38, 14) 贴凹口，南沿 24（A1/A2）/ 28（A3）
   路：y = 32（磨坊南沿下 4~8 格，很近），A1/A2 弯、A3 直
@@ -24,8 +24,8 @@ from PIL import Image, ImageDraw, ImageFont
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 OUT = os.path.join(os.path.dirname(HERE), "art", "_overview")
-TILE = 16
-W, H = 1600, 900
+TILE = 32
+W, H = 3200, 1800
 GW, GH = W // TILE, H // TILE
 
 FONTS = ["C:/Windows/Fonts/msyh.ttc", "C:/Windows/Fonts/simhei.ttf"]

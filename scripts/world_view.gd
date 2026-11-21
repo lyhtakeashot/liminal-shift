@@ -18,7 +18,7 @@ const HouseShape = preload("res://scripts/house_shape.gd")
 ## 写死在代码里，不进 frames.json、不进 houses_data.json：
 ## 1926→2026 是同几栋实体房子，高度不随时间变。给了逐帧字段，
 ## 迟早有人微调成「推时间时房子在呼吸」。
-const EXTRUDE := 16.0
+const EXTRUDE := 32.0
 
 ## 屋顶用色（必须和墙有好区分，§4.8.2 明确「屋顶要能一眼区分是屋顶」）。
 const ROOF_COLOR := Color("#6b4b3e")        # 瓦面：偏褐红
@@ -308,16 +308,16 @@ func _draw_walls_lifted(rects: Array, offset: Vector2, wall_col: Color,
 			var merged_w := end_x - start.position.x
 			var bx := start.position.x
 			var by := start.position.y
-			# 南立面：整个墙格向下延伸 EXTRUDE（EXTRUDE=16 时正好等于整格）
-			draw_rect(Rect2(Vector2(bx, by + 16.0 - EXTRUDE) + offset,
+			# 南立面：整个墙格向下延伸 EXTRUDE（EXTRUDE=TILE 时正好等于整格）
+			draw_rect(Rect2(Vector2(bx, by + HouseShape.TILE - EXTRUDE) + offset,
 				Vector2(merged_w, EXTRUDE)), wall_col)
 			if with_body:
 				# 缺图降级：墙格本体也铺上（否则只有立面，地面那格是空的）
 				draw_rect(Rect2(Vector2(bx, by) + offset,
-					Vector2(merged_w, 16.0)), wall_col)
+					Vector2(merged_w, HouseShape.TILE)), wall_col)
 			# 墙顶面：抬高 EXTRUDE
 			draw_rect(Rect2(Vector2(bx, by - EXTRUDE) + offset,
-				Vector2(merged_w, 16.0)), top_col)
+				Vector2(merged_w, HouseShape.TILE)), top_col)
 			i = j
 
 
@@ -339,10 +339,10 @@ func _draw_roof(data: Dictionary, hpos: Vector2, offset: Vector2, tint: Color,
 		var ww: Array = w
 		var wx := float(ww[0])
 		var wy := float(ww[1])
-		var wpx := float(ww[2]) * 16.0
-		var wpy := float(ww[3]) * 16.0
+		var wpx := float(ww[2]) * HouseShape.TILE
+		var wpy := float(ww[3]) * HouseShape.TILE
 		# 外扩 1px 做出檐，整体抬高 EXTRUDE
-		var r := Rect2(Vector2(hpos.x + wx * 16.0 - 1.0, hpos.y + wy * 16.0 - 1.0 - EXTRUDE) + offset,
+		var r := Rect2(Vector2(hpos.x + wx * HouseShape.TILE - 1.0, hpos.y + wy * HouseShape.TILE - 1.0 - EXTRUDE) + offset,
 			Vector2(wpx + 2.0, wpy + 2.0))
 		draw_rect(r, roof_col, true)
 		# 屋脊：沿该翼长轴，亮一档
@@ -356,7 +356,7 @@ func _draw_roof(data: Dictionary, hpos: Vector2, offset: Vector2, tint: Color,
 		draw_line(Vector2(r.position.x, r.position.y + r.size.y),
 			Vector2(r.position.x + r.size.x, r.position.y + r.size.y), eave_col, 1.0)
 
-	# 有美术屋顶图：整张铺上去（画布高 = lot_h + 16，顶部多出的一格是墙+屋顶）
+	# 有美术屋顶图：整张铺上去（画布高 = lot_h + TILE，顶部多出的一格是墙+屋顶）
 	if tex_roof != null:
 		var lot0 := HouseShape.lot_rect(data, Vector2.ZERO)
 		var tc := Color.WHITE

@@ -1,10 +1,13 @@
 extends SceneTree
 
 ## 镜头专项自检：
-##   1. 地图 = 视口（640×360）时镜头锁死在 (0,0)
+##   1. 地图 = 视口（1280×720）时镜头锁死在 (0,0)
 ##   2. 地图 > 视口时空间轴跟随玩家
 ##   3. 切到时间轴那一刻冻结，推帧 / 玩家乱动都不影响镜头
 ##   4. 回空间轴恢复跟随
+##
+## 2026-11-21 TILE 16→32：世界 3200×1800；视口方案 = 2a'（1×逻辑，1280×720），
+## 即「一屏 40×22.5 格」与原 640×360 的视野完全一致。
 
 const CameraRig = preload("res://scripts/camera_rig.gd")
 
@@ -30,21 +33,22 @@ func _run() -> void:
 	# --- 1. 地图 = 视口：锁死 ---
 	var rig = CameraRig.new()
 	root.add_child(rig)
-	rig.setup_viewport(Vector2(640, 360))
-	_step(rig, Vector2(600, 320), 1.0)
+	rig.setup_viewport(Vector2(1280, 720))
+	_step(rig, Vector2(1200, 640), 1.0)
 	_ok(rig.offset == Vector2.ZERO, "小地图镜头锁死 offset=(0,0)")
 	_ok(rig.position == Vector2.ZERO, "小地图节点位置=(0,0)")
 
 	# --- 2. 大地图：空间轴跟随 ---
 	var big = CameraRig.new()
 	root.add_child(big)
-	big.setup_viewport(Vector2(1600, 900))   # 2.5x 视口
-	# 玩家在右上角 (1200, 700)，理想 offset = (880, 520) → clamp 到 (960, 540)
+	big.setup_viewport(Vector2(3200, 1800))   # 2.5× 视口
+	# 玩家在 (2400, 1400)，理想 offset = (1760, 1040)
+	# clamp 上限 = (3200-1280, 1800-720) = (1920, 1080) → 不触发 clamp
 	for i in 5:
-		_step(big, Vector2(1200, 700), 0.2)
-	_ok(big.offset.x > 800.0 and big.offset.y > 450.0,
+		_step(big, Vector2(2400, 1400), 0.2)
+	_ok(big.offset.x > 1600.0 and big.offset.y > 900.0,
 		"大地图跟随玩家 offset=(%.1f,%.1f)" % [big.offset.x, big.offset.y])
-	_ok(big.offset.x <= 960.0 and big.offset.y <= 540.0,
+	_ok(big.offset.x <= 1920.0 and big.offset.y <= 1080.0,
 		"offset 不超地图边界")
 
 	# 玩家回到左上角 → offset 回 0
@@ -55,7 +59,7 @@ func _run() -> void:
 
 	# --- 3. 时间轴冻结 ---
 	for i in 5:
-		_step(big, Vector2(1200, 700), 0.2)
+		_step(big, Vector2(2400, 1400), 0.2)
 	var frozen: Vector2 = big.offset
 	big.set_time_mode(true)
 	_ok(big.frozen_offset == frozen, "切时间轴瞬间冻结视野")

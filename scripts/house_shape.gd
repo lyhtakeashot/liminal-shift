@@ -10,7 +10,7 @@ extends RefCounted
 ## houses_data.json 在 _ref/ 下（项目根目录内，属 res://），用 FileAccess 直接读
 ## （BUILD-A1 §4.2 办法 A：一份真相源；将来配 Web 导出时把它加进 include_filter）。
 
-const TILE := 16.0
+const TILE := 32.0
 
 const DATA_PATH := "res://_ref/houses/houses_data.json"
 
@@ -243,7 +243,7 @@ static func hotspots(data: Dictionary, pos: Vector2) -> Array:
 			"pos": Vector2(cx, cy),
 			"title": title,
 			"text": String(texts.get(name, "「%s」立在这里。" % name)),
-			"reach": 34.0,
+			"reach": 68.0,
 		})
 	return out
 

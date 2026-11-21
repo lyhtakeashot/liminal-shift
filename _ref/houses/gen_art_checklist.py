@@ -30,7 +30,7 @@ rows = list(csv.DictReader(open(os.path.join(ART, "_a1a3_assets.csv"), encoding=
 d = json.load(open(os.path.join(ART, "_a1a3_assets.json"), encoding="utf-8"))
 # 高频前 20 的口径：按实际摆放次数降序（同次数按编号），和文档 §5.2 一致
 top20 = {p["code"] for p in sorted(d["props"], key=lambda r: (-r["uses"], r["code"]))[:20]}
-# 外观行的 CSV 尺寸已是**画布**（含顶部 +16）；占地尺寸从 JSON 补，便于塌陷核对
+# 外观行的 CSV 尺寸已是**画布**（含顶部 +32）；占地尺寸从 JSON 补，便于塌陷核对
 lot_of = {s["id"]: (s["w"], s["h"], s["px"]) for s in d["shell"]}
 
 
@@ -54,7 +54,7 @@ for r in rows:
     if is_shell:
         lot = lot_of.get(r["文件 id"], (0, 0, (0, 0)))
         sizetxt = "%sx%s（画布）｜占地 %dx%d" % (r["像素宽"], r["像素高"], lot[0], lot[1])
-        note = "画布比占地高 16px（顶部一格是墙与屋顶立面）；" + r["说明"]
+        note = "画布比占地高 32px（顶部一格是墙与屋顶立面）；" + r["说明"]
     else:
         sizetxt = "%sx%s" % (r["像素宽"], r["像素高"])
         note = r["说明"]

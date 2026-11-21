@@ -11,7 +11,7 @@ extends RefCounted
 ## 用 preload 常量引用，任何环境都能跑。
 ## 同理这里也不能在脚本内部引用自己的类型名 —— 所以构造走 setup()，不是静态工厂。
 
-const CHAR_RADIUS := 7.0
+const CHAR_RADIUS := 14.0
 
 const HouseShape = preload("res://scripts/house_shape.gd")
 
@@ -70,7 +70,7 @@ func setup(d: Dictionary) -> void:
 		var p: Array = hd.get("pos", [0, 0])
 		hd["pos"] = Vector2(float(p[0]), float(p[1]))
 		if not hd.has("reach"):
-			hd["reach"] = 34.0
+			hd["reach"] = 68.0
 		hd["reach"] = float(hd["reach"])
 		hotspots.append(hd)
 
@@ -80,8 +80,8 @@ func _rect_from(sd: Dictionary) -> Rect2:
 	return Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))
 
 
-## 把多边形按 8px 一条水平扫描线切成矩形（河的下缘是弯的，直接包围盒会挡住陆地）。
-## 8px 一条对玩家碰撞足够精确（角色半径 7），又不会让 solid_rects 爆炸。
+## 把多边形按 16px 一条水平扫描线切成矩形（河的下缘是弯的，直接包围盒会挡住陆地）。
+## 16px 一条对玩家碰撞足够精确（角色半径 14），又不会让 solid_rects 爆炸。
 func _polygon_scanlines(ppts: Array) -> Array:
 	var min_y := INF
 	var max_y := -INF
@@ -92,7 +92,7 @@ func _polygon_scanlines(ppts: Array) -> Array:
 	if not is_finite(min_y) or not is_finite(max_y):
 		return []
 	var out: Array = []
-	var step: float = 8.0
+	var step: float = 16.0
 	var y: float = floor(min_y / step) * step
 	while y < max_y:
 		# 求该扫描线与多边形各边的交点

@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 """把 _design_v5 的格坐标布局落地成 data/frames.json。
 
-格 → 像素：px = 格 * 16。
+格 → 像素：px = 格 * TILE（TILE 由 _design_v5 单点提供）。
 河 / 田 / 路 用格子集合压成大矩形或折线；房子用 house 形状（读 houses_data.json）。
 """
 import json, os, math, sys, importlib.util
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-TILE = 16
 
 spec = importlib.util.spec_from_file_location("d5", os.path.join(HERE, "_design_v5.py"))
 dv = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dv)
+
+TILE = dv.TILE          # 引用单一真相源，别再写死 16/32
 
 by_id = dv.by_id
 
@@ -86,27 +87,9 @@ def cells_to_rects(cells):
     return merged
 
 
-# ---------- 路：折线（格子 → 像素中心线） ----------
-def road_points_a123(fid):
-    """从 ROAD_SETS（膨胀后的格集合）提取中心线并按 y 归一成折线。
-    简化做法：对每个 x 取该列的 y 中位数作为中心线。"""
-    cells = dv.ROAD_SETS[fid]
-    cols = {}
-    for (x, y) in cells:
-        cols.setdefault(x, []).append(y)
-    pts = []
-    for x in sorted(cols):
-        ys = sorted(cols[x])
-        cy = ys[len(ys) // 2]
-        pts.append([px(x) + TILE // 2, px(cy) + TILE // 2])
-    # 抽稀：每 8 格取一点，首尾必留
-    if len(pts) > 4:
-        keep = [pts[0]]
-        for i in range(8, len(pts) - 1, 8):
-            keep.append(pts[i])
-        keep.append(pts[-1])
-        pts = keep
-    return pts
+# ---------- 路：走 cells_to_rects（逐格 rect + road 标记），不再出折线 ----------
+# 旧实现 road_points_a123() 已删除：它出的是 path 中心线，边缘不对齐格子且带抗锯齿，
+# 美术没法直接铺瓦片。现在路和「田」共用同一个格集合→矩形合并函数。
 
 
 def build_frames():
@@ -137,14 +120,19 @@ def build_frames():
             "label": "坝",
             "solid": True,
         })
-        # 3. 路
-        shapes.append({
-            "type": "path",
-            "points": road_points_a123(fid),
-            "width": 32,
-            "color": "#8a7a5a",
-            "label": "路",
-        })
+        # 3. 路：逐格 rect + road 标记（**不用 path 折线**）。
+        # 为什么：path 是「中心线 + 线宽」，边缘落在格子中间、且 draw_polyline 带抗锯齿，
+        # 像素风里瓦片永远对不齐；rect 每块正好整格，美术能直接铺 32px 路瓦片。
+        # ROAD_SETS 是 _design_v5 里已经膨胀过的格子集合，和「田」共用同一个合并函数。
+        road_rects = cells_to_rects(dv.ROAD_SETS[fid])
+        for k, (rx, ry, rw, rh) in enumerate(road_rects):
+            shapes.append({
+                "type": "rect",
+                "rect": [px(rx), px(ry), px(rw), px(rh)],
+                "color": "#8a7a5a",
+                "label": "路" if k == 0 else "",
+                "road": True,
+            })
         # 4. 田（不规则/规整）
         for (rx, ry, rw, rh) in cells_to_rects(dv.FIELDS[fid]):
             shapes.append({
@@ -198,39 +186,39 @@ def build_hotspots(fid):
     wx, wy = dv.WELL_CELL
     well_c = [px(wx) + TILE // 2, px(wy) + TILE // 2]
     if fid == "a1_1926":
-        hs.append({"pos": well_c, "title": "老井", "reach": 40,
+        hs.append({"pos": well_c, "title": "老井", "reach": 80,
                    "text": "井口是木架，绳子在井沿上磨出一道沟。水面离地不到一尺。"})
     elif fid == "a2_1951":
-        hs.append({"pos": well_c, "title": "老井 · 石板", "reach": 40,
+        hs.append({"pos": well_c, "title": "老井 · 石板", "reach": 80,
                    "text": "井口盖了一块石板，四边和地面几乎齐平。石板接缝里的土是新的。"})
     elif fid == "a3_1976":
-        hs.append({"pos": well_c, "title": "老井 · 三层水泥", "reach": 44,
+        hs.append({"pos": well_c, "title": "老井 · 三层水泥", "reach": 88,
                    "text": "三层水泥。最上一层和地面几乎一样平，边上留了一道没抹完的缝。"})
     # 老槐
     tx, ty = dv.TREE_CELL
     tree_c = [px(tx) + TILE // 2, px(ty) + TILE // 2]
     if fid == "a1_1926":
-        hs.append({"pos": tree_c, "title": "老槐", "reach": 34,
+        hs.append({"pos": tree_c, "title": "老槐", "reach": 68,
                    "text": "老槐树，今年刚栽下。树干还细，根边堆着新土。"})
     elif fid == "a2_1951":
-        hs.append({"pos": tree_c, "title": "老槐", "reach": 40,
+        hs.append({"pos": tree_c, "title": "老槐", "reach": 80,
                    "text": "老槐树，二十五岁。树干朝远离井的方向歪过去——井那侧的地面，像是塌下去了一点。"})
     elif fid == "a3_1976":
-        hs.append({"pos": tree_c, "title": "老槐", "reach": 44,
+        hs.append({"pos": tree_c, "title": "老槐", "reach": 88,
                    "text": "老槐树，四十九岁。树干朝西北歪出去，井那侧的地面塌下去一块，树根有一半露在土外面。"})
     # 界碑
     sx, sy = dv.STELE_CELL
-    hs.append({"pos": [px(sx) + 4, px(sy) + 8], "title": "界碑", "reach": 34,
+    hs.append({"pos": [px(sx) + TILE // 4, px(sy) + TILE // 2], "title": "界碑", "reach": 68,
                "text": "半截石碑，埋在路边的土里。字被凿过，只剩两个：「周界」。"})
     # 坝
-    hs.append({"pos": [px(16), px(5)], "title": "坝", "reach": 70,
+    hs.append({"pos": [px(16), px(5)], "title": "坝", "reach": 140,
                "text": "一道石坝横在河身里。水面在坝前抬高了几寸，从坝顶漫过去。"})
     # 田
     if fid == "a1_1926":
-        hs.append({"pos": [px(66), px(10)], "title": "田", "reach": 48,
+        hs.append({"pos": [px(66), px(10)], "title": "田", "reach": 96,
                    "text": "几块零散的小田，地界歪歪扭扭。土是干的。田埂上的草被踩出一条路，通向磨坊。"})
     else:
-        hs.append({"pos": [px(66), px(10)], "title": "田", "reach": 48,
+        hs.append({"pos": [px(66), px(10)], "title": "田", "reach": 96,
                    "text": "田已经归并成整块。田埂是直的，一头挨着另一头。土还是干的。"})
     return hs
 
@@ -256,10 +244,12 @@ def main():
     frames.sort(key=lambda f: f["year"])
 
     doc = {
-        "world": {"width": 1600, "height": 900},
-        "safe_top": 18,
-        "safe_bottom": 334,
-        "start_pos": [px(dv.TREE_CELL[0]) - 260, px(36) + 8],
+        "world": {"width": dv.W, "height": dv.H},
+        "safe_top": 36,
+        "safe_bottom": 668,
+        # 起点：老槐西侧约 8 格（原先的 -260px 是裸像素，TILE 翻倍后会缩成 4 格），
+        # 纵向落在主路中央（ROAD_Y 是路中线所在格）。
+        "start_pos": [px(dv.TREE_CELL[0]) - 8 * TILE, px(36) + TILE // 2],
         "frames": frames,
     }
     out = old_path

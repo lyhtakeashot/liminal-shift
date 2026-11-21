@@ -20,7 +20,7 @@ var axis: int = Axis.SPACE
 var index: int = 0
 var frames: Array = []            # Array[FrameData]
 var char_pos: Vector2 = Vector2.ZERO
-var world_size := Vector2(640, 360)   # 可玩范围，从 frames.json 的 world 读
+var world_size := Vector2(1280, 720)   # 可玩范围，从 frames.json 的 world 读
 
 
 func load_frames() -> bool:
@@ -41,7 +41,7 @@ func load_frames() -> bool:
 
 	# 世界边界（frames.json 的 world.width/height）；缺就退回内部分辨率
 	var wd: Dictionary = d.get("world", {})
-	world_size = Vector2(float(wd.get("width", 640)), float(wd.get("height", 360)))
+	world_size = Vector2(float(wd.get("width", 1280)), float(wd.get("height", 720)))
 
 	frames.clear()
 	for item in d.get("frames", []):

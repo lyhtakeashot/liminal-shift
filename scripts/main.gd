@@ -9,7 +9,7 @@ extends Control
 ## 复用 move_up / move_down 做时间推进（HANDOFF §2.5），
 ## 语义靠 axis 分派，不另建 time_forward / time_back。
 
-const PLAYER_SPEED := 60.0
+const PLAYER_SPEED := 120.0
 const STEP_DELAY := 0.30      # 按住后多久开始自动重复
 const STEP_INTERVAL := 0.13   # 自动重复的间隔
 
@@ -210,7 +210,7 @@ func _on_bump(_index: int) -> void:
 	# §3.4：不要弹回去，要「顶住了」
 	hud.flash_bump()
 	world.kick_shake(2.2)
-	player.bump_kick = 2.4
+	player.bump_kick = 4.8
 	player.queue_redraw()
 
 

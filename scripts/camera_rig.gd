@@ -13,10 +13,10 @@ extends Node2D
 ##   - 时间轴：进入那一刻冻结 offset，推帧时镜头完全不动（HANDOFF §2.4）。
 ##   - 像素对齐（floor）防止亚像素采样让像素画闪烁。
 
-const VIEWPORT := Vector2(640, 360)
+const VIEWPORT := Vector2(1280, 720)
 const FOLLOW := 9.0          # 跟随平滑速度，越大越紧跟；0.13s 内基本到位
 
-var world_size := Vector2(640, 360)
+var world_size := Vector2(1280, 720)
 var offset := Vector2.ZERO          # 当前镜头偏移（世界坐标）
 var frozen_offset := Vector2.ZERO   # 进入时间轴时冻结的视野
 var time_mode := false
