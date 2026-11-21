@@ -181,6 +181,10 @@ zheng_a4 20×13   lu_a2 20×13     lu_a3  20×13
 | `_ref/houses/houses_data.json` | 房屋数据线 | 同一时间只准一条线写 |
 | `data/frames.json` | 世界布局线 | 同上 |
 | `scripts/house_shape.gd` | 引擎线 | `TILE` 唯一定义点，别人只读 |
+| `_ref/houses/_design_v5.py` | 数据生成线（2026-11-21 定案） | 读 `houses_data.json` → 供 `_land_v5.py` 落地 `frames.json`。改 `TILE` 必须同改 `W/H`（`GW,GH=W//TILE` 保持 100×56）；`sigma`/`TREE_DIAMETER`/`MILL_X0,X1`/`ROAD_Y` 全是格单位，绝不跟着 ×2。归属已写进该文件头注释。 |
+
+> 补充：`shen_a3` 「屋体入水 6 格」是 `_design_v5.py` 的**设计诊断标记**（坐标 (4,9) 未脱节），不是错误，后续别当 bug 修。
+> 补充：`_land_v5.py` 重跑幂等（MD5 前后一致 `BD96E461A388014634582E188DFCA807`）。
 
 ---
 

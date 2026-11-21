@@ -17,6 +17,14 @@
   路：y = 32（磨坊南沿下 4~8 格，很近），A1/A2 弯、A3 直
   井：磨坊院外南侧路边 (42, 26)，公用水井
   槐：井旁路北空地 (39, 24)
+
+维护归属（2026-11-21 用户拍板）：**数据生成线**。
+  - 本文件读 houses_data.json（格坐标，只读）、产出 A1–A3 格布局供 _land_v5.py 落地 frames.json。
+  - ⚠️ 改 TILE 必须同改 W/H：GW,GH = W//TILE, H//TILE 要保持 100×56.25，
+    只改其一会让河/路/树在半张或双倍地图上重算、房子跑到地图外。
+  - 以下全是「格」单位，改 TILE 时**绝不能跟着 ×2**：
+    sigma（河道高斯宽度）、TREE_DIAMETER、MILL_X0/X1、ROAD_Y、dam/well/tree 的格坐标。
+  - 重跑幂等（实测 MD5 前后一致）。_land_v5.py 同样幂等。
 """
 import json, os, math, heapq
 from PIL import Image, ImageDraw, ImageFont
