@@ -34,6 +34,7 @@ _mdtest/greybox/
 # 生成一堆 *.translation 幽灵文件。由 gen_art_checklist.py 生成，可随时重出。
 # ============================================================
 art-handoff/
+art-handoff*.zip
 
 # ============================================================
 # Godot 编辑器扫描 CSV 时自动生成的 .translation 幽灵文件
