@@ -5428,6 +5428,81 @@
     ],
     "furniture": [
       {
+        "name": "板车",
+        "short": "板车",
+        "rect": [
+          3,
+          0,
+          2,
+          1
+        ],
+        "note": "门口 · 卸货用的板车，靠北墙放",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "可回收垃圾桶",
+        "short": "可回收垃圾桶",
+        "rect": [
+          12,
+          0,
+          1,
+          1
+        ],
+        "note": "垃圾分类 · 可回收物（蓝桶），靠院墙一排",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "有害垃圾桶",
+        "short": "有害垃圾桶",
+        "rect": [
+          13,
+          0,
+          1,
+          1
+        ],
+        "note": "垃圾分类 · 有害垃圾（红桶），靠院墙一排",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "厨余垃圾桶",
+        "short": "厨余垃圾桶",
+        "rect": [
+          14,
+          0,
+          1,
+          1
+        ],
+        "note": "垃圾分类 · 厨余垃圾（绿桶），靠院墙一排",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "其他垃圾桶",
+        "short": "其他垃圾桶",
+        "rect": [
+          15,
+          0,
+          1,
+          1
+        ],
+        "note": "垃圾分类 · 其他垃圾（灰桶），靠院墙一排",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
         "name": "旧招牌架",
         "short": "旧招牌架",
         "rect": [
@@ -5443,21 +5518,6 @@
         "wall_mounted": false
       },
       {
-        "name": "板车",
-        "short": "板车",
-        "rect": [
-          11,
-          1,
-          2,
-          1
-        ],
-        "note": "门口 · 卸货用的板车",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
         "name": "水缸",
         "short": "水缸",
         "rect": [
@@ -5467,21 +5527,6 @@
           1
         ],
         "note": "门口 · 接雨水",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "二八大杠",
-        "short": "二八大杠",
-        "rect": [
-          6,
-          2,
-          2,
-          1
-        ],
-        "note": "门口 · 靠墙停着的旧自行车",
         "clue": false,
         "zone": "yard",
         "yard_building": false,
