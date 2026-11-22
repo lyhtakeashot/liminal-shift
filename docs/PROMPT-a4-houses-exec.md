@@ -30,7 +30,7 @@ D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift
 
 | 房屋 | 现状（实测） | 要问用户什么 |
 |---|---|---|
-| `shen_a4` 沈家四合院 | lot `[0,0,27,30]`（28×31）、17 房 / 67 家具、13 门 / 24 拆墙格；note 写「28×28」**与 lot 不符**（旧稿残留） | 是在「A3 三翼原样继承 + 南加倒座」这个基础上继续改，还是推翻重来？具体改哪几间？note 的 28×28 要不要按 lot 改成 28×31？ |
+| `shen_a4` 沈家四合院 | 旧稿 28×31 / 17房 / 67家具已整栋推翻 → **2026-11-22 v9 全新四合院定稿**：lot `[0,0,35,35]`（36×36），32×32 方院居中四周2格庭院、口字连廊宽3贴9×9天井、12功能房 + 4连廊 + 天井 + 门厅前室（18矩形区）、76家具（3 clue）、东南巽位门庑式院门 + 影壁；`lab/_shen_final.py`（房型参数化）+ `lab/_shen_furn_v9.py`（家具）为当前权威脚本（旧 `_redo_shen_a4.py` 已作废，跑它会覆盖回旧结构）。CHECK ALL PASS | 已完成（全新重构，几何家具全改） |
 | `zheng_a4` 郑家小楼 | lot `[0,0,19,12]`（20×13）、wings 只有 `[[0,0,15,11]]`、4 房 / 19 家具；note 明写**「结构照抄 lu_a2 仅为校验布局合法，家具与叙事全新」** | 平面结构要不要独立设计（不再借 `lu_a2`）？若要，依据是什么（2001 年农村瓷砖二层小楼的一层平面）？ |
 
 **在用户回答前，不许改 `shen_a4` / `zheng_a4` 的任何字段。**
@@ -49,7 +49,7 @@ D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift
 
 | id | 占地(lot) | 房间/家具 | 完成度 |
 |---|---|---|---|
-| `shen_a4` | 28×31 | 17 / 67 | A3 三翼完整继承 + 南加倒座，有 `demolished` 24 格、5 条 clue、罪证落倒座账房（地质报告改稿）。**用户说还没改完 → 等口径** |
+| `shen_a4` | 36×36（32×32方院居中+四周庭院2格） | 18（12功能房+4连廊+天井+门厅前室）/ 76 | v9 全新四合院：口字连廊宽3方正闭合贴9×9天井居中、房贴合连廊外侧、单墙分隔、房门全直达连廊不穿房、东南巽位门庑式院门+门厅座山影壁、76家具长边贴墙、3 clue 叙事保全；**11/22 用户「定了，落地」**。`lab/_shen_final.py`+`lab/_shen_furn_v9.py` 为权威脚本（旧 `_redo_shen_a4.py` 作废） |
 | `market` | 42×28 | 6 / 58 | 用户 m02311「长宽各扩一倍」定稿；在建态 58 家具、上磨盘◆ + 文件柜◆证物齐。**可直接精调** |
 | `zhou_a4` | 21×11 | 5 / 31 | note 串了 m02355→m02443→m02457 三轮改稿，4 条 clue；note 写「占地 22×9」与 lot 不符，以 lot 为准。**可直接精调** |
 | `zheng_a4` | 20×13 | 4 / 19 | 结构照抄 `lu_a2`，家具/叙事全新；对话定稿在 `docs/npc.md` §6（郑德胜 40 / 刘桂芳 38 / 郑小虎 15），住户对老井不知情。**等口径（结构要不要独立设计）** |
@@ -58,7 +58,7 @@ D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift
 
 | 脚本 | 作用 |
 |---|---|
-| `_ref/houses/_redo_shen_a4.py` | 从 `shen_a3` 继承重建四合院；**带扩展自检**（家具不压墙/门/院门、不重叠、门四邻禁家具、房间不压墙、每道门原始格必须是墙防假门、A3 继承完整性） |
+| `lab/_shen_final.py` + `lab/_shen_furn_v9.py` | **沈家 v9 当前权威脚本**：参数化房型（口字连廊+12房+影壁）+ 家具排布（76件长边贴墙）；各自带严格自检。`_ref/houses/_redo_shen_a4.py` 已作废（跑它会把 JSON 覆盖回旧28×31方案） |
 | `_ref/houses/_redo_market.py` | 超市 42×28 在建态 |
 | `_ref/houses/_redo_zhou_a4.py` | 周家会计家 |
 | `_ref/houses/_redo_zheng_a4.py` | 从 `lu_a2` 派生郑家（幂等：存在则替换，否则追加） |
@@ -78,7 +78,7 @@ D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift
 
 **可以改**：
 - `_ref/houses/houses_data.json`（唯一真相源）
-- `_ref/houses/_redo_shen_a4.py` / `_redo_market.py` / `_redo_zhou_a4.py` / `_redo_zheng_a4.py`
+- `_ref/houses/_redo_market.py` / `_redo_zhou_a4.py` / `_redo_zheng_a4.py`
 - `_ref/art/A4_2001/*.png`（出图产物）
 - `docs/house-spec.md` / `docs/HANDOFF-VILLAGE.md` / `docs/PROMPT-house-size.md`（旧尺寸回写，§5）
 
@@ -110,7 +110,8 @@ D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift
 
 - **别复活旧模板**：日后若重做 A4 布局图，树要按 `docs/BUILD-A1.md` §2.2 v5 的**逐格阶梯像素圆**（行宽 3,5,7,9,9,9,7,5,3），河要**双频正弦河床 + 磨坊缓凹**，坐标基准统一到 A1 v5。这是 `BUILD-A4.md` 被作废的直接原因。
 - **删墙后查无主格**：删一段墙后要检查房间配色有没有留下无主格（露默认棕色）。A2 磨坊踩过。
-- **note 与 lot 不符是常态**：`shen_a4`（note 28×28 vs lot 28×31）、`zhou_a4`（note 22×9 vs lot 21×11）、`zheng_a4`（note 占地 19×9 / 本体 15×8 vs lot 20×13 / wings 15×11）——**一律以 lot / wings 字段为准**，note 只是叙述。
+- **note 与 lot 不符是常态**：`zhou_a4`（note 22×9 vs lot 21×11）、`zheng_a4` 旧稿（note 占地 19×9 / 本体 15×8 vs lot 20×13 / wings 15×11，11/21 已追平）——**一律以 lot / wings 字段为准**，note 只是叙述。
+- **沈家 v9 重建教训（11/22）**：① `check_all()` 会校验「房间矩形不含墙格」——房间边界必须落在真实室内格，不能把 partition 墙格圈进去；selfcheck 务必补这一项（v9 首轮漏检，check_all 报「西厢·客房压到墙格(3,14)」）② 影壁是 partition 墙段，若房间矩形覆盖了它也会触发压墙，解法是把房间矩形拆成影壁前后两段；③ 房型坐标（house-local）会被 `+MARGIN` 平移，写 partitions/doors 坐标别与渲染坐标混；④ 影壁 y 层必须留出院门北邻格可走，否则堵死入口（可达从 1044 掉到 277）。
 - **郑家坐标**：`docs/HANDOFF-VILLAGE.md:198` 写「已接进 frames.json A4 帧 pos [1120,340]」——那是旧 1600×900 口径且 A4 帧现已全空，**别拿它当现状**。
 
 ## 8. 第一个输出（开工前先交这个）
@@ -118,7 +119,7 @@ D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift
 不要一上来就改文件。第一条回复先给我：
 
 1. 确认已读 `gen_all_houses.py:304-310` 的权威源机制，并说明不会调 `export_seed()`
-2. 按 §0 向用户提出沈家 / 郑家的口径问题（这两栋等回答）
-3. 说明你打算先精调 `market` 还是 `zhou_a4`（推荐先 `market`，数据最完整、证物链最清晰）
+2. ~~按 §0 向用户提出沈家 / 郑家的口径问题~~ 11/21 郑家、11/22 沈家 v9 全新四合院均已定稿落地，此步已完成
+3. 说明下一栋精调目标（A4 四栋沈家/超市/周家/郑家均已定或跳过；余下 A5 `toyshop`/`school`）
 
 等用户回答后再动手。
