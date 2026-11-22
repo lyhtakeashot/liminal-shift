@@ -5431,12 +5431,42 @@
         "name": "板车",
         "short": "板车",
         "rect": [
+          2,
           3,
-          0,
           2,
           1
         ],
-        "note": "门口 · 卸货用的板车，靠北墙放",
+        "note": "门口 · 卸货用的板车，靠南墙放",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "摇摇马",
+        "short": "摇摇马",
+        "rect": [
+          6,
+          3,
+          1,
+          1
+        ],
+        "note": "门口 · 摇摇马，靠南墙摆门前给孩子试骑",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "摇摇马",
+        "short": "摇摇马",
+        "rect": [
+          11,
+          3,
+          1,
+          1
+        ],
+        "note": "门口 · 摇摇马，靠南墙摆门前给孩子试骑",
         "clue": false,
         "zone": "yard",
         "yard_building": false,
@@ -5447,11 +5477,11 @@
         "short": "可回收垃圾桶",
         "rect": [
           12,
-          0,
+          3,
           1,
           1
         ],
-        "note": "垃圾分类 · 可回收物（蓝桶），靠院墙一排",
+        "note": "垃圾分类 · 可回收物（蓝桶），靠南墙一排",
         "clue": false,
         "zone": "yard",
         "yard_building": false,
@@ -5462,11 +5492,11 @@
         "short": "有害垃圾桶",
         "rect": [
           13,
-          0,
+          3,
           1,
           1
         ],
-        "note": "垃圾分类 · 有害垃圾（红桶），靠院墙一排",
+        "note": "垃圾分类 · 有害垃圾（红桶），靠南墙一排",
         "clue": false,
         "zone": "yard",
         "yard_building": false,
@@ -5477,11 +5507,11 @@
         "short": "厨余垃圾桶",
         "rect": [
           14,
-          0,
+          3,
           1,
           1
         ],
-        "note": "垃圾分类 · 厨余垃圾（绿桶），靠院墙一排",
+        "note": "垃圾分类 · 厨余垃圾（绿桶），靠南墙一排",
         "clue": false,
         "zone": "yard",
         "yard_building": false,
@@ -5492,11 +5522,11 @@
         "short": "其他垃圾桶",
         "rect": [
           15,
-          0,
+          3,
           1,
           1
         ],
-        "note": "垃圾分类 · 其他垃圾（灰桶），靠院墙一排",
+        "note": "垃圾分类 · 其他垃圾（灰桶），靠南墙一排",
         "clue": false,
         "zone": "yard",
         "yard_building": false,
@@ -5533,41 +5563,11 @@
         "wall_mounted": false
       },
       {
-        "name": "摇摇马",
-        "short": "摇摇马",
-        "rect": [
-          8,
-          2,
-          1,
-          1
-        ],
-        "note": "门口 · 摇摇马，摆门前给孩子试骑",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "摇摇马",
-        "short": "摇摇马",
-        "rect": [
-          11,
-          2,
-          1,
-          1
-        ],
-        "note": "门口 · 摇摇马，摆门前给孩子试骑",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
         "name": "扫帚",
         "short": "扫帚",
         "rect": [
           1,
-          3,
+          2,
           1,
           1
         ],
@@ -5582,7 +5582,7 @@
         "short": "货箱堆",
         "rect": [
           15,
-          3,
+          0,
           2,
           1
         ],
