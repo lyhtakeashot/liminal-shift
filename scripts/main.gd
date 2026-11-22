@@ -58,6 +58,9 @@ func _ready() -> void:
 	# set_deferred：等布局阶段结束后再设，避免「非对等锚点覆盖 size」WARNING。
 	world.set_deferred("size", tl.world_size)
 	camera_rig.set_target(tl.char_pos)
+	# 玩家像素由 world_view 的 y-sort 循环画（DECIDE D4 方案 B）。
+	# 这里只做注入：让 world_view 拿到节点引用，玩家状态靠 set_player_state() 每帧同步。
+	world.set_player_ref(player)
 	_refresh_all()
 
 
@@ -107,8 +110,10 @@ func _process(delta: float) -> void:
 	player.position = tl.char_pos
 	camera_rig.set_target(tl.char_pos)
 	# 屋顶要不要画取决于「玩家站没站在 wings 里」（house-spec §4.8.4）。
-	# set_player_pos 内部有等值判断，不动就不重绘。
-	world.set_player_pos(tl.char_pos)
+	# 遮挡顺序取决于玩家脚线（y-sort）。所以整套玩家状态都喂给 world_view。
+	# set_player_state 内部有等值判断，不动就不重绘。
+	world.set_player_state(tl.char_pos, player.facing, player.walking,
+		player.walk_phase, player.bump_kick, tl.axis == Timeline.Axis.TIME)
 
 
 func _process_space(delta: float) -> void:
@@ -221,7 +226,9 @@ func _refresh_all() -> void:
 	world.show_frame(f, is_time)
 	world.set_year_tint(_tint_for(tl.index))
 	# 换帧后 wings 会变，屋顶显隐必须按新数据重算（§4.8.4 陷阱：不能缓存布尔）
-	world.set_player_pos(tl.char_pos)
+	# 玩家状态也一并同步 —— 排序键靠脚线，切帧时脚线不变也要保证状态新鲜。
+	world.set_player_state(tl.char_pos, player.facing, player.walking,
+		player.walk_phase, player.bump_kick, is_time)
 
 	player.time_mode = is_time
 	player.queue_redraw()

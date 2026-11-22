@@ -12,6 +12,15 @@ extends RefCounted
 
 const TILE := 32.0
 
+## 墙高（渲染专用，DECIDE D3 / house-spec §4.5.2）。
+## 观察者在东南方向：
+##   墙的**室内侧**朝南/朝东 → 这是北墙/西墙 → 画全高（= 一格）
+##   墙的**室内侧**朝北/朝西 → 这是南墙/东墙 → 画半高（= 半格）
+## 拆墙表（demolished）里的格 = 断墙残垣 → 半高。
+## ⚠️ 只影响「画多高」，**不影响碰撞**：碰撞恒为整格 AABB（solid_rects() 不变）。
+const WALL_FULL := 32.0
+const WALL_HALF := 16.0
+
 const DATA_PATH := "res://_ref/houses/houses_data.json"
 
 # ---- 配色（与 _ref/houses/gen_all_houses.py 的 C 表一致，占位块用）----
@@ -188,6 +197,133 @@ static func solid_rects(data: Dictionary, pos: Vector2) -> Array:
 					pos.y + float(y0 + j) * TILE,
 					TILE, TILE))
 	return out
+
+
+## ---- 渲染专用：墙向分类器（DECIDE D3 / house-spec §4.5.2）----
+##
+## 观察者在东南方向，于是：
+##   墙的**室内侧**朝南/朝东 → 这个内侧面朝向观察者 → 看得见 → 画全高（32px）
+##   墙的**室内侧**朝北/朝西 → 内侧面背着观察者 → 只看得到墙顶 → 画矮墙（16px）
+## 即：北墙/西墙全高，东墙/南墙半高。四面画满会把整个室内盖住（§4.5.2）。
+##
+## ⚠️ **只影响「画多高」，绝不影响碰撞**：solid_rects() 照旧返回整格 AABB。
+## ⚠️ 分类器不假设矩形：任意 wings 形状、任意 partitions、demolished 拆墙表都吃得住。
+##
+## 返回 [{cell: Vector2i, height: float}]（格子坐标 + 该格墙高），按格给，不合并。
+## 结果按房子 id 缓存（拆墙表不会在运行时变）。
+static var _wall_cache: Dictionary = {}
+
+const WALL_CLASS_FULL := 1
+const WALL_CLASS_HALF := 2
+const WALL_CLASS_UNKNOWN := 0
+
+
+static func wall_render_cells(data: Dictionary, pos: Vector2) -> Array:
+	var sid := String(data.get("id", ""))
+	var cells: Array = _wall_cache.get(sid, [])
+	if cells.is_empty():
+		cells = _classify_walls(data)
+		_wall_cache[sid] = cells
+	var out: Array = []
+	for c in cells:
+		var cd: Dictionary = c
+		var cell: Vector2i = cd["cell"]
+		out.append({
+			"cell": cell,
+			"rect": Rect2(
+				pos.x + float(cell.x) * TILE,
+				pos.y + float(cell.y) * TILE,
+				TILE, TILE),
+			"height": float(cd["height"]),
+		})
+	return out
+
+
+## 逐格判墙向 → 每格墙高。
+## ⚠️ 坐标系：格子坐标是**绝对格坐标**（与 lot / wings / demolished 一致，
+##    不是 grid_of() 返回数组里的相对下标）。lot 不从 (0,0) 起时两者会差一截。
+static func _classify_walls(data: Dictionary) -> Array:
+	var lot: Array = data.get("lot", [0, 0, 0, 0])
+	var x0 := int(lot[0])
+	var y0 := int(lot[1])
+	var grid := grid_of(data)
+
+	var interior := {}
+	var walls := {}
+	for j in grid.size():
+		var row := String(grid[j])
+		for i in row.length():
+			var c := Vector2i(x0 + i, y0 + j)
+			if row[i] == ".":
+				interior[c] = true
+			elif row[i] == "#":
+				walls[c] = true
+
+	# 第一步：直接判 —— 看这格墙的哪一侧挨着室内
+	var cls := {}
+	for c in walls.keys():
+		cls[c] = _wall_class_direct(c, interior)
+
+	# 第二步：角上的格子（四邻都不是室内）继承相邻墙格。
+	# 「有全高就全高」是物理直觉：隔断的南端头朝着观察者 → 全高。
+	for _pass in 6:
+		var changed := false
+		for c in walls.keys():
+			if int(cls[c]) != WALL_CLASS_UNKNOWN:
+				continue
+			var v := _wall_class_inherit(c, walls, cls)
+			if v != WALL_CLASS_UNKNOWN:
+				cls[c] = v
+				changed = true
+		if not changed:
+			break
+
+	# 第三步：demolished 拆墙表 = 拆剩的残垣 → 半高（数据说墙已拆，只剩墙根）
+	for d in data.get("demolished", []):
+		var da: Array = d
+		var c2 := Vector2i(int(da[0]), int(da[1]))
+		if walls.has(c2):
+			cls[c2] = WALL_CLASS_HALF
+
+	var out: Array = []
+	for c in walls.keys():
+		var k := int(cls[c])
+		if k == WALL_CLASS_UNKNOWN:
+			k = WALL_CLASS_FULL
+		out.append({
+			"cell": c,
+			"height": WALL_FULL if k == WALL_CLASS_FULL else WALL_HALF,
+		})
+	return out
+
+
+## 室内在东/南 → 内侧面朝东南 → 全高；室内在北/西 → 半高。
+static func _wall_class_direct(c: Vector2i, interior: Dictionary) -> int:
+	if interior.has(c + Vector2i(0, 1)) or interior.has(c + Vector2i(1, 0)):
+		return WALL_CLASS_FULL
+	if interior.has(c + Vector2i(0, -1)) or interior.has(c + Vector2i(-1, 0)):
+		return WALL_CLASS_HALF
+	return WALL_CLASS_UNKNOWN
+
+
+## 角格继承：任一相邻墙格是全高 → 全高；否则任一半高 → 半高。
+static func _wall_class_inherit(c: Vector2i, walls: Dictionary, cls: Dictionary) -> int:
+	var has_full := false
+	var has_half := false
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		var dd: Vector2i = d
+		if not walls.has(dd):
+			continue
+		var v := int(cls[dd])
+		if v == WALL_CLASS_FULL:
+			has_full = true
+		elif v == WALL_CLASS_HALF:
+			has_half = true
+	if has_full:
+		return WALL_CLASS_FULL
+	if has_half:
+		return WALL_CLASS_HALF
+	return WALL_CLASS_UNKNOWN
 
 
 ## a) solid_rects() 只返回墙（'#'）→ 碰撞用
