@@ -246,10 +246,10 @@ def main():
     doc = {
         "world": {"width": dv.W, "height": dv.H},
         "safe_top": 36,
-        "safe_bottom": 668,
+        "safe_bottom": 70 * TILE,  # 2026-11-22 世界重构线：随 H 放大到 2400 重设（格数 37→70）
         # 起点：老槐西侧约 8 格（原先的 -260px 是裸像素，TILE 翻倍后会缩成 4 格），
-        # 纵向落在主路中央（ROAD_Y 是路中线所在格）。
-        "start_pos": [px(dv.TREE_CELL[0]) - 8 * TILE, px(36) + TILE // 2],
+        # 纵向落在主路中央（ROAD_Y 是路中线所在格）。世界重构线：36 → dv.ROAD_Y(52格)。
+        "start_pos": [px(dv.TREE_CELL[0]) - 8 * TILE, px(dv.ROAD_Y) + TILE // 2],
         "frames": frames,
     }
     out = old_path

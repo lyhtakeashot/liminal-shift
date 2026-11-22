@@ -52,9 +52,10 @@ func _init() -> void:
 	# --- 1. 帧表 ---
 	print("FRAMES=%d START=%s MAX=%d" % [tl.frames.size(), str(tl.char_pos), tl.frame_max()])
 
-	# --- 2. BUILD-A1 §7.1：世界 3200×1800，起点在主路上可站 ---
-	print("WORLD=%.0fx%.0f (期望 3200x1800)" % [tl.world_size.x, tl.world_size.y])
-	print("WORLD_OK=%s" % (tl.world_size == Vector2(3200, 1800)))
+	# --- 2. BUILD-A1 §7.1：世界 3200×2400，起点在主路上可站 ---
+	# 2026-11-22 世界重构线：H 1800→2400（主路南移到 y=52 格=1664px）
+	print("WORLD=%.0fx%.0f (期望 3200x2400)" % [tl.world_size.x, tl.world_size.y])
+	print("WORLD_OK=%s" % (tl.world_size == Vector2(3200, 2400)))
 	print("A1_IS_FREE_START=%s (期望 true)" % tl.current().is_free(tl.char_pos))
 	print("START_OK=%s" % tl.current().is_free(tl.char_pos))
 
@@ -278,16 +279,16 @@ func _nearest_free(frame, target: Vector2) -> Vector2:
 
 
 ## 扫一遍 A1 可站区域，统计推到 A5 的通过率，并单独统计「主路活动带」。
-## 主路带：用 A1 该帧自己的主路 y 值（v5 路 y=36 格 → 1152px，路宽 2 格）。
+## 主路带：用 A1 该帧自己的主路 y 值（世界重构线 路 y=52 格 → 1664px，路宽 2 格）。
 ## 判定标准：站在 A1 的某点，推到**下一帧**时不被顶住。
-const ROAD_Y := 1152
+const ROAD_Y := 1664 # 2026-11-22 世界重构线：主路 36格(1152)→52格(1664)
 func _scan_reach(tl) -> Dictionary:
 	var total := 0
 	var full := 0
 	var band_total := 0
 	var band_full := 0
 	var per_step: Array = [0, 0, 0, 0]
-	for y in range(240, 1760, 32):
+	for y in range(240, 2400, 32): # 2026-11-22 世界重构线：上界 1760→2400（覆盖新主路 1664 + 路南房）
 		for x in range(40, 3160, 32):
 			var p := Vector2(x, y)
 			if not tl.frames[0].is_free(p):
@@ -301,7 +302,7 @@ func _scan_reach(tl) -> Dictionary:
 					break
 			if ok:
 				full += 1
-			# 主路活动带 = A1 主路 y=1152（宽 64 → 1120..1184，取 ±40 余量）。
+			# 主路活动带 = A1 主路 y=1664（宽 64 → 1632..1696，取 ±40 余量）。
 			# 只测 A1 主路：玩家在 1926 沿路走，推帧时不该被"凭空出现的东西"卡住。
 			# 不能把 A2/A3 的主路 y 也算进来 —— 那些位置在 A1 时是空地或房子，
 			# 站在那儿推帧被顶住是「时间之门」的正常表现。
@@ -323,7 +324,7 @@ func _scan_reach(tl) -> Dictionary:
 ##   4. 落在该帧**手写 solid 形状**内（界碑、坝这类世界级实体，挡路天经地义）
 func _unexplained_blocks(tl) -> Array:
 	var house_rects: Array = []
-	for fi in [1, 2]:   # A2 / A3
+	for fi in range(1, tl.frames.size()): # 2026-11-22 收编解释集修复：含将来 A4/A5，避免误判
 		for s in tl.frames[fi].shapes:
 			var sd: Dictionary = s
 			if String(sd.get("type", "")) != "house":
@@ -334,7 +335,7 @@ func _unexplained_blocks(tl) -> Array:
 
 	# 手写 solid 形状（rect / circle / polygon）的矩形集合，逐帧
 	var hard_solids: Array = []
-	for fi in [1, 2]:
+	for fi in range(1, tl.frames.size()): # 2026-11-22 收编解释集修复：含将来 A4/A5
 		for s in tl.frames[fi].shapes:
 			var sd: Dictionary = s
 			if String(sd.get("type", "")) == "house":
@@ -368,7 +369,7 @@ func _unexplained_blocks(tl) -> Array:
 						hard_solids.append(Rect2(mnx, mny, mxx - mnx, mxy - mny))
 
 	var out: Array = []
-	for y in range(240, 1760, 32):
+	for y in range(240, 2400, 32): # 2026-11-22 世界重构线：上界 1760→2400
 		for x in range(40, 3160, 32):
 			var p := Vector2(x, y)
 			if not tl.frames[0].is_free(p):

@@ -33,7 +33,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 OUT = os.path.join(os.path.dirname(HERE), "art", "_overview")
 TILE = 32
-W, H = 3200, 1800
+W, H = 3200, 2400
 GW, GH = W // TILE, H // TILE
 
 FONTS = ["C:/Windows/Fonts/msyh.ttc", "C:/Windows/Fonts/simhei.ttf"]
@@ -256,7 +256,10 @@ def a_star(start, goal, blocked, extra=None, max_iter=300000):
                 heapq.heappush(openq, (ng + h(nb), ng, nb, cur))
     return None
 
-ROAD_Y = 36
+# 2026-11-22 世界重构线：主路南移。旧值 36 格(1152px)，A4 沈家 36×36 贴河下缘
+# (y≈448)时底边 1600px，36 格路北缘正好 1600px = 零间隔(压到沈家)。
+# 按提示词规则南移到 52 格(1664px)，路北缘留 64px(=2格)间隔。
+ROAD_Y = 52
 
 def sway(x, amp=2.4):
     return round(amp * math.sin(x / 8.0 + 0.4) + 1.2 * math.sin(x / 3.4))
