@@ -113,8 +113,8 @@ school = {
     #       (12,14) 教室三↔门厅 | (24,13) 门厅↔教室四
     #       (18,18) 门厅↔操场（正对操场中轴）
     "doors": [[16, 4], [20, 4], [18, 9], [12, 14], [24, 13], [18, 18]],
-    # 大门：南围墙 (18,29)(19,29)，进门即是操场，操场正对门厅
-    "gate": [[18, 29], [19, 29]],
+    # 大门：开在**操场东侧的东围墙**（x=37 那一列），门洞沿墙 2 格（进深 1 格）
+    "gate": [[37, 23], [37, 24]],
     "rooms": [
         [1, 1, 15, 8, "教室一", "class"],
         [17, 1, 19, 8, "走廊", "hall"],
@@ -249,8 +249,8 @@ school = {
              "四间教室都配黑板+讲台+课桌（2×1，横竖都留 1 格空当），全校再无办公室与会议室。"
              "操场**整块上色**（room 色键 field=草地 #6f7d4c，整块铺满，不是只描边），"
              "跑道用 seamless 像素格逐格拼成体育场形并单独指定红土色 #b08050。"
-             "大门开在南围墙 (18,29)(19,29)，进门即到操场；操场正北对着门厅，"
-             "门厅↔操场的门开在 (18,18)（操场中轴），走廊不再正对操场。"
+             "**大门开在操场东侧的东围墙**（x=37，门洞沿墙 2 格：2×1），进门即是操场东侧草地；"
+             "教学楼正门仍是门厅↔操场的门 (18,18)（正对操场中轴），走廊不与操场相通。"
              "操场不堆长椅沙坑花坛粉笔筐乒乓球台爬杆旧车胎水缸篮球架，单杠球门也删了，"
              "只剩升旗台+旗杆、主席台+剪彩台+红绸+花篮、跑道、南墙标语牌。"
              "「周」界碑 [1,18,2,1]（操场北围墙最西端）。"),
@@ -431,6 +431,33 @@ assert yard[0] == 1 and yard[2] == 36 and yard[1] == 19 and yard[3] == 28, \
 for f in track_furn:
     assert f.get("color") == TRACK_COLOR, "跑道格必须指定红土色"
 assert TRACK_COLOR != FIELD_COLOR, "跑道色不能跟草地色一样"
+
+# ── 自检 12：大门开在操场东侧，门洞 2×1 ──
+gate = [tuple(g) for g in school["gate"]]
+assert len(gate) == 2, f"大门门洞应是 2 格，现在是 {len(gate)} 格"
+assert all(g[0] == school["lot"][2] for g in gate), \
+    f"大门必须开在东围墙（x={school['lot'][2]}），现在是 {gate}"
+# 门洞沿墙连续、占 2 行 1 列（2×1）
+gx = sorted(g[0] for g in gate)
+gy = sorted(g[1] for g in gate)
+assert gx[0] == gx[1], f"大门门洞必须是 1 列深（2×1），现在跨了 {gx}"
+assert gy[1] - gy[0] == 1, f"大门门洞必须沿墙连续 2 格，现在 y={gy}"
+# 门内侧那一格属于操场（进门即到操场）
+inner_x = school["lot"][2] - 1
+for gy_ in gy:
+    owner = None
+    for r in school["rooms"]:
+        if r[0] <= inner_x <= r[2] and r[1] <= gy_ <= r[3]:
+            owner = r[4]
+            break
+    assert owner == "操场", f"大门内侧 ({inner_x},{gy_}) 不是操场而是「{owner}」"
+# 门两侧不得有家具堵门
+for g in gate:
+    for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        nx, ny = g[0] + dx, g[1] + dy
+        if not (0 <= nx < len(grid[0]) and 0 <= ny < len(grid)):
+            continue
+        assert (nx, ny) not in occupied, f"大门 {g} 邻格被家具堵住 ({nx},{ny})"
 
 if PREVIEW:
     out = os.path.join(HERE, "..", "..", "lab", "school_plan_preview.png")
