@@ -1,0 +1,46 @@
+total furniture entries: 551
+matched by short->manifest id: 253
+unmatched: 298
+distinct manifest ids reachable via short: 85 / 91
+
+-- unmatched short names (top 40) --
+跑道  x56
+课桌  x30
+未拆封货架  x18
+货架  x5
+茶几  x5
+文件柜  x5
+玩具架  x5
+大床  x4
+太师椅  x4
+单床  x3
+脚手架  x3
+木工台  x3
+办公桌  x3
+货箱  x3
+暖水瓶  x3
+黑板  x3
+便器  x2
+保险柜  x2
+打印机  x2
+算盘  x2
+砂堆  x2
+工具箱  x2
+砂浆搅拌机  x2
+灰浆槽  x2
+施工围挡  x2
+讲台  x2
+教鞭盒  x2
+课程表  x2
+图书角  x2
+书包架  x2
+讲义筐  x2
+荣誉榜  x2
+宣传栏  x2
+纸箱  x2
+花篮  x2
+梳妆台  x2
+沙发  x2
+电视柜  x2
+饭桌  x2
+冰箱  x2

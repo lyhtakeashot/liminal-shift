@@ -1,0 +1,18 @@
+lu_house       total= 12 unmatched=  0
+mill_a1        total=  6 unmatched=  0
+mill_a2        total=  7 unmatched=  0
+shen_a1        total= 17 unmatched=  0
+shen_a2        total= 29 unmatched=  0
+shen_a3        total= 51 unmatched=  2
+shen_a4        total= 76 unmatched= 31
+market         total= 58 unmatched= 58
+zhou_house     total= 10 unmatched=  0
+toyshop        total= 24 unmatched= 21
+school         total=154 unmatched=142
+lu_a2          total=  6 unmatched=  0
+zhou_a2        total= 10 unmatched=  0
+mill_a3        total= 20 unmatched=  0
+zhou_a3        total=  8 unmatched=  0
+lu_a3          total=  2 unmatched=  0
+zhou_a4        total= 31 unmatched= 23
+zheng_a4       total= 30 unmatched= 21

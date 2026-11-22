@@ -2854,6 +2854,167 @@
     "粮仓 · 装粮麻袋"
    ],
    "code": "P84"
+  },
+  {
+   "id": "xiaozhuo_1x1",
+   "name": "小方桌",
+   "short": "方桌",
+   "w": 1,
+   "h": 1,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 0,
+   "houses": [],
+   "clue_houses": [],
+   "path": "assets/village/_classmate/props/xiaozhuo_1x1.png",
+   "notes": [
+    "素木小方桌，无装饰；美术同学新图（1×1 占地）",
+    "美术同学资产导入适配线（2026-11-22）；暂存于 _classmate/，待拍板后再进 props/"
+   ],
+   "code": "P85"
+  },
+  {
+   "id": "hongzhuo_1x1",
+   "name": "红绸桌",
+   "short": "红桌",
+   "w": 1,
+   "h": 1,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 0,
+   "houses": [],
+   "clue_houses": [],
+   "path": "assets/village/_classmate/props/hongzhuo_1x1.png",
+   "notes": [
+    "铺红绸的方桌（喜桌/祭桌）；美术同学新图（1×1 占地）",
+    "美术同学资产导入适配线（2026-11-22）；暂存于 _classmate/，待拍板后再进 props/"
+   ],
+   "code": "P86"
+  },
+  {
+   "id": "baizhuo_1x1",
+   "name": "白布桌",
+   "short": "白桌",
+   "w": 1,
+   "h": 1,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 0,
+   "houses": [],
+   "clue_houses": [],
+   "path": "assets/village/_classmate/props/baizhuo_1x1.png",
+   "notes": [
+    "铺白桌布的方桌（供桌）；美术同学新图（1×1 占地）",
+    "美术同学资产导入适配线（2026-11-22）；暂存于 _classmate/，待拍板后再进 props/"
+   ],
+   "code": "P87"
+  },
+  {
+   "id": "shuzhuo_1x1_top",
+   "name": "书桌（俯视）",
+   "short": "书桌",
+   "w": 1,
+   "h": 1,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 0,
+   "houses": [],
+   "clue_houses": [],
+   "path": "assets/village/_classmate/props/shuzhuo_1x1_top.png",
+   "notes": [
+    "俯视角度的书桌，桌上摊纸笔；美术同学新图（1×1 占地）",
+    "美术同学资产导入适配线（2026-11-22）；暂存于 _classmate/，待拍板后再进 props/"
+   ],
+   "code": "P88"
+  },
+  {
+   "id": "gui_1x1",
+   "name": "矮柜",
+   "short": "矮柜",
+   "w": 1,
+   "h": 1,
+   "px": [
+    32,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 0,
+   "houses": [],
+   "clue_houses": [],
+   "path": "assets/village/_classmate/props/gui_1x1.png",
+   "notes": [
+    "两层抽屉矮柜；美术同学新图（1×1 占地）",
+    "美术同学资产导入适配线（2026-11-22）；暂存于 _classmate/，待拍板后再进 props/"
+   ],
+   "code": "P89"
+  },
+  {
+   "id": "changzhuo_2x1",
+   "name": "长桌",
+   "short": "长桌",
+   "w": 2,
+   "h": 1,
+   "px": [
+    64,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 0,
+   "houses": [],
+   "clue_houses": [],
+   "path": "assets/village/_classmate/props/changzhuo_2x1.png",
+   "notes": [
+    "长条木桌；美术同学新图（2×1 占地）",
+    "美术同学资产导入适配线（2026-11-22）；暂存于 _classmate/，待拍板后再进 props/"
+   ],
+   "code": "P90"
+  },
+  {
+   "id": "cantang_3x1",
+   "name": "餐桌",
+   "short": "餐桌",
+   "w": 3,
+   "h": 1,
+   "px": [
+    96,
+    32
+   ],
+   "layer": "props",
+   "zone": "house",
+   "yard_building": false,
+   "uses": 0,
+   "houses": [],
+   "clue_houses": [],
+   "path": "assets/village/_classmate/props/cantang_3x1.png",
+   "notes": [
+    "长桌 + 两侧小凳的整套餐桌；美术同学新图（3×1 占地）",
+    "美术同学资产导入适配线（2026-11-22）；暂存于 _classmate/，待拍板后再进 props/"
+   ],
+   "code": "P91"
   }
  ],
  "scene": [

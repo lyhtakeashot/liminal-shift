@@ -1,0 +1,586 @@
+{
+ "rows": [
+  {
+   "src": "美术资产/家具/柴缸灶/Sprite-水缸1.png",
+   "id": "shuigang_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "陶水缸，院内蓄水",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/shuigang_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    24,
+    24
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 4,
+   "right_gap": 4
+  },
+  {
+   "src": "美术资产/家具/柴缸灶/Sprite-柴火灶.png",
+   "id": "chaihuozao_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "柴火灶，一口锅",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/chaihuozao_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    32,
+    30
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 0,
+   "right_gap": 0
+  },
+  {
+   "src": "美术资产/家具/柴缸灶/Sprite-柴堆.png",
+   "id": "chaidui_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "柴堆",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/chaidui_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    31,
+    32
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 0,
+   "right_gap": 1
+  },
+  {
+   "src": "美术资产/家具/柴缸灶/Sprite-茅坑.png",
+   "id": "maokeng_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "茅坑（坑口）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/maokeng_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    10,
+    18
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 11,
+   "right_gap": 11
+  },
+  {
+   "src": "美术资产/家具/床/Sprite-床1.png",
+   "id": "danrenchuang_1x2",
+   "gw": 1,
+   "gh": 2,
+   "conf": "高",
+   "note": "红被单床",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/danrenchuang_1x2.png",
+   "src_size": [
+    32,
+    64
+   ],
+   "content": [
+    32,
+    57
+   ],
+   "out_size": [
+    32,
+    96
+   ],
+   "left_gap": 0,
+   "right_gap": 0
+  },
+  {
+   "src": "美术资产/家具/床/Sprite-床2.png",
+   "id": "danrenchuang_1x2",
+   "gw": 1,
+   "gh": 2,
+   "conf": "高",
+   "note": "米色被褥床（变体）",
+   "role": "变体",
+   "out": "assets/village/_classmate/props/_variants/danrenchuang_1x2__Sprite-床2.png",
+   "src_size": [
+    32,
+    64
+   ],
+   "content": [
+    32,
+    57
+   ],
+   "out_size": [
+    32,
+    96
+   ],
+   "left_gap": 0,
+   "right_gap": 0
+  },
+  {
+   "src": "美术资产/家具/床/Sprite-床3.png",
+   "id": "danrenchuang_1x2",
+   "gw": 1,
+   "gh": 2,
+   "conf": "高",
+   "note": "蓝被床（变体）",
+   "role": "变体",
+   "out": "assets/village/_classmate/props/_variants/danrenchuang_1x2__Sprite-床3.png",
+   "src_size": [
+    32,
+    64
+   ],
+   "content": [
+    32,
+    56
+   ],
+   "out_size": [
+    32,
+    96
+   ],
+   "left_gap": 0,
+   "right_gap": 0
+  },
+  {
+   "src": "美术资产/家具/床/Sprite-大床1.png",
+   "id": "shuangrenchuang_2x2",
+   "gw": 2,
+   "gh": 2,
+   "conf": "高",
+   "note": "双人大床（米色）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/shuangrenchuang_2x2.png",
+   "src_size": [
+    64,
+    64
+   ],
+   "content": [
+    57,
+    61
+   ],
+   "out_size": [
+    64,
+    96
+   ],
+   "left_gap": 3,
+   "right_gap": 4
+  },
+  {
+   "src": "美术资产/家具/床/Sprite-大床2.png",
+   "id": "shuangrenchuang_2x2",
+   "gw": 2,
+   "gh": 2,
+   "conf": "高",
+   "note": "双人大床（蓝被，变体）",
+   "role": "变体",
+   "out": "assets/village/_classmate/props/_variants/shuangrenchuang_2x2__Sprite-大床2.png",
+   "src_size": [
+    64,
+    64
+   ],
+   "content": [
+    56,
+    61
+   ],
+   "out_size": [
+    64,
+    96
+   ],
+   "left_gap": 4,
+   "right_gap": 4
+  },
+  {
+   "src": "美术资产/家具/柜子/Sprite-柜子1.png",
+   "id": "gui_1x2",
+   "gw": 1,
+   "gh": 2,
+   "conf": "中",
+   "note": "四层抽屉竖柜",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/gui_1x2.png",
+   "src_size": [
+    32,
+    64
+   ],
+   "content": [
+    32,
+    56
+   ],
+   "out_size": [
+    32,
+    96
+   ],
+   "left_gap": 0,
+   "right_gap": 0
+  },
+  {
+   "src": "美术资产/家具/柜子/Sprite-柜子2.png",
+   "id": "gui_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "两层抽屉矮柜（NEW id）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/gui_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    26,
+    27
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 3,
+   "right_gap": 3
+  },
+  {
+   "src": "美术资产/家具/箱子/Sprite-箱子1.png",
+   "id": "muxiang_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "木箱",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/muxiang_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    22,
+    20
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 5,
+   "right_gap": 5
+  },
+  {
+   "src": "美术资产/家具/箱子/Sprite-箱子2.png",
+   "id": "luokuang_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "中",
+   "note": "竹编扁箩筐（变体）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/luokuang_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    28,
+    32
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 2,
+   "right_gap": 2
+  },
+  {
+   "src": "美术资产/家具/箱子/Sprite-箱子3.png",
+   "id": "luokuang_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "中",
+   "note": "竹编圆箩筐（主图）",
+   "role": "变体",
+   "out": "assets/village/_classmate/props/_variants/luokuang_1x1__Sprite-箱子3.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    28,
+    32
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 2,
+   "right_gap": 2
+  },
+  {
+   "src": "美术资产/家具/椅子/Sprite-短椅1.png",
+   "id": "yi_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "带靠背木椅",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/yi_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    15,
+    26
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 8,
+   "right_gap": 9
+  },
+  {
+   "src": "美术资产/家具/椅子/Sprite-短椅2.png",
+   "id": "deng_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "中",
+   "note": "圆草墩（当凳）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/deng_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    14,
+    19
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 9,
+   "right_gap": 9
+  },
+  {
+   "src": "美术资产/家具/桌子/Sprite-短桌1.png",
+   "id": "xiaozhuo_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "素木小方桌（NEW id）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/xiaozhuo_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    26,
+    24
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 3,
+   "right_gap": 3
+  },
+  {
+   "src": "美术资产/家具/桌子/Sprite-短桌2.png",
+   "id": "hongzhuo_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "铺红绸方桌/喜桌（NEW id）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/hongzhuo_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    26,
+    28
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 3,
+   "right_gap": 3
+  },
+  {
+   "src": "美术资产/家具/桌子/Sprite-短桌3.png",
+   "id": "shuzhuo_1x1_top",
+   "gw": 1,
+   "gh": 1,
+   "conf": "中",
+   "note": "俯视书桌，桌上摊纸笔（NEW id）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/shuzhuo_1x1_top.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    26,
+    26
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 3,
+   "right_gap": 3
+  },
+  {
+   "src": "美术资产/家具/桌子/Sprite-短桌4.png",
+   "id": "baizhuo_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "铺白桌布方桌/供桌（NEW id）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/baizhuo_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    26,
+    25
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 3,
+   "right_gap": 3
+  },
+  {
+   "src": "美术资产/家具/桌子/Sprite-书桌1.png",
+   "id": "shuzhuo_1x1",
+   "gw": 1,
+   "gh": 1,
+   "conf": "高",
+   "note": "带抽屉书桌，摊开书册",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/shuzhuo_1x1.png",
+   "src_size": [
+    32,
+    32
+   ],
+   "content": [
+    18,
+    32
+   ],
+   "out_size": [
+    32,
+    64
+   ],
+   "left_gap": 7,
+   "right_gap": 7
+  },
+  {
+   "src": "美术资产/家具/桌子/Sprite-长桌1.png",
+   "id": "changzhuo_2x1",
+   "gw": 2,
+   "gh": 1,
+   "conf": "高",
+   "note": "长条木桌 2 格（NEW id）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/changzhuo_2x1.png",
+   "src_size": [
+    64,
+    32
+   ],
+   "content": [
+    64,
+    31
+   ],
+   "out_size": [
+    64,
+    64
+   ],
+   "left_gap": 0,
+   "right_gap": 0
+  },
+  {
+   "src": "美术资产/家具/桌子/Sprite-餐桌1.png",
+   "id": "cantang_3x1",
+   "gw": 3,
+   "gh": 1,
+   "conf": "高",
+   "note": "整套餐桌：长桌+两小凳（NEW id）",
+   "role": "主图",
+   "out": "assets/village/_classmate/props/cantang_3x1.png",
+   "src_size": [
+    96,
+    32
+   ],
+   "content": [
+    84,
+    32
+   ],
+   "out_size": [
+    96,
+    64
+   ],
+   "left_gap": 6,
+   "right_gap": 6
+  }
+ ],
+ "new_ids": {
+  "xiaozhuo_1x1": [
+   "小方桌",
+   "素木小方桌，无装饰"
+  ],
+  "hongzhuo_1x1": [
+   "红绸桌",
+   "铺红绸的方桌（喜桌/祭桌）"
+  ],
+  "baizhuo_1x1": [
+   "白布桌",
+   "铺白桌布的方桌（供桌）"
+  ],
+  "shuzhuo_1x1_top": [
+   "书桌(俯视)",
+   "俯视角度的书桌，桌上摊纸笔"
+  ],
+  "gui_1x1": [
+   "矮柜",
+   "两层抽屉矮柜，1×1 占地"
+  ],
+  "changzhuo_2x1": [
+   "长桌",
+   "长条木桌，2×1 占地"
+  ],
+  "cantang_3x1": [
+   "餐桌",
+   "长桌+两侧小凳的整套餐桌，3×1 占地"
+  ]
+ }
+}

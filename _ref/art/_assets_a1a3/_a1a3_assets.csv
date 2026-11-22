@@ -130,3 +130,10 @@ S,场景,field_a3,整块大田,16,12,512,384,assets/village/scene/field_a3.png,A
 S,场景,well_old_a3,老井（水泥）,2,2,64,64,assets/village/scene/well_old_a3.png,A3,1,,4 态：开挖 / 封盖 / 锁死 / 水泥封；本帧 2×2 格用其中一态
 S,场景,tree_a3,老槐,6,6,192,192,assets/village/scene/tree_a3.png,A3,1,,4 态：树苗 / 中 / 大 / 树桩；本帧 6×6 格
 S,场景,ground_tile_a3,地面底瓦,1,1,32,32,assets/village/scene/ground_a3_tiles.png,A3,1,,可平铺 32×32 地面（草地/土），帧底色 #6a6a44
+P85,家具·室内,xiaozhuo_1x1,小方桌,1,1,32,32,assets/village/_classmate/props/xiaozhuo_1x1.png,,0,,素木小方桌，无装饰；美术同学新图（1×1 占地）；美术同学资产导入适配线（2026-11-22），暂存 _classmate/ 待拍板
+P86,家具·室内,hongzhuo_1x1,红绸桌,1,1,32,32,assets/village/_classmate/props/hongzhuo_1x1.png,,0,,铺红绸的方桌（喜桌/祭桌）；美术同学新图（1×1 占地）；美术同学资产导入适配线（2026-11-22），暂存 _classmate/ 待拍板
+P87,家具·室内,baizhuo_1x1,白布桌,1,1,32,32,assets/village/_classmate/props/baizhuo_1x1.png,,0,,铺白桌布的方桌（供桌）；美术同学新图（1×1 占地）；美术同学资产导入适配线（2026-11-22），暂存 _classmate/ 待拍板
+P88,家具·室内,shuzhuo_1x1_top,书桌（俯视）,1,1,32,32,assets/village/_classmate/props/shuzhuo_1x1_top.png,,0,,俯视角度的书桌，桌上摊纸笔；美术同学新图（1×1 占地）；美术同学资产导入适配线（2026-11-22），暂存 _classmate/ 待拍板
+P89,家具·室内,gui_1x1,矮柜,1,1,32,32,assets/village/_classmate/props/gui_1x1.png,,0,,两层抽屉矮柜；美术同学新图（1×1 占地）；美术同学资产导入适配线（2026-11-22），暂存 _classmate/ 待拍板
+P90,家具·室内,changzhuo_2x1,长桌,2,1,64,32,assets/village/_classmate/props/changzhuo_2x1.png,,0,,长条木桌；美术同学新图（2×1 占地）；美术同学资产导入适配线（2026-11-22），暂存 _classmate/ 待拍板
+P91,家具·室内,cantang_3x1,餐桌,3,1,96,32,assets/village/_classmate/props/cantang_3x1.png,,0,,长桌 + 两侧小凳的整套餐桌；美术同学新图（3×1 占地）；美术同学资产导入适配线（2026-11-22），暂存 _classmate/ 待拍板

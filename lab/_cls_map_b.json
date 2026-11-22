@@ -1,0 +1,962 @@
+[
+ {
+  "atlas": "Interior.png",
+  "idx": 0,
+  "id": "shuangrenchuang_2x2",
+  "note": "蓝被双人床 @0,1",
+  "role": "变体",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shuangrenchuang_2x2__Interior_0.png",
+  "src_box": [
+   0,
+   32,
+   64,
+   96
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 2,
+  "id": "shuangrenchuang_2x2",
+  "note": "粉被双人床 @3,1",
+  "role": "变体",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shuangrenchuang_2x2__Interior_2.png",
+  "src_box": [
+   96,
+   32,
+   160,
+   96
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 4,
+  "id": "shuangrenchuang_2x2",
+  "note": "米色双人床 @9,1",
+  "role": "变体",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shuangrenchuang_2x2__Interior_4.png",
+  "src_box": [
+   192,
+   32,
+   256,
+   96
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 6,
+  "id": "shujia_2x2",
+  "note": "彩色大书架 @10,1",
+  "role": "主图",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/shujia_2x2.png",
+  "src_box": [
+   320,
+   32,
+   384,
+   96
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 7,
+  "id": "shujia_2x2",
+  "note": "彩色宽书架 @12,1",
+  "role": "变体",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shujia_2x2__Interior_7.png",
+  "src_box": [
+   384,
+   32,
+   448,
+   96
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 9,
+  "id": "yi_1x1",
+  "note": "木椅 @16,2",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/yi_1x1__Interior_9.png",
+  "src_box": [
+   512,
+   64,
+   544,
+   96
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 10,
+  "id": "gui_1x2",
+  "note": "高立柜 @0,3",
+  "role": "变体",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/gui_1x2__Interior_10.png",
+  "src_box": [
+   0,
+   96,
+   64,
+   160
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 11,
+  "id": "yigui_1x2",
+  "note": "窄立柜/衣柜 @5,3",
+  "role": "主图",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/yigui_1x2.png",
+  "src_box": [
+   160,
+   96,
+   192,
+   160
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 13,
+  "id": "shujia_1x2",
+  "note": "窄书架 @10,3",
+  "role": "主图",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/shujia_1x2.png",
+  "src_box": [
+   320,
+   96,
+   352,
+   160
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 16,
+  "id": "danrenchuang_2x1",
+  "note": "白被单人床(横) @7,4",
+  "role": "主图",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/danrenchuang_2x1.png",
+  "src_box": [
+   224,
+   128,
+   288,
+   160
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 24,
+  "id": "xiaozhuo_2x1",
+  "note": "长条木案 @7,9",
+  "role": "主图",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/xiaozhuo_2x1.png",
+  "src_box": [
+   224,
+   288,
+   288,
+   320
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 25,
+  "id": "deng_1x1",
+  "note": "小圆凳 @0,10",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/deng_1x1__Interior_25.png",
+  "src_box": [
+   0,
+   320,
+   32,
+   384
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 27,
+  "id": "baxianzhuo_2x2",
+  "note": "大圆桌 @6,10",
+  "role": "主图",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/baxianzhuo_2x2.png",
+  "src_box": [
+   192,
+   320,
+   256,
+   384
+  ]
+ },
+ {
+  "atlas": "Interior.png",
+  "idx": 38,
+  "id": "zhenglong_1x1",
+  "note": "叠碗蒸笼 @5,14",
+  "role": "主图",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/zhenglong_1x1.png",
+  "src_box": [
+   160,
+   448,
+   192,
+   480
+  ]
+ },
+ {
+  "atlas": "1_Generic_32x32.png",
+  "idx": 24,
+  "id": "muxiang_1x1",
+  "note": "木箱(浅) @4,50",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/muxiang_1x1__1_Generic_32x32_24.png",
+  "src_box": [
+   128,
+   1600,
+   160,
+   1632
+  ]
+ },
+ {
+  "atlas": "1_Generic_32x32.png",
+  "idx": 25,
+  "id": "muxiang_1x1",
+  "note": "木箱(米) @5,50",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/muxiang_1x1__1_Generic_32x32_25.png",
+  "src_box": [
+   160,
+   1600,
+   192,
+   1632
+  ]
+ },
+ {
+  "atlas": "1_Generic_32x32.png",
+  "idx": 26,
+  "id": "muxiang_1x1",
+  "note": "木箱(黄) @6,50",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/muxiang_1x1__1_Generic_32x32_26.png",
+  "src_box": [
+   192,
+   1600,
+   224,
+   1632
+  ]
+ },
+ {
+  "atlas": "1_Generic_32x32.png",
+  "idx": 27,
+  "id": "muxiang_1x1",
+  "note": "木箱(白) @7,50",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/muxiang_1x1__1_Generic_32x32_27.png",
+  "src_box": [
+   224,
+   1600,
+   256,
+   1632
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 9,
+  "id": "wangui_1x2",
+  "note": "高碗柜(红) @4,11",
+  "role": "主图",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/wangui_1x2.png",
+  "src_box": [
+   128,
+   352,
+   160,
+   416
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 11,
+  "id": "wangui_1x2",
+  "note": "高碗柜(浅) @6,11",
+  "role": "变体",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/wangui_1x2__12_Kitchen_32x32_11.png",
+  "src_box": [
+   192,
+   352,
+   224,
+   416
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 18,
+  "id": "gui_1x1",
+  "note": "抽屉柜(棕) @0,12",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/gui_1x1__12_Kitchen_32x32_18.png",
+  "src_box": [
+   0,
+   384,
+   32,
+   416
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 19,
+  "id": "gui_1x1",
+  "note": "抽屉柜(红) @1,12",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/gui_1x1__12_Kitchen_32x32_19.png",
+  "src_box": [
+   32,
+   384,
+   64,
+   416
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 20,
+  "id": "gui_1x1",
+  "note": "抽屉柜(棕2) @2,12",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/gui_1x1__12_Kitchen_32x32_20.png",
+  "src_box": [
+   64,
+   384,
+   96,
+   416
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 14,
+  "id": "jiutan_1x1",
+  "note": "酒瓶(蓝) @10,11",
+  "role": "主图",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/jiutan_1x1.png",
+  "src_box": [
+   320,
+   352,
+   352,
+   384
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 22,
+  "id": "jiutan_1x1",
+  "note": "酒瓶(绿) @10,12",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/jiutan_1x1__12_Kitchen_32x32_22.png",
+  "src_box": [
+   320,
+   384,
+   352,
+   416
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 34,
+  "id": "shuipen_1x1",
+  "note": "白瓷大盆 @2,19",
+  "role": "主图",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/shuipen_1x1.png",
+  "src_box": [
+   64,
+   608,
+   96,
+   640
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 38,
+  "id": "shuichi_1x1",
+  "note": "大水槽 @2,21",
+  "role": "主图",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/shuichi_1x1.png",
+  "src_box": [
+   64,
+   672,
+   96,
+   704
+  ]
+ },
+ {
+  "atlas": "3_Bathroom_32x32.png",
+  "idx": 19,
+  "id": "dunbianqi_1x2",
+  "note": "蹲便器(黄) @8,12",
+  "role": "主图",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/dunbianqi_1x2.png",
+  "src_box": [
+   256,
+   384,
+   288,
+   448
+  ]
+ },
+ {
+  "atlas": "3_Bathroom_32x32.png",
+  "idx": 20,
+  "id": "dunbianqi_1x2",
+  "note": "蹲便器(蓝) @9,12",
+  "role": "变体",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/dunbianqi_1x2__3_Bathroom_32x32_20.png",
+  "src_box": [
+   288,
+   384,
+   320,
+   448
+  ]
+ },
+ {
+  "atlas": "3_Bathroom_32x32.png",
+  "idx": 21,
+  "id": "dunbianqi_1x2",
+  "note": "蹲便器(灰) @10,12",
+  "role": "变体",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/dunbianqi_1x2__3_Bathroom_32x32_21.png",
+  "src_box": [
+   320,
+   384,
+   352,
+   448
+  ]
+ },
+ {
+  "atlas": "2_LivingRoom_32x32.png",
+  "idx": 3,
+  "id": "shuigang_1x1",
+  "note": "陶罐(素) @0,9",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/shuigang_1x1__2_LivingRoom_32x32_3.png",
+  "src_box": [
+   0,
+   288,
+   32,
+   352
+  ]
+ },
+ {
+  "atlas": "2_LivingRoom_32x32.png",
+  "idx": 4,
+  "id": "shuigang_1x1",
+  "note": "陶罐(黄) @1,9",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/shuigang_1x1__2_LivingRoom_32x32_4.png",
+  "src_box": [
+   32,
+   288,
+   64,
+   352
+  ]
+ },
+ {
+  "atlas": "2_LivingRoom_32x32.png",
+  "idx": 5,
+  "id": "shuigang_1x1",
+  "note": "陶罐(蓝) @2,9",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/shuigang_1x1__2_LivingRoom_32x32_5.png",
+  "src_box": [
+   64,
+   288,
+   96,
+   352
+  ]
+ },
+ {
+  "atlas": "5_Classroom_and_library_32x32.png",
+  "idx": 0,
+  "id": "shujia_2x2",
+  "note": "彩色大书架 @1,0",
+  "role": "变体",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shujia_2x2__5_Classroom_and_library_32x32_0.png",
+  "src_box": [
+   32,
+   0,
+   96,
+   64
+  ]
+ },
+ {
+  "atlas": "5_Classroom_and_library_32x32.png",
+  "idx": 9,
+  "id": "shujia_1x2",
+  "note": "梯架书架(空) @0,4",
+  "role": "变体",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shujia_1x2__5_Classroom_and_library_32x32_9.png",
+  "src_box": [
+   0,
+   128,
+   32,
+   192
+  ]
+ },
+ {
+  "atlas": "5_Classroom_and_library_32x32.png",
+  "idx": 10,
+  "id": "shujia_1x2",
+  "note": "梯架书架(书) @1,4",
+  "role": "变体",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shujia_1x2__5_Classroom_and_library_32x32_10.png",
+  "src_box": [
+   32,
+   128,
+   64,
+   192
+  ]
+ },
+ {
+  "atlas": "5_Classroom_and_library_32x32.png",
+  "idx": 11,
+  "id": "gui_1x2",
+  "note": "书柜(绿格) @0,7",
+  "role": "变体",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/gui_1x2__5_Classroom_and_library_32x32_11.png",
+  "src_box": [
+   0,
+   224,
+   32,
+   288
+  ]
+ },
+ {
+  "atlas": "5_Classroom_and_library_32x32.png",
+  "idx": 14,
+  "id": "gui_1x2",
+  "note": "叠层箱柜(黄) @12,10",
+  "role": "变体",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/gui_1x2__5_Classroom_and_library_32x32_14.png",
+  "src_box": [
+   384,
+   320,
+   416,
+   384
+  ]
+ },
+ {
+  "atlas": "5_Classroom_and_library_32x32.png",
+  "idx": 15,
+  "id": "shuzhuo_2x1",
+  "note": "横置木柜 @13,10",
+  "role": "主图",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/shuzhuo_2x1.png",
+  "src_box": [
+   416,
+   320,
+   480,
+   352
+  ]
+ },
+ {
+  "atlas": "4_Bedroom_32x32.png",
+  "idx": 24,
+  "id": "gui_2x1",
+  "note": "双格木柜(米) @0,31",
+  "role": "主图",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/gui_2x1.png",
+  "src_box": [
+   0,
+   992,
+   64,
+   1056
+  ]
+ },
+ {
+  "atlas": "4_Bedroom_32x32.png",
+  "idx": 26,
+  "id": "gui_2x1",
+  "note": "双格木柜(棕) @0,33",
+  "role": "变体",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/gui_2x1__4_Bedroom_32x32_26.png",
+  "src_box": [
+   0,
+   1056,
+   64,
+   1120
+  ]
+ },
+ {
+  "atlas": "4_Bedroom_32x32.png",
+  "idx": 28,
+  "id": "gui_2x1",
+  "note": "双格木柜(浅) @0,35",
+  "role": "变体",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/gui_2x1__4_Bedroom_32x32_28.png",
+  "src_box": [
+   0,
+   1120,
+   64,
+   1184
+  ]
+ },
+ {
+  "atlas": "7_Art_32x32.png",
+  "idx": 10,
+  "id": "deng_1x1",
+  "note": "画凳(米) @3,2",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/deng_1x1__7_Art_32x32_10.png",
+  "src_box": [
+   96,
+   64,
+   160,
+   128
+  ]
+ },
+ {
+  "atlas": "7_Art_32x32.png",
+  "idx": 11,
+  "id": "deng_1x1",
+  "note": "画凳(橙) @5,2",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/deng_1x1__7_Art_32x32_11.png",
+  "src_box": [
+   160,
+   64,
+   224,
+   128
+  ]
+ },
+ {
+  "atlas": "7_Art_32x32.png",
+  "idx": 12,
+  "id": "deng_1x1",
+  "note": "画凳(浅) @7,2",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/deng_1x1__7_Art_32x32_12.png",
+  "src_box": [
+   224,
+   64,
+   288,
+   128
+  ]
+ },
+ {
+  "atlas": "7_Art_32x32.png",
+  "idx": 16,
+  "id": "anban_2x1",
+  "note": "木台(浅) @3,4",
+  "role": "主图",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/anban_2x1.png",
+  "src_box": [
+   96,
+   128,
+   160,
+   192
+  ]
+ },
+ {
+  "atlas": "7_Art_32x32.png",
+  "idx": 17,
+  "id": "anban_2x1",
+  "note": "木台(橙) @5,4",
+  "role": "变体",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/anban_2x1__7_Art_32x32_17.png",
+  "src_box": [
+   160,
+   128,
+   224,
+   192
+  ]
+ },
+ {
+  "atlas": "11_Halloween_32x32.png",
+  "idx": 17,
+  "id": "denglong_1x1",
+  "note": "烛台 @0,4",
+  "role": "主图",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/denglong_1x1.png",
+  "src_box": [
+   0,
+   128,
+   32,
+   192
+  ]
+ },
+ {
+  "atlas": "11_Halloween_32x32.png",
+  "idx": 19,
+  "id": "paiwei_1x1",
+  "note": "挂画(竖) @11,4",
+  "role": "主图",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/paiwei_1x1.png",
+  "src_box": [
+   352,
+   128,
+   384,
+   192
+  ]
+ },
+ {
+  "atlas": "10_Birthday_party_32x32.png",
+  "idx": 15,
+  "id": "xiaozhuo_2x1",
+  "note": "长条供桌 @3,2",
+  "role": "变体",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/xiaozhuo_2x1__10_Birthday_party_32x32_15.png",
+  "src_box": [
+   96,
+   64,
+   160,
+   96
+  ]
+ },
+ {
+  "atlas": "9_Fishing_32x32.png",
+  "idx": 25,
+  "id": "chaihuozao_1x1",
+  "note": "深灶 @8,9",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/chaihuozao_1x1__9_Fishing_32x32_25.png",
+  "src_box": [
+   256,
+   288,
+   288,
+   320
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 30,
+  "id": "chaihuozao_1x1",
+  "note": "小灶 @2,16",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/chaihuozao_1x1__12_Kitchen_32x32_30.png",
+  "src_box": [
+   64,
+   512,
+   96,
+   576
+  ]
+ },
+ {
+  "atlas": "5_Classroom_and_library_32x32.png",
+  "idx": 1,
+  "id": "shujia_2x2",
+  "note": "大书架(带书) @3,0",
+  "role": "变体",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shujia_2x2__5_Classroom_and_library_32x32_1.png",
+  "src_box": [
+   96,
+   0,
+   160,
+   64
+  ]
+ },
+ {
+  "atlas": "Interiors 13_768x768_TILESETS_B_C_D_E.png",
+  "idx": 1,
+  "id": "shujia_2x2",
+  "note": "木架图书 @3,11",
+  "role": "变体",
+  "gw": 2,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/_variants/shujia_2x2__Interiors_13_768x768_TILESETS_B_C_D_E_1.png",
+  "src_box": [
+   96,
+   352,
+   160,
+   416
+  ]
+ },
+ {
+  "atlas": "Interiors 16_768x768_TILESETS_B_C_D_E.png",
+  "idx": 7,
+  "id": "jiutan_1x1",
+  "note": "高瓶 @14,19",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/jiutan_1x1__Interiors_16_768x768_TILESETS_B_C_D_E_7.png",
+  "src_box": [
+   448,
+   608,
+   480,
+   672
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 23,
+  "id": "anban_2x1",
+  "note": "长条案板 @0,13",
+  "role": "变体",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/anban_2x1__12_Kitchen_32x32_23.png",
+  "src_box": [
+   0,
+   416,
+   32,
+   480
+  ]
+ },
+ {
+  "atlas": "12_Kitchen_32x32.png",
+  "idx": 31,
+  "id": "anban_2x1",
+  "note": "厨房长台 @0,17",
+  "role": "变体",
+  "gw": 2,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/anban_2x1__12_Kitchen_32x32_31.png",
+  "src_box": [
+   0,
+   544,
+   64,
+   608
+  ]
+ },
+ {
+  "atlas": "7_Art_32x32.png",
+  "idx": 8,
+  "id": "penjing_1x1",
+  "note": "盆景(绿叶) @0,2",
+  "role": "主图",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/penjing_1x1.png",
+  "src_box": [
+   0,
+   64,
+   32,
+   128
+  ]
+ },
+ {
+  "atlas": "7_Art_32x32.png",
+  "idx": 14,
+  "id": "penjing_1x1",
+  "note": "盆景(茂) @0,4",
+  "role": "变体",
+  "gw": 1,
+  "gh": 1,
+  "out": "assets/village/_classmate/props/_variants/penjing_1x1__7_Art_32x32_14.png",
+  "src_box": [
+   0,
+   128,
+   32,
+   192
+  ]
+ },
+ {
+  "atlas": "10_Birthday_party_32x32.png",
+  "idx": 12,
+  "id": "changdeng_1x2",
+  "note": "烛行长凳 @5,1",
+  "role": "主图",
+  "gw": 1,
+  "gh": 2,
+  "out": "assets/village/_classmate/props/changdeng_1x2.png",
+  "src_box": [
+   160,
+   32,
+   192,
+   64
+  ]
+ }
+]
