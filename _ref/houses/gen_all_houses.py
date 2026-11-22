@@ -55,7 +55,9 @@ C = {
     "room": {"bed": "#9c8468", "hall": "#cbb997", "store": "#8d9a6f",
              "kitchen": "#bdd0b0", "account": "#a8c0d0", "yard": "#3b3a2e",
              "shop": "#b99aa6", "class": "#9dbacd", "mill": "#b5a878",
-             "toilet": "#9aa8a8"},
+             "toilet": "#9aa8a8",
+             # field = 户外场地，整块铺满（如小学操场的草地）
+             "field": "#6f7d4c"},
 }
 
 STD = ("家具标准：人 1×2 ｜ 双人床 2×2(穷)/3×3(富) ｜ 单人床 2×1 横向贴墙 ｜ "
@@ -610,7 +612,9 @@ def render(hs):
         if f.get("seamless"):
             # 像素格拼块（如跑道）：严格按格铺满，无内缩、无描边、无标签，
             # 相邻格严丝合缝 → 拼出来的形状就是数据里的格子集合本身。
-            d.rectangle([bx, by, bx + bw - 1, by + bh - 1], fill=fill)
+            # 家具自带 color 时按它填（如红土跑道），否则用 zone 推出的默认色。
+            ffill = f.get("color") or fill
+            d.rectangle([bx, by, bx + bw - 1, by + bh - 1], fill=ffill)
             continue
         d.rectangle([bx + 3, by + 3, bx + bw - 4, by + bh - 4], fill=fill, outline=edge, width=2)
         draw_label(d, bx + 3, by + 3, bw - 7, bh - 7, f["short"], f["clue"])
