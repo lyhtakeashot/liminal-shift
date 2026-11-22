@@ -34,6 +34,7 @@ const FONT_SIZE := 9
 
 const FrameData = preload("res://scripts/frame_data.gd")
 const HouseShape = preload("res://scripts/house_shape.gd")
+const AssetDraw = preload("res://scripts/asset_draw.gd")
 
 ## 伪 3D 抬升高度 = 一整格（house-spec §4.8.1 已定）。
 ## 写死在代码里，不进 frames.json、不进 houses_data.json：
@@ -49,6 +50,9 @@ const TRUNK_COLOR := Color("#5a4433")       # 树干
 
 # 房子贴图缓存：id → {base, roof}（null = 没有图，只查一次；不每帧 load 刷 ERROR）
 static var _tex_cache := {}
+
+# 场景大图 bbox 缓存：帧 id → {road: Rect2, field: Rect2}
+var _bbox_cache := {}
 
 var frame: FrameData = null
 var time_mode := false
@@ -180,6 +184,11 @@ func _draw_scene(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) ->
 
 ## 背景层：地面铺装 + 房子的 lot 底色/房间色块。固定顺序，不参与排序。
 func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> void:
+	var sc := _scene_tex_color(tint, alpha_mul, grade)
+	var bboxes := _scene_bboxes()
+	var drew_road := false
+	var drew_field := false
+
 	for s in frame.shapes:
 		var sd: Dictionary = s
 		var c: Color = Color(String(sd.get("color", "#888888")))
@@ -198,12 +207,40 @@ func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> 
 		elif stype == "rect":
 			if _is_standing_rect(sd):
 				pass
-			else:
+			elif bool(sd.get("road", false)):
+				# 主路：整张路图按整帧路面 bbox 贴一次（不是逐格贴）
+				if not drew_road and bboxes.has("road"):
+					drew_road = true
+					var rtex := AssetDraw.scene_tex(frame.id, "road")
+					if rtex != null:
+						draw_texture_rect(rtex,
+							Rect2(bboxes["road"].position + offset, bboxes["road"].size),
+							false, sc)
+					else:
+						draw_rect(Rect2(bboxes["road"].position + offset, bboxes["road"].size), c, true)
+			elif label == "坝":
+				# 石坝：一张图对应一个 rect
 				var r: Array = sd.get("rect", [0, 0, 0, 0])
 				var rect := Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))
-				draw_rect(Rect2(rect.position + offset, rect.size), c, true)
-				if label != "" and offset == Vector2.ZERO:
-					_draw_label(label, rect.position + offset + Vector2(3, 10), c)
+				var dtex := AssetDraw.scene_tex(frame.id, "dam")
+				if dtex != null:
+					draw_texture_rect(dtex, Rect2(rect.position + offset, rect.size), false, sc)
+				else:
+					draw_rect(Rect2(rect.position + offset, rect.size), c, true)
+			elif label != "":
+				# 界碑这类立着的小件 → 前景层（_draw_prop）
+				pass
+			else:
+				# 田：整张田图按整帧田块 bbox 贴一次
+				if not drew_field and bboxes.has("field"):
+					drew_field = true
+					var ftex := AssetDraw.scene_tex(frame.id, "field")
+					if ftex != null:
+						draw_texture_rect(ftex,
+							Rect2(bboxes["field"].position + offset, bboxes["field"].size),
+							false, sc)
+					else:
+						draw_rect(Rect2(bboxes["field"].position + offset, bboxes["field"].size), c, true)
 		elif stype == "path":
 			var pts: Array = []
 			for p in sd.get("points", []):
@@ -212,13 +249,59 @@ func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> 
 			if pts.size() >= 2:
 				draw_polyline(pts, c, float(sd.get("width", 20)), true)
 		elif stype == "polygon":
-			# 任意多边形填充（河这类下缘弯曲的地形，用折线描不出形状）
-			var poly: PackedVector2Array = PackedVector2Array()
-			for p in sd.get("points", []):
-				var pa: Array = p
-				poly.append(Vector2(float(pa[0]), float(pa[1])) + offset)
-			if poly.size() >= 3:
-				draw_colored_polygon(poly, c)
+			# 河：整张河图与 frames.json 的河 polygon 同几何（画布 3200×416，锚在 (0,0)）
+			var rtex := AssetDraw.scene_tex(frame.id, "river")
+			if rtex != null:
+				draw_texture_rect(rtex, Rect2(Vector2.ZERO + offset, Vector2(3200, 416)), false, sc)
+			else:
+				var poly: PackedVector2Array = PackedVector2Array()
+				for p in sd.get("points", []):
+					var pa: Array = p
+					poly.append(Vector2(float(pa[0]), float(pa[1])) + offset)
+				if poly.size() >= 3:
+					draw_colored_polygon(poly, c)
+
+
+## 整帧的「路面 bbox」「田块 bbox」（世界坐标）。
+## 场景大图（路/田）是一张整图，图上空白处是透明的 —— 必须按整帧 bbox 一次性贴，
+## 不能逐格贴（逐格会丢路缘/田埂）。
+func _scene_bboxes() -> Dictionary:
+	if _bbox_cache.has(frame.id):
+		return _bbox_cache[frame.id]
+	var out := {}
+	var road := Rect2()
+	var field := Rect2()
+	var has_road := false
+	var has_field := false
+	for s in frame.shapes:
+		var sd: Dictionary = s
+		if String(sd.get("type", "")) != "rect":
+			continue
+		var label := String(sd.get("label", ""))
+		if label == "坝" or label == "碑":
+			continue
+		var r: Array = sd.get("rect", [0, 0, 0, 0])
+		var rect := Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))
+		if bool(sd.get("road", false)):
+			road = road.merge(rect) if has_road else rect
+			has_road = true
+		elif label == "":
+			field = field.merge(rect) if has_field else rect
+			has_field = true
+	if has_road:
+		out["road"] = road
+	if has_field:
+		out["field"] = field
+	_bbox_cache[frame.id] = out
+	return out
+
+
+## 贴图用的调制色：普通帧白，时间轴模式下去饱和 + 年代染色 + 色差叠加。
+func _scene_tex_color(tint: Color, alpha_mul: float, grade: bool) -> Color:
+	var tc := Color.WHITE
+	if grade:
+		tc = _grade(tc)
+	return Color(tc.r * tint.r, tc.g * tint.g, tc.b * tint.b, alpha_mul)
 
 
 ## 这个 rect 是不是「立着的物件」（该参与 y-sort）。
@@ -241,11 +324,19 @@ func _draw_front(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) ->
 		match String(e["kind"]):
 			"walls":
 				var sid := String(e["sid"])
-				var texs := _house_tex(sid)
+				# 美术 base 图里已经画好了墙顶面 + 南立面（_gen_shells.py 的
+				# draw_cap / draw_facade）—— 再叠一层引擎色块就是「双份墙」。
+				# 有图 ⇒ 引擎不再画墙；条目本身保留（排序链不动）。
+				if _art_walls(sid):
+					continue
 				var wall_col := _shade(HouseShape.WALL_COLOR, tint, alpha_mul, grade)
 				var top_col := _shade(HouseShape.WALL_TOP, tint, alpha_mul, grade)
-				_draw_walls_row(e["cells"], offset, wall_col, top_col, texs["base"] == null)
+				_draw_walls_row(e["cells"], offset, wall_col, top_col, true)
 			"door":
+				var sid2 := String(e.get("sid", ""))
+				# 同上：门 / 院门也在 base 图里（draw_door / draw_gate）。
+				if _art_walls(sid2):
+					continue
 				var dd: Dictionary = e["d"]
 				var dc: Color = HouseShape.GATE_COLOR if bool(dd["gate"]) else HouseShape.DOOR_COLOR
 				var dr: Rect2 = dd["rect"]
@@ -305,7 +396,7 @@ func _collect_front() -> Array:
 					var dr: Rect2 = dd["rect"]
 					var dry := int(round((dr.position.y - hpos.y) / HouseShape.TILE))
 					ents.append({
-						"kind": "door", "d": dd,
+						"kind": "door", "d": dd, "sid": sid,
 						"sort_y": hpos.y + (float(dry) + 1.0) * HouseShape.TILE,
 						"seq": ents.size(),
 					})
@@ -372,6 +463,14 @@ const FAMILY := {
 }
 
 
+## 这栋房子的墙/门**是否由美术 base 图接管**（引擎不再画色块）。
+## base 图里已经画好了墙顶面 + 南立面 + 门窗 + 院门
+## （_ref/art/gen/_gen_shells.py 的 draw_cap / draw_facade / draw_door / draw_gate），
+## 再叠一层引擎色块就是「双份墙」。缺图才回引擎色块（降级路径永久保留）。
+static func _art_walls(sid: String) -> bool:
+	return _house_tex(sid)["base"] != null
+
+
 ## 取房子贴图（缓存；不存在只查一次，避免每帧 load 刷 ERROR）。
 ## 返回 {"base": Texture2D|null, "roof": Texture2D|null}。
 ## ⚠️ 缺图回色块的降级路径**永久保留**（DECIDE D8）——美术分批交付期间游戏始终可跑。
@@ -391,6 +490,10 @@ static func _house_tex(sid: String) -> Dictionary:
 
 
 ## 房子的背景部分：lot 底色（院子 + 地面）+ 房间色块。固定在背景层，不参与排序。
+##
+## 美术 base 图（D6）：画布 = lot_w×32 × (lot_h+1)×32，**左上角锚点**贴到
+## 世界 (lot_x, lot_y − 32)（顶部多出的那一格 = 墙立起来的高度）。
+## 有图时贴图替代第 1/2 层色块；**别让 base 盖住第 3 层墙**（墙在前景层画）。
 func _draw_house_base(sd: Dictionary, offset: Vector2, tint: Color,
 		alpha_mul: float, grade: bool) -> void:
 	var sid := String(sd.get("id", ""))
@@ -400,8 +503,20 @@ func _draw_house_base(sd: Dictionary, offset: Vector2, tint: Color,
 	if data.is_empty():
 		return
 
-	# ---- 第 1 层：lot 底色（院子 + 地面，可走）----
 	var lot := HouseShape.lot_rect(data, hpos)
+	var tex_base: Texture2D = _house_tex(sid)["base"]
+
+	if tex_base != null:
+		# 有美术底图：整张贴上去（顶部多出的一格是墙顶面/墙高）
+		var tc := _scene_tex_color(tint, alpha_mul, grade)
+		draw_texture_rect(tex_base,
+			Rect2(Vector2(hpos.x, hpos.y - EXTRUDE) + offset,
+				Vector2(lot.size.x, lot.size.y + EXTRUDE)), false, tc)
+		if offset == Vector2.ZERO:
+			_draw_label(sid, lot.position + Vector2(2, 12), HouseShape.LOT_OUTLINE)
+		return
+
+	# ---- 第 1 层：lot 底色（院子 + 地面，可走）----
 	draw_rect(Rect2(lot.position + offset, lot.size),
 		_shade(HouseShape.YARD_COLOR, tint, alpha_mul, grade), true)
 	draw_rect(Rect2(lot.position + offset, lot.size),
@@ -417,18 +532,39 @@ func _draw_house_base(sd: Dictionary, offset: Vector2, tint: Color,
 
 
 ## 家具占位块 + 名字（可检视线索用橙框）。家具是独立排序条目，所以单独画。
+##
+## 美术 props 图（D6 底部中心锚点）：源图画布 = 占地宽×32 × (占地高×32 + 32)，
+## 多出的那一格在**顶部**，底边 = 占地底边。
+## 美术只是外观 —— 占地/线索/碰撞仍读 houses_data.json，贴图不决定尺寸。
+## 匹配不到（学校施工类词 manifest 没有）→ 回色块，**不报错**。
 func _draw_furniture(f: Dictionary, offset: Vector2, tint: Color,
 		alpha_mul: float, grade: bool) -> void:
 	var fr: Rect2 = f["rect"]
 	var fc := HouseShape.FURN_COLOR if not f["clue"] else HouseShape.CLUE_COLOR
-	draw_rect(Rect2(fr.position + offset, fr.size),
-		_shade(fc, tint, alpha_mul, grade), true)
+
+	var pd := AssetDraw.prop_draw(String(f["name"]), fr)
+	if not pd.is_empty():
+		var tc := _scene_tex_color(tint, alpha_mul, grade)
+		draw_texture_rect(pd["tex"], Rect2((pd["dst"] as Rect2).position + offset,
+			(pd["dst"] as Rect2).size), false, tc)
+		# 线索家具仍画橙框（可检视提示不能丢）
+		if bool(f["clue"]):
+			draw_rect(Rect2(fr.position + offset, fr.size),
+				_shade(HouseShape.CLUE_COLOR, tint, alpha_mul, grade), false, 1.0)
+	else:
+		draw_rect(Rect2(fr.position + offset, fr.size),
+			_shade(fc, tint, alpha_mul, grade), true)
+
 	if offset == Vector2.ZERO:
 		_draw_label(String(f["name"]),
 			fr.position + offset + Vector2(2, 10), HouseShape.WALL_COLOR)
 
 
 ## 立着的圆物件：树（加树干、树冠抬升）或井/水塘（平画）。
+##
+## 美术 scene 小件：老井 / 老槐 / 界碑 各有一张图，贴图**按半径居中**、
+## 底边对齐圆的底边（和现有色块占位同一位置，占位大小不变）。
+## 缺图 → 回原来的色块画法。
 func _draw_prop(sd: Dictionary, offset: Vector2, tint: Color,
 		alpha_mul: float, grade: bool) -> void:
 	var stype := String(sd.get("type", ""))
@@ -442,6 +578,14 @@ func _draw_prop(sd: Dictionary, offset: Vector2, tint: Color,
 		var cp: Array = sd.get("center", [0, 0])
 		var center := Vector2(float(cp[0]), float(cp[1]))
 		var rad := float(sd.get("radius", 4))
+		var tex := _prop_tex(frame.id, label, rad)
+		if tex != null:
+			var tc := _scene_tex_color(tint, alpha_mul, grade)
+			var box := _prop_box(center, rad, tex)
+			draw_texture_rect(tex, Rect2(box.position + offset, box.size), false, tc)
+			if label != "" and offset == Vector2.ZERO:
+				_draw_label(label, center + offset + Vector2(rad + 3, 3), c)
+			return
 		# 树：label 含「槐」才加树干（老井也是 circle，label 是「老井·XX」，别误加）
 		var is_tree := label.find("槐") >= 0
 		if is_tree and rad >= 12.0:
@@ -461,9 +605,35 @@ func _draw_prop(sd: Dictionary, offset: Vector2, tint: Color,
 	else:
 		var r: Array = sd.get("rect", [0, 0, 0, 0])
 		var rect := Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))
-		draw_rect(Rect2(rect.position + offset, rect.size), c, true)
+		var tex := _prop_tex(frame.id, label, 0.0)
+		if tex != null:
+			var tc := _scene_tex_color(tint, alpha_mul, grade)
+			draw_texture_rect(tex, Rect2(rect.position + offset, rect.size), false, tc)
+		else:
+			draw_rect(Rect2(rect.position + offset, rect.size), c, true)
 		if label != "" and offset == Vector2.ZERO:
 			_draw_label(label, rect.position + offset + Vector2(3, 10), c)
+
+
+## 按 label 找 scene 小件贴图。认不出就回 null（回色块）。
+static func _prop_tex(frame_id: String, label: String, rad: float) -> Texture2D:
+	if label.find("槐") >= 0:
+		return AssetDraw.scene_tex(frame_id, "tree")
+	if label.find("井") >= 0:
+		return AssetDraw.scene_tex(frame_id, "well")
+	if label.find("碑") >= 0:
+		return AssetDraw.scene_tex(frame_id, "stele")
+	return null
+
+
+## 树/井贴图落点：底边对齐圆的底边，宽度 = 直径（画布按等比缩）。
+static func _prop_box(center: Vector2, rad: float, tex: Texture2D) -> Rect2:
+	var ts := tex.get_size()
+	if ts.x <= 0.0 or ts.y <= 0.0:
+		return Rect2(center - Vector2(rad, rad), Vector2(rad * 2.0, rad * 2.0))
+	var h := rad * 2.0
+	var w := h * ts.x / ts.y
+	return Rect2(center.x - w * 0.5, center.y + rad - h, w, h)
 
 
 ## 玩家是否站在这栋房子的屋体（wings）内。
