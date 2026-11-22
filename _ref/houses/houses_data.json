@@ -5972,21 +5972,6 @@
         "wall_mounted": false
       },
       {
-        "name": "教鞭盒",
-        "short": "教鞭盒",
-        "rect": [
-          11,
-          1,
-          1,
-          1
-        ],
-        "note": "讲台上的教鞭盒",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
         "name": "课程表",
         "short": "课程表",
         "rect": [
@@ -6362,21 +6347,6 @@
         "wall_mounted": false
       },
       {
-        "name": "教鞭盒",
-        "short": "教鞭盒",
-        "rect": [
-          32,
-          1,
-          1,
-          1
-        ],
-        "note": "讲台上的教鞭盒",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
         "name": "课程表",
         "short": "课程表",
         "rect": [
@@ -6701,21 +6671,6 @@
           1
         ],
         "note": "讲台正对黑板",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "教鞭盒",
-        "short": "教鞭盒",
-        "rect": [
-          8,
-          10,
-          1,
-          1
-        ],
-        "note": "讲台上的教鞭盒",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -7151,21 +7106,6 @@
           1
         ],
         "note": "讲台正对黑板",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "教鞭盒",
-        "short": "教鞭盒",
-        "rect": [
-          34,
-          10,
-          1,
-          1
-        ],
-        "note": "讲台上的教鞭盒",
         "clue": false,
         "zone": "house",
         "yard_building": false,
