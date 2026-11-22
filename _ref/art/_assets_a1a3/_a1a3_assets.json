@@ -3124,7 +3124,7 @@
    "note": "原件 16×32 px，装进 1×1 格画布（图上 8px 宽）"
   },
   {
-   "id": "road_curved",
+   "id": "road_straight",
    "code": "S",
    "name": "主路（宽 2 格）",
    "frame": "A3",
@@ -3134,8 +3134,8 @@
     3200,
     96
    ],
-   "path": "assets/village/scene/road_curved_tiles.png",
-   "note": "弯道（A1/A2 同走向，两侧会收边到 1~2 格）；路宽 2 格 = 64px（逐列实测众数），共 202 个路面格；出 32px 瓦片集（直/弯/丁字/十字）"
+   "path": "assets/village/scene/road_straight_a3.png",
+   "note": "直道（A3 起取直）；路宽 2 格 = 64px（逐列实测众数），共 202 个路面格；出 32px 瓦片集（直/弯/丁字/十字）"
   },
   {
    "id": "field_a3",
