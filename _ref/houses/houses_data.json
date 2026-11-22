@@ -5797,88 +5797,88 @@
     "lot": [
       0,
       0,
-      41,
-      31
+      37,
+      29
     ],
     "wings": [
       [
         0,
         0,
-        42,
-        32
+        38,
+        30
       ]
     ],
     "partitions": [
       [
         1,
         8,
-        40,
+        36,
         8
       ],
       [
         1,
         17,
-        40,
+        36,
         17
       ],
       [
-        13,
+        12,
         1,
-        13,
+        12,
         7
       ],
       [
-        26,
+        25,
         1,
-        26,
+        25,
         7
       ],
       [
-        18,
+        16,
         9,
-        18,
+        16,
         16
       ],
       [
-        22,
+        20,
         9,
-        22,
+        20,
         16
       ]
     ],
     "doors": [
       [
-        13,
+        12,
         4
       ],
       [
-        26,
+        25,
         4
-      ],
-      [
-        20,
-        8
       ],
       [
         18,
-        12
+        8
       ],
       [
-        22,
+        16,
         12
       ],
       [
         20,
+        12
+      ],
+      [
+        18,
         17
       ]
     ],
     "gate": [
       [
-        19,
+        18,
         0
       ],
       [
-        20,
+        19,
         0
       ]
     ],
@@ -5886,23 +5886,23 @@
       [
         1,
         1,
-        12,
+        11,
         7,
         "办公室",
         "account"
       ],
       [
-        14,
+        13,
         1,
-        25,
+        24,
         7,
         "门厅",
         "hall"
       ],
       [
-        27,
+        26,
         1,
-        40,
+        36,
         7,
         "教师宿舍",
         "bed"
@@ -5910,23 +5910,23 @@
       [
         1,
         9,
-        17,
+        15,
         16,
         "教室一",
         "class"
       ],
       [
-        19,
+        17,
         9,
-        21,
+        19,
         16,
         "走廊",
         "hall"
       ],
       [
-        23,
+        21,
         9,
-        40,
+        36,
         16,
         "教室二",
         "class"
@@ -5934,8 +5934,8 @@
       [
         1,
         18,
-        40,
-        30,
+        36,
+        28,
         "操场",
         "yard"
       ]
@@ -5945,7 +5945,7 @@
         "name": "签到处",
         "short": "签到处",
         "rect": [
-          15,
+          14,
           1,
           2,
           1
@@ -5957,55 +5957,10 @@
         "wall_mounted": false
       },
       {
-        "name": "饮水机",
-        "short": "饮水机",
-        "rect": [
-          24,
-          1,
-          1,
-          1
-        ],
-        "note": "门厅角落",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "花篮",
-        "short": "花篮",
-        "rect": [
-          22,
-          1,
-          1,
-          1
-        ],
-        "note": "搬去操场前先摆门厅",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "报刊架",
-        "short": "报刊架",
-        "rect": [
-          14,
-          2,
-          1,
-          2
-        ],
-        "note": "贴西墙",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
         "name": "伞架",
         "short": "伞架",
         "rect": [
-          18,
+          17,
           1,
           1,
           1
@@ -6017,10 +5972,25 @@
         "wall_mounted": false
       },
       {
+        "name": "饮水机",
+        "short": "饮水机",
+        "rect": [
+          23,
+          1,
+          1,
+          1
+        ],
+        "note": "门厅角落",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
         "name": "捐款箱",
         "short": "捐款箱",
         "rect": [
-          24,
+          23,
           3,
           1,
           1
@@ -6032,10 +6002,25 @@
         "wall_mounted": false
       },
       {
+        "name": "报刊架",
+        "short": "报刊架",
+        "rect": [
+          13,
+          2,
+          1,
+          2
+        ],
+        "note": "贴西墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
         "name": "长凳",
         "short": "长凳",
         "rect": [
-          17,
+          15,
           4,
           3,
           1
@@ -6050,7 +6035,7 @@
         "name": "长凳",
         "short": "长凳",
         "rect": [
-          21,
+          19,
           4,
           3,
           1
@@ -6065,7 +6050,7 @@
         "name": "长凳",
         "short": "长凳",
         "rect": [
-          21,
+          13,
           6,
           3,
           1
@@ -6080,23 +6065,8 @@
         "name": "长凳",
         "short": "长凳",
         "rect": [
-          14,
-          5,
-          3,
-          1
-        ],
-        "note": "家长候场席",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          14,
-          7,
+          19,
+          6,
           3,
           1
         ],
@@ -6110,12 +6080,12 @@
         "name": "指示牌",
         "short": "指示牌",
         "rect": [
-          24,
+          23,
           6,
           1,
           1
         ],
-        "note": "立着的指路牌 · 操场往东",
+        "note": "立着的指路牌 · 操场往南",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -6125,7 +6095,7 @@
         "name": "公告板",
         "short": "公告板",
         "rect": [
-          13,
+          12,
           6,
           1,
           2
@@ -6137,25 +6107,10 @@
         "wall_mounted": true
       },
       {
-        "name": "捐建牌匾",
-        "short": "捐建牌匾",
-        "rect": [
-          14,
-          0,
-          5,
-          1
-        ],
-        "note": "「沈氏捐建」牌匾钉在门厅外墙 · 他什么都不知道",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": true
-      },
-      {
         "name": "荣誉榜",
         "short": "荣誉榜",
         "rect": [
-          13,
+          12,
           1,
           1,
           2
@@ -6167,12 +6122,42 @@
         "wall_mounted": true
       },
       {
+        "name": "旧挂钟",
+        "short": "旧挂钟",
+        "rect": [
+          12,
+          3,
+          1,
+          1
+        ],
+        "note": "钉在办公室与门厅之间的墙上",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": true
+      },
+      {
+        "name": "捐建牌匾",
+        "short": "捐建牌匾",
+        "rect": [
+          13,
+          0,
+          4,
+          1
+        ],
+        "note": "「沈氏捐建」牌匾钉在门厅外墙 · 他什么都不知道",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": true
+      },
+      {
         "name": "宣传栏",
         "short": "宣传栏",
         "rect": [
-          22,
+          21,
           0,
-          3,
+          4,
           1
         ],
         "note": "钉在门厅外墙东段 · 贴通知",
@@ -6305,7 +6290,7 @@
         "name": "打印机",
         "short": "打印机",
         "rect": [
-          11,
+          10,
           1,
           1,
           1
@@ -6320,7 +6305,7 @@
         "name": "茶桶",
         "short": "茶桶",
         "rect": [
-          12,
+          11,
           1,
           1,
           1
@@ -6335,7 +6320,7 @@
         "name": "批文匣",
         "short": "批文匣",
         "rect": [
-          10,
+          9,
           5,
           1,
           1
@@ -6350,7 +6335,7 @@
         "name": "会议长桌",
         "short": "会议长桌",
         "rect": [
-          4,
+          3,
           3,
           4,
           2
@@ -6365,7 +6350,7 @@
         "name": "长凳",
         "short": "长凳",
         "rect": [
-          4,
+          3,
           6,
           2,
           1
@@ -6380,7 +6365,7 @@
         "name": "长凳",
         "short": "长凳",
         "rect": [
-          7,
+          6,
           6,
           2,
           1
@@ -6395,7 +6380,7 @@
         "name": "旧报纸",
         "short": "旧报纸",
         "rect": [
-          2,
+          1,
           6,
           2,
           1
@@ -6410,7 +6395,7 @@
         "name": "公文柜",
         "short": "公文柜",
         "rect": [
-          11,
+          10,
           4,
           1,
           2
@@ -6440,7 +6425,7 @@
         "name": "暖水瓶",
         "short": "暖水瓶",
         "rect": [
-          12,
+          11,
           5,
           1,
           1
@@ -6455,37 +6440,22 @@
         "name": "铁皮桶",
         "short": "铁皮桶",
         "rect": [
-          12,
+          11,
           7,
           1,
           1
         ],
-        "note": "办公室西北角",
+        "note": "办公室角落",
         "clue": false,
         "zone": "house",
         "yard_building": false,
         "wall_mounted": false
       },
       {
-        "name": "旧挂钟",
-        "short": "旧挂钟",
-        "rect": [
-          13,
-          3,
-          1,
-          1
-        ],
-        "note": "钉在办公室与门厅之间的墙上",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": true
-      },
-      {
         "name": "单人床",
         "short": "单人床",
         "rect": [
-          27,
+          26,
           1,
           2,
           1
@@ -6500,7 +6470,7 @@
         "name": "单人床",
         "short": "单人床",
         "rect": [
-          31,
+          30,
           1,
           2,
           1
@@ -6515,7 +6485,7 @@
         "name": "单人床",
         "short": "单人床",
         "rect": [
-          35,
+          34,
           1,
           2,
           1
@@ -6530,7 +6500,7 @@
         "name": "单人床",
         "short": "单人床",
         "rect": [
-          27,
+          26,
           6,
           2,
           1
@@ -6545,7 +6515,7 @@
         "name": "衣柜",
         "short": "衣柜",
         "rect": [
-          39,
+          36,
           1,
           1,
           2
@@ -6560,7 +6530,7 @@
         "name": "行李架",
         "short": "行李架",
         "rect": [
-          31,
+          30,
           6,
           2,
           1
@@ -6575,7 +6545,7 @@
         "name": "柜",
         "short": "柜",
         "rect": [
-          39,
+          36,
           6,
           1,
           1
@@ -6590,7 +6560,7 @@
         "name": "书桌",
         "short": "书桌",
         "rect": [
-          29,
+          28,
           4,
           2,
           1
@@ -6605,7 +6575,7 @@
         "name": "椅",
         "short": "椅",
         "rect": [
-          31,
+          30,
           4,
           1,
           1
@@ -6620,7 +6590,7 @@
         "name": "书桌",
         "short": "书桌",
         "rect": [
-          33,
+          32,
           4,
           2,
           1
@@ -6635,7 +6605,7 @@
         "name": "脸盆架",
         "short": "脸盆架",
         "rect": [
-          40,
+          36,
           4,
           1,
           1
@@ -6650,8 +6620,8 @@
         "name": "水桶",
         "short": "水桶",
         "rect": [
-          40,
-          1,
+          35,
+          6,
           1,
           1
         ],
@@ -6665,7 +6635,7 @@
         "name": "晾衣绳",
         "short": "晾衣绳",
         "rect": [
-          29,
+          28,
           2,
           6,
           1
@@ -6680,7 +6650,7 @@
         "name": "被褥",
         "short": "被褥",
         "rect": [
-          35,
+          34,
           2,
           2,
           1
@@ -6695,7 +6665,7 @@
         "name": "脸盆",
         "short": "脸盆",
         "rect": [
-          36,
+          33,
           6,
           1,
           1
@@ -6710,7 +6680,7 @@
         "name": "暖水瓶",
         "short": "暖水瓶",
         "rect": [
-          38,
+          35,
           3,
           1,
           1
@@ -6725,7 +6695,7 @@
         "name": "教案筐",
         "short": "教案筐",
         "rect": [
-          27,
+          26,
           2,
           1,
           1
@@ -6767,36 +6737,6 @@
         "wall_mounted": false
       },
       {
-        "name": "图书角",
-        "short": "图书角",
-        "rect": [
-          15,
-          9,
-          2,
-          2
-        ],
-        "note": "教室里的书架",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "书包架",
-        "short": "书包架",
-        "rect": [
-          17,
-          9,
-          1,
-          2
-        ],
-        "note": "挂书包的地方",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
         "name": "教鞭盒",
         "short": "教鞭盒",
         "rect": [
@@ -6825,6 +6765,36 @@
         "zone": "house",
         "yard_building": false,
         "wall_mounted": true
+      },
+      {
+        "name": "书包架",
+        "short": "书包架",
+        "rect": [
+          13,
+          9,
+          1,
+          2
+        ],
+        "note": "挂书包的地方",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "图书角",
+        "short": "图书角",
+        "rect": [
+          14,
+          9,
+          2,
+          2
+        ],
+        "note": "教室里的书架",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
       },
       {
         "name": "课桌",
@@ -7055,7 +7025,7 @@
         "name": "讲义筐",
         "short": "讲义筐",
         "rect": [
-          16,
+          15,
           15,
           1,
           1
@@ -7070,7 +7040,7 @@
         "name": "荣誉榜",
         "short": "荣誉榜",
         "rect": [
-          18,
+          16,
           9,
           1,
           3
@@ -7085,7 +7055,7 @@
         "name": "宣传栏",
         "short": "宣传栏",
         "rect": [
-          22,
+          20,
           9,
           1,
           3
@@ -7100,7 +7070,7 @@
         "name": "扫把",
         "short": "扫把",
         "rect": [
-          19,
+          17,
           9,
           1,
           1
@@ -7115,7 +7085,7 @@
         "name": "拖把",
         "short": "拖把",
         "rect": [
-          21,
+          19,
           16,
           1,
           1
@@ -7130,7 +7100,7 @@
         "name": "黑板",
         "short": "黑板",
         "rect": [
-          28,
+          27,
           8,
           4,
           1
@@ -7145,7 +7115,7 @@
         "name": "讲台",
         "short": "讲台",
         "rect": [
-          28,
+          27,
           9,
           4,
           1
@@ -7157,40 +7127,10 @@
         "wall_mounted": false
       },
       {
-        "name": "书包架",
-        "short": "书包架",
-        "rect": [
-          23,
-          9,
-          1,
-          2
-        ],
-        "note": "挂书包的地方",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "图书角",
-        "short": "图书角",
-        "rect": [
-          39,
-          9,
-          2,
-          2
-        ],
-        "note": "教室里的书架",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
         "name": "教鞭盒",
         "short": "教鞭盒",
         "rect": [
-          33,
+          32,
           9,
           1,
           1
@@ -7205,7 +7145,7 @@
         "name": "课程表",
         "short": "课程表",
         "rect": [
-          23,
+          22,
           8,
           2,
           1
@@ -7217,6 +7157,51 @@
         "wall_mounted": true
       },
       {
+        "name": "书包架",
+        "short": "书包架",
+        "rect": [
+          21,
+          9,
+          1,
+          2
+        ],
+        "note": "挂书包的地方",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "图书角",
+        "short": "图书角",
+        "rect": [
+          35,
+          9,
+          2,
+          2
+        ],
+        "note": "教室里的书架",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "课桌",
+        "short": "课桌",
+        "rect": [
+          21,
+          11,
+          2,
+          1
+        ],
+        "note": "教室二",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
         "name": "课桌",
         "short": "课桌",
         "rect": [
@@ -7280,8 +7265,8 @@
         "name": "课桌",
         "short": "课桌",
         "rect": [
-          36,
-          11,
+          21,
+          13,
           2,
           1
         ],
@@ -7355,8 +7340,8 @@
         "name": "课桌",
         "short": "课桌",
         "rect": [
-          36,
-          13,
+          21,
+          15,
           2,
           1
         ],
@@ -7416,21 +7401,6 @@
         "short": "课桌",
         "rect": [
           33,
-          15,
-          2,
-          1
-        ],
-        "note": "教室二",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "课桌",
-        "short": "课桌",
-        "rect": [
-          36,
           15,
           2,
           1
@@ -7445,7 +7415,7 @@
         "name": "讲义筐",
         "short": "讲义筐",
         "rect": [
-          38,
+          35,
           15,
           1,
           1
@@ -7475,12 +7445,12 @@
         "name": "升旗台",
         "short": "升旗台",
         "rect": [
-          5,
+          4,
           18,
           2,
           2
         ],
-        "note": "每周一升旗",
+        "note": "跑道西北边 · 每周一升旗",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -7490,27 +7460,27 @@
         "name": "旗杆",
         "short": "旗杆",
         "rect": [
-          5,
-          17,
+          6,
+          18,
           1,
           1
         ],
-        "note": "插在升旗台上",
+        "note": "升旗台边上的旗杆（美术画成竖杆）",
         "clue": false,
         "zone": "house",
         "yard_building": false,
-        "wall_mounted": true
+        "wall_mounted": false
       },
       {
         "name": "主席台",
         "short": "主席台",
         "rect": [
-          23,
+          20,
           18,
-          7,
+          8,
           2
         ],
-        "note": "剪彩的高台 · 沈明远在这儿剪彩",
+        "note": "跑道北侧边上的高台 · 沈明远在这儿剪彩",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -7520,12 +7490,12 @@
         "name": "剪彩台",
         "short": "剪彩台",
         "rect": [
-          21,
+          28,
           18,
           2,
           1
         ],
-        "note": "剪彩用的条桌，紧挨主席台西端",
+        "note": "剪彩用的条桌，紧挨主席台东端",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -7535,12 +7505,12 @@
         "name": "红绸横幅",
         "short": "红绸横幅",
         "rect": [
-          23,
+          20,
           17,
-          7,
+          8,
           1
         ],
-        "note": "红绸挂在主席台后墙上 · 题「沈氏捐建 村小落成」",
+        "note": "红绸挂在主席台背后的墙上 · 题「沈氏捐建 村小落成」",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -7550,387 +7520,12 @@
         "name": "花篮",
         "short": "花篮",
         "rect": [
-          21,
           19,
-          1,
-          1
-        ],
-        "note": "剪彩摆的花篮",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "花篮",
-        "short": "花篮",
-        "rect": [
-          16,
           18,
           1,
           1
         ],
         "note": "剪彩摆的花篮",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "花坛",
-        "short": "花坛",
-        "rect": [
-          17,
-          18,
-          3,
-          1
-        ],
-        "note": "操场上的花坛",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          2,
-          20,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          7,
-          20,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          12,
-          20,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          2,
-          22,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          7,
-          22,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          12,
-          22,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          2,
-          24,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          7,
-          24,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          12,
-          24,
-          4,
-          1
-        ],
-        "note": "学生队列",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          22,
-          20,
-          4,
-          1
-        ],
-        "note": "家长席 · 正对主席台",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          27,
-          20,
-          4,
-          1
-        ],
-        "note": "家长席 · 正对主席台",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          22,
-          22,
-          4,
-          1
-        ],
-        "note": "家长席",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          27,
-          22,
-          4,
-          1
-        ],
-        "note": "家长席",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "篮球架",
-        "short": "篮球架",
-        "rect": [
-          33,
-          20,
-          2,
-          2
-        ],
-        "note": "水泥篮球架",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "单杠",
-        "short": "单杠",
-        "rect": [
-          18,
-          22,
-          4,
-          1
-        ],
-        "note": "一副单杠",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "旱厕",
-        "short": "旱厕",
-        "rect": [
-          36,
-          18,
-          3,
-          2
-        ],
-        "note": "操场东北角 · 村小旱厕",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": true,
-        "wall_mounted": false
-      },
-      {
-        "name": "茅坑",
-        "short": "茅坑",
-        "rect": [
-          37,
-          19,
-          1,
-          1
-        ],
-        "note": "旱厕内",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "乒乓球台",
-        "short": "乒乓球台",
-        "rect": [
-          30,
-          26,
-          2,
-          1
-        ],
-        "note": "水泥乒乓球台",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "沙坑",
-        "short": "沙坑",
-        "rect": [
-          10,
-          27,
-          5,
-          1
-        ],
-        "note": "跳远沙坑",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "花坛",
-        "short": "花坛",
-        "rect": [
-          2,
-          27,
-          4,
-          1
-        ],
-        "note": "操场西南的花坛",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "长凳",
-        "short": "长凳",
-        "rect": [
-          18,
-          27,
-          4,
-          1
-        ],
-        "note": "操场边的看台",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "爬杆",
-        "short": "爬杆",
-        "rect": [
-          33,
-          27,
-          1,
-          2
-        ],
-        "note": "操场边的一根爬杆",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "水缸",
-        "short": "水缸",
-        "rect": [
-          39,
-          29,
-          1,
-          1
-        ],
-        "note": "操场边接雨水",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -7940,12 +7535,28 @@
         "name": "跑道",
         "short": "跑道",
         "rect": [
-          4,
-          25,
-          14,
+          5,
+          20,
+          28,
+          8
+        ],
+        "note": "椭圆跑道（美术按椭圆画环，不是直道）",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false,
+        "shape": "ellipse"
+      },
+      {
+        "name": "单杠",
+        "short": "单杠",
+        "rect": [
+          33,
+          23,
+          3,
           1
         ],
-        "note": "跑道边线",
+        "note": "跑道东边的一副单杠",
         "clue": false,
         "zone": "yard",
         "yard_building": false,
@@ -7955,72 +7566,12 @@
         "name": "球门",
         "short": "球门",
         "rect": [
-          20,
+          2,
           25,
           3,
           1
         ],
-        "note": "足球球门",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "沙包",
-        "short": "沙包",
-        "rect": [
-          24,
-          25,
-          1,
-          1
-        ],
-        "note": "跳远用的沙包",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "跑道",
-        "short": "跑道",
-        "rect": [
-          4,
-          29,
-          30,
-          1
-        ],
-        "note": "跑道边线",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "旧车胎",
-        "short": "旧车胎",
-        "rect": [
-          36,
-          25,
-          2,
-          1
-        ],
-        "note": "扔在操场边的旧车胎",
-        "clue": false,
-        "zone": "yard",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "粉笔筐",
-        "short": "粉笔筐",
-        "rect": [
-          2,
-          29,
-          1,
-          1
-        ],
-        "note": "讲台备的粉笔筐",
+        "note": "跑道西边的足球球门",
         "clue": false,
         "zone": "yard",
         "yard_building": false,
@@ -8031,7 +7582,7 @@
         "short": "标语牌",
         "rect": [
           12,
-          31,
+          29,
           6,
           1
         ],
@@ -8047,7 +7598,7 @@
       "操场主席台上的剪彩台与红绸：2026 沈明远捐建 · 他什么都不知道。"
     ],
     "story": "沈明远剪彩的地方（操场主席台）；他什么都不知道。",
-    "note": "屋本体 42×32 格 = 672×512 px（lot/wings 一致；旧 note 的「21×12」「21×16」均作废）。比原 21×16 整整扩大一倍（用户 11/22 拍板）。主大门开在北墙 (19,0)(20,0)，门厅正对大门、门厅正对走廊、走廊正对操场。走廊收窄成 3 格（x19..21）当交通枢纽，腾出的空间给教室扩容：教室一 17×8、教室二 18×8（原 4×4），课桌 2×1 横竖都留一格空当以便进出。剪彩搬到操场东北角的主席台（剪彩台+红绸+花篮），门厅只留签到处和候场长凳。「周」界碑随尺寸翻倍由 [1,10,2,1] 变为 [1,17,2,1]，相对落点不变（操场北围墙最西端）。"
+    "note": "屋本体 38×30 格 = 608×480 px（lot/wings 一致；旧 note 的「21×12」「21×16」「42×32」均作废）。v3 按年代真实感收过操场：没有旱厕茅坑，跑道改成椭圆，升旗台和主席台都贴着跑道边（升旗台在西北、主席台在北侧偏东，红绸横幅钉在主席台背后的教学楼南墙上），操场不再堆长椅沙坑花坛粉笔筐乒乓球台爬杆旧车胎水缸篮球架，只剩单杠球门和南墙标语。操场收到 36×11 格，整栋 38×30（比 v2 的 42×32 小一点）。主大门开在北墙 (18,0)(19,0)，门厅正对大门、门厅正对走廊、走廊正对操场。走廊 3 格宽（x17..19），教室一 15×8、教室二 16×8，课桌 2×1 横竖都留一格空当以便进出。「周」界碑仍是 [1,17,2,1]（操场北围墙最西端）。"
   },
   {
     "id": "lu_a2",

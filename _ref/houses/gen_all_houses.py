@@ -607,6 +607,15 @@ def render(hs):
             fill, edge = C["clue"], C["clue"]
         else:
             fill, edge = C["furn"], C["furn_edge"]
+        if f.get("shape") == "ellipse":
+            # 椭圆（跑道）：外圈描边 + 内圈填场地色 = 一圈椭圆跑道，不画矩形块
+            d.ellipse([bx + 2, by + 2, bx + bw - 3, by + bh - 3],
+                      outline=edge, width=4)
+            pad = max(6, min(bw, bh) * 0.16)
+            d.ellipse([bx + 2 + pad, by + 2 + pad, bx + bw - 3 - pad, by + bh - 3 - pad],
+                      fill=C["yard"])
+            draw_label(d, bx + 3, by + 3, bw - 7, bh - 7, f["short"], f["clue"])
+            continue
         d.rectangle([bx + 3, by + 3, bx + bw - 4, by + bh - 4], fill=fill, outline=edge, width=2)
         draw_label(d, bx + 3, by + 3, bw - 7, bh - 7, f["short"], f["clue"])
 
