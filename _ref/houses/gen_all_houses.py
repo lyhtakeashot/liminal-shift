@@ -607,14 +607,10 @@ def render(hs):
             fill, edge = C["clue"], C["clue"]
         else:
             fill, edge = C["furn"], C["furn_edge"]
-        if f.get("shape") == "ellipse":
-            # 椭圆（跑道）：外圈描边 + 内圈填场地色 = 一圈椭圆跑道，不画矩形块
-            d.ellipse([bx + 2, by + 2, bx + bw - 3, by + bh - 3],
-                      outline=edge, width=4)
-            pad = max(6, min(bw, bh) * 0.16)
-            d.ellipse([bx + 2 + pad, by + 2 + pad, bx + bw - 3 - pad, by + bh - 3 - pad],
-                      fill=C["yard"])
-            draw_label(d, bx + 3, by + 3, bw - 7, bh - 7, f["short"], f["clue"])
+        if f.get("seamless"):
+            # 像素格拼块（如跑道）：严格按格铺满，无内缩、无描边、无标签，
+            # 相邻格严丝合缝 → 拼出来的形状就是数据里的格子集合本身。
+            d.rectangle([bx, by, bx + bw - 1, by + bh - 1], fill=fill)
             continue
         d.rectangle([bx + 3, by + 3, bx + bw - 4, by + bh - 4], fill=fill, outline=edge, width=2)
         draw_label(d, bx + 3, by + 3, bw - 7, bh - 7, f["short"], f["clue"])
@@ -650,13 +646,24 @@ def render(hs):
     for zone, title in (("house", "— 屋内 —"), ("yard", "— 院子（可走可搜证）—")):
         d.text((40, ty), title, font=font(14), fill=C["gray"])
         ty += 22
+        # 像素格拼块（如跑道）按名字合并成一行，免得刷屏
+        merged = {}
         for f in [x for x in hs["furniture"] if x["zone"] == zone]:
             fx, fy, fw, fh = f["rect"]
             mark = "◆" if f["clue"] else "·"
             col = C["clue"] if f["clue"] else C["text"]
+            if f.get("seamless"):
+                key = (f["name"], f["note"])
+                merged[key] = merged.get(key, 0) + 1
+                continue
             d.text((52, ty),
                    f"{mark} {f['name']}  {fw}×{fh} 格 = {fw*TILE}×{fh*TILE} px   {f['note']}",
                    font=font(13), fill=col, anchor="lm")
+            ty += 21
+        for (nm, note), cnt in merged.items():
+            d.text((52, ty),
+                   f"· {nm}  1×1 格 × {cnt}（像素格逐格拼出，共 {cnt} 格 = {cnt*TILE}×{TILE} px）   {note}",
+                   font=font(13), fill=C["text"], anchor="lm")
             ty += 21
         ty += 8
     d.text((40, H - 18), hs["note"], font=font(13), fill=C["gray"], anchor="lm")
