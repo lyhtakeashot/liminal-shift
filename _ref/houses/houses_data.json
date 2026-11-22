@@ -5330,12 +5330,12 @@
       0,
       0,
       20,
-      15
+      19
     ],
     "wings": [
       [
         0,
-        0,
+        4,
         21,
         16
       ]
@@ -5343,96 +5343,186 @@
     "partitions": [
       [
         1,
-        8,
+        12,
         19,
-        8
+        12
       ],
       [
         6,
-        9,
+        13,
         6,
-        14
+        18
       ],
       [
         13,
-        9,
         13,
-        14
+        13,
+        18
       ]
     ],
     "doors": [
       [
         9,
-        8
+        12
       ],
       [
         6,
-        11
+        15
       ],
       [
         13,
-        11
+        15
       ]
     ],
     "gate": [
       [
         9,
-        0
+        4
       ],
       [
         10,
-        0
+        4
       ],
       [
         16,
-        15
+        19
       ],
       [
         17,
-        15
+        19
       ]
     ],
     "rooms": [
       [
         1,
-        1,
+        5,
         19,
-        7,
+        11,
         "店面",
         "shop"
       ],
       [
         1,
-        9,
+        13,
         5,
-        14,
+        18,
         "里屋",
         "bed"
       ],
       [
         7,
-        9,
+        13,
         12,
-        14,
+        18,
         "账房",
         "account"
       ],
       [
         14,
-        9,
+        13,
         19,
-        14,
+        18,
         "仓库",
         "store"
       ]
     ],
     "furniture": [
       {
+        "name": "旧招牌架",
+        "short": "旧招牌架",
+        "rect": [
+          2,
+          1,
+          2,
+          1
+        ],
+        "note": "门口 · 挂着的旧幌子，三代没换过",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "板车",
+        "short": "板车",
+        "rect": [
+          11,
+          1,
+          2,
+          1
+        ],
+        "note": "门口 · 卸货用的板车",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "水缸",
+        "short": "水缸",
+        "rect": [
+          18,
+          1,
+          1,
+          1
+        ],
+        "note": "门口 · 接雨水",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "二八大杠",
+        "short": "二八大杠",
+        "rect": [
+          6,
+          2,
+          2,
+          1
+        ],
+        "note": "门口 · 靠墙停着的旧自行车",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "扫帚",
+        "short": "扫帚",
+        "rect": [
+          1,
+          3,
+          1,
+          1
+        ],
+        "note": "门口靠墙的扫帚",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "货箱堆",
+        "short": "货箱堆",
+        "rect": [
+          15,
+          3,
+          2,
+          1
+        ],
+        "note": "门口 · 等着搬进仓库的箱子",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
         "name": "招牌小字",
         "short": "招牌",
         "rect": [
           1,
-          0,
+          4,
           2,
           1
         ],
@@ -5447,7 +5537,7 @@
         "short": "老货柜",
         "rect": [
           1,
-          1,
+          5,
           3,
           1
         ],
@@ -5461,12 +5551,12 @@
         "name": "货架",
         "short": "货架",
         "rect": [
-          5,
           1,
-          1,
-          2
+          6,
+          3,
+          1
         ],
-        "note": "北墙货架 · 架上摆着新货：积木、拼图",
+        "note": "老货架 · 架上摆着旧货：陀螺、竹蜻蜓、弹弓",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -5476,8 +5566,8 @@
         "name": "收银台",
         "short": "收银台",
         "rect": [
-          6,
-          1,
+          5,
+          5,
           3,
           1
         ],
@@ -5492,71 +5582,11 @@
         "short": "货架",
         "rect": [
           11,
-          1,
-          1,
-          2
-        ],
-        "note": "北墙货架 · 架上摆着新货：遥控车、电子小汽车",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
-          13,
-          1,
-          2,
-          1
-        ],
-        "note": "北墙货架 · 架上摆着新货：塑料小家电、风扇",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
-          16,
-          1,
-          2,
-          1
-        ],
-        "note": "北墙货架 · 架上摆着新货：文具盒、作业本、蜡笔",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
-          18,
-          1,
-          2,
-          1
-        ],
-        "note": "北墙货架 · 架上摆着新货：气球、泡泡机",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
-          1,
-          2,
+          5,
           1,
           2
         ],
-        "note": "西墙货架 · 架上摆着老货：陀螺、竹蜻蜓、弹弓",
+        "note": "货架列 · 架上摆着新货：遥控车、电子小汽车",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -5566,27 +5596,117 @@
         "name": "货架",
         "short": "货架",
         "rect": [
-          19,
-          2,
+          14,
+          5,
           1,
           2
         ],
-        "note": "东墙货架 · 架上摆着新货：滑板车、小推车",
+        "note": "货架列 · 架上摆着新货：塑料小家电、风扇",
         "clue": false,
         "zone": "house",
         "yard_building": false,
         "wall_mounted": false
       },
       {
-        "name": "中岛货架",
-        "short": "中岛货架",
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          17,
+          5,
+          3,
+          1
+        ],
+        "note": "货架列 · 架上摆着新货：文具盒、作业本、蜡笔",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          1,
+          9,
+          1,
+          2
+        ],
+        "note": "货架列 · 架上摆着旧货：铁皮青蛙盒、纸风车架",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          4,
+          9,
+          1,
+          2
+        ],
+        "note": "货架列 · 架上摆着新货：积木、拼图",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
         "rect": [
           7,
+          9,
+          1,
+          2
+        ],
+        "note": "货架列 · 架上摆着新货：蜡笔盒、拼图盒",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          11,
+          9,
+          1,
+          2
+        ],
+        "note": "货架列 · 架上摆着新货：积木桶、拼图大盒",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          14,
+          9,
+          1,
+          2
+        ],
+        "note": "货架列 · 架上摆着新货：学步车、布娃娃、气球桶",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          17,
+          9,
           3,
-          1,
-          3
+          1
         ],
-        "note": "店面中间的岛架 · 架上摆着新货：积木桶、拼图大盒",
+        "note": "货架列 · 架上摆着新货：气泡机、泡泡机",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -5596,27 +5716,12 @@
         "name": "货架",
         "short": "货架",
         "rect": [
-          1,
-          4,
-          1,
-          2
+          17,
+          10,
+          3,
+          1
         ],
-        "note": "西墙货架 · 架上摆着老货：纸风车、铁皮青蛙盒",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
-          19,
-          4,
-          1,
-          2
-        ],
-        "note": "东墙货架 · 架上摆着新货：布娃娃、学步车",
+        "note": "货架列 · 架上摆着新货：滑板车、小推车",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -5626,8 +5731,8 @@
         "name": "童车展示",
         "short": "童车展示",
         "rect": [
-          3,
-          6,
+          1,
+          11,
           2,
           1
         ],
@@ -5641,8 +5746,23 @@
         "name": "摇摇马",
         "short": "摇摇马",
         "rect": [
+          4,
+          11,
+          1,
+          1
+        ],
+        "note": "落地陈列的大件 · 摇摇马，孩子试骑",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
+        "name": "摇摇马",
+        "short": "摇摇马",
+        "rect": [
           6,
-          6,
+          11,
           1,
           1
         ],
@@ -5657,7 +5777,7 @@
         "short": "儿童自行车",
         "rect": [
           13,
-          6,
+          11,
           2,
           1
         ],
@@ -5668,75 +5788,15 @@
         "wall_mounted": false
       },
       {
-        "name": "滑梯",
-        "short": "滑梯",
+        "name": "货架",
+        "short": "货架",
         "rect": [
           16,
-          6,
-          2,
-          1
-        ],
-        "note": "落地陈列的大件 · 小滑梯",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
-          1,
-          7,
-          2,
-          1
-        ],
-        "note": "南墙货架 · 架上摆着老货：拨浪鼓、竹蜻蜓",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
-          4,
-          7,
-          2,
-          1
-        ],
-        "note": "南墙货架 · 架上摆着新货：蜡笔盒、拼图盒",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
           11,
-          7,
           2,
           1
         ],
-        "note": "南墙货架 · 架上摆着新货：文具、泡泡机",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
-        "name": "货架",
-        "short": "货架",
-        "rect": [
-          17,
-          7,
-          2,
-          1
-        ],
-        "note": "南墙货架 · 架上摆着新货：遥控车配件、气球",
+        "note": "货架列 · 架上摆着新货：遥控车配件、气球",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -5747,7 +5807,7 @@
         "short": "单人床",
         "rect": [
           1,
-          9,
+          13,
           2,
           1
         ],
@@ -5758,26 +5818,11 @@
         "wall_mounted": false
       },
       {
-        "name": "小桌",
-        "short": "小桌",
-        "rect": [
-          4,
-          9,
-          2,
-          1
-        ],
-        "note": "看店人吃饭看账的地方",
-        "clue": false,
-        "zone": "house",
-        "yard_building": false,
-        "wall_mounted": false
-      },
-      {
         "name": "被褥",
         "short": "被褥",
         "rect": [
           1,
-          10,
+          14,
           2,
           1
         ],
@@ -5788,11 +5833,26 @@
         "wall_mounted": false
       },
       {
+        "name": "小桌",
+        "short": "小桌",
+        "rect": [
+          4,
+          13,
+          2,
+          1
+        ],
+        "note": "看店人吃饭看账的地方",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false,
+        "wall_mounted": false
+      },
+      {
         "name": "马扎",
         "short": "马扎",
         "rect": [
           4,
-          10,
+          14,
           1,
           1
         ],
@@ -5807,7 +5867,7 @@
         "short": "旧衣柜",
         "rect": [
           5,
-          12,
+          16,
           1,
           2
         ],
@@ -5822,7 +5882,7 @@
         "short": "脸盆架",
         "rect": [
           1,
-          13,
+          17,
           1,
           1
         ],
@@ -5837,7 +5897,7 @@
         "short": "木箱",
         "rect": [
           1,
-          14,
+          18,
           2,
           1
         ],
@@ -5852,7 +5912,7 @@
         "short": "煤油灯",
         "rect": [
           3,
-          14,
+          18,
           1,
           1
         ],
@@ -5867,7 +5927,7 @@
         "short": "小板凳",
         "rect": [
           5,
-          14,
+          18,
           1,
           1
         ],
@@ -5882,7 +5942,7 @@
         "short": "账柜",
         "rect": [
           11,
-          8,
+          12,
           2,
           1
         ],
@@ -5897,7 +5957,7 @@
         "short": "档案柜",
         "rect": [
           7,
-          9,
+          13,
           1,
           1
         ],
@@ -5912,7 +5972,7 @@
         "short": "办公桌",
         "rect": [
           7,
-          10,
+          14,
           2,
           1
         ],
@@ -5927,7 +5987,7 @@
         "short": "椅",
         "rect": [
           9,
-          10,
+          14,
           1,
           1
         ],
@@ -5942,7 +6002,7 @@
         "short": "算盘",
         "rect": [
           10,
-          10,
+          14,
           1,
           1
         ],
@@ -5957,7 +6017,7 @@
         "short": "账本堆",
         "rect": [
           11,
-          10,
+          14,
           1,
           1
         ],
@@ -5972,7 +6032,7 @@
         "short": "铁皮柜",
         "rect": [
           7,
-          12,
+          16,
           1,
           2
         ],
@@ -5987,7 +6047,7 @@
         "short": "废纸篓",
         "rect": [
           10,
-          12,
+          16,
           1,
           1
         ],
@@ -6002,7 +6062,7 @@
         "short": "暖水瓶",
         "rect": [
           12,
-          12,
+          16,
           1,
           1
         ],
@@ -6017,7 +6077,7 @@
         "short": "旧台灯",
         "rect": [
           12,
-          13,
+          17,
           1,
           1
         ],
@@ -6032,7 +6092,7 @@
         "short": "算盘盒",
         "rect": [
           12,
-          14,
+          18,
           1,
           1
         ],
@@ -6047,7 +6107,7 @@
         "short": "货架",
         "rect": [
           14,
-          9,
+          13,
           1,
           2
         ],
@@ -6062,7 +6122,7 @@
         "short": "货架",
         "rect": [
           19,
-          9,
+          13,
           1,
           2
         ],
@@ -6077,7 +6137,7 @@
         "short": "货箱",
         "rect": [
           16,
-          9,
+          13,
           2,
           1
         ],
@@ -6092,7 +6152,7 @@
         "short": "纸箱堆",
         "rect": [
           16,
-          10,
+          14,
           2,
           1
         ],
@@ -6107,11 +6167,11 @@
         "short": "货箱",
         "rect": [
           15,
-          11,
+          15,
           2,
           1
         ],
-        "note": "存货 · 让开账房通仓库的门 (13,11)",
+        "note": "存货 · 让开账房通仓库的门 (13,15)",
         "clue": false,
         "zone": "house",
         "yard_building": false,
@@ -6122,7 +6182,7 @@
         "short": "旧招牌板",
         "rect": [
           17,
-          12,
+          16,
           2,
           1
         ],
@@ -6137,7 +6197,7 @@
         "short": "拆封样品",
         "rect": [
           14,
-          13,
+          17,
           2,
           1
         ],
@@ -6152,7 +6212,7 @@
         "short": "扫帚",
         "rect": [
           17,
-          13,
+          17,
           1,
           1
         ],
@@ -6167,7 +6227,7 @@
         "short": "纸箱",
         "rect": [
           18,
-          14,
+          18,
           1,
           1
         ],
@@ -6182,7 +6242,7 @@
         "short": "水桶",
         "rect": [
           19,
-          14,
+          18,
           1,
           1
         ],
@@ -6198,7 +6258,7 @@
       "账房账柜：周有田往来账可能在此（位置待定，未定论）"
     ],
     "story": "租的是沈家的楼，雇的是沈家的人；周家三代不知道替谁看店。",
-    "note": "屋本体 21×16 格 = 336×256 px（lot/wings 一致；旧 note 的「15×9」「15×11」均作废）。v3 全上架：店里的玩具不落地，小件货品全部并进货架/柜台的 note（架上摆着…），落地只留大件（童车/摇摇马/儿童自行车/滑梯）；美术那边只要多出几版不重样的货架贴图（架上带玩具）即可，可探索点从 83 收敛到 50 出头。店面整间 x1..19、y1..7（19×7），x9..10 留出入店通道；后排 y=9..14 = 里屋 x1..5 / 账房 x7..12 / 仓库 x14..19。街面朝北：前门（大门）开在北墙 (9,0)(10,0) 两格宽，招牌小字钉在店面北墙最西端 [1,0,2,1]；南墙 (16,15)(17,15) 后门通后巷进货，进的是仓库。账柜贴账房北墙 [11,8,2,1]——周有田往来账位置待定，未定论。货品新旧混搭：老货（拨浪鼓/铁皮青蛙/纸风车/陀螺/弹弓/竹蜻蜓）进老货柜与西墙货架，新货（积木/拼图/布娃娃/气球/遥控车/塑料小家电/文具盒）撑门面货架。"
+    "note": "屋本体 21×16 格 = 336×256 px；占地 21×20 格 = 336×320 px（v4 加北侧 4 格门前庭院）。旧 note 的「15×9」「15×11」均作废。v4：门前有庭院（前门开在屋本体北墙 y=4，门外正对院子），院内停着板车与旧自行车、挂着三代没换过的旧幌子；店内改成货架列布局——竖向货架列成排排布，相邻两列之间留 2 格通道，货架 12 组；店里的玩具不落地，小件货品全部写进货架的 note（架上摆着…），落地只留大件（童车 / 摇摇马两只 / 儿童自行车），美术那边只要多出几版不重样的货架贴图即可。x9..10 是入店通道。后排 y13..18 = 里屋 x1..5 / 账房 x7..12 / 仓库 x14..19。后门 (16,19)(17,19) 通后巷进货，进的是仓库。招牌小字钉在店面北墙最西端 [1,4,2,1]；账柜贴账房北墙 [11,12,2,1]——周有田往来账位置待定，未定论。货品新旧混搭：老货进老货柜与西侧货架列，新货撑门面货架列。"
   },
   {
     "id": "school",
