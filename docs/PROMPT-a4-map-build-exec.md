@@ -27,6 +27,12 @@ Godot：D:\steam\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe
 - `world` / `safe_top` / `safe_bottom` / `start_pos` / a1_1926 / a2_1951 / a3_1976 全部**不许改**。
 - 提交时**只 `git add data/frames.json`**，别的会话的文件一个都不要 add。
 
+🔴 **与「A5 地图线」共写 `frames.json` 的防撞约定（必守，和 `PROMPT-a5-map-build-exec.md` §0 对称）**：
+- 两条线写的是**同一个文件**、不同的帧对象。写入方式必须是「**读当前文件 → 只替换 `a4_2001` 这一个对象 → 原样写回 a1/a2/a3/a5 和 world/safe/start**」，绝不整文件重排、绝不碰 a5 对象。
+- **落盘有先后**：开工先看 `a5_2026` 帧状态。若它已被 A5 线填好，必须基于**这份已含 a5 改动的最新文件**做替换，把 a5 的每一个字节原样保住；反之若你先落盘，A5 线也会保住你的 a4。
+- 提交前 `git diff -- data/frames.json` 自检：**只能看到 `a4_2001` 一个对象从空变有**；若同时看到 a5 或其它字段变化，说明你基于旧文件覆盖了别人，立刻回退重来。
+- 设计草案（算坐标、排 shapes）可以两边同时做，**但真正落盘和 commit 请与 A5 线错开先后**，别卡在同一秒写同一个文件。
+
 ## 2. 地图坐标基准（世界重构线 `29a5e2f` 已定稿，照抄，别自己重算）
 
 世界 **`3200×2400`**（TILE=32px，全图 100×75 格），主路已南移到 **`ROAD_Y = 1664` px（52 格）**，起点 `start_pos=[1024,1680]`，`safe_top=36` / `safe_bottom=2240`。这些都在 `frames.json` 里已就位，**一个都不许改**。`a4_2001` 当前 `ground="#6f6a52"` 保持。
