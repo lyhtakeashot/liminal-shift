@@ -52,7 +52,11 @@ Godot：D:\steam\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe
 ### 3.2 等视觉线结束后接 base / props
 
 - **base**：`world_view.gd:221-249`，在第 1 层之后、第 3 层墙之前插入 base 贴图绘制（若有图，用底部中心锚点画；墙仍按 base 存在与否画半格/满格）。注意别让贴图盖住墙体立体部分。
-- **props**：`world_view.gd:248-256`，把每个家具的色块替换成 `assets/village/props/<id>.png`（从 `f["id"]` 取），缺图保留色块；名字标签可保留但缩小。
+- **props**：`world_view.gd:248-256`，把每个家具的色块替换成 `assets/village/props/<id>.png`，缺图保留色块；名字标签可保留但缩小。
+  - 🔴 **id 取法（总策划 2026-11-22 拍板：近似匹配过渡）**：`houses_data.json` 的家具条目**没有 `id` 键**，只有 `name`/`short`/`rect`/`clue`/`zone`，**不要写 `f["id"]`（会取到空值）**。
+  - 正确做法：用家具的 `short`（或 `name`）去 `_ref/art/_assets_a1a3/_a1a3_assets.json` 的 `props[].short` 查 `id`，再拼 `assets/village/props/<id>.png`。
+  - 实测覆盖：`docs/FEEDBACK-planner-art-import.md` §阻塞②——551 条家具 / 按 short 命中 253 / 未命中 298 / 可达 manifest id **85 of 91**。未命中的是学校/施工类词（跑道×56、课桌×30、未拆封货架×18…），manifest 根本没这些 id，**匹配不到就回色块，是预期行为，不要报错、不要硬造 id**。
+  - 同学图适配产物在 `assets/village/_classmate/props/`（84 张，id 规则同上），manifest 新增的 P85–P91 7 个 id 也在同一份 manifest 里，一并可查。
 - **主角**：`player.gd:40-73`，`draw_self()` 里若有 `Sprite-主角-Sheet.png` 的导入图则画对应帧，否则保留代码画圆。**注意这要等导入线把图放进 `assets/village/`**。
 
 ### 3.3 scene 接入（最后做，最复杂）
