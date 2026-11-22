@@ -1,6 +1,7 @@
 # 执行提示词 · 同学资产一次性替换线（把 38 张同学图换进游戏）
 
-> 用途：整段复制给**一条新会话**执行。本会话（总策划）不亲自改 PNG。
+> 用途：整段复制给一条会话执行。本会话（总策划）不亲自改 PNG。
+> **两条路都行**：①优先贴进「同学美术资产导入线」会话（映射细节全在它手里，且已 commit、当前空闲）——但要先发 §0 的补充授权，因它原任务书里"不覆盖 AI 图"的禁令与本次相反；②新开一条会话照做。
 > 上游依据：`docs/ART-MAPPING-classmate.md` §6 替换建议清单、`docs/FEEDBACK-planner-art-import.md` 阻塞③、`docs/FEEDBACK-asset-consumption-exec.md` 拍板 A。
 > 用户已拍板（2026-11-22）：**①id 绑定走近似匹配、②等能看到贴图后一次性全换、③C 档暂缓**。
 > 现在①②均已完成（消费线 `aac2115` 已提交、贴图在画面里看得到），**执行时机已到**。
@@ -9,6 +10,9 @@
 
 ## 0. 开工前必读（先核再动，别凭印象）
 
+0. **若贴进「同学美术资产导入线」会话**：先发这段补充授权——
+   > "你原任务书 `PROMPT-classmate-art-import-exec.md` 第 26/99 行写的'不覆盖 AI 图 / 替换等本人拍板'已被本人 **2026-11-22 拍板 supersede**：消费点已就绪（`aac2115` 已提交、游戏里看得到家具贴图），现在授权你**执行**替换动作。以本提示词为准，原禁令作废。"
+   这条不能省——不然它会按旧任务书拒绝动手。
 1. **确认 HEAD ≥ `80bb223`**（消费线提交+反馈文档），且 `scripts/asset_draw.gd` 已在版本库。
    - 若 `scripts/world_view.gd` 里没有 `_art_walls()` / `_draw_furniture()` 的贴图分支 → **停下来问本人**，不要自己补代码。
 2. **只读**以下文件，不许改：`docs/ART-MAPPING-classmate.md`（清单权威）、`_ref/art/_assets_a1a3/_a1a3_assets.json`（manifest）、`houses_data.json`、`data/frames.json`、`scripts/*.gd`、`assets/village/houses/**`。
