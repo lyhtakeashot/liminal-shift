@@ -99,15 +99,20 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 
 **已落盘的执行提示词（整段贴给新会话）**：
 
-| 文件 | 对应线 |
-|---|---|
-| `docs/PROMPT-map-fix-exec.md` | **L1**（A4+A5 合并；旧 `PROMPT-a4-map-build-exec.md` 已作废） |
-| `docs/PROMPT-evidence-archive-exec.md` | L5 的上一轮（证物存档 UI 已交付） |
-| `docs/PROMPT-clue-texts-exec.md` | L4 的上一轮（A4/A5 十条文案已交付） |
-| `docs/PROMPT-world-rebuild-exec.md` | 世界重构线（已完成：3200×2400 / 主路 1664） |
-| `docs/PROMPT-classmate-art-*.md` | 同学美术导入/替换（已完成） |
+| 文件 | 对应线 | 状态 |
+|---|---|---|
+| `docs/PROMPT-map-fix-exec.md` | **L1**（A4+A5 合并；旧 `PROMPT-a4-map-build-exec.md` 已作废） | ✅ 已写，可开工 |
+| `docs/PROMPT-render-fix-exec.md` | **L2**（老槐遮井） | ✅ 已写，可开工 |
+| `docs/PROMPT-houses-fix-exec.md` | **L3**（房屋数据：market 双态、撤 school 界碑家具） | ✅ 已写，可开工 |
+| `docs/PROMPT-clue-year-exec.md` | **L4**（证物文案按年） | ✅ 已写，**等 L3 先落盘** |
+| `docs/PROMPT-evidence-model-exec.md` | **L5**（证物模型改日期化观察记录 + 开档收紧 SHIFT/E） | ✅ 已写，可开工 |
+| `docs/PROMPT-evidence-archive-exec.md` | L5 的上一轮（证物存档 UI 已交付） | 历史 |
+| `docs/PROMPT-clue-texts-exec.md` | L4 的上一轮（A4/A5 十条文案已交付） | 历史 |
+| `docs/PROMPT-world-rebuild-exec.md` | 世界重构线（已完成：3200×2400 / 主路 1664） | 已完成 |
+| `docs/PROMPT-classmate-art-*.md` | 同学美术导入/替换（已完成） | 已完成 |
 
-**L2 / L3 / L4 / L5 / L8 尚无提示词 —— 需要你写。L7 不写了（交给美术同学）。**
+**L8（资产接线）尚无提示词 —— 等美术同学的图到位后再写**（它要改 `asset_draw.gd` 的 `scene_tex` 优先级 + `world_view.gd` 的界碑贴图绘制路径，两件事都得等图齐了才能一次做完、写清验收）。
+**L7 不写了（交给美术同学）。**
 
 ---
 
