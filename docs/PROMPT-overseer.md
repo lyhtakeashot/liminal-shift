@@ -101,7 +101,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 
 | 文件 | 对应线 | 状态 |
 |---|---|---|
-| `docs/PROMPT-map-fix-exec.md` | **L1**（A4+A5 合并；旧 `PROMPT-a4-map-build-exec.md` 已作废） | ✅ 已交付（`0436c58`），反馈待补交 |
+| `docs/PROMPT-map-fix-exec.md` | **L1**（A4+A5 合并；旧 `PROMPT-a4-map-build-exec.md` / `PROMPT-a5-map-build-exec.md` **均已作废 2026-11-23**） | ✅ 已交付（`0436c58`），反馈待补交 |
 | `docs/PROMPT-render-fix-exec.md` | **L2**（老槐遮井） | ✅ 已写，可开工 |
 | `docs/PROMPT-houses-fix-exec.md` | **L3**（房屋数据：market 双态、撤 school 界碑家具） | ✅ 已交付并验收（`7805d71`） |
 | `docs/PROMPT-clue-year-exec.md` | **L4**（证物文案按年） | ✅ 已写，**前置已满足（L3 已落盘），可开工** |
