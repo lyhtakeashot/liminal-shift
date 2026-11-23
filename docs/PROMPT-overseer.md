@@ -101,10 +101,10 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 
 | 文件 | 对应线 | 状态 |
 |---|---|---|
-| `docs/PROMPT-map-fix-exec.md` | **L1**（A4+A5 合并；旧 `PROMPT-a4-map-build-exec.md` 已作废） | ✅ 已写，可开工 |
+| `docs/PROMPT-map-fix-exec.md` | **L1**（A4+A5 合并；旧 `PROMPT-a4-map-build-exec.md` 已作废） | ✅ 已交付（`0436c58`），反馈待补交 |
 | `docs/PROMPT-render-fix-exec.md` | **L2**（老槐遮井） | ✅ 已写，可开工 |
-| `docs/PROMPT-houses-fix-exec.md` | **L3**（房屋数据：market 双态、撤 school 界碑家具） | ✅ 已写，可开工 |
-| `docs/PROMPT-clue-year-exec.md` | **L4**（证物文案按年） | ✅ 已写，**等 L3 先落盘** |
+| `docs/PROMPT-houses-fix-exec.md` | **L3**（房屋数据：market 双态、撤 school 界碑家具） | ✅ 已交付并验收（`7805d71`） |
+| `docs/PROMPT-clue-year-exec.md` | **L4**（证物文案按年） | ✅ 已写，**前置已满足（L3 已落盘），可开工** |
 | `docs/PROMPT-evidence-model-exec.md` | **L5**（证物模型改日期化观察记录 + 开档收紧 SHIFT/E） | ✅ 已写，可开工 |
 | `docs/PROMPT-evidence-archive-exec.md` | L5 的上一轮（证物存档 UI 已交付） | 历史 |
 | `docs/PROMPT-clue-texts-exec.md` | L4 的上一轮（A4/A5 十条文案已交付） | 历史 |
@@ -267,16 +267,16 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 
 | 线 | 状态 | 备注 |
 |---|---|---|
-| L1 地图帧修正 | 提示词已写（`docs/PROMPT-map-fix-exec.md`），**未开工** | 坐标已全部拍板，可直接派 |
-| L2 渲染修正（老槐遮井） | 方案已定（`docs/DECIDE-a4-a5-layout.md` §6），**提示词未写** | 改 `world_view.gd:415-421` circle sort_y；注意 `sort_check.gd` 断言全局 sort_y 递增 |
-| L3 房屋数据 | **提示词未写** | `market` 单 id 两形态 name/note |
-| L4 证物文案按年 | **提示词未写** | `CLUE_TEXTS` 支持 `{年: String}`；**等 L3** |
-| L5 证物档案按年 | **提示词未写** | key 加年份；开档时收紧 SHIFT/E；改 `evidence_archive_check.gd` 断言（「老槐只入 1 条」→「入 5 条」） |
-| L6 文档 | 本文件 + `PROMPT-map-fix-exec.md` + `ART-HANDOFF-a4a5.md` + `ART-HANDOFF-a4a5-props.md`（机器生成的 159 条家具缺图明细）已写 | 待回写 `HANDOFF*.md` 旧尺寸、market_a5 三处口径冲突 |
+| L1 地图帧修正 | ✅ **已交付**（commit `0436c58`） | A4 超市[1440,768] 与 A5 同址、shen_a4[96,320]、周郑留路南、界碑 A4[2880,960]／A5 新增[32,1024]、井文案对齐、工地热点挪到 [2112,1632]、`_note` 已加。**尾账：未交 `docs/FEEDBACK-map-fix-exec.md`（R2，需补交实机截图与回归原始输出）**；A4 热点标题仍是「超市工地 · 南大门」（D4，已降级为可选）；`REACH_MAP` 变化已由总策划判为「空间冻结正常表现」，待实机走 A1→A5 主路 |
+| L2 渲染修正（老槐遮井） | ✅ 提示词已写（`docs/PROMPT-render-fix-exec.md`），**未开工** | 改 `scripts/world_view.gd`；核心是「A4/A5 老槐没有 tree 贴图 ⇒ 走色块分支 ⇒ 树冠上抬 0.7r 把井盖住」；方案 A 需分段绘制（树冠层→地标层→玩家层） |
+| L3 房屋数据 | ✅ **已交付并验收通过**（commit `7805d71`） | market 双态说明 + 撤 school 界碑家具（clue 家具 29→28、school 家具 155→154、18 栋几何零改动）。**尾账 R1：两处 px 旧 16px 口径待回退（market 672×448→1344×928、school 608×480→1216×992）**；**R3：生成器 `_ref/houses/gen_all_houses.py:294`/`:300` 与 `_redo_school.py:22/27/226/256` 仍带界碑家具代码 ⇒ 另开「生成器对齐」小线**（只改 py、不碰 JSON） |
+| L4 证物文案按年 | ✅ 提示词已写（`docs/PROMPT-clue-year-exec.md`），**前置已满足（可开工）** | `CLUE_TEXTS` 支持 `{年: String}`；**必须删 `scripts/house_shape.gd:107` 的 `CLUE_TEXTS["school"]["「周」界碑"]`**（D5，已确认派 L4）；**不许在 CLUE_TEXTS 补 school 界碑**（A5 那块碑文案归 frames.json）；`market` 两条家具写 2001/2026 两版；期望 28 件全覆盖、0 条占位句 |
+| L5 证物档案按年 | ✅ 提示词已写（`docs/PROMPT-evidence-model-exec.md`），**未开工** | key 加年份（41 → 约 56–58 条）；开档时收紧 SHIFT/E（`main.gd:100-101`/`:131-132` 移到 `:146-151` 之后）；改 `evidence_archive_check.gd`（「跨时代同名老槐只入 1 条」→「入 5 条」） |
+| L6 文档 | 本文件 + `PROMPT-map-fix-exec.md` + `ART-HANDOFF-a4a5.md` + `ART-HANDOFF-a4a5-props.md`（机器生成的 159 条家具缺图明细）已写；L3 验收意见已写入 `FEEDBACK-houses-fix-exec.md` §8 | 待回写：`HANDOFF-VILLAGE.md` **7 处**「周」界碑是 school 家具（`:147`/`:289`/`:362`/`:397` 是当前状态表要改；`:307`/`:334` 是历史记录**不改写**；`:78` 是脚本摘要）、market_a5 三处口径冲突、旧尺寸 |
 | L7 美术成品图 | **本项目不做，交美术同学** | 清单在 `docs/ART-HANDOFF-a4a5.md`；美术同学不碰代码/测试 |
-| L8 资产接线 | **提示词未写** | 改 `asset_draw.gd` 的 `scene_tex` 优先级 + `world_view.gd` 的界碑贴图绘制路径；**等 L2 做完**（同写 `world_view.gd`） |
+| L8 资产接线 | **提示词未写** | 改 `asset_draw.gd` 的 `scene_tex` 优先级（现在 SHARED_SCENE 优先 ⇒ stele 三帧共用一张，要改成先查每帧）+ `world_view.gd` 的界碑 rect 贴图绘制路径（16×32 rect 配 32×32 图会压扁，要改底部中心锚点 1:1）；**等 L2 做完**（同写 `world_view.gd`） |
 
-**验收尾巴**：L1 改完后，要补一次实机 Shift 切时代 + E 检视，作为证物文案的最终验收。
+**验收尾巴**：① L1/L3 的反馈留档（L1 缺 `FEEDBACK-map-fix-exec.md`）；② L1 改完后补一次实机 Shift 切时代 + E 检视（A4 井/界碑/超市、A5 小学围墙界碑），作为证物文案的最终验收；③ L2 落地后看实机再定 A5 老槐 r=160 是否收成 128。
 
 ---
 
