@@ -15,6 +15,8 @@ const STEP_INTERVAL := 0.13   # 自动重复的间隔
 
 const Timeline = preload("res://scripts/timeline.gd")
 const FrameData = preload("res://scripts/frame_data.gd")
+const EvidenceStore = preload("res://scripts/evidence_store.gd")
+const EvidenceArchive = preload("res://scripts/evidence_archive.gd")
 
 # 五个年代的时间轴色偏：越往后越冷、越灰
 const YEAR_TINTS: Array = [
@@ -33,6 +35,8 @@ const YEAR_TINTS: Array = [
 @onready var display: Node = $DisplayManager
 
 var tl: Timeline
+var archive: Control = null          # 证物档案界面（代码动态建，挂 Main 下）
+var _archive_i_down := false          # I 键边沿检测（轮询，不用事件）
 
 var _step_active := false    # 这一轮按住是否已经推过第一帧
 var _repeating := false      # 是否已经进入连发阶段
@@ -61,7 +65,32 @@ func _ready() -> void:
 	# 玩家像素由 world_view 的 y-sort 循环画（DECIDE D4 方案 B）。
 	# 这里只做注入：让 world_view 拿到节点引用，玩家状态靠 set_player_state() 每帧同步。
 	world.set_player_ref(player)
+	_make_archive()
+	# 读回上次存档的证物（跨启动持久化）。读不到就当空档案。
+	EvidenceStore.load()
 	_refresh_all()
+
+
+## 建证物档案界面：动态挂 Main 下（与 HUD 同层，建在 HUD 之后 → 画在 HUD 上面）。
+## 不改 scenes/main.tscn 的结构。
+func _make_archive() -> void:
+	archive = EvidenceArchive.new()
+	archive.name = "EvidenceArchive"
+	add_child(archive)
+
+
+## 档案开着的时候把 HUD 让开。
+## ⚠️ 兄弟节点里 HUD 排在 archive 前面，档案面板只盖住中间一块，
+## HUD 的顶栏（y<36）和检视卡（x=40 起）会露在面板边缘 —— 直接隐藏 HUD 更干净。
+func _set_hud_hidden(hidden: bool) -> void:
+	if hud == null:
+		return
+	if hud.visible == not hidden:
+		return
+	hud.visible = not hidden
+	if not hidden:
+		# 重新显示时把检视文字补回来（visible=false 期间 show_hotspot 的状态还在）
+		hud.queue_redraw()
 
 
 func _process(delta: float) -> void:
@@ -101,6 +130,25 @@ func _process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("inspect"):
 		_do_inspect()
+
+	# 证物档案：I 键开关（边沿检测 + 轮询，和 F11 同一套路子）。
+	# 输入映射 archive 动作（project.godot，物理键 I）为主，裸键 KEY_I 兜底
+	# （改了 project.godot 没重启编辑器时 InputMap 可能还是旧的）。
+	var archive_now := false
+	if InputMap.has_action("archive") and Input.is_action_pressed("archive"):
+		archive_now = true
+	elif Input.is_key_pressed(KEY_I) or Input.is_physical_key_pressed(KEY_I):
+		archive_now = true
+	if archive_now and not _archive_i_down and archive != null:
+		archive.toggle()
+	_archive_i_down = archive_now
+
+	# 档案开着的时候，游戏逻辑全停（不响应行走 / 时间轴推帧）。
+	if archive != null and archive.is_open():
+		player.walking = false
+		_set_hud_hidden(true)
+		return
+	_set_hud_hidden(false)
 
 	if tl.axis == Timeline.Axis.SPACE:
 		_process_space(delta)
@@ -193,6 +241,45 @@ func _do_inspect() -> void:
 		return
 	_last_hotspot = h
 	hud.show_hotspot(h)
+	_collect_evidence(h, f)
+
+
+## 检视命中 → 证物入档（逆转裁判式收集）。
+## 原来只弹文字；这里追加一次「收集」：首次收集写档案并给提示，重复只弹字不重复入档。
+func _collect_evidence(h: Dictionary, f: FrameData) -> void:
+	var title := String(h.get("title", ""))
+	if title == "":
+		return
+	var house_id := String(h.get("house_id", ""))
+	var key := ""
+	var source := ""
+
+	if house_id != "":
+		# 房屋家具：唯一键 = house_id::家具名；来源 = 房子名 · 年份
+		key = "%s::%s" % [house_id, String(h.get("furniture", title))]
+		source = "%s · %d" % [_short_house_name(String(h.get("house_name", ""))), f.year]
+	else:
+		# 世界地标：唯一键 = title（跨时代同名算同一件）；来源 = 年份 · 村中
+		key = title
+		source = "%d · 村中" % f.year
+
+	if EvidenceStore.try_collect(key, title, source, String(h.get("text", ""))):
+		EvidenceStore.save()
+		if archive != null:
+			archive.flash_collected(title)
+
+
+## 房子全名形如「磨坊 · A1 1926（旧砖、无暗龛）· 加害方根」，
+## 来源标签只要房子名，后面是设定备注，不给玩家看。
+## 名字形态很杂（「陆家（一字形）」「周家 · 长工房」「磨坊 → 粮站」「粮站」），
+## 所以取第一段后剪掉括号注记；改名链（磨坊 → 粮站）保留 —— 那是那栋房子的本名。
+func _short_house_name(full: String) -> String:
+	if full == "":
+		return "旧屋"
+	var head := full.split("·")[0].strip_edges()
+	# 「陆家（一字形）」剪掉括号里的注记
+	var paren := head.split("（")[0].split("(")[0].strip_edges()
+	return paren if paren != "" else "旧屋"
 
 
 func _clear_hotspot() -> void:

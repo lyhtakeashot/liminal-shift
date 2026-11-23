@@ -402,6 +402,11 @@ static func hotspots(data: Dictionary, pos: Vector2) -> Array:
 			"title": title,
 			"text": String(texts.get(name, "「%s」立在这里。" % name)),
 			"reach": 68.0,
+			# 证物存档线用：唯一键 = house_id::家具名，来源标签 = 房子名 · 年份。
+			# 纯附加字段，下游（hud / greybox_check）只读 pos/reach/title/text，不受影响。
+			"house_id": String(data.get("id", "")),
+			"furniture": name,
+			"house_name": String(data.get("name", "")),
 		})
 	return out
 
