@@ -14,9 +14,17 @@ extends Control
 ##   背景层 Back   地面 / 河 / 田 / 路 / 房子 lot 底色 / 房间色块 —— 固定顺序，不排序
 ##   前景层 Front  墙 / 屋顶 / 门洞 / 家具 / 树 / 井 / 碑 / 玩家 —— **按 sort_y 排序**
 ##
+## 2026-11-23 渲染修正（PROMPT-render-fix-exec §2）：
+##   1. 色块树冠**不再上抬**（贴图分支本来就不抬，色块上抬是历史补偿 → A4/A5 的树高一截）。
+##   2. 圆的深度键按「立着 / 贴地」分开取（_circle_sort_y）：树取树冠底缘、井取圆盘底缘，
+##      不再一刀切 center.y + radius * 0.7。
+##   3. 井**恒可见 + 永不挡玩家**：用「补画」实现（_draw_front 的补画 A / B），
+##      排序链一个字没动 —— 墙/屋顶/家具/门洞的前后关系和 sort_y 单调性都不受影响。
+##
 ## sort_y = 精灵的**底边（脚那条线）**，不是中心：
 ##   玩家   position.y + RADIUS * 0.7
-##   树/井  center.y + radius * 0.7
+##   树     树冠底缘 center.y + radius（树冠不再上抬 ⇒ 冠心 = 圆心）
+##   井     圆盘底缘 center.y + radius
 ##   家具   占地 rect 的底边 rect.end.y
 ##   墙     该行墙格格子的南沿（= 行号 + 1 格）
 ##   屋顶   wings 的南沿
@@ -318,51 +326,145 @@ func _is_standing_rect(sd: Dictionary) -> bool:
 
 ## 前景层：收集可排序物件 → 按 sort_y（底边）排 → 依次画。
 ## 玩家是其中一条（不再是独立的 z_index=10 节点）。
+##
+## §2.3「井永远可见 + 永不挡玩家」的做法 = **就地补画（overlay）**，不是重排：
+##   第一遍：照常按 sort_y 画全部（顺序一点没动）；
+##   补画 A：某棵树画在井之后、而且树冠真的压住那口井 → 紧跟在这棵树之后
+##            把那口井再画一遍（井口永远看得见）；
+##   补画 B：某口井真的盖住了玩家 → 紧跟在这口井（它的**最后一次**画）之后
+##            把玩家再画一遍（井永远不挡人）。
+## 为什么不用「把井从排序链里摘出来另开一层」：
+##   那会打乱 sort_y 的单调性（_mdtest/sort_check.gd:250 / _mdtest/asset_draw_check.gd:287
+##   断言前景层 sort_y 有序），也会改掉井与墙/家具的相对关系。
+## 为什么补画要「就地」而不是「画在整层最后」：
+##   画在最后 = 井会盖住它南边的墙/屋顶/家具，玩家会盖住南边的墙 ——
+##   那正是 §2.3 要守住的「不破坏墙/屋顶/家具/门洞/standing rect 前后关系」。
+##   就地补画只把「真重叠的那一对」往后挪一格，其余相对关系一动不动：
+##     · 井被补画到树之后 ⇒ 树冠不再压住井口；
+##     · 井的南边那些东西（sort_y 更大）仍然画在井之上 ⇒ 井与墙/家具的关系没变。
 func _draw_front(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> void:
-	for ent in _collect_front():
-		var e: Dictionary = ent
-		match String(e["kind"]):
-			"walls":
-				var sid := String(e["sid"])
-				# 美术 base 图里已经画好了墙顶面 + 南立面（_gen_shells.py 的
-				# draw_cap / draw_facade）—— 再叠一层引擎色块就是「双份墙」。
-				# 有图 ⇒ 引擎不再画墙；条目本身保留（排序链不动）。
-				if _art_walls(sid):
+	var ents := _collect_front()
+	var n := ents.size()
+	# ---- 分类：1 = 贴地地标（井），2 = 立着的树，其他 = 0 ----
+	var kinds: Array = []
+	for i in n:
+		kinds.append(_prop_kind(ents[i]))
+	# ---- 哪口井被哪些「画在它后面」的树压住（屏幕上真的重叠才算）----
+	var coverers: Array = []
+	for i in n:
+		coverers.append([])
+	for i in n:
+		if int(kinds[i]) != 1:
+			continue
+		for j in range(i + 1, n):
+			if int(kinds[j]) != 2:
+				continue
+			if _circle_bounds(ents[i]["sd"]).intersects(_circle_bounds(ents[j]["sd"])):
+				(coverers[i] as Array).append(j)
+
+	for i in n:
+		_draw_entry(ents[i], offset, tint, alpha_mul, grade)
+		var k := int(kinds[i])
+		if k == 2:
+			# ---- 补画 A：这棵树盖住的井，画到树冠之上 ----
+			for w in n:
+				if not (coverers[w] as Array).has(i):
 					continue
-				var wall_col := _shade(HouseShape.WALL_COLOR, tint, alpha_mul, grade)
-				var top_col := _shade(HouseShape.WALL_TOP, tint, alpha_mul, grade)
-				_draw_walls_row(e["cells"], offset, wall_col, top_col, true)
-			"door":
-				var sid2 := String(e.get("sid", ""))
-				# 同上：门 / 院门也在 base 图里（draw_door / draw_gate）。
-				if _art_walls(sid2):
-					continue
-				var dd: Dictionary = e["d"]
-				var dc: Color = HouseShape.GATE_COLOR if bool(dd["gate"]) else HouseShape.DOOR_COLOR
-				var dr: Rect2 = dd["rect"]
-				draw_rect(Rect2(dr.position + offset, dr.size),
-					_shade(dc, tint, alpha_mul, grade), true)
-			"roof":
-				_draw_roof(e["data"], e["hpos"], offset, tint, alpha_mul, grade,
-					_house_tex(String(e["sid"]))["roof"])
-			"furniture":
-				_draw_furniture(e["f"], offset, tint, alpha_mul, grade)
-			"prop":
-				_draw_prop(e["sd"], offset, tint, alpha_mul, grade)
-			"player":
-				var p := player_ref
-				if p != null and p.has_method("draw_self"):
-					p.call("draw_self", offset)
+				_draw_entry(ents[w], offset, tint, alpha_mul, grade)
+				# ---- 补画 B：玩家在这口井之上 ----
+				if _player_over_well(ents[w]["sd"]):
+					_draw_player(offset)
+		elif k == 1 and (coverers[i] as Array).is_empty():
+			# ---- 补画 B：这口井没被树压住，但它盖住了玩家 ----
+			if _player_over_well(ents[i]["sd"]):
+				_draw_player(offset)
+
+
+## 前景层条目属于哪一类（0 = 其他 / 1 = 贴地地标 / 2 = 立着的树）。
+func _prop_kind(e: Dictionary) -> int:
+	if String(e.get("kind", "")) != "prop":
+		return 0
+	var sd: Dictionary = e["sd"]
+	if String(sd.get("type", "")) != "circle":
+		return 0
+	var label := String(sd.get("label", ""))
+	var rad := float(sd.get("radius", 4))
+	if _is_ground_landmark(label):
+		return 1
+	if _is_standing_tree(label, rad):
+		return 2
+	return 0
+
+
+## 玩家被这口井盖住了吗？（PROMPT-render-fix-exec §2.3 ②）
+## 判据 = 玩家的身体框和井的外接盒真的相交 —— 只在「真挡住」时才补画玩家，
+## 免得把井南边的玩家提到墙前面去。
+func _player_over_well(sd: Dictionary) -> bool:
+	if player_ref == null:
+		return false
+	# 主角精灵 32×32，脚底对齐 position.y + RADIUS ⇒ 身体框 = 上探 18px
+	var body := Rect2(player_pos.x - 16.0, player_pos.y - 18.0, 32.0, 32.0)
+	return _circle_bounds(sd).intersects(body)
+
+
+## 把玩家画一次（补画用；与 _draw_entry 的 "player" 分支同一条路径）。
+func _draw_player(offset: Vector2) -> void:
+	var p := player_ref
+	if p != null and p.has_method("draw_self"):
+		p.call("draw_self", offset)
+
+
+## 画一条前景层条目（墙体/门洞/屋顶/家具/树井/玩家）。
+func _draw_entry(e: Dictionary, offset: Vector2, tint: Color,
+		alpha_mul: float, grade: bool) -> void:
+	match String(e["kind"]):
+		"walls":
+			var sid := String(e["sid"])
+			# 美术 base 图里已经画好了墙顶面 + 南立面（_gen_shells.py 的
+			# draw_cap / draw_facade）—— 再叠一层引擎色块就是「双份墙」。
+			# 有图 ⇒ 引擎不再画墙；条目本身保留（排序链不动）。
+			if _art_walls(sid):
+				return
+			var wall_col := _shade(HouseShape.WALL_COLOR, tint, alpha_mul, grade)
+			var top_col := _shade(HouseShape.WALL_TOP, tint, alpha_mul, grade)
+			_draw_walls_row(e["cells"], offset, wall_col, top_col, true)
+		"door":
+			var sid2 := String(e.get("sid", ""))
+			# 同上：门 / 院门也在 base 图里（draw_door / draw_gate）。
+			if _art_walls(sid2):
+				return
+			var dd: Dictionary = e["d"]
+			var dc: Color = HouseShape.GATE_COLOR if bool(dd["gate"]) else HouseShape.DOOR_COLOR
+			var dr: Rect2 = dd["rect"]
+			draw_rect(Rect2(dr.position + offset, dr.size),
+				_shade(dc, tint, alpha_mul, grade), true)
+		"roof":
+			_draw_roof(e["data"], e["hpos"], offset, tint, alpha_mul, grade,
+				_house_tex(String(e["sid"]))["roof"])
+		"furniture":
+			_draw_furniture(e["f"], offset, tint, alpha_mul, grade)
+		"prop":
+			_draw_prop(e["sd"], offset, tint, alpha_mul, grade)
+		"player":
+			var p := player_ref
+			if p != null and p.has_method("draw_self"):
+				p.call("draw_self", offset)
 
 
 ## 收集前景层条目并排序。
 ## 排序键统一 = 精灵底边（脚那条线）：
 ##   玩家   position.y + RADIUS * 0.7
-##   树/井  center.y + radius * 0.7
+##   树     树冠底缘 center.y + radius（§2.1 之后树冠不再上抬 ⇒ 冠心 = 圆心）
+##   井     圆盘底缘 center.y + radius
 ##   家具   占地 rect 的底边 rect.end.y
 ##   墙     该行格子的南沿
 ##   屋顶   wings 南沿
 ## seq 是「同深度时的稳定序」：sort_custom 不保证稳定，必须自己带一个全序字段。
+##
+## ⚠ 排序链**只加不减**：§2.3 的「井恒可见 + 不挡玩家」用**补画**实现
+##   （_draw_front() 的补画 A / 补画 B），**不动这里的 sort_y** ——
+##   排序链一改，_mdtest/sort_check.gd:250 和 _mdtest/asset_draw_check.gd:287
+##   的「sort_y 单调」断言就会红，墙/家具与玩家的相对关系也会漂。
 func _collect_front() -> Array:
 	var ents: Array = []
 	for s in frame.shapes:
@@ -417,7 +519,7 @@ func _collect_front() -> Array:
 				var rad := float(sd.get("radius", 4))
 				ents.append({
 					"kind": "prop", "sd": sd,
-					"sort_y": float(cp[1]) + rad * 0.7, "seq": ents.size(),
+					"sort_y": _circle_sort_y(sd), "seq": ents.size(),
 				})
 			"rect":
 				if _is_standing_rect(sd):
@@ -451,6 +553,49 @@ static func _roof_sort_y(data: Dictionary, hpos: Vector2) -> float:
 		var ww: Array = w
 		bottom = maxf(bottom, hpos.y + (float(ww[1]) + float(ww[3])) * HouseShape.TILE)
 	return bottom
+
+
+## 圆的深度键 = 它**贴地的那条底边**（PROMPT-render-fix-exec §2.2）。
+## 以前一律 center.y + radius * 0.7（一刀切），把「立着的树」和「贴地的井」混成一种。
+## 现在按语义分开：
+##   立着的（树，label 含「槐」）= 树冠底缘。§2.1 之后树冠不再上抬 ⇒ 冠心 = 圆心
+##                              ⇒ 冠底缘 = center.y + radius。
+##   贴地的（井/水塘等地面圆盘） = 圆盘底缘 = center.y + radius。
+## 两者数值相同，但取值理由不同 —— 万一以后树冠恢复上抬，这里只要改「立着」那一支。
+static func _circle_sort_y(sd: Dictionary) -> float:
+	var cp: Array = sd.get("center", [0, 0])
+	var rad := float(sd.get("radius", 4))
+	var label := String(sd.get("label", ""))
+	var center_y := float(cp[1])
+	if _is_standing_tree(label, rad):
+		# 立着的树：树冠底缘（§2.1 后树冠不抬 ⇒ 冠心 = 圆心）
+		return center_y + rad
+	# 贴地圆盘：圆盘底缘
+	return center_y + rad
+
+
+## 这个圆是不是「立着的树」？（label 含「槐」且够大 —— 小的色块是地面小圆盘）
+static func _is_standing_tree(label: String, rad: float) -> bool:
+	return label.find("槐") >= 0 and rad >= 12.0
+
+
+## 这个圆是不是「贴地的小地标」？（井 / 水塘 / 地面圆盘 —— 标签含「井」等）
+static func _is_ground_landmark(label: String) -> bool:
+	return label.find("井") >= 0
+
+
+## 圆的实际外接盒（贴图分支：按半径居中的方框；色块分支：圆本身）。
+static func _circle_bounds(sd: Dictionary) -> Rect2:
+	var cp: Array = sd.get("center", [0, 0])
+	var rad := float(sd.get("radius", 4))
+	var label := String(sd.get("label", ""))
+	var center := Vector2(float(cp[0]), float(cp[1]))
+	if _is_standing_tree(label, rad):
+		# 色块树：树干在圆心下方一点，整体外接盒 = 冠（圆）∪ 树干
+		var trunk := Rect2(center + Vector2(-2.0, rad * 0.22), Vector2(4.0, rad * 0.85))
+		var crown := Rect2(center - Vector2(rad, rad), Vector2(rad * 2.0, rad * 2.0))
+		return crown.merge(trunk)
+	return Rect2(center - Vector2(rad, rad), Vector2(rad * 2.0, rad * 2.0))
 
 
 ## 房子 id → (族, 帧)，与 _ref/houses/gen_asset_breakdown.py 的 FAMILY 表一致。
@@ -589,14 +734,16 @@ func _draw_prop(sd: Dictionary, offset: Vector2, tint: Color,
 		# 树：label 含「槐」才加树干（老井也是 circle，label 是「老井·XX」，别误加）
 		var is_tree := label.find("槐") >= 0
 		if is_tree and rad >= 12.0:
-			# 树干（先画，树冠抬高压在上面）
+			# 树干（先画，树冠压在上面）
 			draw_rect(Rect2(center + offset + Vector2(-2, rad * 0.22),
 				Vector2(4, rad * 0.85)), _shade(TRUNK_COLOR, tint, alpha_mul, grade))
-			# 树冠上抬 rad*0.7，做出立体感
-			var lifted := center + offset + Vector2(0, -rad * 0.7)
-			draw_circle(lifted, rad, c)
+			# 树冠**不再上抬**（PROMPT-render-fix-exec §2.1）。
+			# 贴图分支（A1–A3）本来就不抬，色块上抬是历史补偿：结果 A4/A5 的树
+			# 比贴图版高一截、还更靠前，正好把旁边的老井盖死（遮挡率 A4 61.8% / A5 100%）。
+			# 现在色块冠心 = 圆心，和贴图版一致。
+			draw_circle(center + offset, rad, c)
 			# 树冠亮部（左上受光，house-spec §1 光从左上来）
-			draw_circle(lifted + Vector2(-rad * 0.25, -rad * 0.25), rad * 0.55,
+			draw_circle(center + offset + Vector2(-rad * 0.25, -rad * 0.25), rad * 0.55,
 				Color(c.r * 1.18, c.g * 1.18, c.b * 1.18, c.a))
 		else:
 			draw_circle(center + offset, rad, c)
