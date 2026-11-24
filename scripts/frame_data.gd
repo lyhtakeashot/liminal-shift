@@ -63,7 +63,7 @@ func setup(d: Dictionary) -> void:
 					push_warning("house 形状没有对应数据：%s" % sid)
 					continue
 				solid_rects.append_array(HouseShape.solid_rects(hdata, hpos))
-				hotspots.append_array(HouseShape.hotspots(hdata, hpos))
+				hotspots.append_array(HouseShape.hotspots(hdata, hpos, year))
 
 	for h in d.get("hotspots", []):
 		var hd: Dictionary = (h as Dictionary).duplicate()

@@ -43,6 +43,14 @@ const ROOM_COLORS := {
 ## A1 家具检视文本。只写看到什么（story.md「写作纪律」，BUILD-A1 §5）：
 ## 磨坊没有暗龛；账桌摆假《水簿》；石磨上的字不点破「一九五七」（那是 A5 回读的线，A1 不能剧透）。
 ## key = 房子 id；value = 家具名 → 文本。缺省退回中性占位描述。
+##
+## ⚠️ value 有两种形态（2026-11-24 L4 线加）：
+##   String      → 所有年代通用（一句话对一个年代）。
+##   Dictionary  → **按年字典** {年份(int): 文案}：该年专用，优先于通用串；
+##                  该年取不到时回退字典里的 "default" 通用键，再取不到才退占位描述。
+##                  （market 一栋楼两态共用：2001 在建工地 / 2026 营业超市 ⇒ 必须按年写。）
+## ⚠️ 键一律是家具的**中文 name**（不是 short、不是 id）——改名会静默退成占位句。
+## 取值逻辑见 hotspots() 里的 _clue_text()。
 const CLUE_TEXTS := {
 	"mill_a1": {
 		"账桌": "一本硬壳账簿摊在柜台上。纸很好，字极整齐。最后一页写着：收粮 三石。",
@@ -90,9 +98,17 @@ const CLUE_TEXTS := {
 		"账桌": "账桌上摊着一份地质勘察报告，纸还是新的。结论那一栏是钢笔字：地下有暗河，不宜大开挖。桩位一栏的坐标被铅笔改过两回，擦得纸面起了毛。",
 		"保险柜": "铁皮保险柜，长边贴着东墙，柜门的漆掉了两块。柜脚底下压着半张撕剩的复写纸，蓝印子还在。",
 	},
+	# ---- A4 2001 / A5 2026：market 一栋楼两态（A4 在建工地 / A5 营业超市）——
+	# 同一栋房子两个年代共用同一份数据 ⇒ 文案必须按年分版（键 = 年份 int）。
 	"market": {
-		"文件柜": "文件柜的玻璃门里塞着牛皮纸档案袋。最上面一袋是「土地登记表（第二联）」，前手栏印着：原业主 周氏，光绪二十六年立契。底下压着的地质勘察报告，「地下有暗河」那句被人用圆珠笔圈了两道。",
-		"上磨盘": "工地铁皮围挡里头，上磨盘斜靠在砖堆上，磨眼堵着一团干水泥。盘沿凿的一圈字看得清：沈氏丰源·一九五七，字口里嵌着石灰。",
+		"文件柜": {
+			2001: "文件柜的玻璃门里塞着牛皮纸档案袋。最上面一袋是「土地登记表（第二联）」，前手栏印着：原业主 周氏，光绪二十六年立契。底下压着的地质勘察报告，「地下有暗河」那句被人用圆珠笔圈了两道。",
+			2026: "文件柜搬进了超市的办公室，柜门上的玻璃换过一块新的，划痕是新的。柜里只剩一个牛皮纸档案袋，袋口用棉线绕着扎过，绕线的地方已经发黑。袋子上写着：土地登记表（第二联）。纸边发黄卷起来，前手栏还是那一行：原业主 周氏，光绪二十六年立契。柜底压着那份地质勘察报告，圆珠笔圈过两道的地方已经褪成很淡的蓝。",
+		},
+		"上磨盘": {
+			2001: "工地铁皮围挡里头，上磨盘斜靠在砖堆上，磨眼堵着一团干水泥。盘沿凿的一圈字看得清：沈氏丰源·一九五七，字口里嵌着石灰。",
+			2026: "上磨盘搬进了超市门厅，平放在一座砖砌的水泥台上，台上压着一块透明板，四角用螺丝拧着。磨眼里的干水泥被掏干净了，掏过的那一圈比别处浅。盘沿凿的那行字擦得发亮，看得清清楚楚：沈氏丰源·一九五七。",
+		},
 	},
 	"zhou_a4": {
 		"保险柜": "卧室西南角蹲着一只半人高的保险柜，黑漆起皮。钥匙插在锁孔里，没转。柜顶压着一沓裁齐的纸，纸边齐得像拿尺比着裁的。",
@@ -103,9 +119,10 @@ const CLUE_TEXTS := {
 		"招牌小字": "招牌的漆重做过，底下一行小字没重做，笔画里全是灰。凑近看是：本店由沈氏物业出租。",
 		"账柜": "账柜漆成深绿，柜门上钉着一块褪色的价目表，边角翘了起来。柜台下的抽屉推到一半就卡住，露着一道缝。",
 	},
-	"school": {
-		"「周」界碑": "围墙根嵌着半截石碑，碑面和砖面抹成一个平。字磨得只剩一个「周」，旁边那个字只留着一道竖笔。",
-	},
+	# ⚠️ 这里**不再有 school 条目**：L3 已把 school 的「「周」界碑」家具撤掉。
+	#    A5 那块碑现在由 data/frames.json 的世界地标承担（rect [32,1024,16,32]、
+	#    热点 (40,1040)），文案在那边 —— 别在这里补，否则同一块碑有两个来源。
+	#    zheng_a4 同样没有条目：它的 clue 家具数 = 0（story：不设陆家线索格）。
 }
 
 static var _by_id: Dictionary = {}
@@ -371,11 +388,15 @@ static func door_rects(data: Dictionary, pos: Vector2) -> Array:
 	return out
 
 
-## furniture 里 clue=true 的 → 检视点（家具矩形中心，reach 34）。
-## ⚠️ 只生成**落在房子 lot 内**的家具。lot 外的 clue 家具（如磨坊数据里的「老井」，
-## rect [6,10] 已在 lot 下界之外）属于**世界级地标**，由 frames.json 的 hotspots 手写管理，
-## 否则会和手写的同名检视点重复（2026-11-20 实测 A1/A2 各出现两个「老井」）。
-static func hotspots(data: Dictionary, pos: Vector2) -> Array:
+## furniture 里 clue=true 的 → 检视点（家具矩形中心，reach 68）。
+## ⚠️ 只生成**落在房子 lot 内**的家具。
+##    磨坊院里那口「老井」**在** lot 内（mill_a1/mill_a2 的 rect [6,12,1,1] 落在 lot
+##    [0,0,17,12]，mill_a3 落在 [0,0,17,16]）⇒ 它是真的家具热点，证物档案里是
+##    独立的「mill::老井」卡；它和 frames.json 里手写的**世界老井**是同一口井的两个位置，
+##    标题靠下面的「· 院里」后缀区分，见下方 title 逻辑。
+## year = 帧的年代（由 scripts/frame_data.gd 传入）。同一栋房子两个年代共用一份数据
+##    （market：2001 在建工地 / 2026 营业超市）⇒ 文案按年取值，见 _clue_text()。
+static func hotspots(data: Dictionary, pos: Vector2, year: int = 0) -> Array:
 	var texts: Dictionary = CLUE_TEXTS.get(String(data.get("id", "")), {})
 	var lot: Array = data.get("lot", [0, 0, 0, 0])
 	var out: Array = []
@@ -400,7 +421,7 @@ static func hotspots(data: Dictionary, pos: Vector2) -> Array:
 		out.append({
 			"pos": Vector2(cx, cy),
 			"title": title,
-			"text": String(texts.get(name, "「%s」立在这里。" % name)),
+			"text": _clue_text(texts, name, year),
 			"reach": 68.0,
 			# 证物存档线用：唯一键 = house_id::家具名，来源标签 = 房子名 · 年份。
 			# 纯附加字段，下游（hud / greybox_check）只读 pos/reach/title/text，不受影响。
@@ -409,6 +430,29 @@ static func hotspots(data: Dictionary, pos: Vector2) -> Array:
 			"house_name": String(data.get("name", "")),
 		})
 	return out
+
+
+## 从 CLUE_TEXTS[house_id] 里取某件家具在某年的检视文本。
+##   1) value 是 String      → 所有年代通用，直接用。
+##   2) value 是 Dictionary  → 按年字典：先取该年（year）的文案；
+##      该年没有就回退字典里的通用键 "default"；再没有就退占位句。
+##   3) 取不到（没有这个 key）→ 占位句「「X」立在这里。」。
+## year = 0（调用方没传年代）时按年字典取不到 0 号键 ⇒ 退 "default" ⇒ 再退占位句。
+static func _clue_text(texts: Dictionary, name: String, year: int) -> String:
+	var placeholder := "「%s」立在这里。" % name
+	if not texts.has(name):
+		return placeholder
+	var v: Variant = texts[name]
+	if typeof(v) == TYPE_STRING:
+		return String(v)
+	if typeof(v) == TYPE_DICTIONARY:
+		var by_year: Dictionary = v
+		if by_year.has(year):
+			return String(by_year[year])
+		if by_year.has("default"):
+			return String(by_year["default"])
+		return placeholder
+	return placeholder
 
 
 ## 渲染辅助：lot 矩形（世界坐标）。
