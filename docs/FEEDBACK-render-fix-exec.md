@@ -104,3 +104,43 @@ PROBE_OVERLAY_DONE
 
 - `git status` 确认：本线只改 `scripts/world_view.gd` + 新增本文件；`lab/` 下临时脚本与截图**未 add**。
 - commit：`fix(render): 老槐不再盖住老井（色块树冠不上抬 + 井按贴地底缘分层 + 井恒可见且不挡玩家）`
+
+## 8. 验收意见（总策划，2026-11-24）
+
+### 8.1 独立复核结果（不采信反馈自述，逐条实测）
+
+| 复核项 | 方法 | 结果 |
+|---|---|---|
+| 提交边界 | `git show --stat cc19b4c` | 2 files：`scripts/world_view.gd`（+188 −41，diff --stat 显示 229 = 188+41 一致）＋ 本反馈文档（+106）✅ 未碰 `scripts/house_shape.gd` / `frame_data.gd` / `data/frames.json` / `_mdtest/**` / `_ref/**` |
+| 三线合计边界 | `git diff --stat f0b4cb1..HEAD -- _mdtest data scripts _ref/houses` | 只有 6 个文件：`world_view.gd`(229) / `house_shape.gd`(66) / `frame_data.gd`(2) / `display_manager.gd`(11) / `_redo_school.py`(10) / `gen_all_houses.py`(2) ⇒ **`_mdtest/**` 与 `data/**` 零改动** ✅ 三条线白名单全部守住 |
+| 七套回归（当前 HEAD `daa8b67` 重跑） | `godot --headless --path . -s res://_mdtest/<name>_check.gd` | greybox `WORLD_OK/START_OK/HOTSPOTS_OK/REACH_OK=true`；camera `CAMERA_CHECK_DONE fails=0`；hud_layout `HUD_CHECK_DONE fails=0`；asset_draw `ASSET_DRAW_CHECK_DONE fails=0`；sort `SORT_CHECK_DONE fails=0`；evidence_archive `EVIDENCE_CHECK_DONE fails=0` + `EVIDENCE_OK`；display 只打配置 ✅ 全绿 |
+| 排序链未动 | `git diff f0b4cb1..HEAD -- _mdtest` 空 + 读 `asset_draw_check.gd:287` / `sort_check.gd:250` | 两条「前景层 sort_y 有序」断言**原文未动**且通过；L2 只做「就地补画 overlay」，没有重排 ents ✅ |
+| 几何遮挡率 | 读 `scripts/world_view.gd` 补画 A/B 分支 + 我自己的 python 步进 2px 采样 | 与反馈自报一致：A5 r=160 **不上抬**＝69.2%（改前上抬 0.7r＝100.0%）；A4 r=96＝0.0%；A1/A2/A3＝0.0% ✅ |
+| 实机画面 | 我**亲眼看过** `lab/render_fix_shot/a5_well_stand.png`（1280×720，25162 B，sha256 64cc5507…） | 深绿大圆树冠占屏中偏左、**深色井盘在树冠右上缘完整可见**、主角站在树冠上、竖向灰带贯穿、右侧大片棕色 market 墙色块、HUD 顶条「2026 · a5_2026 / 空间轴 · SPACE / F11 全屏/小窗」✅ 观感＝「树长在井旁边」，可接受 |
+| 井不挡玩家 | 读 `_player_over_well()` / `_draw_player()` 分支 + 截图 | 玩家身体框 `Rect2(x-16, y-18, 32, 32)` 与井外接盒 `intersects` 时补画玩家 ✅ 实机截图里主角压在井盘上仍清晰可见 |
+
+**结论：三条改动全部达标，执行纪律（只改一个脚本、精确 add、不碰测试与帧数据）达标。通过。**
+
+### 8.2 D1–D4 逐条裁决
+
+| 编号 | 裁决 | 理由 |
+|---|---|---|
+| **D1**（色块树冠不再上抬） | ✅ **通过** | 上抬 0.7r 是「老槐盖住老井」的**唯一根因**（A4/A5 没有 tree 贴图 ⇒ 必走色块分支）。删掉 `lifted` 后遮挡 100.0%→69.2%，与反馈自报完全一致。 |
+| **D2**（圆深度键按「立着/贴地」分开） | ✅ **通过，且写法克制** | `_circle_sort_y()` 两支都返回 `center_y + rad`（数值同、**理由分开写**）——这正是我要的：不动数值以免破坏既有 sort_y 有序断言，只把语义写清楚。 |
+| **D3**（井恒可见且不挡玩家） | ✅ **通过，方案正确** | 「就地补画 overlay」是三条方案里**唯一不动排序链**的：重排 ents 会撞 `_mdtest/sort_check.gd:250` 与 `asset_draw_check.gd:287` 两条断言。补画 A（树后补井）＋补画 B（井后补玩家）都紧跟原绘制顺序追加，视觉结果与「真重排」等价。 |
+| **D4**（A5 老槐 radius 160→128 的数据层建议） | ⬜ **暂不切，交用户拍板** | 我的独立测算与反馈自算表一致：160=69.2%／144=47.4%／**128=27.1%**／112=10.1%／96=0.2%。收 128 仍有 27% 遮挡，收 96 才接近无重叠但**丢掉「树从 1926 栽到 2026 越变越大」的叙事**（现值 32/64/96/96/160 是刻意的时间刻度）。实机看 160 的画面井口已完整露出 ⇒ **我倾向不动**，但这刀属 `data/frames.json`（L1 独占文件），需要时由我派 L1 小线，不在本线范围。 |
+
+### 8.3 三条尾巴（不阻塞任何后续线）
+
+- **R1（交 L8 资产接线线）**：界碑 rect 16×32 配 32×32 贴图会被压扁；A4/A5 完全没有 tree/well 场景贴图（`scripts/asset_draw.gd` 的 `SCENE_FILES` 只含 a1/a2/a3 ⇒ A4/A5 全走色块降级）。**L8 接线后本线的修正仍然生效**（贴图分支本来就不上抬），两条线不冲突。
+- **R2（交 L1 小线，可选）**：若用户决定收 A5 老槐 radius，改 `data/frames.json` 五帧中一行的 `radius` 字段；**同步要改美术清单**——`docs/ART-HANDOFF-a4a5.md` §3 要求 `tree_a5.png` 320×320（＝树冠直径 10 格，与 radius 160 对应），收 128 就必须同步改成 256×256，否则贴图比色块大、又会盖住井。
+- **R3（登记 L4 后做实机验收）**：L4 给 `market` 的「文件柜/上磨盘」拆了 2001/2026 两态文案，这两条在 A4/A5 都要走一遍实机 **E 检视**才能确认「按年取到正确的观察记录」（这是证物模型 B 方案「一件物件一张卡、卡内按年追加」的最终闭环验收）。
+
+### 8.4 复核时另记的两条观察
+
+1. **A5 老槐树冠右缘压 market 西墙**：树冠 x 右缘＝1296+160＝**1456**，market 西墙 x=1440 ⇒ **压墙 16px**。色块渲染下只是绿圆盖住 16px 墙沿，观感可接受（见截图）；但等 L8 把 `tree_a5.png` 接进来后，这 16px 会变成「贴图盖住超市外墙」。⇒ 建议 L8 接线时把 `tree_a5.png` 的实际冠幅做成 ≤ radius，并在接线时验一次「冠缘不得越过 market 西墙」。
+2. **`_mdtest/` 零改动 = 这条线的回归保护靠的是既有断言而非新测试**。几何遮挡率（61.9%→0.0%、100.0%→69.2%）目前**只在反馈文档与临时脚本里**，仓库里没有常驻断言。⇒ 建议在 L8 或收尾阶段补一条常驻检查（遍历五帧、算井被树冠覆盖比例、超过阈值即 FAIL），免得以后再有人把 `lifted` 加回去。
+
+### 8.5 签字
+
+**验收人：项目总策划会话（lead）　日期：2026-11-24　结论：通过（带 R1–R3 三条尾巴，均不阻塞 L4/L6）**
