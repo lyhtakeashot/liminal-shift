@@ -110,6 +110,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | `docs/PROMPT-clue-texts-exec.md` | L4 的上一轮（A4/A5 十条文案已交付） | 历史 |
 | `docs/PROMPT-world-rebuild-exec.md` | 世界重构线（已完成：3200×2400 / 主路 1664） | 已完成 |
 | `docs/PROMPT-classmate-art-*.md` | 同学美术导入/替换（已完成） | 已完成 |
+| `docs/PROMPT-doc-rewrite-v2-exec.md` | **L6**（文档回写 v2：HANDOFF-VILLAGE 旧口径 + 过期数值 + R3 生成器对齐） | ✅ **2026-11-24 新写，可开工**（旧的 `docs/PROMPT-doc-rewrite-exec.md` 从未执行、其清单一行未落地，已作废） |
 
 **L8（资产接线）尚无提示词 —— 等美术同学的图到位后再写**（它要改 `asset_draw.gd` 的 `scene_tex` 优先级 + `world_view.gd` 的界碑贴图绘制路径，两件事都得等图齐了才能一次做完、写清验收）。
 **L7 不写了（交给美术同学）。**
