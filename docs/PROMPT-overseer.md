@@ -1,7 +1,7 @@
 # 新会话提示词：项目总管（多会话统筹）
 
 > 复制「你是」开始的整段到新会话第一条消息。
-> **事实全部经过实测（2026-11-23 17:40）**，基线提交 `55722ac`。若发现与实际不符，以 `git show 55722ac` 为准核验。
+> **事实全部经过实测（2026-11-24）**，基线提交 `e287131`。若发现与实际不符，以 `git show e287131` 为准核验。
 
 ---
 
@@ -13,7 +13,7 @@
 
 项目路径：`D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift`
 
-`git` 已初始化，`main` 分支，当前基线 `55722ac`。**任何会话开工前先 `git status`，收工前 `git commit`。** 这是唯一能回滚的机制。
+`git` 已初始化，`main` 分支，当前基线 `e287131`。**任何会话开工前先 `git status`，收工前 `git commit`。** 这是唯一能回滚的机制。
 
 ⚠️ 本机所有 `pwsh` 调用必须带 `sandbox_permissions: "danger-full-access"`（工作区缺 ACL「更改权限」，不带报 `windows-acl workspace grant failed: Win32Error 5`）。
 
@@ -68,8 +68,8 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | `a1_1926` | 1926 | 63 | 5 | ✅ 可玩 |
 | `a2_1951` | 1951 | 36 | 5 | ✅ 可玩 |
 | `a3_1976` | 1976 | 11 | 5 | ✅ 可玩（**主路已取直**） |
-| `a4_2001` | 2001 | 11 | 6 | ⚠️ 待修正（L1） |
-| `a5_2026` | 2026 | 16 | 6 | ⚠️ 待修正（L1） |
+| `a4_2001` | 2001 | 11 | 6 | ✅ 已定稿（L1 `0436c58`） |
+| `a5_2026` | 2026 | 17 | 7 | ✅ 已定稿（L1 `0436c58`） |
 
 **五帧固定地标（坐标是坐标系，不是美术资产 —— 位置不许漂）：**
 
@@ -91,7 +91,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | **L1** | **地图帧修正** | `data/frames.json`（**A4+A5 两帧一起写**） | 🔴 | 等摆位拍板（已拍板，可直接开工） |
 | **L2** | **渲染修正**（老槐遮井） | `scripts/world_view.gd` | 🔴 | 无，可与 L1 并行 |
 | **L3** | **房屋数据** | `_ref/houses/houses_data.json` | 🟢 | 无 |
-| **L4** | **证物文案按年** | `scripts/house_shape.gd`（`CLUE_TEXTS`） | 🔴 | **等 L3** |
+| **L4** | **证物文案按年** | `scripts/house_shape.gd`（`CLUE_TEXTS`）+ `scripts/frame_data.gd`（**只改 `:66` 一处调用把 year 传进去**，2026-11-24 补白名单） | 🔴 | **等 L3** |
 | **L5** | **证物档案（一张卡·卡内按年观察）** | `scripts/main.gd` + `scripts/evidence_archive.gd` + `scripts/evidence_store.gd` | ✅ | 无（与 L4 可并行） |
 | **L6** | **文档回写** | `docs/**` | 🟢 | 无，可与任何线并行 |
 | **L7** | **美术成品图 —— 本项目不做，交给美术同学** | 美术同学写 `assets/village/**` + `_ref/art/**` | — | 清单见 `docs/ART-HANDOFF-a4a5.md` |
@@ -104,7 +104,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | `docs/PROMPT-map-fix-exec.md` | **L1**（A4+A5 合并；旧 `PROMPT-a4-map-build-exec.md` / `PROMPT-a5-map-build-exec.md` **均已作废 2026-11-23**） | ✅ 已交付（`0436c58`），反馈待补交 |
 | `docs/PROMPT-render-fix-exec.md` | **L2**（老槐遮井） | ✅ 已写，可开工 |
 | `docs/PROMPT-houses-fix-exec.md` | **L3**（房屋数据：market 双态、撤 school 界碑家具） | ✅ 已交付并验收（`7805d71`） |
-| `docs/PROMPT-clue-year-exec.md` | **L4**（证物文案按年） | ✅ 已写，**前置已满足（L3 已落盘），可开工** |
+| `docs/PROMPT-clue-year-exec.md` | **L4**（证物文案按年） | ✅ 已写，**前置已满足（L3 已落盘），可开工**；**2026-11-24 已修订**：加了 `scripts/frame_data.gd` 白名单（原版「只改一个文件」落不了地：按年取值必须有 year 来源）、market 两版文案实算口径、过期注释与地标重复文案的归属 |
 | `docs/PROMPT-evidence-model-exec.md` | **L5**（证物模型改「一件物件一张卡·卡内按年追加观察」+ 开档收紧 SHIFT/E） | ✅ 已交付并验收通过（commit `5a36770`，验收意见见 `docs/FEEDBACK-evidence-model-exec.md` §8） |
 | `docs/PROMPT-evidence-archive-exec.md` | L5 的上一轮（证物存档 UI 已交付） | 历史 |
 | `docs/PROMPT-clue-texts-exec.md` | L4 的上一轮（A4/A5 十条文案已交付） | 历史 |
@@ -123,7 +123,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | 组合 | 原因 |
 |---|---|
 | **L1 地图帧** ‖ **L2 渲染** | 文件不重叠。L1 只改 `frames.json`，L2 只改 `world_view.gd`。唯一耦合是「老槐遮挡判据要按上抬后的圆算」—— L1 算几何时用 L2 修好后的最终效果判断 |
-| **L4 证物文案** ‖ **L5 证物档案** | 文件不重叠（L4 只改 `house_shape.gd` 的 `CLUE_TEXTS`，L5 只改 `main.gd`/`evidence_*.gd`）。⚠️ 但 L5 的 key 归一依赖 `h.furniture`／`h.house_id`，L4 **只改文案不改这些字段**；若 L4 动了 `house_name` 的写法，L5 的 `source` 串会变 —— 报告里点出来 |
+| **L4 证物文案** ‖ **L5 证物档案** | 文件不重叠（L4 只改 `house_shape.gd` 的 `CLUE_TEXTS` + `frame_data.gd:66` 一处调用，L5 只改 `main.gd`/`evidence_*.gd`）。⚠️ 但 L5 的 key 归一依赖 `h.furniture`／`h.house_id`，L4 **只改文案不改这些字段**；若 L4 动了 `house_name` 的写法，L5 的 `source` 串会变 —— 报告里点出来 |
 | **L3 房屋数据** ‖ **L1 地图帧** | 文件不重叠。⚠️ 但 L3 改 `market` 的 name/note 会影响证物来源串显示，**落盘要错开** |
 | **L6 文档** ‖ 任何线 | 只改 `docs/**` |
 | **L7 美术同学出图** ‖ L1 / L2 / L8 | 美术只出 PNG，不读坐标。⚠️ 补 A4/A5 场景图会撞 `_mdtest/asset_draw_check.gd:216` 的「A4 无场景图」断言，**该断言由 L8 资产接线线同步更新**（美术同学不碰测试） |
@@ -145,6 +145,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | `_ref/houses/houses_data.json` | 同一时间只准一条线写（L3） |
 | `data/frames.json` | 同一时间只准一条线写（L1，**A4+A5 归一个人**） |
 | `scripts/house_shape.gd` | `TILE` 唯一定义点 + `CLUE_TEXTS` 归属 L4；别的线只读 |
+| `scripts/frame_data.gd` | **L4 独占**（2026-11-24 补）：只为把 year 传进 `house_shape.hotspots()`，只许改 `:66` 一处调用 |
 | `scripts/main.gd` + `evidence_archive.gd` + `evidence_store.gd` | L5 独占 |
 | `scripts/world_view.gd` | L2 独占（**L8 排在 L2 之后**） |
 | `docs/**` | L6 独占（但各执行线的**反馈文档**由那条线自己写，交上来后由 L6 统一归档） |
@@ -263,21 +264,48 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 
 ---
 
-## 十、当前待办（2026-11-23 状态）
+## 十、当前待办（2026-11-24 状态）
 
 | 线 | 状态 | 备注 |
 |---|---|---|
-| L1 地图帧修正 | ✅ **已交付**（commit `0436c58`） | A4 超市[1440,768] 与 A5 同址、shen_a4[96,320]、周郑留路南、界碑 A4[2880,960]／A5 新增[32,1024]、井文案对齐、工地热点挪到 [2112,1632]、`_note` 已加。**尾账：未交 `docs/FEEDBACK-map-fix-exec.md`（R2，需补交实机截图与回归原始输出）**；A4 热点标题仍是「超市工地 · 南大门」（D4，已降级为可选）；`REACH_MAP` 变化已由总策划判为「空间冻结正常表现」，待实机走 A1→A5 主路 |
-| L2 渲染修正（老槐遮井） | ✅ 提示词已写（`docs/PROMPT-render-fix-exec.md`），**未开工** | 改 `scripts/world_view.gd`；核心是「A4/A5 老槐没有 tree 贴图 ⇒ 走色块分支 ⇒ 树冠上抬 0.7r 把井盖住」；方案 A 需分段绘制（树冠层→地标层→玩家层） |
+| L1 地图帧修正 | ✅ **已交付**（commit `0436c58`），反馈已补交（`e5d9941` → `docs/FEEDBACK-map-fix-exec.md` 390 行 + 4 张实机截图） | A4 超市[1440,768] 与 A5 同址、shen_a4[96,320]、周郑留路南、界碑 A4[2880,960]／A5 新增[32,1024]、井文案对齐、工地热点挪到 [2112,1632]、`_note` 已加。**尾账**：A4 热点标题仍是「超市工地 · 南大门」（D4，已降级为可选）；`REACH_MAP` 变化已由总策划判为「空间冻结正常表现」，待实机走 A1→A5 主路 |
+| L2 渲染修正（老槐遮井） | 🔄 **在跑**（2026-11-24 17:26 `scripts/world_view.gd` 有未提交 WIP：+188/−41） | 改 `scripts/world_view.gd`；核心是「A4/A5 老槐没有 tree 贴图 ⇒ 走色块分支 ⇒ 树冠上抬 0.7r 把井盖住」；方案 A 需分段绘制（树冠层→地标层→玩家层）。**尾账：欠交 commit + `docs/FEEDBACK-render-fix-exec.md`**（L8 必须排在它之后） |
 | L3 房屋数据 | ✅ **已交付并验收通过**（commit `7805d71`） | market 双态说明 + 撤 school 界碑家具（clue 家具 29→28、school 家具 155→154、18 栋几何零改动）。**尾账 R1：两处 px 旧 16px 口径待回退（market 672×448→1344×928、school 608×480→1216×992）**；**R3：生成器 `_ref/houses/gen_all_houses.py:294`/`:300` 与 `_redo_school.py:22/27/226/256` 仍带界碑家具代码 ⇒ 另开「生成器对齐」小线**（只改 py、不碰 JSON） |
-| L4 证物文案按年 | ✅ 提示词已写（`docs/PROMPT-clue-year-exec.md`），**前置已满足（可开工）** | `CLUE_TEXTS` 支持 `{年: String}`；**必须删 `scripts/house_shape.gd:107` 的 `CLUE_TEXTS["school"]["「周」界碑"]`**（D5，已确认派 L4）；**不许在 CLUE_TEXTS 补 school 界碑**（A5 那块碑文案归 frames.json）；`market` 两条家具写 2001/2026 两版；期望 28 件全覆盖、0 条占位句 |
+| L4 证物文案按年 | ✅ 提示词已写并**已修订**（`docs/PROMPT-clue-year-exec.md`，2026-11-24），**前置已满足（可开工）** | ①**白名单已扩到两个文件**：`scripts/house_shape.gd` + `scripts/frame_data.gd`（只改 `:66` 一处把 year 传进 `hotspots()`；原任务书「只改一个文件」落不了地 —— `house_shape.hotspots(data, pos)` 本来没有 year 参数，而 `houses_data.json` 的房子不带 year 字段 ⇒ 年份只能由帧数据传入）②**必须删 `scripts/house_shape.gd:107` 的 `CLUE_TEXTS["school"]["「周」界碑"]`**（D5）；**不许在 CLUE_TEXTS 补 school 界碑**（A5 那块碑文案归 frames.json）③`market` 两条家具写 2001/2026 两版（现在两个年代共用一条 ⇒ 证物卡里会出现两条一模一样的观察）④顺手修 `house_shape.gd:374-377` 的过期注释（磨坊「老井」rect=[6,12,1,1] **在** lot [0,0,17,12] 内，不是世界级地标）⑤期望 **28 件家具全覆盖、0 条占位句**（文案条数 30 条；**不应改动卡数 27 / 观察 58**）⑥跑回归时 `asset_draw_check`/`sort_check` 会读到 L2 在途的 `world_view.gd` ⇒ 任务书 §0.2 给了临时还原法 |
 | L5 证物档案 | ✅ **已交付并验收通过**（commit `5a36770`） | 模型＝**一件物件一张卡，卡内按年追加观察**：key 归一（家具＝`<房屋族>::<家具名>`，地标＝title 第一个「·」前主体名），卡内 `observations` 按年代追加；**实测 27 张卡 / 58 条观察**（⚠️ 任务书原写「39 条」是按唯一 title 去重的旧口径，已作废）。开档时收紧 SHIFT/E 已实现（`main.gd` 档案暂停判断在前，`shift_axis`/`inspect` 在后）；`evidence_archive_check.gd` 已按新模型重写（PASS 111 / FAIL 0）。总策划已独立复核：八套回归全绿、主场景零 SCRIPT ERROR、`58` 用独立 python 仿真复现；验收意见见 `docs/FEEDBACK-evidence-model-exec.md` §8 |
-| L6 文档 | 本文件 + `PROMPT-map-fix-exec.md` + `ART-HANDOFF-a4a5.md` + `ART-HANDOFF-a4a5-props.md`（机器生成的 159 条家具缺图明细）已写；L3 验收意见已写入 `FEEDBACK-houses-fix-exec.md` §8 | 待回写：`HANDOFF-VILLAGE.md` **7 处**「周」界碑是 school 家具（`:147`/`:289`/`:362`/`:397` 是当前状态表要改；`:307`/`:334` 是历史记录**不改写**；`:78` 是脚本摘要）、market_a5 三处口径冲突、旧尺寸 |
+| L6 文档 | 本文件 + `PROMPT-map-fix-exec.md` + `ART-HANDOFF-a4a5.md` + `ART-HANDOFF-a4a5-props.md`（机器生成的 159 条家具缺图明细）已写；L3 验收意见已写入 `FEEDBACK-houses-fix-exec.md` §8 | **待回写清单（2026-11-24 实测 `docs/HANDOFF-VILLAGE.md` 569 行，13 处命中）**：<br>①界碑旧口径 **7 处**：`:147`（三条线索落点表）、`:289`（§6.10 证物链）、`:362`、`:397` 是**当前状态表要改**；`:307`/`:334` 是**历史记录不改写**；`:78` 是脚本摘要<br>②`:132` market 写「21×14 = 336×224」且注「A5 营业态要另起 `market_a5`」——**与 L3 定案冲突**（market 单 id 两形态，42×28 格 = 1344×928）<br>③旧 16px px 口径 **R1**：`:136`/`:284`/`:326`/`:340` 的 school「38×30 = 608×480」→ **1216×992**；market「672×448」→ **1344×928**（`houses_data.json` 的 note 里也是旧值，同属 R1）<br>④`:377`「`a5_2026` 帧仍是空的」已过期（L1 已落地） |
 | L7 美术成品图 | **本项目不做，交美术同学** | 清单在 `docs/ART-HANDOFF-a4a5.md`；美术同学不碰代码/测试 |
 | L8 资产接线 | **提示词未写** | 改 `asset_draw.gd` 的 `scene_tex` 优先级（现在 SHARED_SCENE 优先 ⇒ stele 三帧共用一张，要改成先查每帧）+ `world_view.gd` 的界碑 rect 贴图绘制路径（16×32 rect 配 32×32 图会压扁，要改底部中心锚点 1:1）；**等 L2 做完**（同写 `world_view.gd`） |
 
-**验收尾巴**：① L1/L3 的反馈留档（L1 缺 `FEEDBACK-map-fix-exec.md`）；② L1 改完后补一次实机 Shift 切时代 + E 检视（A4 井/界碑/超市、A5 小学围墙界碑），作为证物文案的最终验收；③ L2 落地后看实机再定 A5 老槐 r=160 是否收成 128。
+**验收尾巴**：① L2 欠交 commit + `docs/FEEDBACK-render-fix-exec.md`；② L4 落地后补一次实机 Shift 切时代 + E 检视（A4 超市文件柜/上磨盘、A5 超市门厅），作为证物文案的最终验收；③ L2 落地后看实机再定 A5 老槐 r=160 是否收成 128；④ **R7 界碑 1951 文案与 1926/1976 逐字相同**（三帧同句「半截石碑，埋在路边的土里。字被凿过，只剩两个：「周界」。」）—— 文案在 `data/frames.json`，**归 L1 文件域**，L4 不并入；同类的 `坝`（1926/1951/1976/2026 四帧同句）与 `田`（1951/1976 同句）也归 L1；⑤ **R5 证物测试未钉住 27/58 数字**（`_mdtest/evidence_archive_check.gd` 唯一数字断言是读回前后卡数相等）—— 可并入 L4 或另派小线；⑥ **R6 `evidence_archive.gd` 的 `new_count` 是只写不读的死变量**（旧版用于算 `first_new`）—— 可清理。
 
 ---
 
-*本提示词基于 2026-11-23 19:20 的实测数据，基线提交 `55722ac`（之后的提交见 `git log`）。*
+## 十一、并行排线（2026-11-24 实测后的结论）
+
+**当时的局面**：只有 L2（渲染）在跑，其余线都空着。
+
+### ✅ 现在就能开
+
+| 线 | 为什么能开 | 与 L2 的关系 |
+|---|---|---|
+| **L4 证物文案按年** | 前置（L3）已满足；写 `house_shape.gd` + `frame_data.gd`，**与 L2 的 `world_view.gd` 零重叠** | 无文件冲突；只有 `asset_draw_check`/`sort_check` 会 preload L2 在途的 `world_view.gd` ⇒ 任务书 §0.2 已给临时还原法 |
+| **L6 文档回写** | 只改 `docs/**`，与任何线零冲突 | 无 |
+| **R3 生成器对齐小线** | 只改 `_ref/houses/*.py`（`gen_all_houses.py:294`/`:300`、`_redo_school.py:22`/`:27`/`:226`/`:256`），不碰 JSON、不碰 scripts | 无 |
+
+### ❌ 不能开
+
+- **L8 资产接线** —— 与 L2 同写 `scripts/world_view.gd`，必须排队 L2 先。
+- **任何新写 `data/frames.json` 的线** —— L1 的两帧已定稿（`0436c58`），再改要按 L1 的写者锁单写者。
+- **任何新写 `_ref/houses/houses_data.json` 的线** —— L3 已交付并验收；R1（两处 px 旧口径）若要改，只改 note 文本、不动几何。
+
+### 📌 下一批的顺序建议
+
+1. **L4**（现在开）
+2. **L6 + R3**（可以同时开，纯文档/纯 py）
+3. L2 交付后 → **L8**（等美术同学的图）
+4. **L1 小尾巴**（R7 界碑 1951 文案 + 坝/田 重复句）—— 归 L1 文件域，等 L4 交付后一次性做，避免和 L4 同时碰文案
+
+---
+
+*本提示词基于 2026-11-24 的实测数据，基线提交 `e287131`（之前的提交见 `git log`）。*
