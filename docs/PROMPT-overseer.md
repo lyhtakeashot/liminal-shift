@@ -92,7 +92,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | **L2** | **渲染修正**（老槐遮井） | `scripts/world_view.gd` | 🔴 | 无，可与 L1 并行 |
 | **L3** | **房屋数据** | `_ref/houses/houses_data.json` | 🟢 | 无 |
 | **L4** | **证物文案按年** | `scripts/house_shape.gd`（`CLUE_TEXTS`） | 🔴 | **等 L3** |
-| **L5** | **证物档案（一张卡·卡内按年观察）** | `scripts/main.gd` + `scripts/evidence_archive.gd` + `scripts/evidence_store.gd` | 🔴 | 无（与 L4 可并行） |
+| **L5** | **证物档案（一张卡·卡内按年观察）** | `scripts/main.gd` + `scripts/evidence_archive.gd` + `scripts/evidence_store.gd` | ✅ | 无（与 L4 可并行） |
 | **L6** | **文档回写** | `docs/**` | 🟢 | 无，可与任何线并行 |
 | **L7** | **美术成品图 —— 本项目不做，交给美术同学** | 美术同学写 `assets/village/**` + `_ref/art/**` | — | 清单见 `docs/ART-HANDOFF-a4a5.md` |
 | **L8** | **资产接线**（把新贴图接进引擎） | `scripts/asset_draw.gd` + `scripts/world_view.gd`（与 L2 串行） | 🔴 | 等美术同学的图到位；与 L2 共用 `world_view.gd` ⇒ **排在 L2 之后** |
@@ -105,7 +105,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | `docs/PROMPT-render-fix-exec.md` | **L2**（老槐遮井） | ✅ 已写，可开工 |
 | `docs/PROMPT-houses-fix-exec.md` | **L3**（房屋数据：market 双态、撤 school 界碑家具） | ✅ 已交付并验收（`7805d71`） |
 | `docs/PROMPT-clue-year-exec.md` | **L4**（证物文案按年） | ✅ 已写，**前置已满足（L3 已落盘），可开工** |
-| `docs/PROMPT-evidence-model-exec.md` | **L5**（证物模型改「一件物件一张卡·卡内按年追加观察」+ 开档收紧 SHIFT/E） | ✅ 已重写（B 方案），可开工 |
+| `docs/PROMPT-evidence-model-exec.md` | **L5**（证物模型改「一件物件一张卡·卡内按年追加观察」+ 开档收紧 SHIFT/E） | ✅ 已交付并验收通过（commit `5a36770`，验收意见见 `docs/FEEDBACK-evidence-model-exec.md` §8） |
 | `docs/PROMPT-evidence-archive-exec.md` | L5 的上一轮（证物存档 UI 已交付） | 历史 |
 | `docs/PROMPT-clue-texts-exec.md` | L4 的上一轮（A4/A5 十条文案已交付） | 历史 |
 | `docs/PROMPT-world-rebuild-exec.md` | 世界重构线（已完成：3200×2400 / 主路 1664） | 已完成 |
@@ -175,7 +175,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 - **「空间冻结、时间可动、位置不变」是核心玩法** ⇒ 跨时代同一栋楼不许移动。A4 超市必须与 A5 同址 `[1440,768]`。
 - **地标是坐标系不是美术资产** ⇒ 五帧位置不许漂；但**界碑是例外且已拍板**：界碑是**世界的独立地标物件，五帧各一个、各自一张贴图**（不是房子家具色块）。它的位置在五帧间的移动是**剧情**：1951 埋土 → 2001 被推到工地东边空地 `[2880,960]` → 2026 砌进小学围墙 `[32,1024,16,32]`。**A1–A3 保持 `[1856,960]` 不动**，这样玩家 Shift 切到 2001 能亲眼看出「它被挪了」。
 - **「超市压住老井」已被几何堵死**（压井必压槐，井与槐相距 128px）⇒ `docs/story.md` 已改文本，井口改为「就在超市西墙外，只隔一道墙」。**不要复活压井方案。**
-- **证物模型 = 「一件物件一张卡，卡内按年追加观察记录」**（2026-11-23 用户拍板，原「日期化观察记录·一对象一年一张卡」作废）：key ＝ 物件身份（家具＝`<房屋族>::<家具名>`，地标＝ title 第一个「·」前的主体名），卡内 `observations` 按年代追加。实测现状 39 条 → 新模型 **27 张卡 / 39 条观察**（`lab/_evidence_count_b.py`）。理由：档案是主角唯一的跨时代记录板（`story.md:19-26` 他是归档员，卷宗是唯一能穿过 Shift 的东西），一张卡五个年龄才是卷宗，一对象一年一张卡是数据库。
+- **证物模型 = 「一件物件一张卡，卡内按年追加观察记录」**（2026-11-23 用户拍板，原「日期化观察记录·一对象一年一张卡」作废）：key ＝ 物件身份（家具＝`<房屋族>::<家具名>`，地标＝ title 第一个「·」前的主体名），卡内 `observations` 按年代追加。实测 **27 张卡 / 58 条观察**（L5 线 `5a36770` 交付时的真实代码路径实测 `PROBE cards=27 observations=58`；总策划用独立 python 仿真复现同值）。⚠️ 早先写的「39 条观察」是**按唯一 title 去重的旧口径**（漏算老槐/界碑/坝/田四张地标卡的跨年代观察），**已作废**。理由：档案是主角唯一的跨时代记录板（`story.md:19-26` 他是归档员，卷宗是唯一能穿过 Shift 的东西），一张卡五个年龄才是卷宗，一对象一年一张卡是数据库。
 - **`market` 单 id 两形态，不拆 `market_a5`**（拆 id 牵动 frames/houses_data/CLUE_TEXTS/证物 key 四处）。
 - **`zheng_a4` 不补线索**（story §7.4「玩家永远确认不了」依赖这条）。
 - **A5 老槐 r=160 暂不改**（等 L2 渲染修好后看实机）。
@@ -271,7 +271,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | L2 渲染修正（老槐遮井） | ✅ 提示词已写（`docs/PROMPT-render-fix-exec.md`），**未开工** | 改 `scripts/world_view.gd`；核心是「A4/A5 老槐没有 tree 贴图 ⇒ 走色块分支 ⇒ 树冠上抬 0.7r 把井盖住」；方案 A 需分段绘制（树冠层→地标层→玩家层） |
 | L3 房屋数据 | ✅ **已交付并验收通过**（commit `7805d71`） | market 双态说明 + 撤 school 界碑家具（clue 家具 29→28、school 家具 155→154、18 栋几何零改动）。**尾账 R1：两处 px 旧 16px 口径待回退（market 672×448→1344×928、school 608×480→1216×992）**；**R3：生成器 `_ref/houses/gen_all_houses.py:294`/`:300` 与 `_redo_school.py:22/27/226/256` 仍带界碑家具代码 ⇒ 另开「生成器对齐」小线**（只改 py、不碰 JSON） |
 | L4 证物文案按年 | ✅ 提示词已写（`docs/PROMPT-clue-year-exec.md`），**前置已满足（可开工）** | `CLUE_TEXTS` 支持 `{年: String}`；**必须删 `scripts/house_shape.gd:107` 的 `CLUE_TEXTS["school"]["「周」界碑"]`**（D5，已确认派 L4）；**不许在 CLUE_TEXTS 补 school 界碑**（A5 那块碑文案归 frames.json）；`market` 两条家具写 2001/2026 两版；期望 28 件全覆盖、0 条占位句 |
-| L5 证物档案 | ✅ 提示词已重写（`docs/PROMPT-evidence-model-exec.md`，B 方案），**未开工** | 模型＝**一件物件一张卡，卡内按年追加观察**：key 归一（家具＝`<房屋族>::<家具名>`，地标＝title 第一个「·」前主体名），卡内 `observations` 按年代追加；实测 39 条 → **27 张卡 / 39 条观察**（`lab/_evidence_count_b.py`）。同批还要做：开档时收紧 SHIFT/E（`main.gd:100-101`/`:131-132` 移到 `:146-151` 之后）；改 `evidence_archive_check.gd`（`:227` A2 磨坊账桌改为「归一到同一张卡」、`:249-258` 「老井 · 石板」改为「归到老井卡第 2 条观察」，另加 7 条新断言） |
+| L5 证物档案 | ✅ **已交付并验收通过**（commit `5a36770`） | 模型＝**一件物件一张卡，卡内按年追加观察**：key 归一（家具＝`<房屋族>::<家具名>`，地标＝title 第一个「·」前主体名），卡内 `observations` 按年代追加；**实测 27 张卡 / 58 条观察**（⚠️ 任务书原写「39 条」是按唯一 title 去重的旧口径，已作废）。开档时收紧 SHIFT/E 已实现（`main.gd` 档案暂停判断在前，`shift_axis`/`inspect` 在后）；`evidence_archive_check.gd` 已按新模型重写（PASS 111 / FAIL 0）。总策划已独立复核：八套回归全绿、主场景零 SCRIPT ERROR、`58` 用独立 python 仿真复现；验收意见见 `docs/FEEDBACK-evidence-model-exec.md` §8 |
 | L6 文档 | 本文件 + `PROMPT-map-fix-exec.md` + `ART-HANDOFF-a4a5.md` + `ART-HANDOFF-a4a5-props.md`（机器生成的 159 条家具缺图明细）已写；L3 验收意见已写入 `FEEDBACK-houses-fix-exec.md` §8 | 待回写：`HANDOFF-VILLAGE.md` **7 处**「周」界碑是 school 家具（`:147`/`:289`/`:362`/`:397` 是当前状态表要改；`:307`/`:334` 是历史记录**不改写**；`:78` 是脚本摘要）、market_a5 三处口径冲突、旧尺寸 |
 | L7 美术成品图 | **本项目不做，交美术同学** | 清单在 `docs/ART-HANDOFF-a4a5.md`；美术同学不碰代码/测试 |
 | L8 资产接线 | **提示词未写** | 改 `asset_draw.gd` 的 `scene_tex` 优先级（现在 SHARED_SCENE 优先 ⇒ stele 三帧共用一张，要改成先查每帧）+ `world_view.gd` 的界碑 rect 贴图绘制路径（16×32 rect 配 32×32 图会压扁，要改底部中心锚点 1:1）；**等 L2 做完**（同写 `world_view.gd`） |

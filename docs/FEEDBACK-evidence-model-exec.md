@@ -117,3 +117,56 @@ v1 旧存档每条 = 一件 = **一张卡 + 一条观察**，key 再归一一次
 3. **「新」角标口径**：新增卡 + 新增观察都算新（§1 ③）。若总策划希望「只有新卡才算新」，改 `pending_new()` 一处即可。
 4. **观察追加在卡内末尾（收集顺序），展示时才按年代升序**：若玩家不按时间线顺序游玩，卡内观察的物理顺序与年代顺序会不一致
    —— 展示层已按年代排序，存档 `order` 字段记的仍是收集次序。
+
+---
+
+## 8. 验收意见（总策划，2026-11-24）
+
+### 8.1 独立复核结果（不采信反馈自述，逐条实测）
+
+| 复核项 | 方法 | 结果 |
+|---|---|---|
+| 提交边界 | `git show --stat 5a36770` | 5 files、899 insertions / 171 deletions，与反馈自报一致 ✅（`_mdtest/evidence_archive_check.gd`、`docs/FEEDBACK-evidence-model-exec.md`、`scripts/evidence_archive.gd`、`scripts/evidence_store.gd`、`scripts/main.gd`） |
+| 父提交正确 | `git log --oneline -4` | HEAD=`5a36770`，父提交＝`a025d99` ✅ 与任务书开工基线一致 |
+| 工作区无偷改 | `git diff --stat HEAD -- scripts/evidence_store.gd scripts/evidence_archive.gd scripts/main.gd _mdtest/evidence_archive_check.gd` | 四个文件**全空**＝与 HEAD 一致 ✅ |
+| **观察数 58 复核** | ①L5 线真实代码路径实测 `PROBE cards=27 observations=58`；②总策划独立 python 仿真（读 `data/frames.json` + `_ref/houses/houses_data.json`，地标＝各帧 `hotspots` 全部、家具＝各帧存在 house 的 `clue:true` 家具，加 lot 内过滤） | **cards=27 / observations=58** 两种方法同值 ✅；`skipped(outside lot) = []` |
+| 58 无重复污染 | 第三份独立 python 审计 | raw entries＝58、unique (key,year) pairs＝58、**同年同 key 冲突 = 0** ⇒ 58 既是未去重原始条目数也是归一后观察数 ✅ |
+| 归一规则落地 | 实读 `scripts/evidence_store.gd` | `HOUSE_FAMILY` :48-54 八族与任务书规则 A 逐行一致 ✅；`furniture_key()` :66、`landmark_key()` :74（split「·」取头）、`normalize_key()` :84 ✅ |
+| 三态收集 | `try_collect()` :101-127 | 新卡→建卡+第 1 条观察；同年代→`RESULT_DUPLICATE` 什么都不做；新年份→末尾追加 + `_new_observations+=1` ✅ |
+| 卡片结构 | `evidence_store.gd:9-27` + `evidence_archive.gd` | `{key,name,order,observations:[{year,title,source,text,order}]}` ✅；列表页一行＝一张卡 ✅；详情页按年代升序 ✅ |
+| 开档收紧 SHIFT/E | 实读 `scripts/main.gd:136-156` | I 键开档(:136-138) → 档案暂停 return(:143-146) → `shift_axis`(:151) → `inspect`(:155) ⇒ 顺序符合任务书 §2.4 ✅ |
+| `evidence_archive_check` | 我亲自重跑 | **PASS 111 / FAIL 0**（尾部 `EVIDENCE_CHECK_DONE fails=0` / `COLLECTED` / `NO_DUP` / `EVIDENCE_OK`）✅ |
+| 其余七套回归 | 我亲自重跑 | greybox PASS=1、display PASS=0、camera PASS=8、hud_layout PASS=11、asset_draw PASS=60、sort PASS=90、interior PASS=1 ⇒ **全绿 0 挂** ✅ |
+| 主场景启动 | `godot --headless --path . --quit-after 60` | 无 SCRIPT ERROR / Parse Error，仅 3 条沙箱噪声（`user://logs` 不可写 + 根证书）⇒ 反馈 §6① 属实 ✅ |
+| 测试防假通过 | `evidence_archive_check.gd:333-336` | 守卫断言 `main.archive == null` 直接 FAIL ✅；`_archive_pauses_world()` :501 每段前放反向对照（档案关着时两键必须有效）✅ |
+| 旧存档兼容 | `SAVE_VERSION` 1→2，`_load_card_v2()` :262 / `_load_card_v1()` :285 | v1 归一为 `mill::账桌`、年份从 source 解析 ✅；损坏 JSON 返回 false 不崩 ✅ |
+
+**结论：四项必改全部达标，执行纪律（白名单 4 脚本 + 1 新文档、精确 add、不碰他线文件）达标。通过。**
+
+### 8.2 反馈 §5 七项待处理事项 · 逐条裁决
+
+| 编号 | 裁决 | 理由 / 动作 |
+|---|---|---|
+| **①** L2 的 parse 错误已被他线修掉 | ✅ **属实，确认闭合** | 我在当前工作区（含 L2 未提交 WIP）跑 `godot --headless --path . --quit-after 30`：无 Parse Error、无 SCRIPT ERROR，只有沙箱噪声。 |
+| **②** 两处旧数字回写 58 + L5 行状态 | ✅ **已由总策划回写完成** | `docs/PROMPT-overseer.md:178`（27 卡/58 观察＋旧 39 口径作废说明）、`:95` 工作线表 L5 危险度→✅、`:108` 索引行改「✅ 已交付并验收通过（commit `5a36770`）」、`:274` §十 L5 行改「✅ 已交付并验收通过」；`docs/PROMPT-evidence-model-exec.md` §2.5 整节重写（正确基线表 + **14 张**多观察卡表 + 其余 13 张各 1 条名单）；`docs/DECIDE-a4-a5-layout.md:195` 裁定②同步 58。 |
+| **③** `house_shape.gd:374-377` 注释过期 | ✅ **属实，移交 L4** | 我已实测：mill_a1/mill_a2/mill_a3 的老井 rect＝`[6,12,1,1]`，mill lot＝`[0,0,17,12]`（mill_a3 是 `[0,0,17,16]`）⇒ **inside=True**，`mill::老井` 卡真实存在（3 条观察）。该文件属 L4 独占，**请 L4 会话在改 `CLUE_TEXTS` 时一并把这段注释改成当前口径**（别只删 `CLUE_TEXTS["school"]["「周」界碑"]` 而留下误导注释）。 |
+| **④** 「新」角标口径 | ✅ **任务书口径成立，保留 L5 实现** | 任务书 §2.3 原文明确要求「新增卡数 + 新增观察数都算新」，L5 实现**完全符合任务书**（`pending_new()` 记 {cards, observations}、`is_new_key()` 认「新建卡或追加观察」、关档 `clear_new_flags()` 结算）。总策划此前口头建议「只有新卡才算新」**与任务书冲突，予以撤回**；若将来要改口径，须同时改任务书 §2.3、`EvidenceStore.pending_new()`/`is_new_key()`、`_mdtest/evidence_archive_check.gd:246-257` 两条断言 —— 三处一起改才算数。 |
+| **⑤** 3 个 `.uid` 未提交 | ✅ **同意补交** | 仓库 tracked `.gd` 36 个、tracked `.uid` 29 个，**7 个 tracked `.gd` 缺 `.uid`**：L5 的 3 个（`scripts/evidence_store.gd.uid`=`uid://c4wn0c7dic4wk`、`scripts/evidence_archive.gd.uid`=`uid://d22c5g5uqi32g`、`_mdtest/evidence_archive_check.gd.uid`=`uid://bauk5lxql23c0`）＋ 资产消费点线 `aac2115` 遗留 4 个（`scripts/asset_draw.gd.uid`=`uid://doug42tqpo2n0`、`_mdtest/asset_draw_check.gd.uid`=`uid://cphcgu46h6r7t`、`_mdtest/asset_shot.gd.uid`=`uid://4fl6vp3ptb0p`、`_mdtest/_evidence_shot.gd.uid`=`uid://be3u661rj6sbp`）——**文件都已在磁盘上存在，只是没 add**。仓库惯例是 `.import` 入库（`assets/*.import` 255 个）。实测仓库内 **0 处引用这些 uid**，`scenes/main.tscn` 用 `path=` 引用脚本、**无 uid 引用** ⇒ 现在不补也不会坏引用，但 Godot 4.4+ 重新生成 uid 可能漂移 ⇒ **总策划已在本次验收 commit 内一并补交这 7 个 .uid**（各文件都已在磁盘上存在、仅未 add；内容逐个核对无误），执行线无需再动。 |
+| **⑥** 卡内物理顺序＝收集顺序≠年代顺序 | ✅ **知悉，保持现状** | 展示层已按年代升序（`sorted_observations()` :384 年代升序＋order 次序），玩家看到的阅读顺序是对的；存档 `order` 记收集次序是**正确的**（它是「你什么时候记下的」）。不改。 |
+| **⑦** L2 渲染线欠交 commit + 反馈文档 | ⏳ **催交，不阻塞 L5** | L2 当前工作区改动实测＝`scripts/world_view.gd` **1 file changed, 180 insertions(+), 42 deletions(-)**（`_circle_sort_y()` :565 已定义、`_wells_under_canopy()` :594、「就地补画 overlay」方案 :330-345、排序链只加不减 :464-465）。**L8 资产接线必须排在 L2 之后**（L8 要按最终遮挡/贴图口径接线）。请 L2 会话补交 commit + `docs/FEEDBACK-render-fix-exec.md`。 |
+
+### 8.3 新增尾巴（不阻塞 L4）
+
+- **R5（建议 L5 线顺手做，10 分钟）**：**测试没有钉住 27 / 58**。`_mdtest/evidence_archive_check.gd` 共 566 行、122 处 `_ok(`、0 处 `_fail(`，唯一的数字断言是 `:481`「读回前后卡数相等」——**全文件没有 27/58 的硬断言** ⇒ 这两个数字目前只由反馈文档与总策划的 python 仿真背书。建议补一条：「遍历五帧全部热点并逐个 `_do_inspect()` 后，`EvidenceStore.count() == 27` 且 `observation_count() == 58`」。有了它，下次任何人改归一规则导致数字漂移，回归会立刻变红。
+- **R6（可选清理）**：`scripts/evidence_archive.gd` 的 `new_count` 在新版变成**只写不读的死变量**——旧版（`5d41f03`）它在 `_draw_list()` 里算 `first_new := entries.size() - new_count` 决定哪些行标「新」；新版列表页改用 `EvidenceStore.is_new_key(key)` :252 逐卡判定，`new_count` 只剩定义(:55)、赋值(:85/:110)、注释(:21)，**grep 全 `scripts/` 无任何绘制消费点**。无害，可清理。
+- **R7（交 L4 文案线，顺手）**：`frames.json` 里**界碑 1951 那条文案与 1926 / 1976 逐字相同**（「半截石碑，埋在路边的土里…」）。归一后这张卡会有三条几乎一样的观察，读起来像卡带。建议 L4 写 1951 版时把「被凿了一半、开始往土里埋」落进文案（story 口径：1951 埋土 → 2001 推到工地东边 → 2026 砌进小学围墙）。
+
+### 8.4 复核时另记的三条观察（非本线责任，登记在案）
+
+1. **任务书 §2.5 的 39 是我写错的**（不是执行线偏差）：我当时用「按唯一 title 去重」口径数，只列了 8 张多观察卡，**漏算老槐/界碑/坝/田四张地标卡的跨年代观察**。按任务书 §2.2 规则（新年份→追加一条）实算就是 58 条，L5 的纠正是对的。已回写四处文档并注明旧口径作废。**教训：写「预期条数」这种基线时，必须按规则实算，别按去重视图数。**
+2. **同一 (key, year) 冲突数 = 0**：意味着「同年同物件不该记两次」这条隐含不变量目前没被打破；但也意味着测试没覆盖它（若将来某个热点在同一年出现两次且 title 相同，会被 `try_collect()` 判为 DUPLICATE 而丢掉第二条）—— R5 的全帧遍历断言会顺带暴露这类问题。
+3. **界碑的「周」字在 A5 埋在围墙里**：`frames.json` A5 界碑热点文案是「围墙里嵌着半截石碑…字磨得只剩一个『周』」⇒ 界碑卡的第 5 条观察与前 4 条（露天残碑）形成完整物证链，**这是 A4/A5 地图线交付的成果，不是证物线的活**；反过来也说明证物模型的「卡内按年追加」确实把这个叙事收益接住了。
+
+### 8.5 签字
+
+**验收人：项目总策划会话（lead）　日期：2026-11-24　结论：通过（带 R5–R7 三条尾巴，均不阻塞 L4；⑦ 7 个 .uid 已由总策划在同一 commit 补交）**
