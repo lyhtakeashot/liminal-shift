@@ -43,7 +43,7 @@
 | 镜头：空间轴跟随、时间轴冻结 | `scripts/camera_rig.gd:42` |
 | 检视文字框（E 键） | `scripts/hud.gd:127` |
 | 小窗/全屏（F11，Exclusive Fullscreen） | `scripts/display_manager.gd:35` |
-| 整数倍缩放（640×360 → 任意分辨率都不糊） | `project.godot` `stretch/scale_mode=1` |
+| 1280×720 + fractional 缩放（canvas_items） | `project.godot` `stretch/mode="canvas_items"` + `scale_mode=0` |
 | 地图四周隐形墙（走不出去） | `scripts/timeline.gd:97` |
 | 自检脚本（含可站比例量化） | `_mdtest/greybox_check.gd` |
 | 房屋数据 + 出图器 + 本地编辑器（18 栋） | `_ref/houses/` → `HANDOFF-VILLAGE.md` |
@@ -60,7 +60,7 @@
 **玩法**：只能沿时间或空间其中一个轴移动，按 Shift 切换。
 
 > **2026-11-19 用户修正**：原版这里写「固定一屏」，已作废。
-> 现在**空间轴镜头跟随玩家、时间轴镜头锁定**，地图会放大到 1600×900（见 `HANDOFF-VILLAGE.md` §7.4）。
+> 现在**空间轴镜头跟随玩家、时间轴镜头锁定**，地图已放大到 3200×2400（已落地，见 `HANDOFF-VILLAGE.md` §7.4）。
 > 「一屏」这个限制从来不是玩法核心 —— **核心是「同一时刻只能动一个轴」**。
 
 ---
@@ -111,7 +111,7 @@
 > 但**空间轴现在要跟镜头**。用户原话：「我打算在空间轴的时候，镜头跟随移动，时间轴镜头锁定」。
 > 实现：`scripts/camera_rig.gd` —— `set_time_mode(true)` 时把当前 offset 冻进 `frozen_offset`，
 > 整段时间轴模式都不再更新；切回空间轴立刻恢复跟随（`FOLLOW=9.0` 平滑）。
-> 地图放大后（见 `HANDOFF-VILLAGE.md` §7.4）这条才会明显生效；640×360 等于视口大小时镜头本来就锁死。
+> 地图放大后（见 `HANDOFF-VILLAGE.md` §7.4）这条才会明显生效；当初 640×360 等于视口大小时镜头本来就锁死。
 > 另：早期加的可见边界线已按用户要求删除，地图边缘改为 `timeline.gd:97` 的隐形墙。
 
 ### 2.5 输入处理骨架
@@ -397,12 +397,12 @@ func is_free(at: Vector2) -> bool:
 
 | 项 | 值 |
 |---|---|
-| 内部分辨率 | **640 × 360** |
-| 缩放 | 整数倍（3x → 1920×1080） |
+| 内部分辨率 | **1280 × 720** |
+| 缩放 | fractional（1080p=1.5× / 1440p=2× / 4K=3×），`project.godot` `stretch/mode="canvas_items"` + `scale_mode=0` |
 | 风格 | 像素风，俯视 3/4（星露谷式） |
 | 光线方向 | **统一从左上来** |
 
-**这个数一旦定了就不能改**，改了所有素材重画。
+**这个数一旦定了就不能改**，改了所有素材重画。（已定案 1280×720，见 `docs/DECIDE-stardew-visual.md` D7。）
 
 ### 5.2 图层拆法：省六倍工作量
 
@@ -515,12 +515,12 @@ assets/village/
 config/features=PackedStringArray("4.7", "GL Compatibility")   ; ✅ 已改（不是 Forward Plus）
 
 [display]
-window/size/viewport_width=640                                  ; ✅
-window/size/viewport_height=360                                 ; ✅
-window/size/window_width_override=1280                          ; ✅ 默认小窗 2x
+window/size/viewport_width=1280                                 ; ✅
+window/size/viewport_height=720                                 ; ✅
+window/size/window_width_override=1280                          ; ✅ 默认小窗 1x
 window/size/window_height_override=720                          ; ✅
 window/stretch/mode="canvas_items"                              ; ✅
-window/stretch/scale_mode=1                                     ; ✅ 整数缩放（配 aspect=keep）
+window/stretch/scale_mode=0                                     ; ✅ fractional 缩放（配 aspect=keep）
 
 [input]                                                         ; ✅ 六个动作已建：
 																;    move_up/down/left/right
@@ -743,11 +743,11 @@ git push -u origin main
 	  - [ ] **A2 陆家**（下一件事，初版已出，等逐件微调）
 	  - [ ] A2 周家 `zhou_a2`（1951 周有田当账房那段，还没建数据）
 	  - [ ] A3 沈家凹形 / A4 沈家四合院 / A4 超市 / A5 玩具店 / A5 小学，逐栋精调
-	  - [ ] 定稿后回写 `house-spec.md` §2（现在的房型尺寸是旧版）
+	  - [x] ~~定稿后回写 `house-spec.md` §2（现在的房型尺寸是旧版）~~ → **已完成**（文档回写线 v2，2026-11-24）
 - [ ] **房子接进游戏**（`HANDOFF-VILLAGE.md` §7 + **`docs/BUILD-A1.md`** 是逐条作业单）
-	  - [ ] **A1 先行**：世界 1600×900 + 四栋占位 + 门洞可进 + 家具级检视点（`BUILD-A1.md` §2/§4/§7）
-	  - [ ] `frames.json` 新增 `house` 类型 shape，读同一份房屋数据
-	  - [ ] 地图放大 640×360 → **1600×900**（最大的四合院 336×304 px，现在塞不下）
+	  - [x] ~~**A1 先行**：世界 1600×900 + 四栋占位 + 门洞可进 + 家具级检视点（`BUILD-A1.md` §2/§4/§7）~~ → **已完成**（世界已重构为 3200×2400，`29a5e2f`）
+	  - [x] ~~`frames.json` 新增 `house` 类型 shape，读同一份房屋数据~~ → **已完成**（a1/a3/a5 帧已接 house）
+	  - [x] ~~地图放大 640×360 → **1600×900**（最大的四合院 336×304 px，现在塞不下）~~ → **已完成**：现为 **3200×2400**，四合院 1152×1152 px
 	  - [ ] 三层渲染 base/roof/props + y 排序（原型 `_mdtest/interior_canvas.gd` 已验证）
 - [ ] 过渡帧（每段 4 张）
 - [x] ~~时间轴 UI 条（显示刻度 + 当前帧）~~ → **已完成**（`scripts/hud.gd:96`）

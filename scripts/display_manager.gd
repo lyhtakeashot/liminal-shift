@@ -2,14 +2,15 @@ extends Node
 
 ## 显示模式：小窗 / 全屏切换。
 ##
-## 缩放不在这里做 —— 交给 Godot 内置的 integer 缩放（project.godot 里
-## window/stretch/scale_mode=1，配合 aspect=keep）。逻辑分辨率永远 640×360：
-##   - 小窗：默认 1280×720（2x），用户也能直接拖窗口边随意缩放，Godot 自动整数倍居中
-##   - 全屏：Exclusive Fullscreen，Godot 按显示器最大整数倍铺，非整数倍留黑边
+## 缩放不在这里做 —— 交给 Godot 内置的 canvas_items 缩放（project.godot 里
+## window/stretch/mode="canvas_items" + window/stretch/scale_mode=0 = fractional，
+## 配合 aspect=keep）。逻辑分辨率永远 1280×720：
+##   - 小窗：默认 1280×720（1x），用户也能直接拖窗口边随意缩放，Godot 自动适应
+##   - 全屏：Exclusive Fullscreen，Godot 按显示器比例铺满
 ##
 ## 为什么之前的 F11「不可用」：手写用的是普通 Fullscreen + fractional 缩放，
 ## 在非 16:9 显示器上会拉伸/发糊。官方明确建议像素游戏用 Exclusive Fullscreen，
-## 它不底部留 1px，配 integer 缩放才能自适应任意显示器。
+## 它不底部留 1px，配 canvas_items 缩放才能自适应任意显示器。
 
 enum DisplayMode { WINDOW, FULLSCREEN }
 
