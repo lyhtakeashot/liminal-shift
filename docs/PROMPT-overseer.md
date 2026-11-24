@@ -277,6 +277,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 | L6 文档 | ✅ **已交付并验收通过**（4 个 commit：`def62dd` 主战场 / `cd4b9d4` 第二档 8 份 docs / `585a004` 补正 / `3361589` R3 生成器对齐） | 主战场 `docs/HANDOFF-VILLAGE.md`（+41/−37）：@16px 全表重算成 32px、界碑三处改「A5 世界地标」、`:377`/`:512` 过期句订正、头部日期更新；第二档：`house-spec.md`/`HANDOFF.md`/`REPORT-house-height.md`/`display_manager.gd` 注释/`PROMPT-art-canvas-h16`/`house-size`/`pseudo3d`/`tile-32px` 全部加 SUPERSEDED 或改陈述（**历史记录不改写**）。**六条验收 grep 我亲自复跑全部通过**（`一格 = 16×16 px` 0 命中、旧 px 串仅 `:328` 历史表、`market_a5` 仅 `:132` 正确声明、`155(1)` 0 命中、`[1,18,2,1]` 3 处全在历史语境、`1600×900\|640×360` 0 命中）。验收意见见 `docs/FEEDBACK-doc-rewrite-v2-exec.md` §6。**尾账**：R1 `houses_data.json` 三处 note px 旧值（玩家不可见，等房屋数据线收口）｜R2 生成器未运行验证（跑它会重画 18 张 `_ref/art/*.png`，用 `git checkout-index -f` 还原）｜R3 历史节 `:328` 旧值保留 |
 | L7 美术成品图 | **本项目不做，交美术同学** | 清单在 `docs/ART-HANDOFF-a4a5.md`；美术同学不碰代码/测试 |
 | L8 资产接线 | **提示词未写，但 L2 已交付 ⇒ 现在可以开** | 改 `asset_draw.gd` 的 `scene_tex` 优先级（现在 `SHARED_SCENE` 优先 ⇒ stele 三帧共用一张，要改成先查每帧）+ `world_view.gd` 的界碑 rect 贴图绘制路径（16×32 rect 配 32×32 图会压扁，要改底部中心锚点 1:1）；顺带把 `SCENE_FILES` 补上 a4/a5（现在只含 a1/a2/a3 ⇒ A4/A5 全走色块降级）。**L2 的修正与本线不冲突**（贴图分支本来就不上抬），但两者同写 `world_view.gd` ⇒ 本线是它之后的第一条 |
+| L9 渲染缺陷调查（人站在墙上 / 门可穿 / A4 门口色块乱） | ✅ **提示词已写**（`docs/PROMPT-render-bug-exec.md`，commit `d2607a1`）⇒ **可派** | 玩家 2026-11-24 实机反馈三条。**能改 `scripts/world_view.gd` + `scripts/house_shape.gd` + `scripts/frame_data.gd`**；不能碰 `data/frames.json`（L1）、`_ref/houses/houses_data.json`（L3）、`_mdtest/**`、测试断言一条都不许改。根因初判已写进任务书：①玩家排序键 `position.y+14*0.7` 与墙的「行南沿」错位（墙的键比该行格顶低一整格 32px ⇒ 人站墙北侧却排在墙之后）；②门洞格是 `'D'`/`'G'`、`solid_rects()` 只收 `'#'` ⇒ **门洞完全不碰撞、人可穿门**（`house_shape.gd:368-369` 注释写明是当年有意设计）；③`grid_of()` 判定顺序 `G > D > partitions > is_wall` ⇒ **门格覆盖隔断、隔断被切断**；④A4 的 12 扇门**全部**开在内部隔断上（但 `shen_a1` 3/3、`market` 3/3、`shen_a2` 5/6、`shen_a3` 7/10 也是 ⇒ **全项目通例，不是 A4 数据错**）；⑤A1–A3 有美术 base 图（引擎不画墙/门）、A4/A5 六栋零张图（走色块画法）⇒ **同一个 bug 在 A4/A5 全看得到**。⚠️ 与 **L8 同写 `world_view.gd` ⇒ 两条不能同时开** |
 
 **验收尾巴**：① **R2 界碑/坝/田 跨年代重复文案**（我实测 `lab/_v_landmark_dup.py`：界碑 5 年只有 3 种文案、**1926/1951/1976 逐字相同**；坝 5 年 2 种、**1926/1951/1976/2026 四帧同句**；田 1951/1976 同句；老井 5 种全不同、老槐 5 种全不同）—— 文案在 `data/frames.json`，**归 L1 文件域**，L4 不并入 ⇒ 派 **L1 小线**；② **R3 实机验收**（market 两态证物）：实机走 A4（超市工地）与 A5（营业超市），E 检视「文件柜」「上磨盘」，确认两次入档落在**同一张卡**（`market::文件柜`）的**两条观察**（2001/2026）⇒ 与 A5 老槐 radius 决策一起做；③ **A5 老槐 r=160 是否收 128**（实测 128 仍挡井 27.1%、96 才 0.2%；实机 160 观感可接受 ⇒ **我倾向不动**，但属 `data/frames.json`＝L1 独占，且收 128 要把 `tree_a5.png` 从 320×320 改 256×256）；④ **R5 证物测试未钉住 27/58 数字**（`_mdtest/evidence_archive_check.gd` 唯一数字断言是读回前后卡数相等）—— 可并入 L8 或另派小线；⑤ **R6 `evidence_archive.gd` 的 `new_count` 是只写不读的死变量**（旧版用于算 `first_new`）—— 可清理；⑥ **L2 几何遮挡率没有常驻断言**（只在反馈文档与临时脚本里）—— 建议 L8 或收尾阶段补一条「遍历五帧算井被树冠覆盖率、超阈值即 FAIL」；⑦ **R1 `houses_data.json` 三处 note px 旧值**（market/school/toyshop，玩家不可见，等房屋数据线收口）；⑧ **文档过期数值扫描**建议纳入 `_mdtest/` 常驻回归（现在只有一次性 grep）。
 
@@ -285,14 +286,16 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 ## 十一、并行排线（2026-11-24 19:00 更新后的结论）
 
 **现在的局面**：L2 / L4 / L6 三条线**全部交付并验收通过**（`cc19b4c` / `63f47eb` / `def62dd`+`cd4b9d4`+`585a004`+`3361589`），工作区无在途代码改动 ⇒ **下一批可以开三条互不重叠的线**。
+**2026-11-24 20:20 更新**：玩家实机体验后新报三条渲染缺陷 → **L9 已写好任务书（`docs/PROMPT-render-bug-exec.md`，commit `d2607a1`）**。L9 与 L8 **同写 `scripts/world_view.gd` ⇒ 两条不能同时开**，L8 要等 L9 落地（或反过来，二选一）。
 
 ### ✅ 现在就能开
 
 | 线 | 写哪些文件 | 为什么能开 |
 |---|---|---|
-| **L8 资产接线** | `scripts/asset_draw.gd` + `scripts/world_view.gd` | L2 已交付，不再有 WIP 挡路；这是 L2 之后的第一条（同写 `world_view.gd` 的队列已清空）。**提示词还没写**，需我先写 |
+| **L9 渲染缺陷调查**（新） | `scripts/world_view.gd` + `scripts/house_shape.gd` + `scripts/frame_data.gd` | 任务书已就绪；三条问题全是渲染/几何层，不碰数据文件。**但与 L8 争 `world_view.gd`** |
+| **L8 资产接线** | `scripts/asset_draw.gd` + `scripts/world_view.gd` | L2 已交付，不再有 WIP 挡路；这是 L2 之后的第一条。**提示词还没写**，需我先写。**与 L9 争 `world_view.gd` ⇒ 与 L9 二选一** |
 | **L1 小尾巴（界碑/坝/田 跨年代文案）** | 只改 `data/frames.json`（三处 `hotspots[].text`） | L4 已交付，不再与文案线并行；`data/frames.json` 是 L1 独占文件、单写者 |
-| **美术清单整理线（新会话）** | 新写 `docs/**` 交付清单；可能要动 `_ref/houses/gen_all_houses.py`（重出 32px 口径拆解图） | 纯文档/纯 py，与前两条零重叠。**必须先解决**：`art-handoff/` 被 `.gitignore:36` 忽略 ⇒ 美术同学在 GitHub 上拿不到交付包；A4/A5 六张拆解图是 16px 旧口径（`gen_all_houses.py:31 TILE = 16`）要重出 |
+| **美术清单整理线（新会话）** | 新写 `docs/**` 交付清单；可能要动 `_ref/houses/gen_all_houses.py`（重出 32px 口径拆解图） | 纯文档/纯 py，与其他线零重叠。**必须先解决**：`art-handoff/` 被 `.gitignore:36` 忽略 ⇒ 美术同学在 GitHub 上拿不到交付包；A4/A5 六张拆解图是 16px 旧口径（`gen_all_houses.py:31 TILE = 16`）要重出 |
 
 ### ❌ 不能开
 
@@ -303,6 +306,7 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 
 ### 📌 下一批的顺序建议
 
+0. 🔴 **L9 vs L8 二选一**（两条都写 `scripts/world_view.gd`）：**先开 L9**（玩家已经在实机里踩到这三条，是体验级缺陷；L8 是「有图之后好不好看」）；L9 落地后再开 L8，届时 `asset_draw.gd` 的改动与 L9 的排序/门洞改动要合并跑一次七套回归。
 1. **L8 资产接线**（我先写任务书 → 再派）：核心是 `asset_draw.gd` 的 `scene_tex` 优先级改成「先查每帧、再查共享」＋`SCENE_FILES` 补 a4/a5＋`world_view.gd` 的界碑 rect 贴图底部中心锚点 1:1。
 2. **L1 小尾巴**（可与 L8 同时）：界碑 1951 文案补「被凿了一半、开始往土里埋」、坝 4 帧同句、田 1951/1976 同句。
 3. **美术清单整理线**（可与前两条同时）：重出 32px 口径 A4/A5 拆解图 + 把清单正文搬进 tracked 的 `docs/`（不要解 `.gitignore` 的 `.csv`→`.translation` 幽灵文件问题）。
@@ -310,4 +314,4 @@ zheng_a4 [0,0,19,12] [[0,0,15,11]]
 
 ---
 
-*本提示词基于 2026-11-24 的实测数据，基线提交 `e287131`（之前的提交见 `git log`）。*
+*本提示词基于 2026-11-24 的实测数据，基线提交 `e287131`（之后的提交见 `git log`）。2026-11-24 20:20 增补 L9 渲染缺陷调查线。*
