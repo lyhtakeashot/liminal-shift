@@ -28,7 +28,7 @@ FRAME_OF_ID = {
     "shen_a4": "A4", "market": "A4", "zhou_a4": "A4", "zheng_a4": "A4",
     "toyshop": "A5", "school": "A5",
 }
-TILE = 16
+TILE = 32  # 一格 = 32×32 px，与 scripts/house_shape.gd:13 的 TILE 一致（旧的 16 口径 2026-11-24 作废）
 SCALE = 40
 FONTS = ["C:/Windows/Fonts/msyh.ttc", "C:/Windows/Fonts/simhei.ttf"]
 
@@ -60,8 +60,10 @@ C = {
              "field": "#6f7d4c"},
 }
 
-STD = ("家具标准：人 1×2 ｜ 双人床 2×2(穷)/3×3(富) ｜ 单人床 2×1 横向贴墙 ｜ "
-       "柜/灶台 1×2 ｜ 一格 16×16 px ｜ 橙框=可检视线索")
+def std_text():
+    """家具标准行。一格 = TILE×TILE px，跟 scripts/house_shape.gd 的 TILE 一致。"""
+    return ("家具标准：人 1×2 ｜ 双人床 2×2(穷)/3×3(富) ｜ 单人床 2×1 横向贴墙 ｜ "
+            f"柜/灶台 1×2 ｜ 一格 {TILE}×{TILE} px ｜ 橙框=可检视线索")
 
 
 def F(name, x, y, w, h, note="", clue=False, short=None, zone="house", yard_building=False):
@@ -454,15 +456,15 @@ def render(hs):
     d = ImageDraw.Draw(img)
 
     d.text((40, 16), hs["name"] + " · 占地拆解图", font=font(28), fill=C["text"])
-    d.text((40, 54), f"屋本体见注 ｜ 占地 {gw}×{gh} 格 = {gw*TILE}×{gh*TILE} px ｜ 一格 16×16 px ｜ 主角 1×2 格",
+    d.text((40, 54), f"屋本体见注 ｜ 占地 {gw}×{gh} 格 = {gw*TILE}×{gh*TILE} px ｜ 一格 {TILE}×{TILE} px ｜ 主角 1×2 格",
            font=font(15), fill=C["key"])
-    d.text((40, 80), STD, font=font(14), fill=C["gray"])
+    d.text((40, 80), std_text(), font=font(14), fill=C["gray"])
     d.text((40, 104), hs["story"], font=font(14), fill=C["gray"])
     yy = 132
     for ln in hs["clue"]:
         d.text((40, yy), "◆ " + ln, font=font(14), fill=C["clue"], anchor="lm")
         yy += 22
-    legend = ("废墟图：残墙基 夯土=地基 绿框[草]=需美术铺 16px 杂草的格 深绿=院/天井 橙虚框=可检视地面痕迹"
+    legend = (f"废墟图：残墙基 夯土=地基 绿框[草]=需美术铺 {TILE}px 杂草的格 深绿=院/天井 橙虚框=可检视地面痕迹"
               if is_ruin else
               "灰棕=墙板(顶部高光) 棕=室内 深绿=院/天井 黄=门 橙框=可检视线索")
     d.text((40, yy + 4), legend, font=font(13), fill=C["gray"])
@@ -487,7 +489,7 @@ def render(hs):
             box = [bx, by, bx + SCALE - 1, by + SCALE - 1]
             if is_ruin:
                 # 废墟态：墙=残墙基，室内=夯土地基，门/院门=缺口。
-                # 杂草不在这里画——grass 字段列出需铺 16px 杂草素材的格，图上只画绿框+"草"占位标注，
+                # 杂草不在这里画——grass 字段列出需铺杂草素材的格，图上只画绿框+"草"占位标注，
                 # 实际美术素材交给美术复用。
                 if ch == "#":
                     d.rectangle(box, fill=C["ruin_wall"])
@@ -500,7 +502,7 @@ def render(hs):
                     d.rectangle(box, fill=C["ruin_base"])
                 else:
                     d.rectangle(box, fill=C["yard"])
-                # 杂草格占位标注：绿色细框 + "草"字，交给美术铺 16px 素材
+                # 杂草格占位标注：绿色细框 + "草"字，交给美术铺素材
                 if (X0 + rx, Y0 + ry) in grass_set:
                     d.rectangle([bx + 2, by + 2, bx + SCALE - 3, by + SCALE - 3],
                                 outline=C["ruin_grass"], width=2)
@@ -732,10 +734,22 @@ def check_all():
 
 
 def main():
+    import argparse
+    global TILE
+    ap = argparse.ArgumentParser(description="占地拆解图生成器")
+    ap.add_argument("--only", default="all", choices=("all", "a4a5"),
+                    help="all=全部 18 栋；a4a5=只出 A4/A5 六栋（不碰 A1–A3 的图）")
+    ap.add_argument("--px", type=int, default=TILE,
+                    help=f"一格多少 px（默认 {TILE}；游戏实际口径是 32）")
+    args = ap.parse_args()
+    TILE = args.px
+    only = {"A4", "A5"} if args.only == "a4a5" else set(FRAME_DIR)
     for frame, dname in FRAME_DIR.items():
         os.makedirs(os.path.join(OUT, dname), exist_ok=True)
     for hs in HOUSES:
         frame = FRAME_OF_ID[hs["id"]]
+        if frame not in only:
+            continue
         sub = FRAME_DIR[frame]
         img = render(hs)
         p = os.path.join(OUT, sub, hs["id"] + ".png")

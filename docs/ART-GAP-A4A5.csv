@@ -1,0 +1,225 @@
+﻿批次,类别,编号,文件名,画布尺寸,画什么,是否线索,状态,负责人,完成日期,备注
+P0,屋体,A01,assets/village/houses/shen/a4_base.png,1152×1184,青砖墙身（不含屋顶）：房型 32×32 居中、四周各留 2 格庭院；口字连廊宽 3 贴 9×9 天井居中；12 间房（正房 4 / 西厢 2 / 东厢 2 / 倒座 4）墙体、房门开向连廊；院门在东南巽位（倒座东头一间的门庑式大门），门厅内座山影壁贴西墙宽 4 格；天井整块留空（露出院内地面）,否,待开工,,,沈家宅 A4（2001 · 标准四合院 · 首富） · base
+P0,屋体,A02,assets/village/houses/shen/a4_roof.png,1152×1184,灰瓦屋顶俯视：屋脊走正房/厢房/倒座，天井那 9×9 整块透明（要让玩家看见院内）；檐口压一圈,否,待开工,,,沈家宅 A4（2001 · 标准四合院 · 首富） · roof
+P0,屋体,A03,assets/village/houses/market/a4_base.png,1344×928,工地态墙体：门厅·材料区 / 营业大厅（主体施工，墙体只起了一半）/ 工地办公室 / 工棚·工具间 / 施工通道 / 建材库；外围蓝白铁皮围挡、贴墙脚手架、砂石料堆位置留空（砂堆/脚手架另有家具图）,否,待开工,,,超市 A4（2001 · 在建工地） · base
+P0,屋体,A04,assets/village/houses/market/a4_roof.png,1344×928,只在已封顶的部分画水泥顶，未封顶区域透明；屋顶带女儿墙雏形与露出的钢筋头,否,待开工,,,超市 A4（2001 · 在建工地） · roof
+P0,屋体,A05,assets/village/houses/market/a5_base.png,1344×928,营业态墙体：临街门厅（玻璃门 + 门厅石材地面）/ 营业大厅（货架列位置留空）/ 办公室 / 工棚改的仓库；店面招牌位置留空（招牌另出图，见 E 组）,否,待开工,,,超市 A5（2026 · 营业超市） · base
+P0,屋体,A06,assets/village/houses/market/a5_roof.png,1344×928,水泥平顶 + 女儿墙 + 招牌钢架；可加太阳能热水器/水箱（2026 村里常见）,否,待开工,,,超市 A5（2026 · 营业超市） · roof
+P0,屋体,A07,assets/village/houses/zhou/a4_base.png,704×384,土坯墙五间：卧室（西）/ 账房（东）/ 起居室 / 灶间 / 卫生间；2001 年翻修过——灶间隔出一半做了白瓷砖独立卫生间（墙上贴白瓷砖是这一间最明显的新意）,否,待开工,,,周家老屋 A4（2001 · 沈氏会计家） · base
+P0,屋体,A08,assets/village/houses/zhou/a4_roof.png,704×384,灰瓦坡顶，屋脊略有歪斜（老屋感），檐口压低；翻修部分的瓦色略新,否,待开工,,,周家老屋 A4（2001 · 沈氏会计家） · roof
+P0,屋体,A09,assets/village/houses/zheng/a4_base.png,640×448,砖混二层的一层平面：主卧 / 次卧 / 堂屋（客餐一体）/ 楼梯间（有楼梯踏步）/ 卫生间 / 厨房；外墙贴小瓷砖（2001 年农村自建的「富起来」标志）——俯视看到的是墙顶面 + 窄窄一圈瓷砖立面,否,待开工,,,郑家 A4（2001 · 外来户瓷砖二层小楼） · base
+P0,屋体,A10,assets/village/houses/zheng/a4_roof.png,640×448,平顶 + 女儿墙 + 屋顶水箱/太阳能支架,否,待开工,,,郑家 A4（2001 · 外来户瓷砖二层小楼） · roof
+P0,屋体,A11,assets/village/houses/school/a5_base.png,1216×992,四间教室（教室一/二在北排，教室三/四在南排）/ 走廊 / 门厅；操场整块是土/水泥地（跑道另有专图，E 组 paodao_1x1 拼），升旗台与主席台位置留空,否,待开工,,,村小 A5（2026 · 沈明远捐建） · base
+P0,屋体,A12,assets/village/houses/school/a5_roof.png,1216×992,教学楼单面坡屋顶（或平顶）+ 红砖檐口；围墙压顶（界碑 A5 态砌在围墙里，见 B 组 stele_a5）,否,待开工,,,村小 A5（2026 · 沈明远捐建） · roof
+P0,屋体,A13,assets/village/houses/toyshop/a5_base.png,672×672,租的沈家楼一层：店面（北半，临街玻璃门面）/ 里屋 / 账房 / 仓库（南半）；最北侧 4 格是门前小院（前门开在店面北墙），院内留板车/自行车/旧幌子/摇摇马的位置（家具图会叠）,否,待开工,,,玩具店 A5（2026 · 周家曾孙租沈家的楼） · base
+P0,屋体,A14,assets/village/houses/toyshop/a5_roof.png,672×672,二楼老屋灰瓦顶（屋顶属于沈家楼，不属于店）+ 屋顶水箱/晾晒,否,待开工,,,玩具店 A5（2026 · 周家曾孙租沈家的楼） · roof
+P2,场景,B01,assets/village/scene/river_a4.png,3200×416,"河道整帧（沿用 A1–A3 的 103 点 polygon 几何，bbox 0,0–3200,416）：2001 水质偏浑、两岸土坡与零星垃圾",否,待开工,,,沿两岸必须留透明区，几何不要自己改
+P2,场景,B02,assets/village/scene/river_a5.png,3200×416,2026 河道：水泥护岸 + 简易栏杆、水面偏暗,否,待开工,,,同上
+P2,场景,B03,assets/village/scene/road_a4.png,3200×64,2001 土路直道整帧（底色 #8a7a5a）：车辙、碎石、路边杂草，横向铺满,否,待开工,,,A1–A4 的路在数据里本来就是土黄色，不要画成柏油
+P2,场景,B04,assets/village/scene/road_a5.png,3200×64,2026 柏油直道整帧（底色 #56564f）：沥青颗粒、白色边线、补丁,否,待开工,,,只有 A5 主路是柏油灰
+P2,场景,B05,assets/village/scene/road_a5_vertical.png,64×1984,2026 竖路（十字路口南北向那条，从 y=416 到 y=2400），宽 64px，与 road_a5 同款沥青,否,待开工,,,路口那一段（y 1664–1728）留透明，由环岛图盖住；接线要新增 key，见 F 组
+P2,场景,B06,assets/village/scene/field_a4.png,512×384,"2001 田块整帧（位置 1856,192）：塑料大棚、田埂、零星菜地",否,待开工,,,与 field_a2/a3 同尺寸同位置，替换整块外包矩形
+P2,场景,B07,assets/village/scene/field_a5.png,512×384,2026 田块整帧：大棚钢架、部分撂荒、田埂硬化,否,待开工,,,同上
+P2,场景,B08,assets/village/scene/ground_a4_tiles.png,32×32,2001 地面平铺瓦（主色贴近 #6f6a52，土黄偏灰）,否,待开工,,,四边无缝可平铺；平铺瓦尺寸不随世界放大
+P2,场景,B09,assets/village/scene/ground_a5_tiles.png,32×32,2026 地面平铺瓦（主色贴近 #7a7a76，水泥/碎石地）,否,待开工,,,同上
+P2,场景,B10,assets/village/scene/well_old_a4.png,64×64,老井 2001 态：一小圈沥青补丁，紧贴超市西墙外，地面略下陷,否,待开工,,,稀疏图：画布 = 占地 2×2 格，四周留透明
+P2,场景,B11,assets/village/scene/well_old_a5.png,96×96,老井 2026 态：车道正中的圆形沥青补丁，边沿被卡车压得往下陷,否,待开工,,,稀疏图：画布 = 占地 3×3 格
+P2,场景,B12,assets/village/scene/tree_a4.png,160×160,老槐 A4 态（75 岁），冠幅 5 格 = 160 px,否,待开工,,,新刻度（本次建议值）；画布就是冠幅，不要额外留白
+P2,场景,B13,assets/village/scene/tree_a5.png,192×192,老槐 A5 态（100 岁），冠幅 6 格 = 192 px，正好顶满环岛内圈,否,待开工,,,新刻度（本次建议值）
+P2,场景,B14,assets/village/scene/stele_a1.png,32×32,界碑 1926：半截石碑半埋在路边土里，字迹完整,否,待开工,,,五帧要分开出图（现在五帧共用一张旧图，见 F 组）
+P2,场景,B15,assets/village/scene/stele_a2.png,32×32,界碑 1951：同款半截碑（文案暂与 1926 重复），碑面略风化,否,待开工,,,同上
+P2,场景,B16,assets/village/scene/stele_a3.png,32×32,界碑 1976：同款半截碑，周围土被踩实,否,待开工,,,同上
+P2,场景,B17,assets/village/scene/stele_a4.png,32×32,界碑 2001：被推到工地东边重新立起来，下加水泥座,否,待开工,,,同上
+P2,场景,B18,assets/village/scene/stele_a5.png,32×32,界碑 2026：砌进小学围墙里，只露出碑面，字磨得只剩一个「周」,否,待开工,,,同上
+P2,场景,B19,assets/village/scene/tree_a2.png,96×96,老槐 A2 态（25 岁）重出：现有 tree_a2.png 是 4 格（128px），要缩到 3 格 = 96px,否,待开工,,,不新增文件，覆盖原图；缩放时保持树干粗细协调
+P2,场景,B20,assets/village/scene/tree_a3.png,128×128,老槐 A3 态（49 岁）重出：现有 tree_a3.png 是 6 格（192px），要缩到 4 格 = 128px,否,待开工,,,同上
+P2,环岛,C01,assets/village/scene/roundabout_a4.png,320×320,2001 十字路口环岛合体图：外径 10 格（320 px）= 中心岛 6 格（192 px）+ 环道 2 格（64 px）× 2 侧；土路材质（#8a7a5a）环道 + 内圈路缘石 + 中心岛绿化,否,待开工,,,底部中心锚点；圆外留透明。中心岛位置上树由 tree_a4.png 叠加，本图不要画树
+P2,环岛,C02,assets/village/scene/roundabout_a5.png,320×320,2026 版环岛：柏油环道（#56564f）+ 白色导流线 + 内圈路缘 + 中心岛绿化/矮灌木；与 A5 柏油主路衔接,否,待开工,,,同上，不要画树（树由 tree_a5.png 叠加，冠幅正好=中心岛）
+P2,环岛,C03,assets/village/scene/roundabout_island_a4.png,192×192,A4 中心岛单独一层（土壤 + 草 + 路缘石），便于和 A5 互换/复用,否,待开工,,,可选：若已合并进 roundabout_a4.png 可不出这张
+P2,环岛,C04,assets/village/scene/roundabout_island_a5.png,192×192,A5 中心岛单独一层（绿化 + 矮灌木 + 路缘）,否,待开工,,,可选：同上
+P1,家具,E001,assets/village/props/baoxiangui_1x2.png,32×96,保险柜（1×2 格，沈宅A4）,是,待开工,,,账房 · 长边贴东墙，改稿底本锁在里面
+P1,家具,E002,assets/village/props/shangmopan_2x1.png,64×64,上磨盘（2×1 格，超市A4/A5）,是,待开工,,,A4 2001 粮站拆出、暂放工地围挡角落，刻「沈氏丰源·一九五七」／A5 2026 摆进超市门厅（story §7.2⑥ 的现代物证）—— 同一件家具，跨时代不变
+P1,家具,E003,assets/village/props/wenjiangui_1x2.png,32×96,文件柜（1×2 格，超市A4/A5）,是,待开工,,,A4 2001 在工地办公室 · 土地登记表第二联 + 改过的地质报告（写「地下有暗河，不宜大开挖」）／A5 2026 搬进超市办公室 —— 同一件家具，跨时代不变
+P1,家具,E004,assets/village/props/baoxiangui_1x3.png,32×128,保险柜（1×3 格，周家A4）,是,待开工,,,卧室西南角 · 会计家的小保险柜，存着往来账的誊抄本（夹层原件 A5 才出土）
+P1,家具,E005,assets/village/props/zhaopai_2x1.png,64×64,招牌（2×1 格，玩具店A5）,是,待开工,,,🔲 「本店由沈氏物业出租」· 店面北墙西端 · A5 铁证链一环
+P1,家具,E006,assets/village/props/zhanggui_2x1.png,64×64,账柜（2×1 格，玩具店A5）,是,待开工,,,🔲 贴账房北墙 · 周有田往来账可能在此（位置待定，未定论）
+P1,家具,E007,assets/village/props/meilu_1x2.png,32×96,煤炉（1×2 格，沈宅A4）,是,待开工,,,【重画】现有 fengwomeilu_1x4.png 尺寸不对；灶间 · 1976 镇上家庭烧蜂窝煤（大件明面）
+P1,家具,E008,assets/village/props/zhangzhuo_3x1.png,96×64,账桌（3×1 格，沈宅A4）,是,待开工,,,【重画】现有 zhangzhuo_1x4.png、zhangzhuo_2x1.png 尺寸不对；账房 · 沈建国在此改地质勘察报告，写「地下有暗河，不宜大开挖」，桩位绕开老井
+P3,家具,E009,assets/village/props/huojia_1x2.png,32×96,货架（1×2 格，沈宅A4/玩具店A5）,否,待开工,,,耳房 · 货架，长边贴西墙（另 10 处）
+P3,家具,E010,assets/village/props/chaji_1x1.png,32×64,茶几（1×1 格，沈宅A4/周家A4/郑家A4）,否,待开工,,,西厢客房 · 茶几（另 4 处）
+P3,家具,E011,assets/village/props/taishiyi_1x1.png,32×64,太师椅（1×1 格，沈宅A4）,否,待开工,,,中堂 · 主客座（另 1 处）
+P3,家具,E012,assets/village/props/bianqi_1x1.png,32×64,便器（1×1 格，沈宅A4/周家A4）,否,待开工,,,净房 · 水冲蹲便（1976 干部楼带抽水设备）（另 1 处）
+P3,家具,E013,assets/village/props/suanpan_1x1.png,32×64,算盘（1×1 格，沈宅A4/玩具店A5）,否,待开工,,,账房 · 算盘（另 1 处）
+P3,家具,E014,assets/village/props/weichaifenghuojia_1x4.png,32×160,未拆封货架（1×4 格，超市A4/A5）,否,待开工,,,大厅 · 货架裹着塑料膜，尚未上架（另 1 处）
+P3,家具,E015,assets/village/props/weichaifenghuojia_1x3.png,32×128,未拆封货架（1×3 格，超市A4/A5）,否,待开工,,,大厅 · 未拆封（第二排）（另 1 处）
+P3,家具,E016,assets/village/props/huoxiang_2x1.png,64×64,货箱（2×1 格，超市A4/A5/玩具店A5）,否,待开工,,,仓库 · 未开封货箱（另 2 处）
+P3,家具,E017,assets/village/props/shuitong_1x1.png,32×64,水桶（1×1 格，超市A4/A5/玩具店A5）,否,待开工,,,工棚 · 施工用水桶（另 1 处）
+P3,家具,E018,assets/village/props/bingxiang_1x1.png,32×64,冰箱（1×1 格，周家A4/郑家A4）,否,待开工,,,起居室 · 新添的冰箱（另 1 处）
+P3,家具,E019,assets/village/props/shuzhuangtai_1x1.png,32×64,梳妆台（1×1 格，周家A4/郑家A4）,否,待开工,,,卧室 · 梳妆台（另 1 处）
+P3,家具,E020,assets/village/props/shafa_2x1.png,64×64,沙发（2×1 格，周家A4/郑家A4）,否,待开工,,,起居室 · 新添的布沙发，翻向后靠临街一侧（另 1 处）
+P3,家具,E021,assets/village/props/xiyiji_1x1.png,32×64,洗衣机（1×1 格，周家A4/郑家A4）,否,待开工,,,院子角落 · 2001 年的新物件（另 1 处）
+P3,家具,E022,assets/village/props/dianshigui_1x1.png,32×64,电视柜（1×1 格，周家A4/郑家A4）,否,待开工,,,起居室 · 电视柜（另 1 处）
+P3,家具,E023,assets/village/props/huojia_3x1.png,96×64,货架（3×1 格，玩具店A5）,否,待开工,,,老货架 · 架上摆着旧货：陀螺、竹蜻蜓、弹弓（另 3 处）
+P3,家具,E024,assets/village/props/paodao_1x1.png,32×64,跑道（1×1 格，小学A5）,否,待开工,,,像素格逐格拼出的体育场形跑道（两段半圆＋中间直段）
+P3,家具,E025,assets/village/props/kezhuo_2x1.png,64×64,课桌（2×1 格，小学A5）,否,待开工,,,教室一（另 3 处）
+P3,家具,E026,assets/village/props/jiangyikuang_1x1.png,32×64,讲义筐（1×1 格，小学A5）,否,待开工,,,讲义筐
+P3,家具,E027,assets/village/props/jiangtai_4x1.png,128×64,讲台（4×1 格，小学A5）,否,待开工,,,讲台正对黑板
+P3,家具,E028,assets/village/props/kechengbiao_2x1.png,64×64,课程表（2×1 格，小学A5）,否,待开工,,,🔲 钉在教室北墙的课程表（另 2 处）
+P3,家具,E029,assets/village/props/heiban_4x1.png,128×64,黑板（4×1 格，小学A5）,否,待开工,,,🔲 钉在教室北墙（另 2 处）
+P4,家具,E030,assets/village/props/danchuang_2x1.png,64×64,单床（2×1 格，沈宅A4）,否,待开工,,,西厢客房 · 单人床，长边贴北墙（另 2 处）
+P4,家具,E031,assets/village/props/yuanzhuo_2x2.png,64×96,圆桌（2×2 格，沈宅A4）,否,待开工,,,长辈房 · 起坐圆桌
+P4,家具,E032,assets/village/props/dachuang_3x3.png,96×128,大床（3×3 格，沈宅A4）,否,待开工,,,长辈房 · 3×3 富家床，床头靠北墙
+P4,家具,E033,assets/village/props/dagui_1x2.png,32×96,大柜（1×2 格，沈宅A4）,否,待开工,,,耳房 · 储物大柜，长边贴东墙
+P4,家具,E034,assets/village/props/zhuangtai_2x1.png,64×64,妆台（2×1 格，沈宅A4）,否,待开工,,,长辈房 · 梳妆台
+P4,家具,E035,assets/village/props/shoutai_1x1.png,32×64,手台（1×1 格，沈宅A4）,否,待开工,,,净房 · 洗手台
+P4,家具,E036,assets/village/props/shoupen_1x1.png,32×64,手盆（1×1 格，沈宅A4）,否,待开工,,,净房 · 洗手盆
+P4,家具,E037,assets/village/props/dayinji_1x1.png,32×64,打印机（1×1 格，沈宅A4）,否,待开工,,,账房 · 打印改稿
+P4,家具,E038,assets/village/props/wenjiangui_2x1.png,64×64,文件柜（2×1 格，沈宅A4）,否,待开工,,,账房 · 卷宗文件柜，长边贴南墙
+P4,家具,E039,assets/village/props/tiaoji_2x1.png,64×64,条几（2×1 格，沈宅A4）,否,待开工,,,门厅 · 迎客条几，长边贴北墙
+P4,家具,E040,assets/village/props/zhuo_2x1.png,64×64,桌（2×1 格，沈宅A4）,否,待开工,,,门房 · 门房桌，长边贴北墙
+P4,家具,E041,assets/village/props/diannao_1x1.png,32×64,电脑（1×1 格，沈宅A4）,否,待开工,,,账房 · 2001 台式电脑
+P4,家具,E042,assets/village/props/shiliu_1x2.png,32×96,石榴（1×2 格，沈宅A4）,否,待开工,,,天井 · 庭树石榴
+P4,家具,E043,assets/village/props/yijia_1x1.png,32×64,衣架（1×1 格，沈宅A4）,否,待开工,,,门厅 · 衣帽架
+P4,家具,E044,assets/village/props/xiejia_1x1.png,32×64,鞋架（1×1 格，沈宅A4）,否,待开工,,,门厅 · 鞋架，进门换鞋（东南院门穿堂）
+P4,家具,E045,assets/village/props/mugongtai_2x1.png,64×64,木工台（2×1 格，超市A4/A5）,否,待开工,,,大厅 · 现支木工台
+P4,家具,E046,assets/village/props/gongjuxiang_2x1.png,64×64,工具箱（2×1 格，超市A4/A5）,否,待开工,,,门厅 · 木工工具箱（另 1 处）
+P4,家具,E047,assets/village/props/shigongweidang_1x1.png,32×64,施工围挡（1×1 格，超市A4/A5）,否,待开工,,,南门口 · 施工围挡（院门西侧）（另 1 处）
+P4,家具,E048,assets/village/props/huijiangcao_2x1.png,64×64,灰浆槽（2×1 格，超市A4/A5）,否,待开工,,,大厅 · 灰浆槽（另 1 处）
+P4,家具,E049,assets/village/props/jiaoshoujia_1x6.png,32×224,脚手架（1×6 格，超市A4/A5）,否,待开工,,,门厅 · 贴墙钢管脚手架（另 1 处）
+P4,家具,E050,assets/village/props/baoxianxiang_1x1.png,32×64,保险箱（1×1 格，超市A4/A5）,否,待开工,,,办公室 · 工地保险箱
+P4,家具,E051,assets/village/props/bangongzhuo_3x1.png,96×64,办公桌（3×1 格，超市A4/A5）,否,待开工,,,办公室 · 工地办公桌
+P4,家具,E052,assets/village/props/tuzhizhuo_4x1.png,128×64,图纸桌（4×1 格，超市A4/A5）,否,待开工,,,办公室 · 摊开的施工图
+P4,家具,E053,assets/village/props/anquanmaojia_1x2.png,32×96,安全帽架（1×2 格，超市A4/A5）,否,待开工,,,门厅 · 安全帽
+P4,家具,E054,assets/village/props/gongdiyi_1x1.png,32×64,工地椅（1×1 格，超市A4/A5）,否,待开工,,,办公室 · 折椅
+P4,家具,E055,assets/village/props/gongpengpu_3x1.png,96×64,工棚铺（3×1 格，超市A4/A5）,否,待开工,,,工棚 · 民工临时铺
+P4,家具,E056,assets/village/props/jiancaidui_3x2.png,96×96,建材堆（3×2 格，超市A4/A5）,否,待开工,,,工棚 · 零碎建材
+P4,家具,E057,assets/village/props/shoutuiche_2x1.png,64×64,手推车（2×1 格，超市A4/A5）,否,待开工,,,通道 · 运砖手推车
+P4,家具,E058,assets/village/props/zheyi_1x1.png,32×64,折椅（1×1 格，超市A4/A5）,否,待开工,,,办公室 · 折椅
+P4,家具,E059,assets/village/props/shigonggonggaolan_3x1.png,96×64,施工公告栏（3×1 格，超市A4/A5）,否,待开工,,,门厅 · 施工公告与进度表
+P4,家具,E060,assets/village/props/muliaodui_4x1.png,128×64,木料堆（4×1 格，超市A4/A5）,否,待开工,,,门厅 · 木料码放
+P4,家具,E061,assets/village/props/shuiniku_3x2.png,96×96,水泥库（3×2 格，超市A4/A5）,否,待开工,,,仓库 · 袋装水泥堆
+P4,家具,E062,assets/village/props/shuinidaidui_3x2.png,96×96,水泥袋堆（3×2 格，超市A4/A5）,否,待开工,,,门厅 · 水泥袋码放
+P4,家具,E063,assets/village/props/cizhuandui_2x1.png,64×64,瓷砖堆（2×1 格，超市A4/A5）,否,待开工,,,仓库 · 待贴瓷砖
+P4,家具,E064,assets/village/props/dianzuantai_1x2.png,32×96,电钻台（1×2 格，超市A4/A5）,否,待开工,,,工棚 · 电钻台
+P4,家具,E065,assets/village/props/shiliaodui_3x2.png,96×96,石料堆（3×2 格，超市A4/A5）,否,待开工,,,门厅 · 碎石料堆
+P4,家具,E066,assets/village/props/shadui_3x2.png,96×96,砂堆（3×2 格，超市A4/A5）,否,待开工,,,门厅 · 黄砂堆
+P4,家具,E067,assets/village/props/shadui_3x1.png,96×64,砂堆（3×1 格，超市A4/A5）,否,待开工,,,仓库 · 黄砂
+P4,家具,E068,assets/village/props/shajiangjiaobanji_3x2.png,96×96,砂浆搅拌机（3×2 格，超市A4/A5）,否,待开工,,,门厅 · 小型搅拌机
+P4,家具,E069,assets/village/props/shajiangjiaobanji_2x1.png,64×64,砂浆搅拌机（2×1 格，超市A4/A5）,否,待开工,,,大厅 · 施工机械
+P4,家具,E070,assets/village/props/zhuanduo_2x1.png,64×64,砖垛（2×1 格，超市A4/A5）,否,待开工,,,仓库 · 红砖垛
+P4,家具,E071,assets/village/props/jiaoshoujia_1x5.png,32×192,脚手架（1×5 格，超市A4/A5）,否,待开工,,,通道 · 贴墙钢管脚手架
+P4,家具,E072,assets/village/props/jingshipai_1x1.png,32×64,警示牌（1×1 格，超市A4/A5）,否,待开工,,,门厅 · 施工警示牌
+P4,家具,E073,assets/village/props/yunliaodou_2x1.png,64×64,运料斗（2×1 格，超市A4/A5）,否,待开工,,,通道 · 斗车运料
+P4,家具,E074,assets/village/props/gangjindui_4x1.png,128×64,钢筋堆（4×1 格，超市A4/A5）,否,待开工,,,门厅 · 捆扎钢筋
+P4,家具,E075,assets/village/props/huikeyi_1x1.png,32×64,会客椅（1×1 格，周家A4）,否,待开工,,,账房 · 来谈财务的客人坐这儿，不必进内屋
+P4,家具,E076,assets/village/props/xinbaoxiang_1x1.png,32×64,信报箱（1×1 格，周家A4）,否,待开工,,,院里 · 订了报纸，沈氏会计要看账目公告
+P4,家具,E077,assets/village/props/dayigui_1x2.png,32×96,大衣柜（1×2 格，周家A4）,否,待开工,,,卧室 · 新添的大衣柜，贴西墙长边沿墙摆放
+P4,家具,E078,assets/village/props/chuangtougui_1x1.png,32×64,床头柜（1×1 格，周家A4）,否,待开工,,,卧室 · 床头柜
+P4,家具,E079,assets/village/props/chuangtoudeng_1x1.png,32×64,床头灯（1×1 格，周家A4）,否,待开工,,,卧室 · 床头灯
+P4,家具,E080,assets/village/props/caidian_1x1.png,32×64,彩电（1×1 格，周家A4）,否,待开工,,,2001 年的新物件 · 起居室彩电，翻向后与沙发相对
+P4,家具,E081,assets/village/props/wenjiangui_1x1.png,32×64,文件柜（1×1 格，周家A4）,否,待开工,,,账房 · 保险柜挪进卧室后，账册再装一只文件柜
+P4,家具,E082,assets/village/props/wenjianxiang_1x1.png,32×64,文件箱（1×1 格，周家A4）,否,待开工,,,院子 · 装订好的旧账册，堆在文件箱里没扔
+P4,家具,E083,assets/village/props/linyu_1x3.png,32×128,淋浴（1×3 格，周家A4）,否,待开工,,,独立卫生间 · 淋浴喷头，不再是院子里的旱厕
+P4,家具,E084,assets/village/props/meiqizao_2x1.png,64×64,煤气灶（2×1 格，周家A4）,否,待开工,,,土坯灶台拆了 · 换煤气灶
+P4,家具,E085,assets/village/props/meiqiudui_1x3.png,32×128,煤球堆（1×3 格，周家A4）,否,待开工,,,院子角落 · 蜂窝煤，2001 年还在烧
+P4,家具,E086,assets/village/props/dianhua_1x1.png,32×64,电话（1×1 格，周家A4）,否,待开工,,,起居室 · 沈氏会计的电话，家里也装了一部
+P4,家具,E087,assets/village/props/suanpangui_1x1.png,32×64,算盘柜（1×1 格，周家A4）,否,待开工,,,账房 · 算盘与账册收在柜里，谈账不必再进卧室
+P4,家具,E088,assets/village/props/zixingche_2x1.png,64×64,自行车（2×1 格，周家A4）,否,待开工,,,院里停放 · 周家上下班骑的车
+P4,家具,E089,assets/village/props/fanzhuo_2x1.png,64×64,饭桌（2×1 格，周家A4）,否,待开工,,,起居室 · 一家人吃饭的桌子，退到南侧内屋
+P4,家具,E090,assets/village/props/chuwu_1x1.png,32×64,储物（1×1 格，郑家A4）,否,待开工,,,"楼梯间杂物 · 让开 (11,2) 门口"
+P4,家具,E091,assets/village/props/zuobianqi_1x1.png,32×64,坐便器（1×1 格，郑家A4）,否,待开工,,,水冲坐便 · 新式卫生间
+P4,家具,E092,assets/village/props/dachuang_2x2.png,64×96,大床（2×2 格，郑家A4）,否,待开工,,,2001 新买的席梦思双人床
+P4,家具,E093,assets/village/props/caidiangui_1x1.png,32×64,彩电柜（1×1 格，郑家A4）,否,待开工,,,"客厅彩电 · 让开 (9,5) 卫生间门口"
+P4,家具,E094,assets/village/props/motuo_2x1.png,64×64,摩托（2×1 格，郑家A4）,否,待开工,,,院里停的摩托 · 先富起来的人家
+P4,家具,E095,assets/village/props/liangyijia_1x1.png,32×64,晾衣架（1×1 格，郑家A4）,否,待开工,,,院子晾晒
+P4,家具,E096,assets/village/props/louti_2x3.png,64×128,楼梯（2×3 格，郑家A4）,否,待开工,,,通往二层的楼梯 · 旧版照抄平房格局时完全缺失
+P4,家具,E097,assets/village/props/chugui_1x2.png,32×96,橱柜（1×2 格，郑家A4）,否,待开工,,,整体橱柜 · 现代厨房
+P4,家具,E098,assets/village/props/linyu_1x1.png,32×64,淋浴（1×1 格，郑家A4）,否,待开工,,,燃气热水器 · 不用再烧水
+P4,家具,E099,assets/village/props/meiqizao_1x1.png,32×64,煤气灶（1×1 格，郑家A4）,否,待开工,,,"液化气灶台 · 让开 (11,8) 门口"
+P4,家具,E100,assets/village/props/kongtiao_1x1.png,32×64,空调（1×1 格，郑家A4）,否,待开工,,,"立式柜机·美术按贴墙 1×2 格出图（占地(8,8)，上沿(8,9)另占1格）·不压墙门"
+P4,家具,E101,assets/village/props/huatan_2x1.png,64×64,花坛（2×1 格，郑家A4）,否,待开工,,,院角花坛 · 不知道脚下埋着什么
+P4,家具,E102,assets/village/props/chashuigui_1x1.png,32×64,茶水柜（1×1 格，郑家A4）,否,待开工,,,堂屋待客
+P4,家具,E103,assets/village/props/xiegui_1x1.png,32×64,鞋柜（1×1 格，郑家A4）,否,待开工,,,"院门进门处 · 让开 (7,9) 入院通道"
+P4,家具,E104,assets/village/props/fanzhuo_2x2.png,64×96,饭桌（2×2 格，郑家A4）,否,待开工,,,一家人吃饭的圆桌
+P4,家具,E105,assets/village/props/saozhou_1x1.png,32×64,扫帚（1×1 格，玩具店A5）,否,待开工,,,门口靠墙的扫帚（另 1 处）
+P4,家具,E106,assets/village/props/yaoyaoma_1x1.png,32×64,摇摇马（1×1 格，玩具店A5）,否,待开工,,,门口 · 摇摇马，靠南墙摆门前给孩子试骑
+P4,家具,E107,assets/village/props/ertongzixingche_2x1.png,64×64,儿童自行车（2×1 格，玩具店A5）,否,待开工,,,落地陈列的大件 · 儿童自行车
+P4,家具,E108,assets/village/props/qitalajitong_1x1.png,32×64,其他垃圾桶（1×1 格，玩具店A5）,否,待开工,,,垃圾分类 · 其他垃圾（灰桶），靠南墙一排
+P4,家具,E109,assets/village/props/bangongzhuo_2x1.png,64×64,办公桌（2×1 格，玩具店A5）,否,待开工,,,账房办公 · 桌上算盘与流水
+P4,家具,E110,assets/village/props/chuyulajitong_1x1.png,32×64,厨余垃圾桶（1×1 格，玩具店A5）,否,待开工,,,垃圾分类 · 厨余垃圾（绿桶），靠南墙一排
+P4,家具,E111,assets/village/props/kehuishoulajitong_1x1.png,32×64,可回收垃圾桶（1×1 格，玩具店A5）,否,待开工,,,垃圾分类 · 可回收物（蓝桶），靠南墙一排
+P4,家具,E112,assets/village/props/xiaobandeng_1x1.png,32×64,小板凳（1×1 格，玩具店A5）,否,待开工,,,门口的小板凳
+P4,家具,E113,assets/village/props/feizhilou_1x1.png,32×64,废纸篓（1×1 格，玩具店A5）,否,待开工,,,账房角落
+P4,家具,E114,assets/village/props/chaifengyangpin_2x1.png,64×64,拆封样品（2×1 格，玩具店A5）,否,待开工,,,拆了包装的样品箱
+P4,家具,E115,assets/village/props/shouyintai_3x1.png,96×64,收银台（3×1 格，玩具店A5）,否,待开工,,,前门旁 · 算盘与找零抽屉
+P4,家具,E116,assets/village/props/jiutaideng_1x1.png,32×64,旧台灯（1×1 格，玩具店A5）,否,待开工,,,桌上的旧台灯
+P4,家具,E117,assets/village/props/jiuzhaopaiban_2x1.png,64×64,旧招牌板（2×1 格，玩具店A5）,否,待开工,,,三代没换过的旧门板 · 靠在墙边
+P4,家具,E118,assets/village/props/jiuzhaopaijia_2x1.png,64×64,旧招牌架（2×1 格，玩具店A5）,否,待开工,,,门口 · 挂着的旧幌子，三代没换过
+P4,家具,E119,assets/village/props/jiuyigui_1x2.png,32×96,旧衣柜（1×2 格，玩具店A5）,否,待开工,,,贴东墙
+P4,家具,E120,assets/village/props/nuanshuiping_1x1.png,32×64,暖水瓶（1×1 格，玩具店A5）,否,待开工,,,账房角落
+P4,家具,E121,assets/village/props/youhailajitong_1x1.png,32×64,有害垃圾桶（1×1 格，玩具店A5）,否,待开工,,,垃圾分类 · 有害垃圾（红桶），靠南墙一排
+P4,家具,E122,assets/village/props/banche_2x1.png,64×64,板车（2×1 格，玩具店A5）,否,待开工,,,门口 · 卸货用的板车，靠南墙放
+P4,家具,E123,assets/village/props/danganggui_1x1.png,32×64,档案柜（1×1 格，玩具店A5）,否,待开工,,,贴西墙 · 旧账本
+P4,家具,E124,assets/village/props/meiyoudeng_1x1.png,32×64,煤油灯（1×1 格，玩具店A5）,否,待开工,,,看店人自己留的灯
+P4,家具,E125,assets/village/props/tongchezhanshi_2x1.png,64×64,童车展示（2×1 格，玩具店A5）,否,待开工,,,落地陈列的大件 · 折叠童车，摆在店里给人看
+P4,家具,E126,assets/village/props/suanpanhe_1x1.png,32×64,算盘盒（1×1 格，玩具店A5）,否,待开工,,,装旧算盘的盒子
+P4,家具,E127,assets/village/props/zhixiang_1x1.png,32×64,纸箱（1×1 格，玩具店A5）,否,待开工,,,角落的纸箱
+P4,家具,E128,assets/village/props/zhixiangdui_2x1.png,64×64,纸箱堆（2×1 格，玩具店A5）,否,待开工,,,纸箱堆
+P4,家具,E129,assets/village/props/laohuogui_3x1.png,96×64,老货柜（3×1 格，玩具店A5）,否,待开工,,,玻璃柜台 · 架上摆着镇店的旧货：拨浪鼓、铁皮青蛙、纸风车、木陀螺
+P4,家具,E130,assets/village/props/lianpenjia_1x1.png,32×64,脸盆架（1×1 格，玩具店A5）,否,待开工,,,里屋西南角
+P4,家具,E131,assets/village/props/beiru_2x1.png,64×64,被褥（2×1 格，玩具店A5）,否,待开工,,,叠在床尾的旧被褥
+P4,家具,E132,assets/village/props/zhangbendui_1x1.png,32×64,账本堆（1×1 格，玩具店A5）,否,待开工,,,一摞流水账
+P4,家具,E133,assets/village/props/huojia_2x1.png,64×64,货架（2×1 格，玩具店A5）,否,待开工,,,货架列 · 架上摆着新货：遥控车配件、气球
+P4,家具,E134,assets/village/props/huoxiangdui_2x1.png,64×64,货箱堆（2×1 格，玩具店A5）,否,待开工,,,门口 · 等着搬进仓库的箱子
+P4,家具,E135,assets/village/props/tiepigui_1x2.png,32×96,铁皮柜（1×2 格，玩具店A5）,否,待开工,,,贴西墙 · 上锁的柜子
+P4,家具,E136,assets/village/props/mazha_1x1.png,32×64,马扎（1×1 格，玩具店A5）,否,待开工,,,小桌旁的马扎
+P4,家具,E137,assets/village/props/shubaojia_1x2.png,32×96,书包架（1×2 格，小学A5）,否,待开工,,,挂书包的地方
+P4,家具,E138,assets/village/props/tushujiao_1x2.png,32×96,图书角（1×2 格，小学A5）,否,待开工,,,教室东墙的书架
+P4,家具,E139,assets/village/props/hualan_1x1.png,32×64,花篮（1×1 格，小学A5）,否,待开工,,,剪彩摆的花篮
+P4,家具,E140,assets/village/props/rongyubang_1x3.png,32×128,荣誉榜（1×3 格，小学A5）,否,待开工,,,🔲 钉在走廊西墙（另 1 处）
+P4,家具,E141,assets/village/props/zhuxitai_8x2.png,256×96,主席台（8×2 格，小学A5）,否,待开工,,,跑道北侧边上的高台 · 沈明远在这儿剪彩
+P4,家具,E142,assets/village/props/shubaojia_1x1.png,32×64,书包架（1×1 格，小学A5）,否,待开工,,,挂书包的地方
+P4,家具,E143,assets/village/props/sanjia_1x1.png,32×64,伞架（1×1 格，小学A5）,否,待开工,,,门边的伞架
+P4,家具,E144,assets/village/props/gonggaoban_1x2.png,32×96,公告板（1×2 格，小学A5）,否,待开工,,,🔲 钉在门厅西墙
+P4,家具,E145,assets/village/props/jiancaitai_2x1.png,64×64,剪彩台（2×1 格，小学A5）,否,待开工,,,剪彩用的条桌，紧挨主席台东端
+P4,家具,E146,assets/village/props/shengqitai_2x2.png,64×96,升旗台（2×2 格，小学A5）,否,待开工,,,跑道西北边 · 每周一升旗
+P4,家具,E147,assets/village/props/tushujiao_2x2.png,64×96,图书角（2×2 格，小学A5）,否,待开工,,,教室东墙的书架
+P4,家具,E148,assets/village/props/xuanchuanlan_1x3.png,32×128,宣传栏（1×3 格，小学A5）,否,待开工,,,🔲 钉在走廊东墙 · 贴通知
+P4,家具,E149,assets/village/props/xuanchuanlan_3x1.png,96×64,宣传栏（3×1 格，小学A5）,否,待开工,,,🔲 钉在门厅与走廊之间的墙上 · 贴通知
+P4,家具,E150,assets/village/props/saba_1x1.png,32×64,扫把（1×1 格，小学A5）,否,待开工,,,走廊靠墙
+P4,家具,E151,assets/village/props/tuoba_1x1.png,32×64,拖把（1×1 格，小学A5）,否,待开工,,,走廊东南角
+P4,家具,E152,assets/village/props/zhishipai_1x1.png,32×64,指示牌（1×1 格，小学A5）,否,待开工,,,立着的指路牌 · 操场往南
+P4,家具,E153,assets/village/props/juanjianpaibian_4x1.png,128×64,捐建牌匾（4×1 格，小学A5）,否,待开工,,,🔲 「沈氏捐建」牌匾钉在门厅外墙 · 他什么都不知道
+P4,家具,E154,assets/village/props/juankuanxiang_1x1.png,32×64,捐款箱（1×1 格，小学A5）,否,待开工,,,村民捐建的心意箱
+P4,家具,E155,assets/village/props/qigan_1x1.png,32×64,旗杆（1×1 格，小学A5）,否,待开工,,,升旗台边上的旗杆（美术画成竖杆）
+P4,家具,E156,assets/village/props/jiuguazhong_1x1.png,32×64,旧挂钟（1×1 格，小学A5）,否,待开工,,,🔲 钉在门厅西墙
+P4,家具,E157,assets/village/props/biaoyupai_6x1.png,192×64,标语牌（6×1 格，小学A5）,否,待开工,,,🔲 「好好学习 天天向上」钉在操场南围墙
+P4,家具,E158,assets/village/props/qiandaochu_2x1.png,64×64,签到处（2×1 格，小学A5）,否,待开工,,,来宾签到的小桌
+P4,家具,E159,assets/village/props/hongchouhengfu_8x1.png,256×64,红绸横幅（8×1 格，小学A5）,否,待开工,,,🔲 红绸挂在主席台背后的墙上 · 题「沈氏捐建 村小落成」
+P4,家具,E160,assets/village/props/yinshuiji_1x1.png,32×64,饮水机（1×1 格，小学A5）,否,待开工,,,门厅角落
+P4,新增元素,D01,assets/village/scene/hill_a1.png,256×192,山丘单体（1926）：土坡 + 稀疏灌木,否,待开工,,,占地 8×6 格；可水平镜像复用；每帧 3~4 座（估算）
+P4,新增元素,D02,assets/village/scene/hill_a2.png,256×192,山丘单体（1951）：坡上有开垦痕迹,否,待开工,,,同上
+P4,新增元素,D03,assets/village/scene/hill_a3.png,256×192,山丘单体（1976）：坡上小径、坟包,否,待开工,,,同上
+P4,新增元素,D04,assets/village/scene/ridge_a1.png,512×128,岭线条带（1926）：远山剪影，贴在画面最上缘做越界遮挡,否,待开工,,,16×4 格；水平可平铺
+P4,新增元素,D05,assets/village/scene/ridge_a2.png,512×128,岭线条带（1951）,否,待开工,,,同上
+P4,新增元素,D06,assets/village/scene/ridge_a3.png,512×128,岭线条带（1976）,否,待开工,,,同上
+P4,新增元素,D07,assets/village/scene/signpost_road_a1.png,32×96,指路牌（1926）：木柱 + 指向牌,否,待开工,,,1×2 格；底部中心锚点
+P4,新增元素,D08,assets/village/scene/signpost_road_a2.png,32×96,指路牌（1951）,否,待开工,,,同上
+P4,新增元素,D09,assets/village/scene/signpost_road_a3.png,32×96,指路牌（1976）,否,待开工,,,同上
+P4,新增元素,D10,assets/village/scene/signpost_name_a1.png,64×64,地名牌（1926）：横牌，牌面留白不写字,否,待开工,,,2×1 格
+P4,新增元素,D11,assets/village/scene/signpost_name_a2.png,64×64,地名牌（1951）,否,待开工,,,同上
+P4,新增元素,D12,assets/village/scene/signpost_name_a3.png,64×64,地名牌（1976）,否,待开工,,,同上
+P4,新增元素,D13,assets/village/scene/signpost_warn_a1.png,32×96,警示牌（1926）：方牌 + 木柱,否,待开工,,,1×2 格
+P4,新增元素,D14,assets/village/scene/signpost_warn_a2.png,32×96,警示牌（1951）,否,待开工,,,同上
+P4,新增元素,D15,assets/village/scene/signpost_warn_a3.png,32×96,警示牌（1976）：可加「注意安全」,否,待开工,,,同上
+P4,新增元素,D16,assets/village/scene/field_big_a1.png,256×192,大地块（1926）：补齐 A1 只有细条田造成的空旷,否,待开工,,,8×6 格；每帧 2 块（估算）
+P4,新增元素,D17,assets/village/scene/field_big_a2.png,256×192,大地块（1951）：替换整块色块田中的一片,否,待开工,,,同上
+P4,新增元素,D18,assets/village/scene/field_big_a3.png,256×192,大地块（1976）,否,待开工,,,同上
+P4,新增元素,D19,assets/village/scene/field_dike_a2.png,256×64,田埂横条（1951）：土埂 + 杂草，两端可对接,否,待开工,,,8×1 格；每帧 3 条（估算）
+P4,新增元素,D20,assets/village/scene/field_dike_a3.png,256×64,田埂横条（1976）,否,待开工,,,同上
+P4,新增元素,D21,assets/village/scene/ditch_tiles_a1.png,32×32,水渠平铺瓦（1926）：土渠 + 浅水,否,待开工,,,四边无缝；6~8 块拼一条渠
+P4,新增元素,D22,assets/village/scene/ditch_tiles_a2.png,32×32,水渠平铺瓦（1951）,否,待开工,,,同上
+P4,新增元素,D23,assets/village/scene/ditch_tiles_a3.png,32×32,水渠平铺瓦（1976）：水泥衬砌,否,待开工,,,同上
+P4,新增元素,D24,assets/village/scene/scarecrow_a1.png,32×96,稻草人（1926）：草帽 + 破布衣,否,待开工,,,1×2 格；每帧 1~2 个（估算）
+P4,新增元素,D25,assets/village/scene/scarecrow_a2.png,32×96,稻草人（1951）,否,待开工,,,同上
+P4,新增元素,D26,assets/village/scene/scarecrow_a3.png,32×96,稻草人（1976）,否,待开工,,,同上
