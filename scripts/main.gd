@@ -97,9 +97,6 @@ func _process(delta: float) -> void:
 	if tl == null:
 		return
 
-	if Input.is_action_just_pressed("shift_axis"):
-		tl.toggle_axis()
-
 	# F11 全屏：轮询 + 边沿检测（事件版收不到，见 display_manager.gd 注释）
 	# 多路触发，任一可用即生效：
 	#   1. project.godot 的 toggle_fullscreen action（物理键 F11）
@@ -128,9 +125,6 @@ func _process(delta: float) -> void:
 			print("[全屏] 切换完成 → mode=", after, " size=", DisplayServer.window_get_size())
 	_f11_down = fs_now
 
-	if Input.is_action_just_pressed("inspect"):
-		_do_inspect()
-
 	# 证物档案：I 键开关（边沿检测 + 轮询，和 F11 同一套路子）。
 	# 输入映射 archive 动作（project.godot，物理键 I）为主，裸键 KEY_I 兜底
 	# （改了 project.godot 没重启编辑器时 InputMap 可能还是旧的）。
@@ -143,12 +137,23 @@ func _process(delta: float) -> void:
 		archive.toggle()
 	_archive_i_down = archive_now
 
-	# 档案开着的时候，游戏逻辑全停（不响应行走 / 时间轴推帧）。
+	# 档案开着的时候，游戏逻辑全停（不响应行走 / 时间轴推帧 / SHIFT 切时代 / E 检视）。
+	# ⚠️ SHIFT 与 E 的处理必须放在这个判断**之后** —— 开着档案时世界是停的，
+	#    否则玩家能一边翻档案一边切时代、顺手把新年代证物也收了。
 	if archive != null and archive.is_open():
 		player.walking = false
 		_set_hud_hidden(true)
 		return
 	_set_hud_hidden(false)
+
+	# ↓↓↓ 开档时不响应的两个动作放在这里 ↓↓↓
+	# SHIFT 切时代：档案开着就跳过（档案是跨时代卷宗，翻它不该动世界）。
+	if Input.is_action_just_pressed("shift_axis"):
+		tl.toggle_axis()
+
+	# E 检视：档案开着就跳过（免得关档瞬间误收一件）。
+	if Input.is_action_just_pressed("inspect"):
+		_do_inspect()
 
 	if tl.axis == Timeline.Axis.SPACE:
 		_process_space(delta)
@@ -245,7 +250,12 @@ func _do_inspect() -> void:
 
 
 ## 检视命中 → 证物入档（逆转裁判式收集）。
-## 原来只弹文字；这里追加一次「收集」：首次收集写档案并给提示，重复只弹字不重复入档。
+## 模型（v2）：一件物件 = 一张卡，卡内按年代追加观察记录。
+## 归一键（任务书 §2.1）：
+##   规则 A 家具 = "<房屋族>::<家具名>"（同一栋房子换 id 仍是同一件）
+##   规则 B 地标 = title 第一个「·」之前的主体名（地标状态变了还是同一件）
+##   规则 C 家具带 "族::" 前缀、地标不带 ⇒ 两个命名空间互不混
+##             （mill::老井 永远不会跟 老井 合成一张卡，这是有意保留）。
 func _collect_evidence(h: Dictionary, f: FrameData) -> void:
 	var title := String(h.get("title", ""))
 	if title == "":
@@ -255,18 +265,21 @@ func _collect_evidence(h: Dictionary, f: FrameData) -> void:
 	var source := ""
 
 	if house_id != "":
-		# 房屋家具：唯一键 = house_id::家具名；来源 = 房子名 · 年份
-		key = "%s::%s" % [house_id, String(h.get("furniture", title))]
+		# 房屋家具：归一键 = 族::家具名；来源 = 房子名 · 年份
+		key = EvidenceStore.furniture_key(house_id, String(h.get("furniture", title)))
 		source = "%s · %d" % [_short_house_name(String(h.get("house_name", ""))), f.year]
 	else:
-		# 世界地标：唯一键 = title（跨时代同名算同一件）；来源 = 年份 · 村中
-		key = title
+		# 世界地标：归一键 = 「·」之前的主体名；来源 = 年份 · 村中
+		key = EvidenceStore.landmark_key(title)
 		source = "%d · 村中" % f.year
 
-	if EvidenceStore.try_collect(key, title, source, String(h.get("text", ""))):
-		EvidenceStore.save()
-		if archive != null:
-			archive.flash_collected(title)
+	var res := EvidenceStore.try_collect(key, title, source, String(h.get("text", "")), f.year)
+	if res == EvidenceStore.RESULT_DUPLICATE:
+		# 同年代已经记过了 → 什么都不做（去重）。
+		return
+	EvidenceStore.save()
+	if archive != null:
+		archive.flash_collected(title, res == EvidenceStore.RESULT_NEW_CARD)
 
 
 ## 房子全名形如「磨坊 · A1 1926（旧砖、无暗龛）· 加害方根」，

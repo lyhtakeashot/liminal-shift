@@ -8,13 +8,17 @@ extends Control
 ## 布局单位跟 hud.gd 一致：下面数字都是「640×360 时代的设计值」，写的时候乘 UI。
 ## UI = 2.0（视口 1280×720）。
 ##
+## —— 模型（v2）：一件物件 = 一张卡，卡内按年代追加观察记录 ——
+##   列表页：一行 = 一张卡（卡片名 + 右侧年份跨度 + 首条观察摘要）
+##   详情页：卡片名 + 「已记录 N 次观察」+ 按年代升序列出每条观察（可滚动）
+##
 ## 状态：
 ##   open      档案是否打开（决定画不画面板）
 ##   detail    详情态（列表态 ↔ 详情态）
-##   selected  列表选中项下标
+##   selected  列表选中项下标（卡的下标）
 ##   scroll    详情页滚动行数
 ##   toast_*   「已收集」提示（关档时也能看见）
-##   new_count 自上次关档以来新收集的条数（列表里标「新」）
+##   new_count 自上次关档以来的新增量（新增卡数 + 新增观察数，见 EvidenceStore.pending_new）
 ##
 ## ⚠️ 本节点常驻 visible：收集提示要在关档时也能画出来。
 ##    面板本身由 open 决定画不画，不用 visible 切（visible=false 就画不出提示了）。
@@ -30,7 +34,14 @@ const FONT_BIG := int(13 * UI)
 const PANEL := Rect2(40.0, 16.0, 560.0, 310.0)
 const TITLE_H := 22.0
 const CARD_H := 30.0
-const FOOTER_H := 14.0
+## footer 要两行（操作提示 + 「世界已暂停」），所以比原来高。
+const FOOTER_H := 26.0
+
+## 详情页：年份列宽（设计单位）。来源标签跟在年份右边，观察文案再往右缩进。
+const YEAR_COL := 24.0
+
+## footer 第二行：开档时世界是停的，这句话要说清楚。
+const FOOTER_PAUSED := "世界已暂停 · 按 I 或 Esc 关闭档案"
 
 var font: Font = ThemeDB.fallback_font
 
@@ -40,6 +51,7 @@ var selected := 0
 var scroll := 0
 var toast_t := 0.0
 var toast_text := ""
+## 自上次关档以来的新增量 = 新增卡数 + 新增观察数（口径见 EvidenceStore.pending_new）。
 var new_count := 0
 
 
@@ -62,6 +74,7 @@ func open_archive() -> void:
 	detail = false
 	scroll = 0
 	selected = 0
+	_sync_new_count()
 	queue_redraw()
 
 
@@ -70,6 +83,8 @@ func close_archive() -> void:
 	detail = false
 	scroll = 0
 	new_count = 0     # 这批「新」提示看过了，下次开档不再标
+	# 「新」标记归零：同一批新增只在下一轮开档前显示一次。
+	EvidenceStore.clear_new_flags()
 	queue_redraw()
 
 
@@ -81,11 +96,18 @@ func toggle() -> void:
 
 
 ## 收集成功时叫一次：弹一行「已收集：xxx」提示。
-func flash_collected(name: String) -> void:
-	toast_text = "已收集：%s" % name
+## is_new_card = true 表示这是**新建一张卡**；false 表示已有卡追加了新年代的观察。
+func flash_collected(name: String, is_new_card: bool = true) -> void:
+	toast_text = ("新证物：%s" if is_new_card else "新观察：%s") % name
 	toast_t = 2.4
-	new_count += 1
+	_sync_new_count()
 	queue_redraw()
+
+
+## 从数据层把新增计数同步过来（新增卡数 + 新增观察数）。
+func _sync_new_count() -> void:
+	var p := EvidenceStore.pending_new()
+	new_count = int(p.get("cards", 0)) + int(p.get("observations", 0))
 
 
 # ---- 输入 ----------------------------------------------------------------
@@ -146,7 +168,7 @@ func _draw_panel() -> void:
 	draw_rect(p, Color(0.09, 0.08, 0.07, 0.97), true)
 	draw_rect(p, Color(0.58, 0.50, 0.38, 0.90), false, 1.0 * UI)
 
-	_draw_title(p, entries.size())
+	_draw_title(p, entries)
 
 	if detail:
 		_draw_detail(p, entries)
@@ -156,7 +178,8 @@ func _draw_panel() -> void:
 	_draw_footer(p)
 
 
-func _draw_title(p: Rect2, n: int) -> void:
+## 标题栏右侧：卡数 + 观察条数（两个数字都在）。
+func _draw_title(p: Rect2, entries: Array) -> void:
 	var bar_h := TITLE_H * UI
 	draw_rect(Rect2(p.position, Vector2(p.size.x, bar_h)), Color(0.14, 0.12, 0.10, 0.95), true)
 	draw_line(p.position + Vector2(0, bar_h), p.position + Vector2(p.size.x, bar_h),
@@ -167,12 +190,16 @@ func _draw_title(p: Rect2, n: int) -> void:
 	draw_string(font, Vector2(p.position.x + 10.0 * UI, ty), "证物档案 · 证据清单",
 		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.95, 0.82, 0.60))
 
-	var cnt := "已收集 %d 件" % n
+	var obs_total := 0
+	for e in entries:
+		obs_total += (e as Dictionary).get("observations", []).size()
+	var cnt := "已收集 %d 件 · %d 条观察" % [entries.size(), obs_total]
 	var cw: float = font.get_string_size(cnt, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT).x
 	draw_string(font, Vector2(p.position.x + p.size.x - cw - 10.0 * UI, ty), cnt,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.72, 0.70, 0.63))
 
 
+## 列表页：一行 = 一张卡（卡片名 + 右侧年份跨度 + 首条观察摘要）。
 func _draw_list(p: Rect2, entries: Array) -> void:
 	var list_top := p.position.y + TITLE_H * UI + 4.0 * UI
 	var list_bottom := p.position.y + p.size.y - FOOTER_H * UI - 4.0 * UI
@@ -196,7 +223,6 @@ func _draw_list(p: Rect2, entries: Array) -> void:
 		_list_scroll = selected - visible_n + 1
 	_list_scroll = clampi(_list_scroll, 0, maxi(0, entries.size() - visible_n))
 
-	var first_new := entries.size() - new_count
 	var x := p.position.x + 6.0 * UI
 	var w := p.size.x - 12.0 * UI
 
@@ -214,8 +240,7 @@ func _draw_list(p: Rect2, entries: Array) -> void:
 				Color(0.85, 0.68, 0.38, 0.90), false, 1.0 * UI)
 
 		var name := String(e.get("name", ""))
-		var source := String(e.get("source", ""))
-		var text := String(e.get("text", ""))
+		var key := String(e.get("key", ""))
 
 		var nx := x + 8.0 * UI
 		var ny := cy + 13.0 * UI
@@ -223,25 +248,27 @@ func _draw_list(p: Rect2, entries: Array) -> void:
 			HORIZONTAL_ALIGNMENT_LEFT, -1, FONT,
 			Color(0.96, 0.86, 0.64) if is_sel else Color(0.86, 0.83, 0.75))
 
-		# 新证据角标
-		if i >= first_new:
+		# 新证据角标（新建卡 或 追加了新年代的观察）
+		if EvidenceStore.is_new_key(key):
 			var nw: float = font.get_string_size("新", HORIZONTAL_ALIGNMENT_LEFT, -1, FONT).x
 			draw_string(font, Vector2(nx + font.get_string_size(
 				name, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT).x + 5.0 * UI, ny), "新",
 				HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.55, 0.85, 0.50))
 
-		# 来源（右对齐）
-		if source != "":
-			var sw: float = font.get_string_size(source, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT).x
-			draw_string(font, Vector2(x + w - sw - 8.0 * UI, ny), source,
+		# 年份跨度（右对齐）：首条观察年份 · 末条观察年份
+		var span := _year_span(e)
+		if span != "":
+			var sw: float = font.get_string_size(span, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT).x
+			draw_string(font, Vector2(x + w - sw - 8.0 * UI, ny), span,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.60, 0.58, 0.52))
 
-		# 描述摘要（超长截断，详情页看全文）
-		var summary := _clip(text, w - 16.0 * UI)
+		# 摘要：首条观察的文本（不是拼接）
+		var summary := _clip(_first_observation_text(e), w - 16.0 * UI)
 		draw_string(font, Vector2(x + 8.0 * UI, cy + 25.0 * UI), summary,
 			HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.66, 0.64, 0.59))
 
 
+## 详情页：卡片名 + 「已记录 N 次观察」+ 按年代升序的观察列表（可滚动）。
 func _draw_detail(p: Rect2, entries: Array) -> void:
 	if entries.is_empty():
 		return
@@ -254,16 +281,14 @@ func _draw_detail(p: Rect2, entries: Array) -> void:
 	draw_string(font, Vector2(x, y + 12.0 * UI), String(e.get("name", "")),
 		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_BIG, Color(0.96, 0.86, 0.64))
 
-	var source := String(e.get("source", ""))
-	if source != "":
-		draw_string(font, Vector2(x, y + 28.0 * UI), "来源：%s" % source,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.64, 0.62, 0.56))
+	var obs := sorted_observations(e)
+	draw_string(font, Vector2(x, y + 28.0 * UI), "已记录 %d 次观察" % obs.size(),
+		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.64, 0.62, 0.56))
 
 	draw_line(Vector2(x, y + 34.0 * UI), Vector2(p.position.x + p.size.x - 16.0 * UI, y + 34.0 * UI),
 		Color(0.42, 0.37, 0.30, 0.80), 1.0 * UI)
 
-	var body := String(e.get("text", ""))
-	var lines := _wrap(body, p.size.x - 32.0 * UI)
+	var lines := detail_lines(e, p.size.x - 16.0 * UI - YEAR_COL * UI)
 	var line_h := 15.0 * UI
 	var top := y + 52.0 * UI
 	var bottom := p.position.y + p.size.y - FOOTER_H * UI - 6.0 * UI
@@ -275,8 +300,16 @@ func _draw_detail(p: Rect2, entries: Array) -> void:
 	for i in range(scroll, lines.size()):
 		if shown >= max_lines:
 			break
-		draw_string(font, Vector2(x, top + float(shown) * line_h + line_h * 0.8),
-			String(lines[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.86, 0.84, 0.78))
+		var ln: Dictionary = lines[i]
+		var lx := x + float(int(ln.get("col", 0))) * YEAR_COL * UI
+		var col := Color(0.86, 0.84, 0.78)
+		match String(ln.get("style", "body")):
+			"year":
+				col = Color(0.90, 0.76, 0.44)
+			"source":
+				col = Color(0.60, 0.58, 0.52)
+		draw_string(font, Vector2(lx, top + float(shown) * line_h + line_h * 0.8),
+			String(ln.get("text", "")), HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, col)
 		shown += 1
 
 	# 文本没到底时给个滚动提示
@@ -288,6 +321,7 @@ func _draw_detail(p: Rect2, entries: Array) -> void:
 			HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.52, 0.50, 0.46))
 
 
+## footer 两行：操作提示 + 「世界已暂停」。
 func _draw_footer(p: Rect2) -> void:
 	var txt := ""
 	if detail:
@@ -296,8 +330,14 @@ func _draw_footer(p: Rect2) -> void:
 		txt = "↑↓ 选择    Enter 详情    I/ESC 关闭"
 	var w: float = font.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT).x
 	draw_string(font, Vector2(p.position.x + (p.size.x - w) * 0.5,
-		p.position.y + p.size.y - 4.0 * UI), txt,
+		p.position.y + p.size.y - 14.0 * UI), txt,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.60, 0.58, 0.52))
+
+	var paused := FOOTER_PAUSED
+	var pw: float = font.get_string_size(paused, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT).x
+	draw_string(font, Vector2(p.position.x + (p.size.x - pw) * 0.5,
+		p.position.y + p.size.y - 3.0 * UI), paused,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.72, 0.60, 0.36))
 
 
 func _draw_toast() -> void:
@@ -331,8 +371,75 @@ func _entries() -> Array:
 	return EvidenceStore.get_entries()
 
 
+## 标题栏右侧计数文案：「已收集 N 件 · M 条观察」（两个数字都在）。
+func title_summary() -> String:
+	var entries := _entries()
+	var obs_total := 0
+	for e in entries:
+		obs_total += (e as Dictionary).get("observations", []).size()
+	return "已收集 %d 件 · %d 条观察" % [entries.size(), obs_total]
+
+
+## 观察按年代升序；同年代多条按收集顺序（order 字段）。
+func sorted_observations(card: Dictionary) -> Array:
+	var obs: Array = (card.get("observations", []) as Array).duplicate(true)
+	obs.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var ya := int(a.get("year", 0))
+		var yb := int(b.get("year", 0))
+		if ya != yb:
+			return ya < yb
+		return int(a.get("order", 0)) < int(b.get("order", 0)))
+	return obs
+
+
+## 卡片的年份跨度：首末观察年份（只有一条就一个年份）。
+func _year_span(card: Dictionary) -> String:
+	var obs := sorted_observations(card)
+	if obs.is_empty():
+		return ""
+	var y0 := int((obs[0] as Dictionary).get("year", 0))
+	var y1 := int((obs[obs.size() - 1] as Dictionary).get("year", 0))
+	if y0 <= 0 and y1 <= 0:
+		return ""
+	if y0 == y1:
+		return str(y0)
+	return "%d · %d" % [y0, y1]
+
+
+## 首条观察的文本（列表页摘要用）。
+func _first_observation_text(card: Dictionary) -> String:
+	var obs: Array = card.get("observations", [])
+	if obs.is_empty():
+		return ""
+	return String((obs[0] as Dictionary).get("text", ""))
+
+
+## 详情页正文行（可滚动的行表）。每年一条观察：
+## 「年份 | 来源标签」一行 + 文案若干行 + 空行分隔。
+## 公开（测试要断言「按年代升序」）。
+func detail_lines(card: Dictionary, text_w: float) -> Array:
+	var out: Array = []
+	for o in sorted_observations(card):
+		var od: Dictionary = o
+		var year := int(od.get("year", 0))
+		out.append({
+			"text": (str(year) if year > 0 else "年份不详"),
+			"style": "year", "col": 0,
+		})
+		out.append({
+			"text": String(od.get("source", "")),
+			"style": "source", "col": 1,
+		})
+		var t := String(od.get("text", ""))
+		if t != "":
+			for ln in _wrap(t, text_w):
+				out.append({"text": String(ln), "style": "body", "col": 1})
+		out.append({"text": "", "style": "gap", "col": 0})
+	return out
+
+
 func _max_scroll() -> int:
-	# 详情页能滚的最大行数 = 全文折行数 - 一屏能放下的行数。
+	# 详情页能滚的最大行数 = 正文折行数 - 一屏能放下的行数。
 	# ⚠️ 这里必须真算，别写死 0 —— 写死的话长描述根本滚不动（踩过）。
 	var entries := _entries()
 	if entries.is_empty():
@@ -340,7 +447,7 @@ func _max_scroll() -> int:
 	var idx := clampi(selected, 0, entries.size() - 1)
 	var e: Dictionary = entries[idx]
 	var p := _panel_rect()
-	var lines := _wrap(String(e.get("text", "")), p.size.x - 32.0 * UI)
+	var lines := detail_lines(e, p.size.x - 16.0 * UI - YEAR_COL * UI)
 	var top := p.position.y + TITLE_H * UI + 10.0 * UI + 52.0 * UI
 	var bottom := p.position.y + p.size.y - FOOTER_H * UI - 6.0 * UI
 	var max_lines := int(maxf(1.0, floor((bottom - top) / (15.0 * UI))))
