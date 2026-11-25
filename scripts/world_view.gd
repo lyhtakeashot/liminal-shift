@@ -27,6 +27,7 @@ extends Control
 ##   井     圆盘底缘 center.y + radius
 ##   家具   占地 rect 的底边 rect.end.y
 ##   墙     该行墙格格子的南沿（= 行号 + 1 格）
+##   门     该门格的**北沿**（= 行号，L9：原为南沿，与墙同值导致「门盖人 + 门压墙」）
 ##   屋顶   wings 的南沿
 ##
 ## 玩家画在 world_view 里（player.gd 只剩状态载体）：z_index 插不进 `_draw()` 内部顺序，
@@ -422,8 +423,13 @@ func _draw_entry(e: Dictionary, offset: Vector2, tint: Color,
 			var sid := String(e["sid"])
 			# 美术 base 图里已经画好了墙顶面 + 南立面（_gen_shells.py 的
 			# draw_cap / draw_facade）—— 再叠一层引擎色块就是「双份墙」。
-			# 有图 ⇒ 引擎不再画墙；条目本身保留（排序链不动）。
+			# 有图 ⇒ 不画色块，但 **L9 修复**：base 图整体在背景层，永远不会挡人，
+			# 玩家站在墙北/墙内南墙前会「画在墙之上」（＝ 玩家报的「人站在墙上」，
+			# 只在 A1–A3 美术路径出现）。所以这里把 base 图里**该墙行那一条**按原
+			# 位置补贴回前景层：像素与背景完全相同 ⇒ 画面无缝，只换来正确深度。
 			if _art_walls(sid):
+				_draw_art_wall_strips(String(e["sid"]), e["cells"],
+					e["hpos"], offset, tint, alpha_mul, grade)
 				return
 			var wall_col := _shade(HouseShape.WALL_COLOR, tint, alpha_mul, grade)
 			var top_col := _shade(HouseShape.WALL_TOP, tint, alpha_mul, grade)
@@ -458,6 +464,7 @@ func _draw_entry(e: Dictionary, offset: Vector2, tint: Color,
 ##   井     圆盘底缘 center.y + radius
 ##   家具   占地 rect 的底边 rect.end.y
 ##   墙     该行格子的南沿
+##   门     该行格子的北沿（L9 改，原为南沿）—— 见下面 "door" 分支注释
 ##   屋顶   wings 南沿
 ## seq 是「同深度时的稳定序」：sort_custom 不保证稳定，必须自己带一个全序字段。
 ##
@@ -488,18 +495,26 @@ func _collect_front() -> Array:
 					rows[ry].append(cd)
 				for ry in rows.keys():
 					ents.append({
-						"kind": "walls", "sid": sid, "cells": rows[ry],
+						"kind": "walls", "sid": sid, "cells": rows[ry], "hpos": hpos,
 						"sort_y": hpos.y + (float(int(ry)) + 1.0) * HouseShape.TILE,
 						"seq": ents.size(),
 					})
-				# ---- 门洞：地面层的开口，跟它所在行同深度 ----
+				# ---- 门洞：地面层的开口 ----
+				# L9 修复「人出现在门下面」+「门色块压在墙顶面上」（§0.2 坑4 / §2.3-b）：
+				#   旧键 = 格南沿 = 同排墙的键，门靠 seq 后 append ⇒ 门色块盖墙顶；
+				#   玩家站门格中心时脚线 = 南沿 − 6.2 ⇒ 门永远排在玩家之后、把玩家糊住。
+				#   新键 = 格北沿（门在墙线上，比玩家入门格的脚线小）：
+				#     ① 玩家进任意门格（脚线进格）→ 脚线 > 门键 → 人画在门之上；
+				#     ② 同排墙键 = 南沿 > 门键 → 墙后画，但墙只占自己的格、横向不压门；
+				#     ③ 玩家退到门外北（脚线 < 北沿）→ 门挡住人（门槛在墙线，合理）。
+				#   碰撞不动（solid_rects 仍不含门格）⇒ DOOR_PASSABLE 不变。
 				for d in HouseShape.door_rects(data, hpos):
 					var dd: Dictionary = d
 					var dr: Rect2 = dd["rect"]
 					var dry := int(round((dr.position.y - hpos.y) / HouseShape.TILE))
 					ents.append({
 						"kind": "door", "d": dd, "sid": sid,
-						"sort_y": hpos.y + (float(dry) + 1.0) * HouseShape.TILE,
+						"sort_y": hpos.y + float(dry) * HouseShape.TILE,
 						"seq": ents.size(),
 					})
 				# ---- 屋顶：整栋一块，深度 = wings 南沿（玩家进屋就不画）----
@@ -544,6 +559,56 @@ func _collect_front() -> Array:
 			return ay < by
 		return int(a["seq"]) < int(b["seq"]))
 	return ents
+
+
+## 美术 base 图路径的墙遮挡补贴（L9 修复「人站在墙上」）。
+## base 图（含墙顶面 + 南立面）整张画在**背景层**，前景 "walls" 条目又直接 return，
+## 于是墙永远挡不住人 —— 玩家站墙北/墙内会「画在墙的抬高顶面上面」（玩家实机所见）。
+## 修法：把 base 图里**该墙行那一横条**按原屏幕位置重贴回前景层。
+##   · 贴的是同一张图、同一个落点 ⇒ 无遮挡时像素与背景逐点相同，画面零差异；
+##   · 只是让墙行拿到它在排序链里的正常位置 ⇒ 墙北的玩家被墙盖住（正确遮挡）。
+## 生成器（_gen_shells.py:482）对**每格墙**都画满 32px cap（不做引擎的 32/16 分类），
+## 一格墙的抬高投影带 = 画布 [(gy−Y0)·32, +64]，屏幕带 = [body顶 − 32, body顶 + 32]。
+## 逐格贴 64 高，横向相邻格会重叠贴同一批像素 ⇒ 无害。按行连续 x 合并省 draw call。
+## 画布锚点：贴图左上落在 (hpos.x, hpos.y − EXTRUDE)，画布 (cx,cy) → 屏幕 (hpos.x+cx, hpos.y−EXTRUDE+cy)。
+func _draw_art_wall_strips(sid: String, cells: Array, hpos: Vector2,
+		offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> void:
+	var tex: Texture2D = _house_tex(sid)["base"]
+	if tex == null or cells.is_empty():
+		return
+	# 只在**全不透明的主通道**贴（alpha_mul = 1.0）：时间轴模式会先叠两层 alpha 0.45 的
+	# 色差通道再画主通道，若在那两层也补贴，墙带就被合成 4 次、比别处更实 ⇒ 出现亮带。
+	# 主通道里「不透明像素覆盖同一批不透明像素」= 逐点相同 ⇒ 画面零差异。
+	if not is_equal_approx(alpha_mul, 1.0):
+		return
+	var data := HouseShape.house(sid)
+	var lot: Array = data.get("lot", [0, 0, 0, 0])
+	var x0 := int(lot[0])
+	var y0 := int(lot[1])
+	var tc := _scene_tex_color(tint, alpha_mul, grade)
+	# cells 属同一行（_collect_front 已按行拆分）；按 x 合并连续段。
+	var xs: Array = []
+	for c in cells:
+		xs.append(int((c as Dictionary)["cell"].x))
+	xs.sort()
+	var i := 0
+	while i < xs.size():
+		var start := int(xs[i])
+		var j := i + 1
+		while j < xs.size() and int(xs[j]) == start + (j - i):
+			j += 1
+		var ox := start - x0
+		var oy := int((cells[0] as Dictionary)["cell"].y) - y0
+		var w := j - i
+		# dst 用与 _draw_house_base 完全相同的落点公式 (hpos.x+cx, hpos.y−EXTRUDE+cy)：
+		# 重贴的像素 = 背景那一段墙（cap + facade，生成器画满 64 高），逐点相同。
+		var src := Rect2(float(ox) * HouseShape.TILE, float(oy) * HouseShape.TILE,
+			float(w) * HouseShape.TILE, HouseShape.TILE * 2.0)
+		var dst := Rect2(Vector2(hpos.x + float(ox) * HouseShape.TILE,
+			hpos.y + float(oy) * HouseShape.TILE - EXTRUDE) + offset,
+			Vector2(float(w) * HouseShape.TILE, HouseShape.TILE * 2.0))
+		draw_texture_rect_region(tex, dst, src, tc)
+		i = j
 
 
 ## 屋顶的排序键 = wings 的南沿（屋体「站」着的那条线）。
