@@ -10,10 +10,35 @@
 |---|---|
 | 仓库根 | `D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift` |
 | Godot | `D:\steam\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe`（不在 PATH） |
-| HEAD 要求 | ≥ `696caac`（`git log -1` 确认）。若更低，先 `git status` 看现场再定要不要 pull |
+| HEAD 要求 | ≥ `92078cb`（`git log -1` 确认，2026-11-25 11:05 的进度快照提交）。若更低，先 `git status` 看现场再定要不要 pull |
 | 你能改的文件 | `scripts/world_view.gd`、`scripts/house_shape.gd`、`scripts/frame_data.gd`（三者都在白名单内，见 §1.1） |
 | 你**不能**碰 | `data/frames.json`（L1 独占）、`_ref/houses/houses_data.json`（L3 单写者）、`scripts/main.gd`、`scripts/evidence_*.gd`、`scripts/asset_draw.gd`（L8 独占）、`assets/**`、`_ref/art/**`、`_mdtest/**`（**测试文件一律不要改**）、`docs/PROMPT-overseer.md` |
 | pwsh | 本机 `pwsh` 调「写文件」类命令要带 `sandbox_permissions: "danger-full-access"`（工作区 ACL），否则会报 `windows-acl workspace grant failed: Win32Error 5` |
+
+### §0.0.5 这条线现在的状态（总策划 2026-11-25 复核）
+
+- 🔴 **本线从未真正开工**：`docs/FEEDBACK-render-bug-exec.md` 不存在；`scripts/world_view.gd` 自 `cc19b4c`（2026-11-24 17:26）起没动过 ⇒ **工作区没有任何在途改动**，你是这条线的第一个执行者。
+- ✅ **任务书里的行号引用已由总策划逐条复核过（2026-11-25 11:10）**，全部仍然准确：
+  - `scripts/world_view.gd:455-467`＝排序键约定段（「玩家 position.y + RADIUS * 0.7」／「墙 该行格子的南沿」都在里面）；
+  - `:537`＝玩家 `sort_y: player_pos.y + 14.0 * 0.7`；`:492`＝墙 `sort_y: hpos.y + (row+1) * HouseShape.TILE`；
+  - `:847-848`＝墙顶面抬高 `hh` 的 `draw_rect`；`:805`＝「北/西墙 h=TILE（32px 全高），东/南墙 h=TILE/2（16px 半高）」；
+  - `:426-427`＝有 base 图就 `return`（引擎不画墙）；`:431-435`＝门分支同理；
+  - `:604-608`＝`FAMILY` 映射（**只到 a1–a3 的 12 栋** ⇒ A4/A5 六栋查不到屋体图）；
+  - `scripts/house_shape.gd:157-219`＝`grid_of()`；`:368-369`＝「solid_rects() 只返回墙 → 碰撞用；door_rects() 只画颜色、不参与碰撞」；
+  - `scripts/player.gd:17`＝`const RADIUS := 14.0`；`:103-106`＝`_draw_hero` 脚底对齐 `base.y + RADIUS - HERO_FRAME - bob`。
+- ⚠️ **§1.3 表格里 `WALL_STOP_Y` / `DOOR_PASSABLE` 的行号写法有误**（真值在 `greybox_check.gd` 里）：
+
+| 断言 | 任务书原写法 | 实际位置 | 内容 |
+|---|---|---|---|
+| `DOOR_PASSABLE` | `greybox_check.gd:189` | **`greybox_check.gd:182-189`**（用例块 `:182`，断言在 `:189`） | 4 个院门点必须可站：`(1456,784)` / `(336,976)` / `(1872,1456)` / `(2512,1104)` |
+| `WALL_STOP_Y` | `greybox_check.gd:208-209` | **`greybox_check.gd:202-209`**（用例块 `:202`，断言在 `:208-209`） | 期望 **800~816**（撞磨坊南墙，从 `(1248,904)` 上撞） |
+| `TIME_FWD_REACHED` | `greybox_check.gd:218` | `:211-218` | 期望 `[1,2,3,4]`（起点 `(1400,1120)`） |
+| `A1_WELL_FREE` | `greybox_check.gd:233` | `:226-233`（断言在 `:233`） | 期望 **false**（`(1360,860)`） |
+| `A3_OLD_WELL_UNDER_MILL` | `greybox_check.gd:170` | `:170` | 期望 `true` |
+| `UNEXPLAINED_BLOCKS=0` | `greybox_check.gd:255` | `:251-261`（断言在 `:255`） | — |
+
+  ⇒ 定位时按「用例块起始行 → 断言行」两处一起看，别只按断言行号跳。
+- ⚠️ **`scripts/world_view.gd` 最近一次改动是 `cc19b4c`（L2 交付）**，所以 §2 里所有「总策划初步定位」都是在那个版本上做的；若你改到 `world_view.gd` 的别处，**别回退 L2 的成果**（色块树冠不上抬／圆深度键分立着-贴地／井恒可见的补画方案，见 §4 末尾）。
 
 ### §0.1 跑回归的正确姿势（照抄，别自己发挥）
 

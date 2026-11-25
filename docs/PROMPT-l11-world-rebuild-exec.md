@@ -18,8 +18,8 @@
 
 | 项 | 值 |
 | --- | --- |
-| 开工要求的 HEAD | `df0c241`（或其后） |
-| 本线产出 | `docs/PROMPT-world-rebuild-exec.md` 之外的**代码与数据**，本文件不产生新文档 |
+| 开工要求的 HEAD | `92078cb`（或其后；2026-11-25 11:05 的进度快照提交） |
+| 本线产出 | `docs/PROMPT-l11-world-rebuild-exec.md` 之外的**代码与数据**，本文件不产生新文档 |
 | 反馈文档（必须写） | `docs/FEEDBACK-l11-world-rebuild-exec.md`，≤120 行（⚠️ `docs/FEEDBACK-world-rebuild-exec.md` 是旧世界重构线的存档，**不许覆盖**） |
 | 布局基准文件（**只读，不要改**） | **`lab/_l11_final.json`**（子代理 v3 冻结版：含 world/road/roundabout/well/tree/stele/field/hills/signs/edge_houses/parking/river/houses + 五帧 shapes）、`lab/_l11_final_report.txt`（自检报告，241 行，红灯 0 项） |
 
