@@ -295,7 +295,7 @@ git diff --stat _ref/houses/houses_data.json scripts/evidence_store.gd data/fram
 git diff -- data/frames.json
 ```
 - `houses_data.json` 的 diff **只有新增行、没有删除行**。
-- `frames.json` 的 diff **只涉及 a5_2026 帧 + world + start_pos**；a1/a2/a3/a4 四个帧零改动。
+- `frames.json` 的 diff **只涉及 a5_2026 帧 + world + start_pos + a1/a2/a3/a4 四帧里老槐那条 hotspot 的 `text` 字段**；a1–a4 的**几何一个字节都不许变**（形状、坐标、radius、label、reach 全不动）。
 
 ### 4.3 回归（跑完看关键字，别看退出码）
 
@@ -315,6 +315,10 @@ git diff -- data/frames.json
 
 ⚠️ **A1–A4 四帧仍是旧的 3200×2400 布局**，所以世界一放大，A1–A4 的可达性扫描口径就会变（REACH_MAP 的 to_a5 / blocked_at_step 会动）。**这不是你引入的回归**，但你必须在反馈文档里**如实报告**改动前后的 REACH_MAP 数字，别装没看见。
 
+🔴 **另一条会红的断言（授权范围之外，别自己动）**：`greybox_check.gd:20-42` 的 `HOUSE_MAP` / `HOUSE_MAP_A2` / `HOUSE_MAP_A3` 钉的是 A1/A2/A3 四栋房子的 **pos + 尺寸**（写在 3200×2400 的旧坐标上），`:81-107`／`:109-120` 拿它跟 `houses_data.json` 的 lot 比对。**本线不动 A1–A3 的房子** ⇒ 这几条**应该仍然是绿的**；如果它们红了，说明你误改了 a1/a2/a3 的帧 ⇒ **停下来查 diff，别改断言**。
+
+🟡 **`REACH_MAP` 数字必然变**：扫描范围从 `range(240,2400,32)×range(40,3160,32)` 变成覆盖 4800×3600 ⇒ `standable` / `to_a5` / `band_*` 都会是新值。**这不是回归**（世界变大了），但**必须**在反馈文档里给出改动前（`{standable:6127, to_a5:4848, blocked_at_step:[144,191,722,222], band_total:196, band_full:159, band_ratio:"81%", ratio:"79%"}`）与改动后的对照，别装没看见。
+
 ### 4.4 实机
 
 ```powershell
@@ -331,9 +335,13 @@ git diff -- data/frames.json
 
 1. `git add` **只 add 这几个**：`data/frames.json`、`_ref/houses/houses_data.json`、`scripts/evidence_store.gd`、`docs/story.md`、`docs/HANDOFF.md`、`_mdtest/greybox_check.gd`、`_mdtest/camera_check.gd`、`docs/FEEDBACK-a5-v5-exec.md`。
    **绝不 `git add -A` / `git add .`。**
-2. **分两个 commit**：
-   - `feat(map): 新增 shen_a5 房屋数据（克隆 shen_a4·封门·无 clue）＋ HOUSE_FAMILY 补 shen_a5`
-   - `feat(map): A5 2026 帧按 v5 排版落地（世界 4800x3600·环岛+四合院·删停车场与红绿灯）＋ story/HANDOFF 文本同步`
+2. **分三个 commit**（顺序有讲究，落盘错开）：
+   - ① `feat(map): 新增 shen_a5 房屋数据（克隆 shen_a4·封门·无 clue）＋ HOUSE_FAMILY 补 shen_a5`
+     —— 只含 `_ref/houses/houses_data.json` ＋ `scripts/evidence_store.gd`
+   - ② `feat(map): A5 2026 帧按 v5 排版落地（世界 4800x3600·环岛+四合院·删停车场与红绿灯）`
+     —— 只含 `data/frames.json`（含 a1–a4 老槐文案改口）＋ `_mdtest/greybox_check.gd` ＋ `_mdtest/camera_check.gd`
+   - ③ `docs: A5 v5 落地同步 story/HANDOFF 文本（删红绿灯与停车场·物证编号前移·主题句）`
+     —— 只含 `docs/story.md` ＋ `docs/HANDOFF.md` ＋ `docs/FEEDBACK-a5-v5-exec.md`
 3. 写 `docs/FEEDBACK-a5-v5-exec.md`（≤120 行），必须包含：
    - 落盘后的实际 shapes / hotspots 计数；
    - 你的自检脚本输出（错误 0 条）；
