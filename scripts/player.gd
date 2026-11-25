@@ -17,6 +17,10 @@ const OUTLINE := Color(0.12, 0.10, 0.08)
 const RADIUS := 14.0
 const TRAIL := 4
 
+## L12/M6：走路动画频率。提速 ×1.5（120→180）后频率同步 ÷1.5（9.0→6.0），
+## 否则腿脚比身体快、看着像滑冰。bob 与帧索引必须共用这一个常量（改一漏一会抽搐）。
+const WALK_FREQ := 6.0
+
 ## 美术主角精灵表（D6 同款约定）：1152×32 = 36 帧，一帧 32×32。
 ## 分组（美术同学没给方向标记，按帧内容推出来的）：
 ##   0-3   朝下走   4-7  朝左走   8-11 朝右走   12-15 朝上走（背面）
@@ -70,7 +74,7 @@ func draw_self(offset: Vector2 = Vector2.ZERO) -> void:
 
 	var bob := 0.0
 	if walking:
-		bob = absf(sin(walk_phase * 9.0)) * 3.2
+		bob = absf(sin(walk_phase * WALK_FREQ)) * 3.2
 
 	var kick := facing * bump_kick * -1.0
 
@@ -93,7 +97,7 @@ func _draw_hero(c: CanvasItem, sheet: Texture2D, base: Vector2, bob: float) -> v
 	var frames: Array = HERO_WALK[group] if walking else HERO_IDLE[group]
 	var idx := 0
 	if walking:
-		idx = int(walk_phase * 9.0) % frames.size()
+		idx = int(walk_phase * WALK_FREQ) % frames.size()
 	else:
 		# 站立：轻轻呼吸（第 0 帧和第 2 帧之间来回），不是死板不动
 		idx = int(walk_phase * 2.0) % 2 * 2

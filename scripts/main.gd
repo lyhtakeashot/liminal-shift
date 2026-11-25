@@ -9,7 +9,7 @@ extends Control
 ## 复用 move_up / move_down 做时间推进（HANDOFF §2.5），
 ## 语义靠 axis 分派，不另建 time_forward / time_back。
 
-const PLAYER_SPEED := 120.0
+const PLAYER_SPEED := 180.0    # L12/M6：120→180（×1.5，世界同步放大 1.5 倍 ⇒ 观感不突变）
 const STEP_DELAY := 0.30      # 按住后多久开始自动重复
 const STEP_INTERVAL := 0.13   # 自动重复的间隔
 
@@ -161,6 +161,9 @@ func _process(delta: float) -> void:
 		_process_time(delta)
 
 	player.position = tl.char_pos
+	# 小地图每帧要玩家坐标（hud.sync 只在切帧/切轴时调，不够）。
+	# 档案开着时 _process 在上面已 return ⇒ 开档小地图停更，符合「开档世界停」。
+	hud.sync_player(tl.char_pos)
 	camera_rig.set_target(tl.char_pos)
 	# 屋顶要不要画取决于「玩家站没站在 wings 里」（house-spec §4.8.4）。
 	# 遮挡顺序取决于玩家脚线（y-sort）。所以整套玩家状态都喂给 world_view。

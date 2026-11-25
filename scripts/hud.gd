@@ -29,6 +29,43 @@ var hotspot_visible := false
 var bump_flash := 0.0
 var axis_flash := 0.0
 
+# ── 小地图（L12/M6）──────────────────────────────────────────
+# 世界尺寸按 4800×3600 写死（M7 甲方案已拍板：地图 ×1.5、TILE 仍 32）。
+# ⚠️ 若 L11 尚未落地（frames.json 还是 3200×2400），小地图仍按 4800×3600 画框，
+#    玩家点会落在左上 2/3 区域 —— 等 L11 落地后自然复原，不用改这里。
+var world_extent := Vector2(4800, 3600)
+var player_pos := Vector2.ZERO
+
+const MINIMAP_W := 100.0 * UI    # 设计值 100×75 → 实际 200×150（与 4800:3600 同比例 4:3）
+const MINIMAP_H := 75.0 * UI
+const MINIMAP_MARGIN := 8.0 * UI # 与顶条/右缘的间隙
+
+
+## 小地图几何的唯一出处：绘制与测试断言共用，防止两处写歪。
+## 落位＝右上角：顶条（36px）下沿 + 16px 间隙；右缘留 16px。
+func minimap_rect() -> Rect2:
+	return Rect2(size.x - MINIMAP_MARGIN - MINIMAP_W,
+		18.0 * UI + MINIMAP_MARGIN, MINIMAP_W, MINIMAP_H)
+
+
+## 世界坐标 → 小地图上的点（含玩家点/任何标注）。越界世界坐标夹到框内。
+func minimap_point(world_pos: Vector2) -> Vector2:
+	var r := minimap_rect()
+	if world_extent.x <= 0.0 or world_extent.y <= 0.0:
+		return r.position
+	var t := Vector2(
+		clampf(world_pos.x / world_extent.x, 0.0, 1.0),
+		clampf(world_pos.y / world_extent.y, 0.0, 1.0))
+	return r.position + t * r.size
+
+
+## 每帧由 main.gd:_process 喂玩家坐标（sync() 的签名不许动 —— 坑 2）。
+func sync_player(pos: Vector2) -> void:
+	if pos.distance_squared_to(player_pos) < 0.0001:
+		return
+	player_pos = pos
+	queue_redraw()
+
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -83,6 +120,18 @@ func _draw() -> void:
 	_draw_timeline()
 	_draw_hotspot()
 	_draw_hint()
+	_draw_minimap()
+
+
+## 小地图：世界框 + 玩家点。不画 houses/roads/地标（HUD 不读 frames.json，
+## 且那是 L11 的单写者域 —— 任务书 §3.3 与 §7.3）。
+## §3.4 采纳：时间轴模式下底板 alpha 0.62→0.45，与时间轴收起风格一致。
+func _draw_minimap() -> void:
+	var r := minimap_rect()
+	var bg_a := 0.45 if time_mode else 0.62
+	draw_rect(r, Color(0.06, 0.05, 0.04, bg_a), true)
+	draw_rect(r, Color(0.55, 0.48, 0.38, 0.55), false, 1.0 * UI)
+	draw_circle(minimap_point(player_pos), 3.0 * UI, Color(0.95, 0.85, 0.60))
 
 
 func _draw_top_bar() -> void:
