@@ -42,9 +42,10 @@
 | `docs/FEEDBACK-a5-v5-exec.md` | 新建。**≤120 行**。写什么见 §5。 | — |
 
 **落盘错开约定**（本线独占 `frames.json`，但工作区有别的线）：
-1. 先改 `houses_data.json` + `evidence_store.gd`，跑完自检，**先 commit 这两个**。
-2. 再改 `data/frames.json` + 两个 docs，**单独 commit**。
-3. 每个 commit 只 add 自己那几个文件。
+1. 先改 `houses_data.json` + `evidence_store.gd`，跑完自检，**先 commit 这两个**（§5 的 commit ①）。
+2. 再改 `data/frames.json` + 两个测试文件，**单独 commit**（commit ②）。
+3. 最后改 `docs/story.md` + `docs/HANDOFF.md` + 写反馈文档，**第三个 commit**（commit ③）。
+4. 每个 commit 只 add 自己那几个文件，提交前先 `git diff --cached --stat` 看一眼。
 
 ---
 
