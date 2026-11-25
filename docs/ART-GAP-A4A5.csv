@@ -13,30 +13,28 @@ P0,屋体,A11,assets/village/houses/school/a5_base.png,1216×992,四间教室（
 P0,屋体,A12,assets/village/houses/school/a5_roof.png,1216×992,教学楼单面坡屋顶（或平顶）+ 红砖檐口；围墙压顶（界碑 A5 态砌在围墙里，见 B 组 stele_a5）,否,待开工,,,村小 A5（2026 · 沈明远捐建） · roof
 P0,屋体,A13,assets/village/houses/toyshop/a5_base.png,672×672,租的沈家楼一层：店面（北半，临街玻璃门面）/ 里屋 / 账房 / 仓库（南半）；最北侧 4 格是门前小院（前门开在店面北墙），院内留板车/自行车/旧幌子/摇摇马的位置（家具图会叠）,否,待开工,,,玩具店 A5（2026 · 周家曾孙租沈家的楼） · base
 P0,屋体,A14,assets/village/houses/toyshop/a5_roof.png,672×672,二楼老屋灰瓦顶（屋顶属于沈家楼，不属于店）+ 屋顶水箱/晾晒,否,待开工,,,玩具店 A5（2026 · 周家曾孙租沈家的楼） · roof
-P2,场景,B01,assets/village/scene/river_a4.png,3200×416,"河道整帧（沿用 A1–A3 的 103 点 polygon 几何，bbox 0,0–3200,416）：2001 水质偏浑、两岸土坡与零星垃圾",否,待开工,,,沿两岸必须留透明区，几何不要自己改
-P2,场景,B02,assets/village/scene/river_a5.png,3200×416,2026 河道：水泥护岸 + 简易栏杆、水面偏暗,否,待开工,,,同上
-P2,场景,B03,assets/village/scene/road_a4.png,3200×64,2001 土路直道整帧（底色 #8a7a5a）：车辙、碎石、路边杂草，横向铺满,否,待开工,,,A1–A4 的路在数据里本来就是土黄色，不要画成柏油
-P2,场景,B04,assets/village/scene/road_a5.png,3200×64,2026 柏油直道整帧（底色 #56564f）：沥青颗粒、白色边线、补丁,否,待开工,,,只有 A5 主路是柏油灰
-P2,场景,B05,assets/village/scene/road_a5_vertical.png,64×1984,2026 竖路（十字路口南北向那条，从 y=416 到 y=2400），宽 64px，与 road_a5 同款沥青,否,待开工,,,路口那一段（y 1664–1728）留透明，由环岛图盖住；接线要新增 key，见 F 组
-P2,场景,B06,assets/village/scene/field_a4.png,512×384,"2001 田块整帧（位置 1856,192）：塑料大棚、田埂、零星菜地",否,待开工,,,与 field_a2/a3 同尺寸同位置，替换整块外包矩形
-P2,场景,B07,assets/village/scene/field_a5.png,512×384,2026 田块整帧：大棚钢架、部分撂荒、田埂硬化,否,待开工,,,同上
-P2,场景,B08,assets/village/scene/ground_a4_tiles.png,32×32,2001 地面平铺瓦（主色贴近 #6f6a52，土黄偏灰）,否,待开工,,,四边无缝可平铺；平铺瓦尺寸不随世界放大
-P2,场景,B09,assets/village/scene/ground_a5_tiles.png,32×32,2026 地面平铺瓦（主色贴近 #7a7a76，水泥/碎石地）,否,待开工,,,同上
-P2,场景,B10,assets/village/scene/well_old_a4.png,64×64,老井 2001 态：一小圈沥青补丁，紧贴超市西墙外，地面略下陷,否,待开工,,,稀疏图：画布 = 占地 2×2 格，四周留透明
-P2,场景,B11,assets/village/scene/well_old_a5.png,96×96,老井 2026 态：车道正中的圆形沥青补丁，边沿被卡车压得往下陷,否,待开工,,,稀疏图：画布 = 占地 3×3 格
-P2,场景,B12,assets/village/scene/tree_a4.png,160×160,老槐 A4 态（75 岁），冠幅 5 格 = 160 px,否,待开工,,,新刻度（本次建议值）；画布就是冠幅，不要额外留白
-P2,场景,B13,assets/village/scene/tree_a5.png,192×192,老槐 A5 态（100 岁），冠幅 6 格 = 192 px，正好顶满环岛内圈,否,待开工,,,新刻度（本次建议值）
-P2,场景,B14,assets/village/scene/stele_a1.png,32×32,界碑 1926：半截石碑半埋在路边土里，字迹完整,否,待开工,,,五帧要分开出图（现在五帧共用一张旧图，见 F 组）
-P2,场景,B15,assets/village/scene/stele_a2.png,32×32,界碑 1951：同款半截碑（文案暂与 1926 重复），碑面略风化,否,待开工,,,同上
-P2,场景,B16,assets/village/scene/stele_a3.png,32×32,界碑 1976：同款半截碑，周围土被踩实,否,待开工,,,同上
-P2,场景,B17,assets/village/scene/stele_a4.png,32×32,界碑 2001：被推到工地东边重新立起来，下加水泥座,否,待开工,,,同上
-P2,场景,B18,assets/village/scene/stele_a5.png,32×32,界碑 2026：砌进小学围墙里，只露出碑面，字磨得只剩一个「周」,否,待开工,,,同上
-P2,场景,B19,assets/village/scene/tree_a2.png,96×96,老槐 A2 态（25 岁）重出：现有 tree_a2.png 是 4 格（128px），要缩到 3 格 = 96px,否,待开工,,,不新增文件，覆盖原图；缩放时保持树干粗细协调
-P2,场景,B20,assets/village/scene/tree_a3.png,128×128,老槐 A3 态（49 岁）重出：现有 tree_a3.png 是 6 格（192px），要缩到 4 格 = 128px,否,待开工,,,同上
-P2,环岛,C01,assets/village/scene/roundabout_a4.png,320×320,2001 十字路口环岛合体图：外径 10 格（320 px）= 中心岛 6 格（192 px）+ 环道 2 格（64 px）× 2 侧；土路材质（#8a7a5a）环道 + 内圈路缘石 + 中心岛绿化,否,待开工,,,底部中心锚点；圆外留透明。中心岛位置上树由 tree_a4.png 叠加，本图不要画树
-P2,环岛,C02,assets/village/scene/roundabout_a5.png,320×320,2026 版环岛：柏油环道（#56564f）+ 白色导流线 + 内圈路缘 + 中心岛绿化/矮灌木；与 A5 柏油主路衔接,否,待开工,,,同上，不要画树（树由 tree_a5.png 叠加，冠幅正好=中心岛）
-P2,环岛,C03,assets/village/scene/roundabout_island_a4.png,192×192,A4 中心岛单独一层（土壤 + 草 + 路缘石），便于和 A5 互换/复用,否,待开工,,,可选：若已合并进 roundabout_a4.png 可不出这张
-P2,环岛,C04,assets/village/scene/roundabout_island_a5.png,192×192,A5 中心岛单独一层（绿化 + 矮灌木 + 路缘）,否,待开工,,,可选：同上
+P2,场景,B01,assets/village/scene/river_a4_tiles.png,32×32,河水单方格瓦（2001）：浑水 + 水面高光；四边无缝可平铺,否,待开工,,,尺寸无关：河的轮廓由地图线的 polygon 决定，这张只管水的样子，不要画岸线
+P2,场景,B02,assets/village/scene/river_a5_tiles.png,32×32,河水单方格瓦（2026）：暗水 + 白沫 + 浮渣；四边无缝可平铺,否,待开工,,,尺寸无关：同上，轮廓由地图线决定
+P2,场景,B03,assets/village/scene/road_a4_tiles.png,32×32,土路单方格瓦（2001）：车辙 + 碎石 + 干土（底色 #8a7a5a）；四边无缝可平铺,否,待开工,,,尺寸无关：路面颜色在数据里本来就是土黄，不要画成柏油；不做边缘描边，路面宽度由地图线决定
+P2,场景,B04,assets/village/scene/road_a5_tiles.png,32×32,柏油单方格瓦（2026）：沥青颗粒 + 细裂纹（底色 #56564f）；四边无缝可平铺,否,待开工,,,尺寸无关：只有 2026 的路是柏油灰；竖路也用这张，不另出图
+P2,场景,B05,assets/village/scene/field_a4_tiles.png,32×32,田地单方格瓦（2001）：土垄 + 菜苗；四边无缝可平铺,否,待开工,,,尺寸无关：田块范围由地图线的 rect 圈定，这张只管田里的样子
+P2,场景,B06,assets/village/scene/field_a5_tiles.png,32×32,田地单方格瓦（2026）：水泥田埂 + 撂荒 + 钢架大棚；四边无缝可平铺,否,待开工,,,尺寸无关：同上
+P2,场景,B07,assets/village/scene/ground_a4_tiles.png,32×32,2001 地面平铺瓦（主色贴近 #6f6a52，土黄偏灰）,否,待开工,,,四边无缝可平铺；平铺瓦尺寸不随世界放大
+P2,场景,B08,assets/village/scene/ground_a5_tiles.png,32×32,2026 地面平铺瓦（主色贴近 #7a7a76，水泥/碎石地）,否,待开工,,,同上
+P2,场景,B09,assets/village/scene/well_old_a4.png,64×64,老井 2001 态：一小圈沥青补丁，紧贴超市西墙外，地面略下陷,否,待开工,,,稀疏图：画布 = 占地 2×2 格，四周留透明
+P2,场景,B10,assets/village/scene/well_old_a5.png,96×96,老井 2026 态：车道正中的圆形沥青补丁，边沿被卡车压得往下陷,否,待开工,,,稀疏图：画布 = 占地 3×3 格
+P2,场景,B11,assets/village/scene/tree_a4.png,160×160,老槐 A4 态（75 岁），冠幅 5 格 = 160 px,否,待开工,,,新刻度（本次建议值）；画布就是冠幅，不要额外留白 ｜ ⚠️ 冠幅待定：地图线随世界放大后定最终格数（参考 4~6 格）；构图不变，只改画布尺寸与文件名里的格数
+P2,场景,B12,assets/village/scene/tree_a5.png,192×192,老槐 A5 态（100 岁），冠幅 6 格 = 192 px，正好顶满环岛内圈,否,待开工,,,新刻度（本次建议值） ｜ ⚠️ 冠幅待定：地图线随世界放大后定最终格数（参考 4~6 格）；构图不变，只改画布尺寸与文件名里的格数
+P2,场景,B13,assets/village/scene/stele_a1.png,32×32,界碑 1926：半截石碑半埋在路边土里，字迹完整,否,待开工,,,五帧要分开出图（现在五帧共用一张旧图，见 F 组）
+P2,场景,B14,assets/village/scene/stele_a2.png,32×32,界碑 1951：同款半截碑（文案暂与 1926 重复），碑面略风化,否,待开工,,,同上
+P2,场景,B15,assets/village/scene/stele_a3.png,32×32,界碑 1976：同款半截碑，周围土被踩实,否,待开工,,,同上
+P2,场景,B16,assets/village/scene/stele_a4.png,32×32,界碑 2001：被推到工地东边重新立起来，下加水泥座,否,待开工,,,同上
+P2,场景,B17,assets/village/scene/stele_a5.png,32×32,界碑 2026：砌进小学围墙里，只露出碑面，字磨得只剩一个「周」,否,待开工,,,同上
+P2,场景,B18,assets/village/scene/tree_a2.png,96×96,老槐 A2 态（25 岁）重出：现有 tree_a2.png 是 4 格（128px），要缩到 3 格 = 96px,否,待开工,,,不新增文件，覆盖原图；缩放时保持树干粗细协调 ｜ ⚠️ 冠幅待定：地图线随世界放大后定最终格数（参考 4~6 格）；构图不变，只改画布尺寸与文件名里的格数
+P2,场景,B19,assets/village/scene/tree_a3.png,128×128,老槐 A3 态（49 岁）重出：现有 tree_a3.png 是 6 格（192px），要缩到 4 格 = 128px,否,待开工,,,同上 ｜ ⚠️ 冠幅待定：地图线随世界放大后定最终格数（参考 4~6 格）；构图不变，只改画布尺寸与文件名里的格数
+P2,环岛,C01,assets/village/scene/roundabout_curb.png,32×32,环岛路缘弧段（通用）：路缘石 + 白色导流线的圆弧段，一张 32×32，靠旋转与平移拼出任意半径的环,否,待开工,,,尺寸无关：环道用 road_a5_tiles 平铺、中心岛用下面两张瓦平铺，这张只补路缘与导流线；环岛外径待地图线定稿，不按固定尺寸画
+P2,环岛,C02,assets/village/scene/roundabout_island_soil.png,32×32,中心岛土色瓦（2001 工地态）：裸土 + 碎石 + 临时围挡根；四边无缝可平铺,否,待开工,,,尺寸无关：中心岛大小由地图线圈定，这张只管地面样子
+P2,环岛,C03,assets/village/scene/roundabout_island_green.png,32×32,中心岛绿化瓦（2026 营业态）：矮灌木 + 草 + 一点花；四边无缝可平铺,否,待开工,,,尺寸无关：同上
 P1,家具,E001,assets/village/props/baoxiangui_1x2.png,32×96,保险柜（1×2 格，沈宅A4）,是,待开工,,,账房 · 长边贴东墙，改稿底本锁在里面
 P1,家具,E002,assets/village/props/shangmopan_2x1.png,64×64,上磨盘（2×1 格，超市A4/A5）,是,待开工,,,A4 2001 粮站拆出、暂放工地围挡角落，刻「沈氏丰源·一九五七」／A5 2026 摆进超市门厅（story §7.2⑥ 的现代物证）—— 同一件家具，跨时代不变
 P1,家具,E003,assets/village/props/wenjiangui_1x2.png,32×96,文件柜（1×2 格，超市A4/A5）,是,待开工,,,A4 2001 在工地办公室 · 土地登记表第二联 + 改过的地质报告（写「地下有暗河，不宜大开挖」）／A5 2026 搬进超市办公室 —— 同一件家具，跨时代不变
@@ -197,29 +195,29 @@ P4,家具,E157,assets/village/props/biaoyupai_6x1.png,192×64,标语牌（6×1 �
 P4,家具,E158,assets/village/props/qiandaochu_2x1.png,64×64,签到处（2×1 格，小学A5）,否,待开工,,,来宾签到的小桌
 P4,家具,E159,assets/village/props/hongchouhengfu_8x1.png,256×64,红绸横幅（8×1 格，小学A5）,否,待开工,,,🔲 红绸挂在主席台背后的墙上 · 题「沈氏捐建 村小落成」
 P4,家具,E160,assets/village/props/yinshuiji_1x1.png,32×64,饮水机（1×1 格，小学A5）,否,待开工,,,门厅角落
-P4,新增元素,D01,assets/village/scene/hill_a1.png,256×192,山丘单体（1926）：土坡 + 稀疏灌木,否,待开工,,,占地 8×6 格；可水平镜像复用；每帧 3~4 座（估算）
-P4,新增元素,D02,assets/village/scene/hill_a2.png,256×192,山丘单体（1951）：坡上有开垦痕迹,否,待开工,,,同上
-P4,新增元素,D03,assets/village/scene/hill_a3.png,256×192,山丘单体（1976）：坡上小径、坟包,否,待开工,,,同上
-P4,新增元素,D04,assets/village/scene/ridge_a1.png,512×128,岭线条带（1926）：远山剪影，贴在画面最上缘做越界遮挡,否,待开工,,,16×4 格；水平可平铺
-P4,新增元素,D05,assets/village/scene/ridge_a2.png,512×128,岭线条带（1951）,否,待开工,,,同上
-P4,新增元素,D06,assets/village/scene/ridge_a3.png,512×128,岭线条带（1976）,否,待开工,,,同上
-P4,新增元素,D07,assets/village/scene/signpost_road_a1.png,32×96,指路牌（1926）：木柱 + 指向牌,否,待开工,,,1×2 格；底部中心锚点
-P4,新增元素,D08,assets/village/scene/signpost_road_a2.png,32×96,指路牌（1951）,否,待开工,,,同上
-P4,新增元素,D09,assets/village/scene/signpost_road_a3.png,32×96,指路牌（1976）,否,待开工,,,同上
-P4,新增元素,D10,assets/village/scene/signpost_name_a1.png,64×64,地名牌（1926）：横牌，牌面留白不写字,否,待开工,,,2×1 格
-P4,新增元素,D11,assets/village/scene/signpost_name_a2.png,64×64,地名牌（1951）,否,待开工,,,同上
-P4,新增元素,D12,assets/village/scene/signpost_name_a3.png,64×64,地名牌（1976）,否,待开工,,,同上
-P4,新增元素,D13,assets/village/scene/signpost_warn_a1.png,32×96,警示牌（1926）：方牌 + 木柱,否,待开工,,,1×2 格
-P4,新增元素,D14,assets/village/scene/signpost_warn_a2.png,32×96,警示牌（1951）,否,待开工,,,同上
-P4,新增元素,D15,assets/village/scene/signpost_warn_a3.png,32×96,警示牌（1976）：可加「注意安全」,否,待开工,,,同上
-P4,新增元素,D16,assets/village/scene/field_big_a1.png,256×192,大地块（1926）：补齐 A1 只有细条田造成的空旷,否,待开工,,,8×6 格；每帧 2 块（估算）
-P4,新增元素,D17,assets/village/scene/field_big_a2.png,256×192,大地块（1951）：替换整块色块田中的一片,否,待开工,,,同上
-P4,新增元素,D18,assets/village/scene/field_big_a3.png,256×192,大地块（1976）,否,待开工,,,同上
-P4,新增元素,D19,assets/village/scene/field_dike_a2.png,256×64,田埂横条（1951）：土埂 + 杂草，两端可对接,否,待开工,,,8×1 格；每帧 3 条（估算）
-P4,新增元素,D20,assets/village/scene/field_dike_a3.png,256×64,田埂横条（1976）,否,待开工,,,同上
-P4,新增元素,D21,assets/village/scene/ditch_tiles_a1.png,32×32,水渠平铺瓦（1926）：土渠 + 浅水,否,待开工,,,四边无缝；6~8 块拼一条渠
-P4,新增元素,D22,assets/village/scene/ditch_tiles_a2.png,32×32,水渠平铺瓦（1951）,否,待开工,,,同上
-P4,新增元素,D23,assets/village/scene/ditch_tiles_a3.png,32×32,水渠平铺瓦（1976）：水泥衬砌,否,待开工,,,同上
-P4,新增元素,D24,assets/village/scene/scarecrow_a1.png,32×96,稻草人（1926）：草帽 + 破布衣,否,待开工,,,1×2 格；每帧 1~2 个（估算）
-P4,新增元素,D25,assets/village/scene/scarecrow_a2.png,32×96,稻草人（1951）,否,待开工,,,同上
-P4,新增元素,D26,assets/village/scene/scarecrow_a3.png,32×96,稻草人（1976）,否,待开工,,,同上
+P4,新增元素,D01,assets/village/scene/hill_a1.png,256×192,山丘单体（1926）：土坡 + 稀疏灌木,否,待开工,,,占地 8×6 格；可水平镜像复用；每帧 3~4 座（估算） ｜ 🟡 地图侧只用 rect 圈定区域，贴图按圈定的区域铺（可平铺/可拉伸），不要按固定格数画死
+P4,新增元素,D02,assets/village/scene/hill_a2.png,256×192,山丘单体（1951）：坡上有开垦痕迹,否,待开工,,,同上 ｜ 🟡 地图侧只用 rect 圈定区域，贴图按圈定的区域铺（可平铺/可拉伸），不要按固定格数画死
+P4,新增元素,D03,assets/village/scene/hill_a3.png,256×192,山丘单体（1976）：坡上小径、坟包,否,待开工,,,同上 ｜ 🟡 地图侧只用 rect 圈定区域，贴图按圈定的区域铺（可平铺/可拉伸），不要按固定格数画死
+P4,新增元素,D04,assets/village/scene/ridge_a1.png,512×128,岭线条带（1926）：远山剪影，贴在画面最上缘做越界遮挡,否,待开工,,,16×4 格；水平可平铺 ｜ 🟡 地图侧贴在画面最上缘，条带水平可平铺，长度随世界宽度
+P4,新增元素,D05,assets/village/scene/ridge_a2.png,512×128,岭线条带（1951）,否,待开工,,,同上 ｜ 🟡 地图侧贴在画面最上缘，条带水平可平铺，长度随世界宽度
+P4,新增元素,D06,assets/village/scene/ridge_a3.png,512×128,岭线条带（1976）,否,待开工,,,同上 ｜ 🟡 地图侧贴在画面最上缘，条带水平可平铺，长度随世界宽度
+P4,新增元素,D07,assets/village/scene/signpost_road_a1.png,32×96,指路牌（1926）：木柱 + 指向牌,否,待开工,,,1×2 格；底部中心锚点 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D08,assets/village/scene/signpost_road_a2.png,32×96,指路牌（1951）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D09,assets/village/scene/signpost_road_a3.png,32×96,指路牌（1976）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D10,assets/village/scene/signpost_name_a1.png,64×64,地名牌（1926）：横牌，牌面留白不写字,否,待开工,,,2×1 格 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D11,assets/village/scene/signpost_name_a2.png,64×64,地名牌（1951）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D12,assets/village/scene/signpost_name_a3.png,64×64,地名牌（1976）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D13,assets/village/scene/signpost_warn_a1.png,32×96,警示牌（1926）：方牌 + 木柱,否,待开工,,,1×2 格 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D14,assets/village/scene/signpost_warn_a2.png,32×96,警示牌（1951）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D15,assets/village/scene/signpost_warn_a3.png,32×96,警示牌（1976）：可加「注意安全」,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计，只微调破损度
+P4,新增元素,D16,assets/village/scene/field_big_a1.png,256×192,大地块（1926）：补齐 A1 只有细条田造成的空旷,否,待开工,,,8×6 格；每帧 2 块（估算） ｜ 🟡 地图侧用 rect 圈定，贴图铺满
+P4,新增元素,D17,assets/village/scene/field_big_a2.png,256×192,大地块（1951）：替换整块色块田中的一片,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 圈定，贴图铺满
+P4,新增元素,D18,assets/village/scene/field_big_a3.png,256×192,大地块（1976）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 圈定，贴图铺满
+P4,新增元素,D19,assets/village/scene/field_dike_a2.png,256×64,田埂横条（1951）：土埂 + 杂草，两端可对接,否,待开工,,,8×1 格；每帧 3 条（估算） ｜ 🟡 地图侧用 rect 圈定，贴图水平铺，两端可对接
+P4,新增元素,D20,assets/village/scene/field_dike_a3.png,256×64,田埂横条（1976）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 圈定，贴图水平铺，两端可对接
+P4,新增元素,D21,assets/village/scene/ditch_tiles_a1.png,32×32,水渠平铺瓦（1926）：土渠 + 浅水,否,待开工,,,四边无缝；6~8 块拼一条渠 ｜ 🟡 地图侧用 rect 圈渠，贴图平铺
+P4,新增元素,D22,assets/village/scene/ditch_tiles_a2.png,32×32,水渠平铺瓦（1951）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 圈渠，贴图平铺
+P4,新增元素,D23,assets/village/scene/ditch_tiles_a3.png,32×32,水渠平铺瓦（1976）：水泥衬砌,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 圈渠，贴图平铺
+P4,新增元素,D24,assets/village/scene/scarecrow_a1.png,32×96,稻草人（1926）：草帽 + 破布衣,否,待开工,,,1×2 格；每帧 1~2 个（估算） ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计
+P4,新增元素,D25,assets/village/scene/scarecrow_a2.png,32×96,稻草人（1951）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计
+P4,新增元素,D26,assets/village/scene/scarecrow_a3.png,32×96,稻草人（1976）,否,待开工,,,同上 ｜ 🟡 地图侧用 rect 定位，底部中心锚点；三个年代共用一个设计
