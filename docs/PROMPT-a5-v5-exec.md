@@ -8,14 +8,15 @@
 
 - **项目路径**：`D:\Desktop\VibeCoding\godot_project\github_game_off_shift\shift`（= 工作目录，直接在仓库根跑）。
 - **Godot**：`D:\steam\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe`（不在 PATH）。
-- **HEAD 下限**：`df079ba`（`git rev-parse --short HEAD` 确认）。低于这个数说明工作区不对，停下来问。
+- **HEAD 下限**：`e6569b6`（`git rev-parse --short HEAD` 确认）。**低于这个数说明几何基准文件还没入库，停下来问。**
+  （`e6569b6` = 本任务书 + 修正版几何基准 `lab/_a5_v5fix.py` / `_a5_v5fix.json` / 预览图 + v5 原始反馈文档 `docs/FEEDBACK-a5-layout-v5.md` 入库。）
 - **开工第一件事**：`git status --short`。工作区**长期是脏的**，里面有跟你完全无关的东西：
   - `M _ref/art/A1_1926/*.png`、`A2_1926/*.png`、`A3_1976/*.png`（美术线在改，**绝对不要 add**）
   - `D 美术资产/**` 一批（用户自己删的，**绝对不要 add，也不要恢复**）
   - 大量未跟踪 `lab/_*`、`docs/FEEDBACK-*`（**绝对不要 add**）
   - **纪律：只精确 `git add` 下面 §1 列出的文件。绝不 `git add -A`、绝不 `git add .`。**
 - **权威源**（照抄，别自己重算）：
-  - 几何基准 = `lab/_a5_v5fix.json`（**本线唯一几何依据**）+ `lab/_a5_v5fix.py`（生成器与自检脚本，可读、**但要按 §3 修正后再用**）。
+  - 几何基准 = `lab/_a5_v5fix.json`（**本线唯一几何依据，已入库**）+ `lab/_a5_v5fix.py`（生成器与自检脚本，已入库；可读、**但要按 §3 修正后再用**）。
   - 权威河公式 = `_ref/houses/_design_v5.py` 的 `river_depth(x)`（实测能 100% 复现现行 `data/frames.json` 的河）。
   - 房屋数据权威源 = `_ref/houses/houses_data.json`（**顶层是 list**，18 条；禁调 `export_seed()`）。
 - **必踩的坑**：
@@ -305,7 +306,11 @@ git diff -- data/frames.json
 - `_mdtest/greybox_check.gd:284` `const ROAD_Y := 1664`（扫 `range(240,2400,32)`）与 `:291`/`:372` 的扫描上界 ⇒ 4800×3600 后扫不到新区域。
 - `_mdtest/camera_check.gd:44` `setup_viewport(Vector2(3200,2400))` 与 `:51-52` 的 clamp 上限 (1920,1680)。
 
-⇒ **本线授权你同步更新这三处测试常量**（`greybox_check.gd:57-58` 改 4800×3600；`:284` 的 ROAD_Y 改 1664（已经是了，保持）；`:291`/`:372` 的扫描上界改 3600/4800；`camera_check.gd:44` 改 4800×3600、`:51-52` clamp 上限改 (4800−1280, 3600−720) = (3520, 2880)）。
+⇒ **本线授权你同步更新这几处测试常量**：
+- `greybox_check.gd:57` 的期望文案 `期望 3200x2400` → `期望 4800x3600`；`:58` 期望值 `Vector2(3200, 2400)` → `Vector2(4800, 3600)`
+- `greybox_check.gd:284` 的 `const ROAD_Y := 1664` **保持不变**（已经是新值）
+- `greybox_check.gd:291` 与 `:372` 的扫描上界：`range(240, 2400, 32)` → `range(240, 3600, 32)`；`range(40, 3160, 32)` → `range(40, 4800, 32)`
+- `camera_check.gd:44` `setup_viewport(Vector2(3200, 2400))` → `setup_viewport(Vector2(4800, 3600))`；`:51-52` 的 clamp 上限 `1920.0 / 1680.0` → `3520.0 / 2880.0`（＝(4800−1280, 3600−720)，见 `scripts/camera_rig.gd:57` 的 `max_off = (world_size - VIEWPORT)`）
 **其它任何一条断言都不许改**（尤其：DOOR_PASSABLE、WALL_STOP_Y 800~816、TIME_FWD_REACHED、SPACE_MOVE_DX=40、A1_WELL_FREE、A3_OLD_WELL_UNDER_MILL、UNEXPLAINED_BLOCKS=0、sort_y 单调断言）。
 
 ⚠️ **A1–A4 四帧仍是旧的 3200×2400 布局**，所以世界一放大，A1–A4 的可达性扫描口径就会变（REACH_MAP 的 to_a5 / blocked_at_step 会动）。**这不是你引入的回归**，但你必须在反馈文档里**如实报告**改动前后的 REACH_MAP 数字，别装没看见。
