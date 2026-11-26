@@ -86,3 +86,23 @@ const ZHOU_NO_NOTE := "这一处不许有任何注解。"
 ## 双本默认内容＝《水簿》一对（假本誊清 / 真本原稿）。
 static func mill_pair() -> Dictionary:
 	return {"fake": FAKE_MILL, "raw": RAW_MILL, "left_title": "假本 · 誊清", "right_title": "真本 · 原稿"}
+
+
+## 《水簿》作为证物入档时用的卡片（"复刻一份在背包里"）。
+##
+## key 用「《水簿》」这种不带 "::" 的地标写法：`evidence_store.gd:85-93` 的 normalize_key
+## 只把带 "::" 的当家具键（过族表），不带 "::" 的按地标归一 —— 书不是谁家的家具，
+## 换年代也是同一本，正好用地标命名空间。
+##
+## text 是**摘要**，不是全文：证物档案是「清单 + 摘要」，全文只留在本文件的 RAW_MILL 里。
+## 将来做举证（对质时把书呈上）时，拿 key 查这张卡、再按 key 取 RAW_MILL 翻全文即可，
+## 不存在两份正文对不上的问题。
+static func mill_evidence(year: int) -> Dictionary:
+	return {
+		"key": "《水簿》",
+		"name": "《水簿》",
+		"source": "磨坊 · %d" % year,
+		"year": year,
+		"text": "磨坊柜台上的誊清本，字迹整齐得不像日常记账；"
+			+ "墙基暗龛里的原稿有四处涂改。两本对照可读。",
+	}

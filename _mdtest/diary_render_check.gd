@@ -33,8 +33,10 @@ func _run() -> void:
 	_d9_pair()
 	_d10_no_bbcode()
 	_layout_checks()
+	_page_checks()
 	_s_static()
 	_view_smoke()
+	_view_input_checks()
 	print("DIARY_RENDER_CHECK_DONE fails=%d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -262,7 +264,7 @@ func _layout_checks() -> void:
 	var real := _new_page(true, DiaryTexts.RAW_MILL)
 	var f_res: Dictionary = fake.compute_layout(fake.body_top(), fake.text_width())
 	var r_res: Dictionary = real.compute_layout(real.body_top(), real.text_width())
-	var room: float = real.size.y - real.body_top() - DiaryPage.PAD
+	var room: float = real.size.y - real.body_top() - DiaryPage.PAD - DiaryPage.FOOTER_H
 	print("LAYOUT fake_h=%.1f real_h=%.1f room=%.1f ops=%d/%d" % [
 		float(f_res.height), float(r_res.height), room,
 		(f_res.ops as Array).size(), (r_res.ops as Array).size()])
@@ -356,6 +358,72 @@ func _layout_checks() -> void:
 	long.free()
 
 
+# ---- P1–P6：分页 + 页脚箭头（仿 Minecraft 的书）-------------------------
+
+func _page_checks() -> void:
+	var fake := _new_page(false, DiaryTexts.FAKE_MILL)
+	var real := _new_page(true, DiaryTexts.RAW_MILL)
+
+	# P1 默认纸高（470×648）：两本都一页装得下，箭头留着但灰掉
+	_ok(fake.page_count() == 1 and real.page_count() == 1,
+		"P1 默认纸高两本各一页：%d/%d" % [fake.page_count(), real.page_count()])
+	_ok(fake.page_text() == "1 / 1", "P1 页码文字是「1 / 1」：%s" % fake.page_text())
+	_ok(not fake.can_prev() and not fake.can_next(), "P1 只有一页时两个箭头都不可用")
+	_ok(fake.hit_arrow(fake.arrow_rect(-1).get_center()) == 0
+		and fake.hit_arrow(fake.arrow_rect(1).get_center()) == 0,
+		"P1 只有一页时点箭头没有任何反应（按钮留着，和 Minecraft 一样）")
+
+	# P2 纸高压小就必须分页，而且按「行」切、不漏行、不多出空页
+	var small := _new_page(false, DiaryTexts.FAKE_MILL)
+	small.size = Vector2(470.0, 300.0)
+	var n: int = small.page_count()
+	var cap: int = small.per_page_lines()
+	var lines: int = small.line_count()
+	_ok(n >= 2, "P2 纸高压到 300 就分成多页：%d 页（每页 %d 行）" % [n, cap])
+	_ok(cap * n >= lines and (n - 1) * cap < lines,
+		"P2 分页刚好盖住 %d 行（%d 页 × %d 行）" % [lines, n, cap])
+
+	# P3 翻到两头就停住，页码跟着走
+	small.goto_page(0)
+	_ok(small.page_text() == "1 / %d" % n, "P3 首页页码：%s" % small.page_text())
+	small.prev_page()
+	_ok(small.page_index() == 0, "P3 首页再往前翻不动")
+	for i in n + 3:
+		small.next_page()
+	_ok(small.page_index() == n - 1, "P3 一直往后翻停在末页：%d/%d" % [small.page_index() + 1, n])
+	_ok(small.page_text() == "%d / %d" % [n, n], "P3 末页页码：%s" % small.page_text())
+
+	# P4 命中区：右箭头 = 后一页；首页点左、末页点右都没反应
+	small.goto_page(0)
+	_ok(small.hit_arrow(small.arrow_rect(1).get_center()) == 1, "P4 多页时点右箭头 = 后一页")
+	_ok(small.hit_arrow(small.arrow_rect(-1).get_center()) == 0, "P4 首页点左箭头不响应")
+	small.goto_page(1)
+	_ok(small.hit_arrow(small.arrow_rect(-1).get_center()) == -1, "P4 第二页点左箭头 = 前一页")
+
+	# P5 箭头画在页脚里、左右贴着内边距（不会被正文压住）
+	var ar_l: Rect2 = fake.arrow_rect(-1)
+	var ar_r: Rect2 = fake.arrow_rect(1)
+	_ok(ar_r.position.y >= 648.0 - DiaryPage.FOOTER_H - 0.01
+		and ar_r.position.y + ar_r.size.y <= 648.0 + 0.01,
+		"P5 箭头落在页脚里（y=%.1f..%.1f）" % [ar_r.position.y, ar_r.position.y + ar_r.size.y])
+	_ok(is_equal_approx(ar_l.position.x, DiaryPage.PAD)
+		and is_equal_approx(ar_r.position.x + ar_r.size.x, 470.0 - DiaryPage.PAD),
+		"P5 两个箭头贴左右内边距（x=%.1f / %.1f）"
+		% [ar_l.position.x, ar_r.position.x + ar_r.size.x])
+	_ok(ar_l.position.x + ar_l.size.x < ar_r.position.x, "P5 左右箭头不重叠（中间留给页码）")
+
+	# P6 真本同样按行分页（不是只对假本生效）
+	var small2 := _new_page(true, DiaryTexts.RAW_MILL)
+	small2.size = Vector2(470.0, 300.0)
+	_ok(small2.page_count() >= 2 and small2.line_count() == real.line_count(),
+		"P6 真本按行分页：%d 页 / %d 行" % [small2.page_count(), small2.line_count()])
+
+	fake.free()
+	real.free()
+	small.free()
+	small2.free()
+
+
 # ---- S1/S2/S4：静态自检 --------------------------------------------------
 
 func _read(path: String) -> String:
@@ -412,4 +480,65 @@ func _view_smoke() -> void:
 	v.open_view()
 	v.close_view()
 	_ok(not v.is_open(), "S6 close_view 之后收起")
+	v.queue_free()
+
+
+# ---- V1–V6：键位与点箭头（E 开合同键 / Esc / 点箭头翻页）----------------
+
+## 造一个「按下」的键事件（逻辑键与物理键都给，跟真实输入一致）。
+func _key(code: int) -> InputEventKey:
+	var e := InputEventKey.new()
+	e.keycode = code
+	e.physical_keycode = code
+	e.pressed = true
+	return e
+
+
+func _view_input_checks() -> void:
+	var v: Control = DiaryView.new()
+	root.add_child(v)
+	v.size = Vector2(1280.0, 720.0)
+	v._layout()
+
+	# V1 Esc 合上
+	v.open_view()
+	v._input(_key(KEY_ESCAPE))
+	_ok(not v.is_open(), "V1 Esc 合上书本")
+	_ok(v.just_closed(),
+		"V1 合上那一帧 just_closed() 为真（主流程靠它防「合上又被 E 立刻翻开」）")
+
+	# V2 E 也能合上（开合是同一个键）
+	v.open_view()
+	v._input(_key(KEY_E))
+	_ok(not v.is_open(), "V2 E 同样能合上书本")
+
+	# V3 点页脚右箭头 → 两本一起往后翻一页
+	v.open_view()
+	v.left_page.size = Vector2(470.0, 300.0)
+	v.right_page.size = Vector2(470.0, 300.0)
+	var pages := int(v.left_page.page_count())
+	_ok(pages >= 2, "V3 纸压小之后有多页可翻：%d 页" % pages)
+	var mb := InputEventMouseButton.new()
+	mb.button_index = MOUSE_BUTTON_LEFT
+	mb.pressed = true
+	mb.position = v.left_page.global_position + v.left_page.arrow_rect(1).get_center()
+	v._input(mb)
+	_ok(int(v.left_page.page_index()) == 1, "V3 点左页右箭头 → 翻到第 2 页")
+	_ok(int(v.right_page.page_index()) == 1, "V3 两本一起翻（对照阅读不脱节）")
+
+	# V4 点正文（不是箭头）不该翻页
+	var before := int(v.left_page.page_index())
+	mb.position = v.left_page.global_position + Vector2(200.0, 200.0)
+	v._input(mb)
+	_ok(int(v.left_page.page_index()) == before, "V4 点纸面正文不翻页")
+
+	# V5 → 键继续往后翻，末页停住
+	v._input(_key(KEY_RIGHT))
+	_ok(int(v.left_page.page_index()) == mini(2, pages - 1),
+		"V5 → 键往后翻：%d/%d" % [int(v.left_page.page_index()) + 1, pages])
+
+	# V6 收起状态下按键不会把界面弄开
+	v.close_view()
+	v._input(_key(KEY_RIGHT))
+	_ok(not v.is_open(), "V6 收起状态下按键不会打开界面")
 	v.queue_free()

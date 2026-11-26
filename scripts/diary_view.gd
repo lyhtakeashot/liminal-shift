@@ -6,12 +6,17 @@ extends Control
 ## 两个 DiaryPage 手动摆位（任务书 §3.4）—— 容器会把纸页拉伸/留白，实测量出来的
 ## 字号线高就不对了，纸页尺寸必须是我们自己给的定值。
 ##
-## 本文件只负责「摆两张纸 + 背景 + 滚动 + 关闭」，正文怎么画全在 `diary_page.gd`。
-## **不接主流程**（L17 还没交付，`scripts/main.gd` 这条线另有接线补丁，见反馈文档）。
+## 本文件只负责「摆两张纸 + 背景 + 翻页 + 关闭」，正文怎么画全在 `diary_page.gd`。
+##
+## 交互（2026-11-26 定）：
+##   · 翻页：纸页页脚上两个箭头（点一下翻一页，仿 Minecraft 的书）+ 键盘 ← → / ↑ ↓
+##   · 合书：E 或 Esc —— E 与「在世界里打开」用的是同一个键，开合对称
+##   · 滚轮：上下各翻一页（鼠标习惯，不是滚动条；纸上没有滚动条了）
 
 const DiaryPage = preload("res://scripts/diary_page.gd")
 const DiaryMarkup = preload("res://scripts/diary_markup.gd")
 const DiaryTexts = preload("res://scripts/diary_texts.gd")
+const EvidenceStore = preload("res://scripts/evidence_store.gd")
 
 ## —— 版式（照 _mdtest/render3.gd:36-44 的比例，按 1280×720 重算）——
 const PAGE_W := 470.0     # 单页宽
@@ -22,8 +27,10 @@ const HINT_H := 22.0      # 底部提示条预留
 const BG_COL := Color("#efe6d0")      # 整页压暗底（render3.gd:36-39）
 const HINT_COL := Color("#6a5a48")
 const HINT_FS := 12
-const HINT := "↑↓ / 滚轮 翻页        Esc 关闭"
-const SCROLL_STEP := 52.0             # 一次滚两行（2 × 行高 26）
+const HINT := "← → 翻页        E / Esc 合上"
+
+## 合上书本时通知外面（主流程用它把 HUD 放回来）
+signal closed
 
 var font: Font = ThemeDB.fallback_font
 
@@ -33,7 +40,7 @@ var open := false
 var bg: ColorRect
 var left_frame: Control
 var right_frame: Control
-## 这两页要用动态访问（page.scroll / page.set_scroll），故意不写 static 类型
+## 这两页要用动态访问（page.goto_page / page.hit_arrow），故意不写 static 类型
 var left_page = null
 var right_page = null
 
@@ -41,6 +48,12 @@ var _fake_raw := ""
 var _raw_raw := ""
 var _left_title := "假本 · 誊清"
 var _right_title := "真本 · 原稿"
+
+## 合上动作发生在哪一帧：主流程用 just_closed() 避免「E 关掉又立刻被 E 打开」
+var _close_frame := -1
+
+## 证物档案界面（可选）：给了就在入档时闪一下「已收集」。不塞自己的依赖，接线方决定。
+var archive_hook: Object = null
 
 
 func _ready() -> void:
@@ -120,15 +133,25 @@ func is_open() -> bool:
 
 func open_view() -> void:
 	open = true
-	left_page.set_scroll(0.0)
-	right_page.set_scroll(0.0)
+	left_page.goto_page(0)
+	right_page.goto_page(0)
 	visible = true
 	queue_redraw()
 
 
 func close_view() -> void:
+	if not open:
+		return
 	open = false
 	visible = false
+	_close_frame = Engine.get_process_frames()
+	closed.emit()
+
+
+## 这一帧刚刚合上书（E 键在 _input 里合上，主流程的 E 轮询会晚一帧看到）。
+## 没有这道闸，按一次 E 会「合上 → 又打开」。
+func just_closed() -> bool:
+	return _close_frame == Engine.get_process_frames()
 
 
 func toggle() -> void:
@@ -138,7 +161,36 @@ func toggle() -> void:
 		open_view()
 
 
-# ---- 输入（只在自己的展开期间吃键，不吃 WASD/SHIFT/E/I）------------------
+## 把这本书按证物入档（"复刻一份在背包里"）：返回 EvidenceStore.RESULT_*。
+## 档案里是一张「书」卡；正文不进档案（档案是清单 + 摘要），全文仍只在 DiaryTexts 里。
+## 举证环节（对质时把书呈上）还没做，等那条线自己按 key 取这本书。
+func collect_copy(year: int) -> int:
+	var e := DiaryTexts.mill_evidence(year)
+	var res := EvidenceStore.try_collect(String(e.key), String(e.name),
+		String(e.source), String(e.text), int(e.year))
+	if res != EvidenceStore.RESULT_DUPLICATE:
+		EvidenceStore.save()
+		if archive_hook != null and archive_hook.has_method("flash_collected"):
+			archive_hook.call("flash_collected", String(e.name), res == EvidenceStore.RESULT_NEW_CARD)
+	return res
+
+
+# ---- 翻页 ----------------------------------------------------------------
+
+## 两本一起翻（对照阅读：左页看到的和右页永远是同一处上下文）。
+func turn(delta: int) -> void:
+	if delta == 0:
+		return
+	left_page.goto_page(int(left_page.page_index()) + delta)
+	right_page.goto_page(int(right_page.page_index()) + delta)
+	queue_redraw()
+
+
+func page_text() -> String:
+	return "%s    %s" % [String(left_page.page_text()), String(right_page.page_text())]
+
+
+# ---- 输入（只在自己的展开期间吃键，不吃 WASD/SHIFT/I）--------------------
 
 func _input(event: InputEvent) -> void:
 	if not open:
@@ -146,34 +198,42 @@ func _input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
-		if mb.pressed:
-			if mb.button_index == MOUSE_BUTTON_WHEEL_UP:
-				_scroll_by(-SCROLL_STEP)
-				get_viewport().set_input_as_handled()
-			elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				_scroll_by(SCROLL_STEP)
-				get_viewport().set_input_as_handled()
+		if not mb.pressed:
+			return
+		# 点页脚上的两个箭头（仿 Minecraft 的书）
+		if mb.button_index == MOUSE_BUTTON_LEFT:
+			for p in [left_page, right_page]:
+				if p == null:
+					continue
+				var d := int(p.hit_arrow(mb.position - p.global_position))
+				if d != 0:
+					turn(d)
+					get_viewport().set_input_as_handled()
+					return
+		elif mb.button_index == MOUSE_BUTTON_WHEEL_UP:
+			turn(-1)
+			get_viewport().set_input_as_handled()
+		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			turn(1)
+			get_viewport().set_input_as_handled()
 		return
 
 	if event is InputEventKey:
 		var k := event as InputEventKey
 		if not k.pressed or k.echo:
 			return
-		match k.keycode:
-			KEY_ESCAPE:
+		# 直接用物理键判断，不依赖 InputMap 有没有重载（和 F11 的兜底同一理由）
+		var code := k.keycode if k.keycode != 0 else k.physical_keycode
+		match code:
+			KEY_ESCAPE, KEY_E:
 				close_view()
-			KEY_UP, KEY_PAGEUP:
-				_scroll_by(-SCROLL_STEP)
-			KEY_DOWN, KEY_PAGEDOWN:
-				_scroll_by(SCROLL_STEP)
+			KEY_LEFT, KEY_UP, KEY_PAGEUP:
+				turn(-1)
+			KEY_RIGHT, KEY_DOWN, KEY_PAGEDOWN:
+				turn(1)
 			_:
 				return
 		get_viewport().set_input_as_handled()
-
-
-func _scroll_by(d: float) -> void:
-	left_page.set_scroll(float(left_page.scroll) + d)
-	right_page.set_scroll(float(right_page.scroll) + d)
 
 
 # ---- 底部提示 ------------------------------------------------------------
