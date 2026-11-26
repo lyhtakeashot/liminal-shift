@@ -35,10 +35,31 @@ func setup(d: Dictionary) -> void:
 	for s in d.get("shapes", []):
 		var sd: Dictionary = s
 		shapes.append(sd)
-		if not bool(sd.get("solid", false)):
+		var is_solid := bool(sd.get("solid", false))
+		var stype := String(sd.get("type", ""))
+
+		# 房子：热点（能看的东西）和碰撞（走不走得进去）是两件事，必须解耦。
+		# 装饰房写 solid:false 时仍然要能看室内的东西，只是不挡人
+		# （2026-11-26 用户口径：装饰房 / 山体暂不参与空气墙）。
+		if stype == "house":
+			# clue 家具自动加成检视点（BUILD-A1 §5）
+			var sid := String(sd.get("id", ""))
+			var sp: Array = sd.get("pos", [0, 0])
+			var hpos := Vector2(float(sp[0]), float(sp[1]))
+			var hdata := HouseShape.house(sid)
+			if hdata.is_empty():
+				push_warning("house 形状没有对应数据：%s" % sid)
+				continue
+			# 墙逐段进 solid_rects（门洞留空、lot 边界不阻挡）
+			if is_solid:
+				solid_rects.append_array(HouseShape.solid_rects(hdata, hpos))
+			hotspots.append_array(HouseShape.hotspots(hdata, hpos, year))
 			continue
-		# 只有矩形、圆形、房子可以阻挡；路径和纯装饰不参与。
-		match String(sd.get("type", "")):
+
+		if not is_solid:
+			continue
+		# 只有矩形、圆形、多边形可以阻挡；路径和纯装饰不参与。
+		match stype:
 			"rect":
 				solid_rects.append(_rect_from(sd))
 			"circle":
@@ -52,18 +73,6 @@ func setup(d: Dictionary) -> void:
 				var ppts: Array = sd.get("points", [])
 				if ppts.size() >= 3:
 					solid_rects.append_array(_polygon_scanlines(ppts))
-			"house":
-				# 房子：墙逐段进 solid_rects（门洞留空、lot 边界不阻挡）；
-				# clue 家具自动加成检视点（BUILD-A1 §5）
-				var sid := String(sd.get("id", ""))
-				var sp: Array = sd.get("pos", [0, 0])
-				var hpos := Vector2(float(sp[0]), float(sp[1]))
-				var hdata := HouseShape.house(sid)
-				if hdata.is_empty():
-					push_warning("house 形状没有对应数据：%s" % sid)
-					continue
-				solid_rects.append_array(HouseShape.solid_rects(hdata, hpos))
-				hotspots.append_array(HouseShape.hotspots(hdata, hpos, year))
 
 	for h in d.get("hotspots", []):
 		var hd: Dictionary = (h as Dictionary).duplicate()
