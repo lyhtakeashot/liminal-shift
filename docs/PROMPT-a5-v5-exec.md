@@ -333,7 +333,7 @@ python -c "import json;d=json.load(open('_ref/houses/houses_data.json',encoding=
 - `shen_a5` 的 `doors` 与 `gate` 必须是空数组；`furniture` 里没有 `clue:true` 的项。
 
 ```bash
-git diff --stat _ref/houses/houses_data.json scripts/evidence_store.gd data/frames.json docs/story.md docs/HANDOFF.md
+git diff --stat _ref/houses/houses_data.json scripts/evidence_store.gd data/frames.json docs/story.md
 git diff -- data/frames.json
 ```
 - `houses_data.json` 的 diff **只有新增行、没有删除行**。
