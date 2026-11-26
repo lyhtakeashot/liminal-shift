@@ -4,6 +4,8 @@
 
 **SHIFT** is a pixel narrative game about an archivist nobody can see. Space stays frozen; time moves. Walk the same village across five eras, press **Shift** to travel through time, and piece together a family's unfinished story from what people left behind.
 
+*The world turns over. He stays where he is, watching the clouds pass.*
+
 Made with [Godot 4](https://godotengine.org/) for [GitHub Game Off](https://gameoff.dev/).
 
 ![沈家院内 · 1926](./_mdtest/assets/a1_shen_house.png)

@@ -830,7 +830,9 @@ git push -u origin main
 
 **写进 itch 页面的介绍里，这是评委第一个看的：**
 
-> **主角唯一能移动的维度是时间，而一百年里唯一没有移动过的东西，是那块地砖。**
+> **时过境迁，沧海桑田，我仍在此处看云卷云舒。**
+
+> *The world turns over. He stays where he is, watching the clouds pass.*
 
 空间冻结、时间可动、位置不变——**这既是玩法，也是这个故事的主题。**
 
