@@ -70,10 +70,6 @@ var font: Font = ThemeDB.fallback_font
 # 时间轴模式下世界整体的一种冷暖偏移，让五个年代第一眼就能分开
 var year_tint := Color(1, 1, 1, 1)
 
-# 推不过去时的震动（§3.4 的「顶住了」反馈之一）
-var _shake := 0.0
-var _shake_dir := Vector2.ZERO
-
 # 玩家世界坐标。用来判「玩家是不是站在这栋房子的 wings 里」→ 决定画不画屋顶。
 # 每帧由 main.gd 通过 set_player_state() 灌进来；房间是逐帧数据，不缓存布尔（§4.8.4 陷阱）。
 var player_pos := Vector2.ZERO
@@ -85,7 +81,7 @@ var player_ref: Node2D = null
 var _p_facing := Vector2.ZERO
 var _p_walking := false
 var _p_walk_phase := 0.0
-var _p_bump := 0.0
+var _p_phasing := false
 var _p_time := false
 
 
@@ -113,22 +109,25 @@ func set_player_pos(p: Vector2) -> void:
 	queue_redraw()
 
 
-## 玩家状态通路（排序需要的全套）：pos / facing / walking / walk_phase / bump_kick / time_mode。
+## 玩家状态通路（排序需要的全套）：pos / facing / walking / walk_phase / phasing / time_mode。
 ## 任何一项变了才重画；走路时 walk_phase 一直在变 → 本来也会因为位置变而重绘，不额外花钱。
+## phasing 在第 5 位（这个位置原本放撞墙后仰量）：虚化的半透明由 player.gd 自己按这个布尔算。
 func set_player_state(p: Vector2, facing: Vector2, walking: bool, walk_phase: float,
-		bump_kick: float, is_time: bool) -> void:
+		phasing: bool, is_time: bool) -> void:
 	var changed := (not p.is_equal_approx(player_pos)) \
 		or (not facing.is_equal_approx(_p_facing)) \
 		or (walking != _p_walking) \
 		or (not is_equal_approx(walk_phase, _p_walk_phase)) \
-		or (not is_equal_approx(bump_kick, _p_bump)) \
+		or (phasing != _p_phasing) \
 		or (is_time != _p_time)
 	player_pos = p
 	_p_facing = facing
 	_p_walking = walking
 	_p_walk_phase = walk_phase
-	_p_bump = bump_kick
+	_p_phasing = phasing
 	_p_time = is_time
+	if player_ref != null:
+		player_ref.set("phasing", phasing)
 	if changed:
 		queue_redraw()
 
@@ -141,26 +140,9 @@ func set_player_ref(p: Node2D) -> void:
 	queue_redraw()
 
 
-## 震屏。幅度很小，0.12 秒内衰减 —— 是「顶住了」不是「弹回去」。
-func kick_shake(amount: float) -> void:
-	_shake = maxf(_shake, amount)
-	_shake_dir = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)).normalized()
-	queue_redraw()
-
-
-func _process(delta: float) -> void:
-	if _shake > 0.0:
-		_shake = maxf(0.0, _shake - delta * 22.0)
-		queue_redraw()
-
-
 func _draw() -> void:
 	if frame == null:
 		return
-
-	var shake_off := Vector2.ZERO
-	if _shake > 0.0:
-		shake_off = _shake_dir * _shake
 
 	# 地面：先铺整帧地面色（C4 容错 —— 贴图缺失时不能变成透明），再盖 32px 地面瓦片。
 	# 瓦片**只在主通道画这一遍**，不进 _draw_scene 的三遍色差：
@@ -176,9 +158,9 @@ func _draw() -> void:
 		return
 
 	# 色差：红往左、青往右，各偏 1px，低透明度
-	_draw_scene(Vector2(-1, 0) + shake_off, Color(1.0, 0.55, 0.55, 1.0), 0.45, true)
-	_draw_scene(Vector2(1, 0) + shake_off, Color(0.55, 0.85, 1.0, 1.0), 0.45, true)
-	_draw_scene(shake_off, Color(1, 1, 1, 1), 1.0, true)
+	_draw_scene(Vector2(-1, 0), Color(1.0, 0.55, 0.55, 1.0), 0.45, true)
+	_draw_scene(Vector2(1, 0), Color(0.55, 0.85, 1.0, 1.0), 0.45, true)
+	_draw_scene(Vector2.ZERO, Color(1, 1, 1, 1), 1.0, true)
 
 	_draw_vignette()
 

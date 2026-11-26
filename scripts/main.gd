@@ -45,6 +45,9 @@ var _diary_j_down := false            # J 键边沿检测（临时调试入口�
 var _step_active := false    # 这一轮按住是否已经推过第一帧
 var _repeating := false      # 是否已经进入连发阶段
 var _hold_time := 0.0
+var _phase_active := false   # 虚化位移的按住状态（A/D，边沿 + 连发）
+var _phase_repeating := false
+var _phase_hold := 0.0
 var _last_hotspot: Dictionary = {}
 var _f11_down := false       # F11 边沿检测（轮询，不用事件）
 
@@ -57,7 +60,9 @@ func _ready() -> void:
 
 	tl.axis_changed.connect(_on_axis_changed)
 	tl.frame_changed.connect(_on_frame_changed)
-	tl.bump.connect(_on_bump)
+	# house-spec §8.3：推时间不再被拒，改为「时代前进 + 卡墙虚化」。
+	tl.out_of_range.connect(_on_out_of_range)
+	tl.phasing_changed.connect(_on_phasing_changed)
 
 	player.position = tl.char_pos
 	camera_rig.setup_viewport(tl.world_size)
@@ -222,10 +227,19 @@ func _process(delta: float) -> void:
 	# 遮挡顺序取决于玩家脚线（y-sort）。所以整套玩家状态都喂给 world_view。
 	# set_player_state 内部有等值判断，不动就不重绘。
 	world.set_player_state(tl.char_pos, player.facing, player.walking,
-		player.walk_phase, player.bump_kick, tl.axis == Timeline.Axis.TIME)
+		player.walk_phase, tl.phasing, tl.axis == Timeline.Axis.TIME)
 
 
 func _process_space(delta: float) -> void:
+	# 虚化中不走普通行走：is_walkable() 在虚化期间只守边界（恒为真），
+	# 走 move_space 会变成无限穿墙。这里只留 A/D 的「往里 / 往外」（house-spec §8.3）。
+	if tl.phasing:
+		var held := _process_phasing(delta)
+		player.walking = held
+		if held and not _last_hotspot.is_empty():
+			_clear_hotspot()
+		return
+
 	var dir := Vector2(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
@@ -252,11 +266,17 @@ func _process_time(delta: float) -> void:
 	elif Input.is_action_pressed("move_down"):
 		dir = -1
 
-	player.walking = dir != 0
 	if dir != 0:
 		player.walk_phase += delta
 		player.facing = Vector2.UP if dir > 0 else Vector2.DOWN
 
+	# 虚化中 W/S 照旧推时间（house-spec §8.3：时间轴手感不变），
+	# A/D 额外提供往里 / 往外 —— 所以这里不 return，两条输入同时有效。
+	var phased := false
+	if tl.phasing:
+		phased = _process_phasing(delta)
+
+	player.walking = dir != 0 or phased
 	if dir == 0:
 		_step_active = false
 		_repeating = false
@@ -367,12 +387,64 @@ func _on_frame_changed(_index: int, _frame: FrameData) -> void:
 	_refresh_all()
 
 
-func _on_bump(_index: int) -> void:
-	# §3.4：不要弹回去，要「顶住了」
-	hud.flash_bump()
-	world.kick_shake(2.2)
-	player.bump_kick = 4.8
+func _on_out_of_range(_index: int) -> void:
+	# 到时间轴这一头了：提示一下，不做位移、不改时代（house-spec §8.3）。
+	hud.flash_bounds()
+
+
+func _on_phasing_changed(on: bool) -> void:
+	# 虚化只影响玩家自己的观感（半透明 + 冷色），不闪屏、不震屏。
+	hud.set_phasing(on)
+	if not on:
+		# 走出来时顺手把「往里 / 往外」的按住状态清掉，避免下一步连发
+		_phase_active = false
+		_phase_repeating = false
+		_phase_hold = 0.0
 	player.queue_redraw()
+
+
+## 虚化位移输入（house-spec §8.3 / 方案甲：不改 project.godot，A/D 临时解释成
+## 往里 / 往外）。手感跟推时间一致：按下立刻走一步，长按 STEP_DELAY 后按
+## STEP_INTERVAL 连发。返回这一帧 A/D 是否按着（给 player.walking 用）。
+func _process_phasing(delta: float) -> bool:
+	var inp := 0
+	if Input.is_action_pressed("move_left"):
+		inp = 1      # A = 往里（沿当前朝向深入实体）
+	elif Input.is_action_pressed("move_right"):
+		inp = -1     # D = 往外（退回最近的自由表面）
+	if inp == 0:
+		_phase_active = false
+		_phase_repeating = false
+		_phase_hold = 0.0
+		return false
+
+	if not _phase_active:
+		_phase_active = true
+		_phase_repeating = false
+		_phase_hold = 0.0
+		_do_phase_step(inp)
+		return true
+
+	_phase_hold += delta
+	if not _phase_repeating:
+		if _phase_hold >= STEP_DELAY:
+			_phase_repeating = true
+			_phase_hold = 0.0
+			_do_phase_step(inp)
+		return true
+
+	if _phase_hold >= STEP_INTERVAL:
+		_phase_hold -= STEP_INTERVAL
+		_do_phase_step(inp)
+	return true
+
+
+func _do_phase_step(inp: int) -> void:
+	if inp > 0:
+		tl.push_in(player.facing)
+	else:
+		tl.push_out(player.facing)
+	_clear_hotspot()
 
 
 func _refresh_all() -> void:
@@ -384,7 +456,7 @@ func _refresh_all() -> void:
 	# 换帧后 wings 会变，屋顶显隐必须按新数据重算（§4.8.4 陷阱：不能缓存布尔）
 	# 玩家状态也一并同步 —— 排序键靠脚线，切帧时脚线不变也要保证状态新鲜。
 	world.set_player_state(tl.char_pos, player.facing, player.walking,
-		player.walk_phase, player.bump_kick, is_time)
+		player.walk_phase, tl.phasing, is_time)
 
 	player.time_mode = is_time
 	player.queue_redraw()

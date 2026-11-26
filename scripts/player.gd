@@ -10,12 +10,22 @@ extends Node2D
 ##   以前靠 z_index = 10 把自己叠在全世界最上 —— 绕到房子后面仍然盖在屋顶上，
 ##   伪 3D 直接失效。现在像素由 world_view 的 y-sort 循环在正确深度上画出来
 ##   （world_view 调 draw_self()）。所以这里**不能**再设 z_index。
+##
+## L17 卡墙虚化（house-spec §8.3）：phasing 时整个人半透明 + 轻微冷色，
+##   影子也一起淡掉 —— 玩家一眼能看出「我现在是穿在实体里，不是我隐身了」。
 
 const BODY := Color(0.96, 0.88, 0.62)
 const BODY_DIM := Color(0.62, 0.60, 0.52)
 const OUTLINE := Color(0.12, 0.10, 0.08)
 const RADIUS := 14.0
 const TRAIL := 4
+
+## 虚化的不透明度。⚠️ 时间轴模式下 world_view 会把玩家画三遍（两遍色差 + 一遍实色），
+## 三遍同点叠加后不透明度 = 1-(1-a)^3 ⇒ 单遍 0.40 会合成到 0.78、几乎看不见虚化，
+## 所以时间轴模式单遍取 0.16（合成 ≈0.41），空间轴单遍直接 0.40。
+const PHASING_ALPHA := 0.40
+const PHASING_ALPHA_TIME := 0.16
+const PHASING_TINT := Color(0.78, 0.90, 1.0)
 
 ## L12/M6：走路动画频率。提速 ×1.5（120→180）后频率同步 ÷1.5（9.0→6.0），
 ## 否则腿脚比身体快、看着像滑冰。bob 与帧索引必须共用这一个常量（改一漏一会抽搐）。
@@ -45,7 +55,7 @@ var time_mode := false
 var facing := Vector2.DOWN
 var walk_phase := 0.0
 var walking := false
-var bump_kick := 0.0     # 撞墙时的一个小位移，0.12 秒内衰减
+var phasing := false     # 卡墙虚化中（由 world_view.set_player_state 注入）
 
 ## 主角贴图（美术资产）。加载失败 → 回退到原来的圆 + 三角画法。
 static var _sheet: Texture2D = null
@@ -62,7 +72,7 @@ func _draw() -> void:
 	pass
 
 
-## 画玩家。offset = 色差/震屏偏移（世界坐标）。
+## 画玩家。offset = 色差偏移（世界坐标，时间轴三遍画的 ±1px）。
 ## 坐标基准 = 本节点的 position（世界坐标，由 main.gd 每帧设成 tl.char_pos）。
 ## world_view 在排序循环里按 sort_y 轮到玩家时才调它 —— 深度由调用顺序决定。
 func draw_self(offset: Vector2 = Vector2.ZERO) -> void:
@@ -76,18 +86,38 @@ func draw_self(offset: Vector2 = Vector2.ZERO) -> void:
 	if walking:
 		bob = absf(sin(walk_phase * WALK_FREQ)) * 3.2
 
-	var kick := facing * bump_kick * -1.0
-
 	# 美术主角精灵：有贴图就画精灵，没有就回退到圆 + 三角。
 	var sheet := _hero_sheet()
 	if sheet != null:
-		_draw_hero(c, sheet, base + kick, bob)
+		_draw_hero(c, sheet, base, bob)
 	else:
-		_draw_fallback(c, base + kick, bob)
+		_draw_fallback(c, base, bob)
 
-	# 空间轴模式下的脚下影子，帮玩家判断站立点
+	# 空间轴模式下的脚下影子，帮玩家判断站立点。
+	# 虚化时影子一起淡掉：人穿在实体里却还有实心影子，看着像 bug。
 	if not time_mode:
-		c.draw_circle(base + Vector2(0, RADIUS * 0.7), RADIUS * 0.9, Color(0, 0, 0, 0.16))
+		var sa := 0.16 * (0.35 if phasing else 1.0)
+		c.draw_circle(base + Vector2(0, RADIUS * 0.7), RADIUS * 0.9, Color(0, 0, 0, sa))
+
+
+## 虚化的调制色：不透明度 + 轻微冷色偏（house-spec §8.3「半透明 + 轻微色差」）。
+func _phase_tint() -> Color:
+	if not phasing:
+		return Color(1, 1, 1, 1)
+	return Color(PHASING_TINT.r, PHASING_TINT.g, PHASING_TINT.b, 1.0)
+
+
+## 单遍应有的不透明度（时间轴三遍叠加后才是肉眼看到的值，见常量注释）。
+func _body_alpha() -> float:
+	if not phasing:
+		return 1.0
+	return PHASING_ALPHA_TIME if time_mode else PHASING_ALPHA
+
+
+## 把基色和虚化调制色乘起来（不透明部分按 tint 压暗，alpha 用单遍值）。
+func _phase_color(base: Color) -> Color:
+	var t := _phase_tint()
+	return Color(base.r * t.r, base.g * t.g, base.b * t.b, _body_alpha())
 
 
 ## 画美术精灵：一帧 32×32，**脚底对齐** position.y + RADIUS（站位不变），
@@ -108,7 +138,7 @@ func _draw_hero(c: CanvasItem, sheet: Texture2D, base: Vector2, bob: float) -> v
 		base.x - HERO_FRAME * 0.5,
 		base.y + RADIUS - HERO_FRAME - bob,
 		HERO_FRAME, HERO_FRAME)
-	c.draw_texture_rect_region(sheet, dst, src)
+	c.draw_texture_rect_region(sheet, dst, src, _phase_color(Color(1, 1, 1, 1)))
 
 	# 时间轴模式的残影：沿朝向反方向排开，越远越淡（用精灵的第一帧）
 	if time_mode and walking:
@@ -120,8 +150,10 @@ func _draw_hero(c: CanvasItem, sheet: Texture2D, base: Vector2, bob: float) -> v
 				base.x - HERO_FRAME * 0.5 + off.x,
 				base.y + RADIUS - HERO_FRAME - bob + off.y,
 				HERO_FRAME, HERO_FRAME)
+			var tc := _phase_color(Color(1, 1, 1, 1))
+			tc.a = a * _body_alpha()
 			c.draw_texture_rect_region(sheet, rdst, Rect2(fno * HERO_FRAME, 0,
-				HERO_FRAME, HERO_FRAME), Color(1, 1, 1, a))
+				HERO_FRAME, HERO_FRAME), tc)
 
 
 ## 没有美术贴图时的灰盒画法（保留：美术资产缺失也不能把游戏画不出来）。
@@ -131,12 +163,12 @@ func _draw_fallback(c: CanvasItem, base: Vector2, bob: float) -> void:
 		for i in range(TRAIL, 0, -1):
 			var t := float(i) / float(TRAIL + 1)
 			var off := -facing * (float(i) * 6.4)
-			var a := 0.30 * (1.0 - t)
-			c.draw_circle(base + off, RADIUS - 0.5,
-				Color(BODY_DIM.r, BODY_DIM.g, BODY_DIM.b, a))
+			var a := 0.30 * (1.0 - t) * _body_alpha()
+			var tc := _phase_color(BODY_DIM)
+			c.draw_circle(base + off, RADIUS - 0.5, Color(tc.r, tc.g, tc.b, a))
 
-	var col := BODY
-	c.draw_circle(base, RADIUS + 1.0, OUTLINE)
+	var col := _phase_color(BODY)
+	c.draw_circle(base, RADIUS + 1.0, _phase_color(OUTLINE))
 	c.draw_circle(base + Vector2(0, -bob), RADIUS, col)
 
 	# 朝向小三角
@@ -161,9 +193,3 @@ static func _hero_sheet() -> Texture2D:
 	if ResourceLoader.exists(HERO_SHEET):
 		_sheet = load(HERO_SHEET)
 	return _sheet
-
-
-func _process(delta: float) -> void:
-	if bump_kick > 0.0:
-		bump_kick = maxf(0.0, bump_kick - delta * 40.0)
-		queue_redraw()

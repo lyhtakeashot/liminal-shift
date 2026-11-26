@@ -211,13 +211,17 @@ func _init() -> void:
 	print("WALL_BLOCKED=%s" % (tl.char_pos.y >= 800.0 and tl.char_pos.y <= 816.0))
 
 	# --- 5. 从 A1 一路推到 A5（起点在主路 (1400,1120)，A2-A5 该点为空地可站） ---
+	# L17 起 step_time 不再拒绝推进（落进实体就进虚化），所以「推得到几步」只由帧数决定；
+	# 「能不能站」改由 PHASING 断言单独盯（这里是空地，不该虚化）。
 	tl.char_pos = Vector2(1400, 1120)
 	tl.index = 0
+	tl.exit_phasing()
 	var reached: Array = []
 	for i in 10:
 		if tl.step_time(+1):
 			reached.append(tl.index)
 	print("TIME_FWD_REACHED=%s (期望 [1,2,3,4])" % str(reached))
+	print("TIME_FWD_PHASING=%s (期望 false：主路这个点五帧都可站，不该虚化)" % str(tl.phasing))
 
 	# --- 6. 边界 ---
 	tl.index = 0
@@ -247,9 +251,10 @@ func _init() -> void:
 			i, fr.id, fr.year, fr.solid_rects.size(), fr.hotspots.size()])
 
 	# --- 10. 时间轴可行性回归（用户 2026-11-20 报过「移动一会儿后无法推时间」）---
-	# 根因曾是 A2-A5 的旧 640×360 固体叠在新 A1 世界左上角 → 走进重叠区被顶住。
-	# A2 建好后，A1 空地变成 A2 房子/新井，推帧被「顶住」是正确设计，不能要求全场 100%。
+	# 根因曾是 A2-A5 的旧 640×360 固体叠在新 A1 世界左上角 → 走进重叠区被挡住。
+	# A2 建好后，A1 空地变成 A2 房子/新井，推帧落进实体是正常现象（L17 起改为虚化）。
 	# 正确断言：**每一个卡点都必须能解释**（在 A2 房子 lot 内 / 在新井内 / 贴墙 8px 内的边界效应）。
+	# ⚠️ REACH_MAP 直接查 frames[k].is_free()，与 step_time 是否拒绝推进无关 —— L17 不改它的口径。
 	var reach := _scan_reach(tl)
 	print("REACH_MAP=%s" % str(reach))
 	print("REACH_MOVE_BAND=%s (A1 主路带的可推率，仅作参考)" % str(reach["band_ratio"]))
@@ -259,7 +264,7 @@ func _init() -> void:
 		print("  BAD BLOCK %s" % str(u))
 	# 判定标准：**所有卡点都必须可解释**（落在目标帧的建筑/手写实体里）。
 	# 主路带不追求 100% —— A1 的路在 A2/A3 上变成了沈家宅基和粮站地，
-	# 推过去被顶住正是「时间之门」的设计（实测 165 个主路卡点里 154 个在房子内）。
+	# 落在实体里正是「时间之门」的设计（实测 165 个卡点里 154 个在房子内）。
 	print("REACH_OK=%s (期望 true：卡点全部可解释)" % unexplained.is_empty())
 
 	# --- 11. 三段式线索点（§4.1）—— A2–A5 本轮是空帧占位，等照抄 A1 重建后再验 ---
