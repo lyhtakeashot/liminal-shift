@@ -62,3 +62,6 @@ __pycache__/
 
 # µ¼³ö²úÎï£ºÌå»ı´ó¡¢¿É¸´ÏÖ£¬²»Èë¿â£¨¼û docs/PROMPT-playable-build-exec.md£©
 build/
+
+# å½’æ¡£åŒºï¼šä¸è¿›ç‰ˆæœ¬åº“
+_archive/
