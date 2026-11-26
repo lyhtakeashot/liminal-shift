@@ -48,6 +48,7 @@ const RESULT_NEW_OBSERVATION := 2   # 同一件物件的新年代 → 追加一�
 const HOUSE_FAMILY := {
 	"lu_house": "lu", "lu_a2": "lu", "lu_a3": "lu",
 	"shen_a1": "shen", "shen_a2": "shen", "shen_a3": "shen", "shen_a4": "shen",
+	"shen_a5": "shen",
 	"mill_a1": "mill", "mill_a2": "mill", "mill_a3": "mill",
 	"zhou_house": "zhou", "zhou_a2": "zhou", "zhou_a3": "zhou", "zhou_a4": "zhou",
 	"market": "market", "zheng_a4": "zheng", "school": "school", "toyshop": "toyshop",

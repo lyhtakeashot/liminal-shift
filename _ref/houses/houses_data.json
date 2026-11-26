@@ -11484,5 +11484,1487 @@
     ],
     "story": "陆家老宅 1926 年后地契归沈家，1951 年空屋，1976 年塌成废墟。到 2001 年，这块地上盖起一栋先富起来的普通人家的瓷砖外墙二层小楼：席梦思、彩电、立式空调、水冲卫生间，一样不少。这家人不知道脚下曾是陆家老宅，也不知道二十年前这里的残墙断井——他们只是买下了沈家手里的一块地。全篇「没人知道」的主题，在这栋房子上落到了最平常的一户人家。",
     "note": "屋本体 15×11 格、占地 20×13 格（lot/wings 为准；旧 note 的 15×8/19×9 是照抄 lu_a2 时的旧口径）。一层独立设计为六空间：主卧/次卧/堂屋(客餐一体)/楼梯间/卫生间/厨房，堂屋为枢纽、每间房直接开门向堂屋，院门在堂屋正南。家具：主卧梳妆台+电视柜贴南墙、次卧书桌与椅子严格对调（书桌贴南墙）、堂屋立式柜机美术按 1×2 格出图。楼梯间是二层小楼一层必备、旧版完全缺失。与 A1/A2/A3 陆家同址——1976 还是废墟(lu_a3)，2001 已起新房；结构不再照抄 lu_a2，家具与叙事全新。住户对陆家旧事和老井一无所知，不设陆家线索格。"
+  },
+  {
+    "id": "shen_a5",
+    "name": "沈家宅 · A5 2026（四合院 · 祖宅 · 封门）",
+    "lot": [
+      0,
+      0,
+      35,
+      35
+    ],
+    "wings": [
+      [
+        2,
+        2,
+        32,
+        13
+      ],
+      [
+        2,
+        22,
+        32,
+        12
+      ],
+      [
+        2,
+        2,
+        9,
+        32
+      ],
+      [
+        25,
+        2,
+        9,
+        32
+      ],
+      [
+        10,
+        10,
+        5,
+        17
+      ],
+      [
+        22,
+        10,
+        5,
+        17
+      ]
+    ],
+    "partitions": [
+      [
+        11,
+        10,
+        25,
+        10
+      ],
+      [
+        10,
+        3,
+        10,
+        32
+      ],
+      [
+        26,
+        3,
+        26,
+        32
+      ],
+      [
+        18,
+        3,
+        18,
+        9
+      ],
+      [
+        3,
+        14,
+        9,
+        14
+      ],
+      [
+        3,
+        18,
+        9,
+        18
+      ],
+      [
+        3,
+        22,
+        9,
+        22
+      ],
+      [
+        27,
+        14,
+        32,
+        14
+      ],
+      [
+        27,
+        18,
+        32,
+        18
+      ],
+      [
+        27,
+        22,
+        32,
+        22
+      ],
+      [
+        11,
+        26,
+        25,
+        26
+      ],
+      [
+        18,
+        27,
+        18,
+        32
+      ],
+      [
+        27,
+        30,
+        30,
+        30
+      ]
+    ],
+    "doors": [],
+    "gate": [],
+    "demolished": [
+      [
+        14,
+        14
+      ],
+      [
+        15,
+        14
+      ],
+      [
+        16,
+        14
+      ],
+      [
+        17,
+        14
+      ],
+      [
+        18,
+        14
+      ],
+      [
+        19,
+        14
+      ],
+      [
+        20,
+        14
+      ],
+      [
+        21,
+        14
+      ],
+      [
+        22,
+        14
+      ],
+      [
+        14,
+        22
+      ],
+      [
+        15,
+        22
+      ],
+      [
+        16,
+        22
+      ],
+      [
+        17,
+        22
+      ],
+      [
+        18,
+        22
+      ],
+      [
+        19,
+        22
+      ],
+      [
+        20,
+        22
+      ],
+      [
+        21,
+        22
+      ],
+      [
+        22,
+        22
+      ],
+      [
+        14,
+        15
+      ],
+      [
+        14,
+        16
+      ],
+      [
+        14,
+        17
+      ],
+      [
+        14,
+        18
+      ],
+      [
+        14,
+        19
+      ],
+      [
+        14,
+        20
+      ],
+      [
+        14,
+        21
+      ],
+      [
+        22,
+        15
+      ],
+      [
+        22,
+        16
+      ],
+      [
+        22,
+        17
+      ],
+      [
+        22,
+        18
+      ],
+      [
+        22,
+        19
+      ],
+      [
+        22,
+        20
+      ],
+      [
+        22,
+        21
+      ]
+    ],
+    "rooms": [
+      [
+        3,
+        3,
+        9,
+        13,
+        "正房·长辈房（西北角大房）",
+        "bed"
+      ],
+      [
+        11,
+        3,
+        17,
+        9,
+        "正房·明间·中堂",
+        "hall"
+      ],
+      [
+        19,
+        3,
+        25,
+        9,
+        "正房·沈建国书房",
+        "account"
+      ],
+      [
+        27,
+        3,
+        32,
+        13,
+        "正房·耳房·储物（东北角大房）",
+        "store"
+      ],
+      [
+        3,
+        15,
+        9,
+        17,
+        "西厢·客房",
+        "bed"
+      ],
+      [
+        3,
+        19,
+        9,
+        21,
+        "西厢·灶间",
+        "kitchen"
+      ],
+      [
+        27,
+        15,
+        32,
+        17,
+        "东厢·净房",
+        "toilet"
+      ],
+      [
+        27,
+        19,
+        32,
+        21,
+        "东厢·账房",
+        "account"
+      ],
+      [
+        3,
+        23,
+        9,
+        32,
+        "倒座·门房（西南角大房）",
+        "hall"
+      ],
+      [
+        11,
+        27,
+        17,
+        32,
+        "倒座·客房",
+        "bed"
+      ],
+      [
+        19,
+        27,
+        25,
+        32,
+        "倒座·杂物",
+        "store"
+      ],
+      [
+        27,
+        23,
+        32,
+        29,
+        "倒座·门厅（东南角院门穿堂）",
+        "hall"
+      ],
+      [
+        27,
+        31,
+        32,
+        32,
+        "门厅·前室（入院穿堂）",
+        "hall"
+      ],
+      [
+        11,
+        11,
+        25,
+        13,
+        "北连廊",
+        "hall"
+      ],
+      [
+        11,
+        23,
+        25,
+        25,
+        "南连廊",
+        "hall"
+      ],
+      [
+        11,
+        14,
+        13,
+        22,
+        "西连廊",
+        "hall"
+      ],
+      [
+        23,
+        14,
+        25,
+        22,
+        "东连廊",
+        "hall"
+      ],
+      [
+        14,
+        14,
+        22,
+        22,
+        "天井（中空9×9）",
+        "yard"
+      ]
+    ],
+    "furniture": [
+      {
+        "name": "双人床",
+        "short": "大床",
+        "rect": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "note": "长辈房 · 3×3 富家床，床头靠北墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "床头柜",
+        "short": "柜",
+        "rect": [
+          6,
+          3,
+          1,
+          1
+        ],
+        "note": "长辈房 · 床头柜",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "大衣柜",
+        "short": "衣柜",
+        "rect": [
+          9,
+          3,
+          1,
+          2
+        ],
+        "note": "长辈房 · 长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "梳妆台",
+        "short": "妆台",
+        "rect": [
+          3,
+          7,
+          2,
+          1
+        ],
+        "note": "长辈房 · 梳妆台",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "大衣柜",
+        "short": "衣柜",
+        "rect": [
+          9,
+          7,
+          1,
+          2
+        ],
+        "note": "长辈房 · 第二座衣柜，长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "圆桌",
+        "short": "圆桌",
+        "rect": [
+          4,
+          9,
+          2,
+          2
+        ],
+        "note": "长辈房 · 起坐圆桌",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "方凳",
+        "short": "凳",
+        "rect": [
+          6,
+          9,
+          1,
+          1
+        ],
+        "note": "长辈房 · 圆桌配凳",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "屏风",
+        "short": "屏风",
+        "rect": [
+          7,
+          11,
+          1,
+          2
+        ],
+        "note": "长辈房 · 内间屏风",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "条案",
+        "short": "条案",
+        "rect": [
+          11,
+          3,
+          3,
+          1
+        ],
+        "note": "中堂 · 靠北墙，中堂最尊位",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "牌位",
+        "short": "牌位",
+        "rect": [
+          12,
+          4,
+          1,
+          1
+        ],
+        "note": "中堂 · 先祖牌位，祭祀",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "八仙桌",
+        "short": "八仙桌",
+        "rect": [
+          13,
+          6,
+          2,
+          2
+        ],
+        "note": "中堂 · 待客",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "太师椅",
+        "short": "太师椅",
+        "rect": [
+          12,
+          6,
+          1,
+          1
+        ],
+        "note": "中堂 · 主客座",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "太师椅",
+        "short": "太师椅",
+        "rect": [
+          15,
+          6,
+          1,
+          1
+        ],
+        "note": "中堂 · 主客座",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "太师椅",
+        "short": "太师椅",
+        "rect": [
+          11,
+          6,
+          1,
+          1
+        ],
+        "note": "中堂 · 客座",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "太师椅",
+        "short": "太师椅",
+        "rect": [
+          17,
+          6,
+          1,
+          1
+        ],
+        "note": "中堂 · 客座",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "书架",
+        "short": "书架",
+        "rect": [
+          19,
+          3,
+          1,
+          2
+        ],
+        "note": "书房 · 长边贴西墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "书架",
+        "short": "书架",
+        "rect": [
+          25,
+          3,
+          1,
+          2
+        ],
+        "note": "书房 · 长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "书桌",
+        "short": "书桌",
+        "rect": [
+          21,
+          6,
+          3,
+          1
+        ],
+        "note": "书房 · 写字台",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "办公椅",
+        "short": "椅",
+        "rect": [
+          22,
+          7,
+          1,
+          1
+        ],
+        "note": "书房 · 办公椅",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "方凳",
+        "short": "凳",
+        "rect": [
+          24,
+          7,
+          1,
+          1
+        ],
+        "note": "书房 · 来客方凳",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "木箱",
+        "short": "木箱",
+        "rect": [
+          27,
+          3,
+          1,
+          1
+        ],
+        "note": "耳房 · 储物木箱，北墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "木箱",
+        "short": "木箱",
+        "rect": [
+          28,
+          3,
+          1,
+          1
+        ],
+        "note": "耳房 · 储物木箱，北墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "木箱",
+        "short": "木箱",
+        "rect": [
+          29,
+          3,
+          1,
+          1
+        ],
+        "note": "耳房 · 储物木箱，北墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "酒坛",
+        "short": "酒坛",
+        "rect": [
+          30,
+          3,
+          1,
+          2
+        ],
+        "note": "耳房 · 储酒坛，北墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "酒坛",
+        "short": "酒坛",
+        "rect": [
+          31,
+          3,
+          1,
+          2
+        ],
+        "note": "耳房 · 储酒坛，北墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          27,
+          6,
+          1,
+          2
+        ],
+        "note": "耳房 · 货架，长边贴西墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          27,
+          9,
+          1,
+          2
+        ],
+        "note": "耳房 · 货架，长边贴西墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "大柜",
+        "short": "大柜",
+        "rect": [
+          32,
+          6,
+          1,
+          2
+        ],
+        "note": "耳房 · 储物大柜，长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "单人床",
+        "short": "单床",
+        "rect": [
+          3,
+          15,
+          2,
+          1
+        ],
+        "note": "西厢客房 · 单人床，长边贴北墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "衣柜",
+        "short": "衣柜",
+        "rect": [
+          9,
+          15,
+          1,
+          2
+        ],
+        "note": "西厢客房 · 长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "茶几",
+        "short": "茶几",
+        "rect": [
+          5,
+          16,
+          1,
+          1
+        ],
+        "note": "西厢客房 · 茶几",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "衣柜",
+        "short": "衣柜",
+        "rect": [
+          3,
+          16,
+          1,
+          1
+        ],
+        "note": "西厢客房 · 第二座衣柜",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "蜂窝煤炉",
+        "short": "煤炉",
+        "rect": [
+          3,
+          19,
+          1,
+          2
+        ],
+        "note": "灶间 · 1976 镇上家庭烧蜂窝煤（大件明面）",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "铁锅",
+        "short": "铁锅",
+        "rect": [
+          5,
+          19,
+          1,
+          1
+        ],
+        "note": "灶间 · 炒菜铁锅",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "碗柜",
+        "short": "碗柜",
+        "rect": [
+          9,
+          19,
+          1,
+          2
+        ],
+        "note": "灶间 · 碗柜，长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "水池",
+        "short": "水池",
+        "rect": [
+          3,
+          21,
+          1,
+          1
+        ],
+        "note": "灶间 · 洗菜水池",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "案板",
+        "short": "案板",
+        "rect": [
+          5,
+          21,
+          2,
+          1
+        ],
+        "note": "灶间 · 切菜案板，长边贴南墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "屏风",
+        "short": "屏风",
+        "rect": [
+          28,
+          15,
+          1,
+          2
+        ],
+        "note": "净房 · 遮挡屏风",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "水冲蹲便器",
+        "short": "便器",
+        "rect": [
+          30,
+          15,
+          1,
+          1
+        ],
+        "note": "净房 · 水冲蹲便（1976 干部楼带抽水设备）",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "洗手盆",
+        "short": "手盆",
+        "rect": [
+          32,
+          15,
+          1,
+          1
+        ],
+        "note": "净房 · 洗手盆",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "洗手台",
+        "short": "手台",
+        "rect": [
+          31,
+          16,
+          1,
+          1
+        ],
+        "note": "净房 · 洗手台",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "账桌",
+        "short": "账桌",
+        "rect": [
+          27,
+          19,
+          3,
+          1
+        ],
+        "note": "账房 · 沈建国在此改地质勘察报告，写「地下有暗河，不宜大开挖」，桩位绕开老井",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "老板椅",
+        "short": "椅",
+        "rect": [
+          28,
+          20,
+          1,
+          1
+        ],
+        "note": "账房 · 老板椅",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "保险柜",
+        "short": "保险柜",
+        "rect": [
+          32,
+          19,
+          1,
+          2
+        ],
+        "note": "账房 · 长边贴东墙，改稿底本锁在里面",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "电脑",
+        "short": "电脑",
+        "rect": [
+          31,
+          19,
+          1,
+          1
+        ],
+        "note": "账房 · 2001 台式电脑",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "打印机",
+        "short": "打印机",
+        "rect": [
+          31,
+          20,
+          1,
+          1
+        ],
+        "note": "账房 · 打印改稿",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "算盘",
+        "short": "算盘",
+        "rect": [
+          27,
+          21,
+          1,
+          1
+        ],
+        "note": "账房 · 算盘",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "文件柜",
+        "short": "文件柜",
+        "rect": [
+          30,
+          21,
+          2,
+          1
+        ],
+        "note": "账房 · 卷宗文件柜，长边贴南墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "门房桌",
+        "short": "桌",
+        "rect": [
+          3,
+          23,
+          2,
+          1
+        ],
+        "note": "门房 · 门房桌，长边贴北墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "椅子",
+        "short": "椅",
+        "rect": [
+          4,
+          24,
+          1,
+          1
+        ],
+        "note": "门房 · 椅子",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "储物柜",
+        "short": "柜",
+        "rect": [
+          9,
+          23,
+          1,
+          2
+        ],
+        "note": "门房 · 储物柜，长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "单人床",
+        "short": "单床",
+        "rect": [
+          5,
+          32,
+          2,
+          1
+        ],
+        "note": "门房 · 看门人床铺，长边贴南墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "衣柜",
+        "short": "衣柜",
+        "rect": [
+          9,
+          28,
+          1,
+          2
+        ],
+        "note": "门房 · 看门人衣柜，长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "茶几",
+        "short": "茶几",
+        "rect": [
+          5,
+          29,
+          1,
+          1
+        ],
+        "note": "门房 · 茶几",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "单人床",
+        "short": "单床",
+        "rect": [
+          11,
+          27,
+          2,
+          1
+        ],
+        "note": "倒座客房 · 单人床，长边贴北墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "衣柜",
+        "short": "衣柜",
+        "rect": [
+          17,
+          27,
+          1,
+          2
+        ],
+        "note": "倒座客房 · 贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "茶几",
+        "short": "茶几",
+        "rect": [
+          13,
+          28,
+          1,
+          1
+        ],
+        "note": "倒座客房 · 茶几",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "衣柜",
+        "short": "衣柜",
+        "rect": [
+          17,
+          29,
+          1,
+          2
+        ],
+        "note": "倒座客房 · 第二座衣柜，长边贴东墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "床头柜",
+        "short": "柜",
+        "rect": [
+          11,
+          28,
+          1,
+          1
+        ],
+        "note": "倒座客房 · 床头柜",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "木箱",
+        "short": "木箱",
+        "rect": [
+          19,
+          27,
+          1,
+          1
+        ],
+        "note": "杂物间 · 木箱，北墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "木箱",
+        "short": "木箱",
+        "rect": [
+          20,
+          27,
+          1,
+          1
+        ],
+        "note": "杂物间 · 木箱，北墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "木箱",
+        "short": "木箱",
+        "rect": [
+          21,
+          27,
+          1,
+          1
+        ],
+        "note": "杂物间 · 木箱，北墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "酒坛",
+        "short": "酒坛",
+        "rect": [
+          24,
+          27,
+          1,
+          2
+        ],
+        "note": "杂物间 · 酒坛，东北角成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "酒坛",
+        "short": "酒坛",
+        "rect": [
+          25,
+          27,
+          1,
+          2
+        ],
+        "note": "杂物间 · 酒坛，东北角成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          19,
+          29,
+          1,
+          2
+        ],
+        "note": "杂物间 · 货架，长边贴西墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "货架",
+        "short": "货架",
+        "rect": [
+          19,
+          31,
+          1,
+          2
+        ],
+        "note": "杂物间 · 货架，长边贴西墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "木箱",
+        "short": "木箱",
+        "rect": [
+          22,
+          31,
+          1,
+          1
+        ],
+        "note": "杂物间 · 木箱，南墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "木箱",
+        "short": "木箱",
+        "rect": [
+          23,
+          31,
+          1,
+          1
+        ],
+        "note": "杂物间 · 木箱，南墙成排",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "酒坛",
+        "short": "酒坛",
+        "rect": [
+          25,
+          31,
+          1,
+          2
+        ],
+        "note": "杂物间 · 酒坛，东南角",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "条几",
+        "short": "条几",
+        "rect": [
+          27,
+          23,
+          2,
+          1
+        ],
+        "note": "门厅 · 迎客条几，长边贴北墙",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "鞋架",
+        "short": "鞋架",
+        "rect": [
+          30,
+          23,
+          1,
+          1
+        ],
+        "note": "门厅 · 鞋架，进门换鞋（东南院门穿堂）",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "衣帽架",
+        "short": "衣架",
+        "rect": [
+          32,
+          23,
+          1,
+          1
+        ],
+        "note": "门厅 · 衣帽架",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "藤椅",
+        "short": "藤椅",
+        "rect": [
+          11,
+          11,
+          1,
+          1
+        ],
+        "note": "北连廊 · 藤椅（抄手游廊歇脚）",
+        "clue": false,
+        "zone": "house",
+        "yard_building": false
+      },
+      {
+        "name": "石桌",
+        "short": "石桌",
+        "rect": [
+          17,
+          18,
+          2,
+          1
+        ],
+        "note": "天井 · 石桌",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false
+      },
+      {
+        "name": "庭树石榴",
+        "short": "石榴",
+        "rect": [
+          17,
+          14,
+          1,
+          2
+        ],
+        "note": "天井 · 庭树石榴",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false
+      },
+      {
+        "name": "花盆",
+        "short": "花盆",
+        "rect": [
+          14,
+          17,
+          1,
+          1
+        ],
+        "note": "天井 · 花盆",
+        "clue": false,
+        "zone": "yard",
+        "yard_building": false
+      }
+    ],
+    "clue": [
+      "口字连廊方正闭合（外框15×15、环宽3、贴9×9天井居中），是设计基准",
+      "房间为矩形、严丝合缝贴在连廊外侧；四角放大成矩形大房填齐转角（耳房形制）",
+      "每间房门开在贴合墙上直达连廊，不穿房、不角部串联；房间之间只隔一面墙",
+      "房间12间与沈家6~7口人口匹配；院门东南巽位门庑式（大门占倒座东头一间）",
+      "门厅内设座山影壁贴西墙(宽4格)：进门见影壁、绕东侧入院——四合院礼制，影壁是墙非门",
+      "36×36占地：房型32×32居中，四周各留2格庭院空地"
+    ],
+    "story": "沈家第四代已经搬走，院子封了门，从 2001 年起再没人住进来。四合院的形制没动：北正房、东西厢房、南倒座，中庭方正——只是门窗都钉死了。",
+    "note": "36×36 占地，A5 封门祖宅，无探索点。几何与 shen_a4 完全相同（lot/wings/partitions/rooms/demolished 原样），只把 doors/gate 清空 ⇒ 网格 D=0/G=0、外墙闭合，玩家进不去，所以不需要引擎 decor 分支。L14（A5 v5 落地）批次新增。"
   }
 ]
