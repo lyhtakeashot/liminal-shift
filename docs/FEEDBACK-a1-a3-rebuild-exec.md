@@ -1,9 +1,9 @@
 # 反馈：A1–A3 重排（任务书 `docs/PROMPT-a1-a3-rebuild-exec.md`）
 
 - **开工 HEAD**：`c476ff0`（=任务书提交，满足「≥ `1a4e5d3`」）
-- **交付提交**：本提交（父提交 `69825e0`），提交信息 `feat(frames): A1–A3 按 A5 v5 骨架重排（环岛/南北车道/河延伸/房屋落位）`。哈希见 `git log -1`。
-  说明：施工期间别的线在 `c476ff0` 上并了两笔音频文档提交（`4a2774c`、`69825e0`），都只动 `assets/audio_raw/_split/*`、`docs/*`、`lab/*`，**没碰 `data/frames.json`**，所以我的重排是在它们之上做的，无需 rebase。
-- **结论**：`data/frames.json` 的 a1/a2/a3 三帧已按 A5 v5 骨架重排；a4/a5/world/safe_*/start_frame/start_pos **零变化**；三套回归（`greybox_check` / `a4_rebuild_check` / `phasing_check`）全绿；S4 三组空气墙双向格数全部下降；V1 视觉统计按整窗口口径全过；路面分代材质**做不到**（数据层无此能力，见 §5-V4 与 §7-①）。
+- **交付提交**：`d68fbde`（`data/frames.json` + `lab/_a13_plan.py` + 本文件初版；父提交 `69825e0`），提交信息 `feat(frames): A1–A3 按 A5 v5 骨架重排（环岛/南北车道/河延伸/房屋落位）`。本文件后补了 V4 美术缺口表与交叉引用，修订落在其后一笔 `docs(feedback): …` 提交里（`git log -- docs/FEEDBACK-a1-a3-rebuild-exec.md`）。
+  说明：施工期间别的线在 `c476ff0` 上并了几笔音频文档提交（`4a2774c`、`69825e0`、`88e9d57`、`1b39a3f`），都只动 `assets/audio_raw/_split/*`、`docs/*`、`lab/*`，**没碰 `data/frames.json`**，所以我的重排无需 rebase。
+- **结论**：`data/frames.json` 的 a1/a2/a3 三帧已按 A5 v5 骨架重排；a4/a5/world/safe_*/start_frame/start_pos **零变化**；三套回归（`greybox_check` / `a4_rebuild_check` / `phasing_check`）全绿；S4 三组空气墙双向格数**全部下降**；V1/V2/V3 过；**V4 有缺口**——路面分代等 4 条美术缺口数据层做不到（见 §4-V4 与 §5）。
 
 ---
 
@@ -12,10 +12,11 @@
 | 文件 | 状态 | 说明 |
 |---|---|---|
 | `data/frames.json` | 修改 | 102427 → 135469 字节；`git diff --numstat` = `3188 1262`，改动全在三帧内部 |
-| `lab/_a13_plan.py` | 新增（约 554 行） | 方案脚本：生成三帧 + 34 条自检 + `--write` 才落盘 |
+| `lab/_a13_plan.py` | 新增（561 行） | 方案脚本：生成三帧 + 34 条自检 + `--write` 才落盘 |
 | `docs/FEEDBACK-a1-a3-rebuild-exec.md` | 新增 | 本文件 |
-| `_mdtest/greybox_check.gd` | 修改 | 见 §8：硬编码坐标必须跟着改，否则 S6 不成立；**是否随本次提交由你定** |
-| `lab/_a13_stats.py` | 新增（未跟踪） | V1/V2 像素统计，PIL |
+| `_mdtest/greybox_check.gd` | 修改（+43/−38） | 见 §7：硬编码坐标必须跟着改，否则 S6 不成立。**任务书 §6 只让 `git add` 三件，故本文件留在工作区未入提交**；要自洽就 `git add _mdtest/greybox_check.gd && git commit --amend --no-edit` |
+| `lab/_a13_stats.py` | 新增（未跟踪） | V1/V2 像素统计（PIL） |
+| `lab/_a13_*.txt` / `_a13_head*.json` / `_a13_new.json` | 新增（未跟踪） | 三套回归的新/旧输出快照、plan 全量自检、像素统计、基线数据快照 |
 
 `git diff` 里其余脏文件（`_ref/art/A1_1926|A2_1951|A3_1976/*.png` 的 M、`docs/HANDOFF.md` 的 M、`美术资产/**` 的 D）**是别人的在途改动，我没碰、也没加进索引**。
 
@@ -140,7 +141,7 @@ rect 变少是因为直线主路 26 段/a3 1 段换成了 2 段引道 + 环道 p
 | `START` | `start_frame=a5_2026`、`start_pos=[2048,1864]`、`safe_top=36`、`safe_bottom=3552` | **完全不变** | 任务书禁改；`[2048,1864]` 距环岛圆心 200，落在环道（R176–R304）上，A5 现有取值，未触碰 |
 
 ### S8 scripts/scenes/_ref/assets 零改动 —— **PASS**
-`git status --porcelain` 里这几处只有别人的在途改动（`_ref/art/**` 的 M、`美术资产/**` 的 D），我的改动只有 `data/frames.json`、`lab/_a13_plan.py`、`lab/_a13_stats.py`、本文件、`_mdtest/greybox_check.gd`（见 §8）。
+`git status --porcelain` 里这几处只有别人的在途改动（`_ref/art/**` 的 M、`美术资产/**` 的 D），我的改动只有 `data/frames.json`、`lab/_a13_plan.py`、`lab/_a13_stats.py`、本文件、`_mdtest/greybox_check.gd`（见 §7）。
 
 ---
 
@@ -164,20 +165,31 @@ rect 变少是因为直线主路 26 段/a3 1 段换成了 2 段引道 + 环道 p
 - 像素证据：截图三条水平线上的 32px 周期命中率 a1 90%/95%/87%、a2 84%/95%/87%、a3 84%/95%/87%、a4 85%/95%/90%、a5 87%/91%/79%。未命中的部分是房屋/井/树/HUD/前景小件压在瓦上，不是地瓦本身不周期。
 - 数据证据：我从没给任何 shape 填过整帧色块图；a1–a3 的 ground 各自指向 `ground_a1/a2/a3_tiles.png`（前两次改动的 L8 平铺没被破坏）。
 
-### V3 截图交用户看 —— **见最终回复附图，共 10 张（a1..a5 × space/time）+ 1 张 phasing**，路径 `_mdtest/greybox/`。
-**声明：我本人看的是像素统计（颜色数/主色占比/32px 周期命中率），不是肉眼看图——本机没有视觉模型（`read_image` / `modlens_read_image` 都报不支持）。** 画面是否「像 1926/1951/1976 的村子」需要你本人裁定。
+### V3 截图交用户看 —— 共 11 张，路径 `_mdtest/greybox/`
+`a1_space.png` `a1_time.png` `a2_space.png` `a2_time.png` `a3_space.png` `a3_time.png` `a4_space.png` `a4_time.png` `a5_space.png` `a5_time.png` `phasing.png`（1280×720，窗口模式渲染，非 headless）。
+**声明：我本人看的是像素统计（颜色数/主色占比/32px 周期命中率），不是肉眼看图——本机没有视觉模型（`read_image` / `modlens_read_image` 都报不支持图像输入）。** 画面是否「像 1926/1951/1976 的村子」必须由你本人裁定；统计只能证明「不是色块糊的、瓦是 32px 平铺的、三帧地面分代了」。
 
-### V4 缺材质点名 —— **见 §7-①，美术缺口共 4 条**
+### V4 缺材质点名 —— **FAIL（有缺口，不许算全过）**，共 4 条
+
+| # | 位置 | 现在实际画的是 | 应该有 | 落地需要 | 本次是否加重 |
+|---|---|---|---|---|---|
+| 1 | 三帧路面（东西引道 / 南北车道 / 环道） | 三帧共用 `assets/village/scene/road_tiles_l8.png` 土黄瓦（`#8e7148` 三帧同占 26.9%） | a1 土路带车辙、a2 碎石夯土、a3 水泥 | 3 张 32px 瓦 `road_a1/a2/a3_tiles.png` + 改 `scripts/asset_draw.gd` 的 `TILE_FILES`（`scripts/**`、`assets/**` 本次禁改） | 是（§2 明确要求分代） |
+| 2 | A1 环岛位置（§2 要「空地/树影」） | 路瓦 | 空地 / 树影 的地面瓦 | `POLYGON_TILE_KIND` 只认「河」「路」，让 polygon 铺 ground 瓦要改脚本 | 是（§2 明确要求） |
+| 3 | 内岛「岛」polygon（三帧都有） | `draw_colored_polygon(#6b7a4a)` 纯色块 | 岛面瓦（草/石/土） | 同上，缺 `island` 瓦类型 | 否（A4/A5 早已如此，本次照抄） |
+| 4 | 田（a1 六小块 / a2·a3 整块） | 三帧共用 `field_tiles_l8.png` | 1926 私田田埂 / 1951 集体田 / 1976 大田 三种 | 瓦表分帧 + 美术补图 | 部分（搬了位置，没解决分代） |
+
+结论：**路面与环岛的年代差异这条验收没过**，原因不在数据而在 `scripts/asset_draw.gd` 的瓦表与 `assets/` 缺图，已在 §5-1、§5-2 说明，请按 §6-2 拍板是接受现状还是另开补图任务。
 
 ---
 
 ## 5. 没做到 / 做不到 的项，及原因
 
-1. **路面材质分代（§2 的 a1 土路带车辙 / a2 碎石夯土 / a3 水泥）：数据层做不到。**
+1. **路面材质分代（§2 的 a1 土路带车辙 / a2 碎石夯土 / a3 水泥）：数据层做不到**（= §4-V4 #1）。
    `scripts/asset_draw.gd` 的 `TILE_FILES` 里 a1/a2/a3 的 `road` 都指向同一张 `assets/village/scene/road_tiles_l8.png`（`POLYGON_TILE_KIND` 也只认「河」「路」两种 label）。要让三帧路面不同，必须新增 3 张路面瓦并改 `asset_draw.gd` 的帧→瓦映射——两者都在禁改清单（`scripts/**`、`assets/**`）。**故三帧路面仍是同一张土黄瓦（截图里 `#8e7148` 三帧同占 26.9%）**，请美术补 `road_a1/a2/a3_tiles.png`，再开一个小任务改 `TILE_FILES`。
-2. **§2 的「A1 环岛位置是空地/树影」做不到。** polygon 分派只有「河」「路」两种瓦，`label` 留空会退化成 `draw_colored_polygon(color)` 纯色块（违反 C4）。所以我保留三帧环道都为「路」polygon——这也正好保住了 S4/S5 要的几何一致性。
+2. **§2 的「A1 环岛位置是空地/树影」做不到**（= §4-V4 #2）。polygon 分派只有「河」「路」两种瓦，`label` 留空会退化成 `draw_colored_polygon(color)` 纯色块（违反 C4）。所以我保留三帧环道都为「路」polygon——这也正好保住了 S4/S5 要的几何一致性。
 3. **story §4.3「粮油站挖地基挖到老井」失去载体。** §1 要求五帧井同址 `(2048,832)`，而磨坊三帧在 `(1216,512)`，井不可能再压在磨坊地基下。`_mdtest/greybox_check.gd` 里原来那条 `A3_OLD_WELL_UNDER_MILL`（磨坊 lot 必须包含井）已按新事实翻面成 `A3_WELL_NOT_UNDER_MILL`。**这条需要总策划裁定**：是改剧情（比如「挖到的是老井的地下水脉/旧管沟」），还是把井挪回去（那就要破 S2）。
 4. **`start_pos` 落在环道上**：`[2048,1864]` 距圆心 200，在 R176–R304 的环道内。这是 A5 现有取值、任务书禁改，我只记录不修改。
+5. **内岛「岛」纯色块、田不分代**（= §4-V4 #3、#4）：A4/A5 就已存在的缺口，本次照抄骨架没有加重，也没有修（同样卡在 `scripts/**`、`assets/**` 禁改上），一并记在美术缺口里。
 
 ---
 
