@@ -76,7 +76,7 @@ const REPORT_PAD := 6.0
 const LINE_H := 10.5
 
 ## footer 第二行：开表时世界是停的，这句话要说清楚。
-const FOOTER_PAUSED := "世界已暂停 · 按 F 或 Esc 关闭归档表"
+const FOOTER_PAUSED := "世界已暂停 · 随时可关，填一半也留得住 · F 或 Esc 关表"
 const FOOTER_HINT := "↑↓ 选格 · ←→ 改值（循环）· Tab 换格 · Enter 落定出口"
 
 ## 焦点槽位（平铺顺序 = Tab 顺序）。
@@ -160,6 +160,32 @@ func report_now() -> Dictionary:
 
 func frame_year() -> int:
 	return _frame_year
+
+
+## 这一栏一共几个空（五格 × 两列 + 四个单选 = 14）。
+func fill_total() -> int:
+	return EndingStore.YEARS.size() * 2 + RADIO_FIELDS.size()
+
+
+## 已经填了几个。**随时可以看**：走到一半开表、填一半关表都算数，
+## 进度条就是这个数 / fill_total()。
+func filled_count() -> int:
+	var n := 0
+	for y in EndingStore.YEARS:
+		for col in 2:
+			if not EndingStore.get_cell(String(y), col).is_empty():
+				n += 1
+	for f in RADIO_FIELDS:
+		if not EndingStore.get_radio(String(f)).is_empty():
+			n += 1
+	return n
+
+
+func fill_ratio() -> float:
+	var t := fill_total()
+	if t <= 0:
+		return 0.0
+	return float(filled_count()) / float(t)
 
 
 # ---- 焦点 / 改值（测试也走这几个口子，不走 Input） --------------------------
@@ -475,6 +501,21 @@ func _draw_title(p: Rect2) -> void:
 	draw_string(font, Vector2(p.position.x + p.size.x - w - 10.0 * UI,
 		p.position.y + 14.0 * UI), who,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.72, 0.70, 0.63))
+
+	# 填表进度：随时开表都能看见填到哪了（填一半关掉也留得住）。
+	var prog := "已填 %d/%d" % [filled_count(), fill_total()]
+	var pw: float = font.get_string_size(prog, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT).x
+	var prog_x := p.position.x + p.size.x - w - 24.0 * UI - pw
+	draw_string(font, Vector2(prog_x, p.position.y + 14.0 * UI), prog,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT, Color(0.66, 0.60, 0.46))
+
+	# 标题栏底边的进度条（金色占比 = fill_ratio()）
+	var strip := Rect2(p.position.x, p.position.y + bar_h - 2.0 * UI, p.size.x, 2.0 * UI)
+	draw_rect(strip, Color(0.22, 0.20, 0.17, 0.95), true)
+	var filled_w := strip.size.x * clampf(fill_ratio(), 0.0, 1.0)
+	if filled_w > 0.0:
+		draw_rect(Rect2(strip.position, Vector2(filled_w, strip.size.y)),
+			Color(0.78, 0.62, 0.34, 0.95), true)
 
 
 func _draw_table(p: Rect2) -> void:

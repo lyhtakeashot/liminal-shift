@@ -508,6 +508,21 @@ func _form_checks() -> void:
 	_ok(form.focus_index() == 0, "E11 开表焦点在第一格")
 	_ok(form.report_now()["variant"] == "丙", "E11 空表开着就是变体丙")
 
+	# E14：填表进度 —— 玩家可以随时开表填已知的那部分（不必等到最后一站）
+	_ok(form.fill_total() == 14, "E14 一共 14 个空（十格 + 四单选）")
+	_ok(form.filled_count() == 0, "E14 空表进度 0/14")
+	_ok(is_equal_approx(form.fill_ratio(), 0.0), "E14 空表比例 0")
+	EndingStore.reset()
+	EndingStore.set_cell("1926", EndingStore.COL_MOTIVE, "放任")
+	EndingStore.set_cell("1926", EndingStore.COL_INTENT, "间接故意")
+	EndingStore.set_radio("burial", "井下")
+	_ok(form.filled_count() == 3, "E14 只填了三处 ⇒ 3/14（早开表也算数）")
+	_ok(is_equal_approx(form.fill_ratio(), 3.0 / 14.0), "E14 比例跟着走")
+	_fill_canonical()
+	_ok(form.filled_count() == 14, "E14 填满 ⇒ 14/14")
+	_ok(is_equal_approx(form.fill_ratio(), 1.0), "E14 填满比例 1")
+	EndingStore.reset()   # 下一条用例（E12）从空表开始，别被这里的填格带偏
+
 	# E12：←→ 循环改值（空 → 选项… → 空），且不设默认值
 	form.set_focus(0)
 	form.cycle(1)
