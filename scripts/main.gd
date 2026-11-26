@@ -20,6 +20,7 @@ const EvidenceArchive = preload("res://scripts/evidence_archive.gd")
 const DiaryView = preload("res://scripts/diary_view.gd")
 const DiaryTexts = preload("res://scripts/diary_texts.gd")
 const EndingForm = preload("res://scripts/ending_form.gd")
+const EndingOutro = preload("res://scripts/ending_outro.gd")
 
 # 五个年代的时间轴色偏：越往后越冷、越灰
 const YEAR_TINTS: Array = [
@@ -43,6 +44,7 @@ var _archive_i_down := false          # I 键边沿检测（轮询，不用事�
 var diary: Control = null            # 双日记对照界面（代码动态建，挂 Main 下）
 var ending_form: Control = null      # 归档表（推理—结案，代码动态建，挂 Main 下）
 var _ending_g_down := false          # G 键边沿检测（轮询，不用事件）
+var outro: Control = null            # 结局收束层（落定出口后的黑幕，挂 Main 下）
 
 var _step_active := false    # 这一轮按住是否已经推过第一帧
 var _repeating := false      # 是否已经进入连发阶段
@@ -79,6 +81,7 @@ func _ready() -> void:
 	_make_archive()
 	_make_diary()
 	_make_ending_form()
+	_make_outro()
 	# 读回上次存档的证物（跨启动持久化）。读不到就当空档案。
 	EvidenceStore.load()
 	_refresh_all()
@@ -110,6 +113,17 @@ func _make_ending_form() -> void:
 	ending_form = EndingForm.new()
 	ending_form.name = "EndingForm"
 	add_child(ending_form)
+
+
+## 建结局收束层：动态挂 Main 下（建在归档表之后 → 画在最上面，黑幕盖住一切）。
+## 它是 `ending_form.exit_chosen` 唯一的监听者 —— 在这之前，落定出口这件事
+## 全仓库没人接，玩家按完只看到表自己关掉。收束本身在 ending_outro.gd 里。
+func _make_outro() -> void:
+	outro = EndingOutro.new()
+	outro.name = "EndingOutro"
+	add_child(outro)
+	# 用 Callable 字符串名调用：outro 的静态类型是 Control，上面没有 play()。
+	ending_form.exit_chosen.connect(Callable(outro, "play"))
 
 
 ## 脚下那一格如果是一条「书」热点，就翻开它。返回是否翻开了。
@@ -207,7 +221,8 @@ func _process(delta: float) -> void:
 	# 书本的「合上」走 DiaryView._input（E / Esc），不吃这一段；
 	# 归档表自己吃 ↑↓←→ / Tab / Enter / Esc / F（见 ending_form.gd 的 _handle_keys）。
 	if (archive != null and archive.is_open()) or (diary != null and diary.is_open()) \
-			or (ending_form != null and ending_form.is_open()):
+			or (ending_form != null and ending_form.is_open()) \
+			or (outro != null and bool(outro.call("is_playing"))):
 		player.walking = false
 		_set_hud_hidden(true)
 		return
