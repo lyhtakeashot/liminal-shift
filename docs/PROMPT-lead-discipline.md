@@ -144,3 +144,23 @@ git -c http.sslBackend=openssl push "https://x-access-token:$tok@github.com/lyht
 
 推前先 `git rev-list --count <远端sha>..HEAD` 报数量；推后用 `git -c http.sslBackend=openssl ls-remote --heads origin` 核对远端 sha == 本地 `HEAD`。
 输出里的 `sh.exe: *** fatal error - couldn't create signal pipe, Win32 error 5` 是沙箱噪音，不影响结果。
+
+---
+
+## §10 归档区与草稿区（2026-11-26 定，仓库整理线交付后）
+
+整理前 `git status --short` 是 **1008 行**（12 `M` / 34 `D` / 962 `??`），几乎所有噪音来自 `lab/` 里跑一次就丢的调参脚本和截图。
+
+**规矩：**
+
+| 放什么 | 放哪 | 进不进库 |
+|---|---|---|
+| 一次性脚本、截图、备份、日志 | `_archive/scratch/` | **不进**（`_archive/` 已在 `.gitignore:67`） |
+| 与 `data/**` 一起提交的溯源脚本（产出数据的那个 `.py`） | `lab/` | **进**（现有 **117 个已跟踪文件**，谁都不许整目录搬走） |
+| 游戏要用的成品资产 | `assets/**` | 进 |
+| 原始素材 / 中间产物 | `_archive/` 或 `assets/audio_raw/`（含 `.gdignore`） | 视情况 |
+
+**两条教训：**
+
+1. **别把「未跟踪」当成「没用」。** 整理后剩下的 269 个未跟踪文件全是要入库的真东西（`美术资产/` 146 新素材、`assets/audio/voice` 93 TTS 成品、`*.gd.uid` 13 个 Godot sidecar、`docs/*.import` 9）。判断依据永远是「有没有引用 / 是不是交付物」，不是「git 认不认识它」。
+2. **任务书里的目标数字要先自证可达。** 这次我写的「未跟踪 < 30」在只授权动四个目录的前提下**数学上不可能**达到，执行线直接拒绝了并说明理由——这是对的做法。以后写量化目标前先算一遍：授权范围 × 现有数量 = 能不能到。
