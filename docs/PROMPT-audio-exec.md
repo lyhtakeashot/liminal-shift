@@ -26,6 +26,7 @@
 - `project.godot` 的 `[display]` 段：窗口 1280×720，`stretch mode = canvas_items`，`CONTENT_SCALE_MODE=1`。
 - 目标平台是 **Web 导出**（gl_compatibility），音频必须走 **WAV（PCM）**，不要 OGG/MP3（Web 上解码不稳、体积也压不下来多少）。
 - 本机 python：`C:\Users\lyh\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe`（3.12.14，**numpy 2.3.5 已装**）。系统 python 不在 PATH。
+- **本机出网实测不通**（2026-11-26 lead 验）：`api.github.com`、`opengameart.org`、`kenney.nl` 连接被重置，`freesound.org` 域名解析失败。所以「去网上找现成音效」这条路在本机走不通 —— **不要尝试下载，浪费时间**。这也是 §2.1「必须自研合成」的物理原因之一。
 - Godot：`D:\steam\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe`
 
 ---
@@ -92,6 +93,20 @@ docs/**  除你自己的反馈文件
 
 **不做的**：BGM/配乐、语音、3D 定位音。赛前时间不够，氛围靠环境底噪 + 交互音效就够。
 
+### 3.5 必须交一个试听页（**这条不是可选项**）
+
+原因：**你和 lead 都听不见音频**（都是纯文本代理）。验收只能证明「文件存在、不削波、循环不爆音」，
+证明不了「好不好听」。所以必须把「听」这件事交到人手上，并且要让人**一次听完全部 13 条**。
+
+产出 `tools/audio_preview.html`（单文件、纯静态、零依赖）：
+
+- 直接 `<audio src="../assets/audio/xxx.wav">`，13 行，每行一个 `<button>` 播放 + 文件名 + 一句用途说明。
+- 循环音（`amb_*`）加一个「循环」勾选框（`audio.loop = true`）。
+- 顶部一句话：「按顺序听一遍，把难听的编号报给 lead」。
+- 用浏览器直接打开 `tools/audio_preview.html` 即可（不需要起服务）。
+
+**这也是唯一的人耳验收入口**，写进反馈时要说明「我本人没有听过」。
+
 ---
 
 ## §4 `scripts/audio.gd` 的接口（照这个签，别自创）
@@ -143,6 +158,7 @@ func ready_check() -> Dictionary        # 返回 {"streams": 13, "buses": [...],
 | **G6** | autoload 生效：`godot --headless --path . --quit-after 60` 输出里**没有** `SCRIPT ERROR`/`Parse Error`，且 `ready_check()` 报 13 个 stream、3 条 bus | 命令行 |
 | **G7** | `Aud.play("collect")` / `Aud.ambient("a3_1976")` 调用不报错、不 return null | `_mdtest/audio_check.gd` |
 | **G8** | `.wav.import` sidecar 全部提交（缺了 Web 导出会静音） | `git status` 自查 |
+| **G9** | `tools/audio_preview.html` 存在，13 条都能单独播放且带标签 | 浏览器打开（**由人听，不由你听**） |
 
 **报告格式照 `docs/FEEDBACK-house-art-a4a5-exec.md`**：§1 产出表 → §2 每个音色的实测参数（时长/峰值/首尾差）→ §3 验收表逐条 → §4 剩余问题 → §5 提交范围。
 
