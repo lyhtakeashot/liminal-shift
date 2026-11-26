@@ -17,27 +17,30 @@ const OUT_DIR := "res://_mdtest/greybox"
 ## 五帧统一布局 v5（2026-11-21 落地）：地标与路三帧完全相同，房子在原址上长大。
 ## 磨坊三帧同址；沈家左移与树留间隙；周家路南、陆家东侧。
 ## 尺寸取自 houses_data.json 的 lot（格）× TILE=32。
+## 2026-11-26 A1–A3 重排（docs/PROMPT-a1-a3-rebuild-exec.md）：环岛/车道/引道/河与 A4/A5 逐点同形，
+## 井槐沈家周家五帧同址，磨坊抬到 y=512 让开引水湾。本文件坐标同步到实测落盘值。
 const HOUSE_MAP := {
-	"mill_a1": {"pos": Vector2(1216, 448), "size": Vector2(576, 416)},
-	"shen_a1": {"pos": Vector2(128, 640), "size": Vector2(640, 416)},
-	"zhou_house": {"pos": Vector2(1792, 1280), "size": Vector2(384, 224)},
+	"mill_a1": {"pos": Vector2(1216, 512), "size": Vector2(576, 416)},
+	"shen_a1": {"pos": Vector2(64, 416), "size": Vector2(640, 416)},
+	"zhou_house": {"pos": Vector2(576, 1920), "size": Vector2(384, 224)},
 	"lu_house": {"pos": Vector2(2304, 768), "size": Vector2(640, 416)},
 }
 
 ## A2 1951：沈家 L 形
 const HOUSE_MAP_A2 := {
-	"mill_a2": {"pos": Vector2(1216, 448), "size": Vector2(576, 416)},
-	"shen_a2": {"pos": Vector2(128, 512), "size": Vector2(736, 544)},
-	"zhou_a2": {"pos": Vector2(1792, 1280), "size": Vector2(384, 224)},
+	"mill_a2": {"pos": Vector2(1216, 512), "size": Vector2(576, 416)},
+	"shen_a2": {"pos": Vector2(64, 416), "size": Vector2(736, 544)},
+	"zhou_a2": {"pos": Vector2(576, 1920), "size": Vector2(384, 224)},
 	"lu_a2": {"pos": Vector2(2304, 768), "size": Vector2(640, 416)},
 }
-const OLD_WELL := Vector2(1360, 848)
+## 2026-11-26 重排：老井从磨坊院外 (1360,848) 挪到环岛中心，与 A4/A5 五帧同址
+const WELL_POS := Vector2(2048, 832)
 
 ## A3 1976：沈家凹形最大
 const HOUSE_MAP_A3 := {
-	"mill_a3": {"pos": Vector2(1216, 448), "size": Vector2(576, 544)},
-	"shen_a3": {"pos": Vector2(128, 288), "size": Vector2(896, 768)},
-	"zhou_a3": {"pos": Vector2(1792, 1280), "size": Vector2(384, 224)},
+	"mill_a3": {"pos": Vector2(1216, 512), "size": Vector2(576, 544)},
+	"shen_a3": {"pos": Vector2(64, 416), "size": Vector2(896, 768)},
+	"zhou_a3": {"pos": Vector2(576, 1920), "size": Vector2(384, 224)},
 	"lu_a3": {"pos": Vector2(2304, 768), "size": Vector2(640, 416)},
 }
 
@@ -130,14 +133,11 @@ func _init() -> void:
 			print("  A2 LOT %s = %s (期望 %s)" % [hid, str(lr2.size), str(e2["size"])])
 			a2_ok = false
 	print("HOUSES_A2=%s" % a2_ok)
-	# 老井 (900,545) 必须落在 mill_a2 lot 内：story「磨坊一直盖在井上面」
-	var mill2_rect := HouseShape.lot_rect(
-		HouseShape.house("mill_a2"), HOUSE_MAP_A2["mill_a2"]["pos"])
-	# v5 设计：磨坊三帧同址 (1216,448)，井在磨坊院外路边 (1360,848)。
+	# 2026-11-26 重排：磨坊抬到 (1216,512)（北墙压河沿，水车贴河），井挪到环岛中心 (2048,832)。
 	# A1 井敞开（挡路）、A2 石板封（不挡）、A3 三层水泥（不挡）。
 	print("A2_MILL_SAME_SPOT=%s (期望 true：磨坊三帧同址，不漂移)" % (
-		(HOUSE_MAP_A2["mill_a2"]["pos"] as Vector2) == Vector2(1216, 448)))
-	print("A2_OLD_WELL_NO_WELL_SOLID=%s (期望 true：A2 井盖石板，不再挡路)" % tl.frames[1].is_free(OLD_WELL))
+		(HOUSE_MAP_A2["mill_a2"]["pos"] as Vector2) == Vector2(1216, 512)))
+	print("A2_WELL_NO_WELL_SOLID=%s (期望 true：A2 井盖石板，不再挡路)" % tl.frames[1].is_free(WELL_POS))
 	print("A2_HOTSPOTS=%d (期望 >=10：手写5 + clue家具)" % tl.frames[1].hotspots.size())
 
 	# --- 2c3. A3 1976：四栋都在 + 粮站盖住老井 + 三层水泥封层 ---
@@ -164,25 +164,26 @@ func _init() -> void:
 			print("  A3 LOT %s = %s (期望 %s)" % [hid, str(lr3.size), str(e3["size"])])
 			a3_ok = false
 	print("HOUSES_A3=%s" % a3_ok)
-	# 老井必须在粮站 lot 内（story §4.3「挖地基挖到了老井」）
+	# ⚠️ 2026-11-26 重排的代价：五帧井同址（任务书 §1/S2）⇒ 旧断言
+	# 「粮站挖地基挖到老井」(story §4.3) 失去载体，改成断言「井已不在房子底下」；
+	# 该剧情冲突已写进 docs/FEEDBACK-a1-a3-rebuild-exec.md，交总策划裁定。
 	var mill3_rect := HouseShape.lot_rect(
 		HouseShape.house("mill_a3"), HOUSE_MAP_A3["mill_a3"]["pos"])
-	print("A3_OLD_WELL_UNDER_MILL=%s (期望 true：粮站盖在井上面)" % mill3_rect.has_point(OLD_WELL))
-	# A3 老井是三层水泥封死的实体（挡路），不是可站的石板
-	# v5：A3 井是三层水泥封层，不挡路（玩家能在上面走）
-	print("A3_OLD_WELL_FREE=%s (期望 true：三层水泥封平，能走过去)" % tl.frames[2].is_free(OLD_WELL))
+	print("A3_WELL_NOT_UNDER_MILL=%s (期望 true：井已挪出粮站)" % (not mill3_rect.has_point(WELL_POS)))
+	# A3 井是三层水泥封层，不挡路（玩家能在上面走）
+	print("A3_WELL_FREE=%s (期望 true：三层水泥封平，能走过去)" % tl.frames[2].is_free(WELL_POS))
 	print("A3_HOTSPOTS=%d (期望 >=10：手写5 + clue家具)" % tl.frames[2].hotspots.size())
 
 	# --- 2d. 每扇院门两侧都能站（门洞中心可站） ---
-	# v5 布局门洞中心（house 数据 gate 格 + lot 原点，格心 = TILE/2 = 16）：
-	#   mill_a1  gate(7,10) → (1216+7*32+16, 448+10*32+16) = (1456, 784)
-	#   shen_a1  gate(6,10) → (128+6*32+16,  640+10*32+16) = (336, 976)
-	#   zhou     gate(2,5)  → (1792+2*32+16, 1280+5*32+16) = (1872, 1456)
+	# 2026-11-26 重排后的门洞中心（house 数据 gate 格 + lot 原点，格心 = TILE/2 = 16）：
+	#   mill_a1  gate(7,10) → (1216+7*32+16, 512+10*32+16) = (1456, 848)
+	#   shen_a1  gate(6,10) → (64+6*32+16,   416+10*32+16) = (272, 752)
+	#   zhou     gate(2,5)  → (576+2*32+16,  1920+5*32+16) = (656, 2096)
 	#   lu       gate(6,10) → (2304+6*32+16, 768+10*32+16) = (2512, 1104)
 	var doors_passable := true
 	for gate in [
-		Vector2(1456, 784), Vector2(336, 976),
-		Vector2(1872, 1456), Vector2(2512, 1104)]:
+		Vector2(1456, 848), Vector2(272, 752),
+		Vector2(656, 2096), Vector2(2512, 1104)]:
 		if not tl.frames[0].is_free(gate):
 			print("  DOOR BLOCKED %s" % str(gate))
 			doors_passable = false
@@ -196,19 +197,21 @@ func _init() -> void:
 	print("HOTSPOTS_OK=%s" % (a1_hot >= 9))
 
 	# --- 3. 空间移动（往右走，y=1400 一带是空地） ---
+	# ⚠️ load_frames 的 index 落在 start_frame(A5)，这两段都测 A1，必须显式切回 0。
+	tl.index = 0
 	tl.char_pos = Vector2(600, 1600)
 	var before: Vector2 = tl.char_pos
 	tl.move_space(Vector2(40, 0))
 	print("SPACE_MOVE_DX=%.1f (期望 40)" % (tl.char_pos.x - before.x))
 
-	# --- 4. 撞墙：磨坊 lot (1216,448) 18x13 格 → 屋体南墙行 → 南沿 y=816（实测） ---
-	# 注意：老井中心 (1360,848)、半径 32，bbox 1328~1392 x 816~880，
-	# 从井的 x 范围往北会先撞井而不是撞墙。改用 x=1248（避开井）。
+	# --- 4. 撞墙：磨坊 lot (1216,512) 18x13 格 → 南墙行在格 10（y=832~864） ---
+	# 从 (1248, 904) 往北推：撞墙下沿 864，角色半径 14 ⇒ 停在 878 附近。
+	tl.index = 0
 	tl.char_pos = Vector2(1248, 904)
 	for i in 120:
 		tl.move_space(Vector2(0, -4))
-	print("WALL_STOP_Y=%.1f (磨坊南墙前，期望 800~816)" % tl.char_pos.y)
-	print("WALL_BLOCKED=%s" % (tl.char_pos.y >= 800.0 and tl.char_pos.y <= 816.0))
+	print("WALL_STOP_Y=%.1f (磨坊南墙前，期望 864~880)" % tl.char_pos.y)
+	print("WALL_BLOCKED=%s" % (tl.char_pos.y >= 864.0 and tl.char_pos.y <= 880.0))
 
 	# --- 5. 从 A1 一路推到 A5（起点在主路 (1400,1120)，A2-A5 该点为空地可站） ---
 	# L17 起 step_time 不再拒绝推进（落进实体就进虚化），所以「推得到几步」只由帧数决定；
@@ -233,15 +236,17 @@ func _init() -> void:
 	# 磨坊内部（账房/大厅地面）应可站：玩家能从门洞进房子。
 	# 墙体格不可站由 WALL_STOP_Y 撞墙覆盖。
 	tl.index = 0
-	print("A1_MILL_INTERIOR_FREE=%s (期望 true，屋内地面可走)" % tl.frames[0].is_free(Vector2(1400, 520)))
-	print("A1_MILL_DOOR_FREE=%s (期望 true，门洞 (1456,784) 可站)" % tl.frames[0].is_free(Vector2(1456, 784)))
-	# 老井：A1 挖开可挡
-	print("A1_WELL_FREE=%s (期望 false)" % tl.frames[0].is_free(Vector2(1360, 860)))
+	print("A1_MILL_INTERIOR_FREE=%s (期望 true，屋内地面可走)" % tl.frames[0].is_free(Vector2(1400, 752)))
+	print("A1_MILL_DOOR_FREE=%s (期望 true，门洞 (1456,848) 可站)" % tl.frames[0].is_free(Vector2(1456, 848)))
+	# 老井：A1 敞口是实体（挡路）
+	print("A1_WELL_FREE=%s (期望 false)" % tl.frames[0].is_free(WELL_POS))
 
 	# --- 8. 检视点 ---
 	tl.index = 0
-	print("HOTSPOT_A1_WELL=%s" % String(tl.frames[0].hotspot_at(Vector2(1360, 860)).get("title", "NONE")))
-	print("HOTSPOT_A1_MILL_DESK=%s" % String(tl.frames[0].hotspot_at(Vector2(1264, 544)).get("title", "NONE")))
+	print("HOTSPOT_A1_WELL=%s (期望 老井)" % String(tl.frames[0].hotspot_at(WELL_POS).get("title", "NONE")))
+	print("HOTSPOT_A2_WELL=%s (期望 老井 · 石板)" % String(tl.frames[1].hotspot_at(WELL_POS).get("title", "NONE")))
+	print("HOTSPOT_A3_WELL=%s (期望 老井 · 三层水泥)" % String(tl.frames[2].hotspot_at(WELL_POS).get("title", "NONE")))
+	print("HOTSPOT_A1_MILL_DESK=%s" % String(tl.frames[0].hotspot_at(Vector2(1264, 608)).get("title", "NONE")))
 	print("HOTSPOT_A1_FAR=%s (期望 empty)" % ("empty" if tl.frames[0].hotspot_at(Vector2(40, 1700)).is_empty() else "FOUND"))
 
 	# --- 9. 每帧概况 ---
