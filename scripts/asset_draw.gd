@@ -88,11 +88,12 @@ const TILE_FILES := {
 }
 
 ## polygon 的 label → TILE_FILES 的 kind（§3.2 按 label 分派）。
-## 表里没有的 label（**岛 / 山**：美术还没交 roundabout_island_soil|green、山地表瓦片）
+## 表里没有的 label（**山**：美术还没交山地表瓦片）
 ## ⇒ 回空串 ⇒ 调用方保留纯色降级，缺口登记在 docs/FEEDBACK-asset-tile-wire-exec.md §2。
 const POLYGON_TILE_KIND := {
 	"河": "river",
 	"路": "road",
+	"岛": "ground",   # 内岛＝草地，复用地面瓦片（原先无图 ⇒ 纯色圆盘）
 }
 
 static var _tex_cache := {}

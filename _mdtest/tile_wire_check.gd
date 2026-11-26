@@ -28,7 +28,7 @@ const FRAMES := ["a1_1926", "a2_1951", "a3_1976", "a4_2001", "a5_2026"]
 const WORLD := Vector2(4800, 3600)
 
 ## 已知美术缺口：这些 label 现在只能画纯色（缺 32×32 瓦片），登记进 GAP 行。
-const KNOWN_GAP := ["岛", "山"]
+const KNOWN_GAP := ["山"]
 
 const WATER_PROBE := Color("#3f5f6e")   # river_tiles_l8 的主色（判「这里是水」）
 const GROUND_A4_PROBE := Color("#6f6a52")
