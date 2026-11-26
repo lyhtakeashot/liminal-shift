@@ -1,0 +1,33 @@
+[gd_resource type="TileSet" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/village/scene/ground_a3_tiles.png" id="1_oa3u3"]
+[ext_resource type="Texture2D" path="res://assets/village/scene/field_tiles_l8.png" id="2_l7ttm"]
+[ext_resource type="Texture2D" path="res://assets/village/scene/road_tiles_l8.png" id="3_ygjij"]
+[ext_resource type="Texture2D" path="res://assets/village/scene/river_tiles_l8.png" id="4_s3rqn"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k4ayo"]
+texture = ExtResource("1_oa3u3")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ut35"]
+texture = ExtResource("2_l7ttm")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_awdl2"]
+texture = ExtResource("3_ygjij")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_schnk"]
+texture = ExtResource("4_s3rqn")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_k4ayo")
+sources/1 = SubResource("TileSetAtlasSource_1ut35")
+sources/2 = SubResource("TileSetAtlasSource_awdl2")
+sources/3 = SubResource("TileSetAtlasSource_schnk")
