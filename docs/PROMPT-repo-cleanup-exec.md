@@ -22,7 +22,7 @@
 |---|---|---|
 | `git status --short` 行数 | 1008 | **< 30** |
 | 仓库根目录散落文件 | 7 个 `lab_out_*.txt` 等 | 0 |
-| `lab/` 文件数 | 1031 | < 40（只留本周在用的） |
+| `lab/` 里的**未跟踪**文件数 | ~820 | **0**（已跟踪的 117 个溯源脚本**必须原样留着**） |
 | `docs/` 文件数 | 161 | < 90（过期任务书/反馈进 `_archive/`） |
 
 ---
@@ -38,23 +38,36 @@ _archive/
   mdtest-assets/       # _mdtest 下未跟踪的截图与预览图
 ```
 
-2. `.gitignore` 追加两行（**该文件不是 UTF-8，`read`/`edit` 工具会报 invalid UTF-8，只能用 `Add-Content` 追加**）：
+2. `.gitignore` **只追加 `_archive/` 一条**（**不要**把 `lab/` 加进去——`lab/` 里有 117 个已跟踪的溯源脚本，而且以后跑数据线还要往里写可提交的脚本）。
 
 ```powershell
-Add-Content .gitignore "`n# 归档区：不进版本库`n_archive/`n# 草稿脚本区：本地工作用`nlab/"
+Add-Content .gitignore "`n# 归档区：不进版本库`n_archive/"
 ```
 
-追加后用 `git check-ignore -v _archive/x lab/x` 验证生效，并确认 `.evidence_archive.json`（第 61 行）与 `build/`（第 64 行）两条**没有被破坏**。
+追加后用 `git check-ignore -v _archive/x` 验证生效，并确认 `.evidence_archive.json`（第 61 行）与 `build/`（第 64 行）两条**没有被破坏**。
+
+**新规矩（写进反馈，lead 会同步到守则）**：一次性草稿、截图、备份一律放 `_archive/scratch/`，**不再往 `lab/` 里丢**；`lab/` 只放「和 `data/` 一起提交的溯源脚本」。
 
 ---
 
 ## §3 处置表
 
-**1. `lab/` → `_archive/lab-2026-11-26/`**
+**1. `lab/` 的未跟踪文件 → `_archive/lab-2026-11-26/`**
 
-整目录搬（`lab/` 下 1031 个文件全部是未跟踪的草稿：`_probe_*.py`/`_probe_*.gd`、`maps/`、`audio_demo/`、`evidence_shot/`、`render_fix_shot/`、`_backup_16px_a4a5/`、`_backup_artline/`、`_l19_appdata/`、`_push_api_tmp/`、`__pycache__/`、`lab_out_*.txt`）。
+⚠️ **先读这条**：`lab/` **不是全未跟踪**！实测 `git ls-files lab` 有 **117 个已跟踪文件**（55 个 `.py` 溯源脚本如 `_a13_road_v3.py`、`_a4_build.py`，7 个 `.json` 基线，21 个 `.png` 证据图，17 个 `.import`，6 个 `.gd`，4 个 `.md`，7 个 `.txt`）。**这些是数据产物的溯源，一个都不许移动或删除。**
 
-搬完 `lab/` 保留为空目录即可（或删掉空目录）。**注意：`lab/` 里没有已跟踪文件，搬之前用 `git ls-files lab` 确认输出为空。**
+所以做法是：**只搬 `lab/` 下的未跟踪文件**，已跟踪的原样不动。
+
+```powershell
+# 列出 lab/ 下未跟踪的文件（这就是要搬的名单）
+git ls-files --others --exclude-standard -- lab/
+```
+
+典型要搬的：`_probe_*.py`/`_probe_*.gd`、`_gen_*.py`、`_inspect_*.py`、`_verify_*.py`、`_qa_*.py`、`maps/`、`audio_demo/`、`evidence_shot/`、`render_fix_shot/`、`_backup_16px_a4a5/`、`_backup_artline/`、`_l19_appdata/`、`_push_api_tmp/`、`__pycache__/`、`lab_out_*.txt`。
+
+搬完必须验证：`git ls-files lab | Measure-Object -Line` 仍然是 **117**。
+
+**搬运规则**：`git ls-files --others --exclude-standard -- <目录>` 逐条搬，**不要 `Move-Item lab _archive/` 整个目录**（那样会把 117 个已跟踪文件一起搬走，git 会认为它们被删了）。
 
 **2. `_mdtest/` 下未跟踪的截图与预览 → `_archive/mdtest-assets/`**
 
@@ -80,16 +93,23 @@ lab_out_greybox.txt  lab_frames_diff.txt  _tmp_version.txt
 
 **已跟踪的 `docs/**` 一个都不许动**（`git ls-files docs` 里有的就别碰）。
 
-**5. `美术资产/` 的 34 个 `D` → 提交删除**
+**5. `美术资产/` 的 34 个 `D` → 逐个确认后提交删除（**不许删整个目录**）**
 
-先证明它已经用不上：
+⚠️ **这个目录不是垃圾堆**：`scripts/player.gd:39` 写着 `const HERO_SHEET := "res://美术资产/主角/Sprite-主角-Sheet.png"`，**主角贴图正在用**。整目录删掉会直接把玩家立绘干掉。
+
+工作区里已经处于「已删除（`D`）」状态的 **34 个**，实测全是家具道具（`Sprite-老椿树1.png`、`Sprite-茅坑.png`、`小桌/`、`床/`、`椅子/`、`灶台柴/`、`长桌/` 及其 `.import`）。要验证它们确实被 `_ref/art/_assets_a1a3/_a1a3_assets.json` 取代了：
 
 ```powershell
-Select-String -Path scripts/*.gd,scenes/**/*.tscn,*.tres -Pattern "美术资产" -ErrorAction SilentlyContinue
+# ① 这批文件名是否被任何已跟踪的代码/场景/资源引用（除注释和文档外应该为空）
+git grep -n "老椿树1\|茅坑\|小桌\|灶台柴" -- scripts scenes tools data "*.tres" "*.tscn"
+# ② manifest 是否指向 assets/ 而不是 美术资产/（实测：不指向）
+git grep -n "美术资产" -- _ref/art/_assets_a1a3/
 ```
 
-**输出为空**（说明没有任何代码/场景/资源引用它）⇒ `git add -u 美术资产` 并单独提交，提交信息：「chore: 删除被 assets/ 取代的原始素材目录」。
-**输出非空** ⇒ 停手，把命中的行贴进反馈，报 lead。
+- ①**无命中** 且 ②**无命中** ⇒ `git add -u 美术资产` 单独提交，信息：「chore: 删除已被 _ref/art manifest 取代的家具原图（主角贴图保留）」。
+- 任何一条**有命中** ⇒ 停手，把命中的行贴进反馈，报 lead。
+
+⚠️ **禁止** `Remove-Item 美术资产 -Recurse`，禁止 `git rm -r 美术资产`。
 
 **6. 12 个 `M` 文件 → 一个字都不许碰**
 
@@ -102,7 +122,7 @@ Select-String -Path scripts/*.gd,scenes/**/*.tscn,*.tres -Pattern "美术资产"
 
 - **C1** `git ls-files --others --exclude-standard | Measure-Object -Line` < 30。
 - **C2** `git status --short` 行数 < 30，且其中**只剩 §3 第 6 条的 12 个 `M`**（如果 `美术资产` 已提交）。
-- **C3** `_archive/` 下文件总数 = 搬走前的未跟踪文件数（误差 ≤ 5，允许合并空目录）。
+- **C3** `_archive/` 下文件总数 = 搬走前的未跟踪文件数（误差 ≤ 5，允许合并空目录）；且 **`git ls-files lab | Measure-Object -Line` 仍为 117**（一个溯源脚本都没被搬走）。
 - **C4** `git ls-files _archive` 输出为空（归档区确实没进库）。
 - **C5** 九套回归全绿，且数字与基线**逐位相同**。
 
