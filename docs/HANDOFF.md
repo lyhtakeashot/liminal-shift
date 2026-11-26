@@ -35,16 +35,16 @@
 
 | 已实现 | 在哪 |
 |---|---|
-| Shift 切轴、W/S 推时间、WASD 空间移动 | `scripts/main.gd:57`（轮询，不是事件） |
-| AABB 碰撞 + 分轴滑动（不用物理引擎） | `scripts/timeline.gd:105` |
-| 推不过去的「顶住了」（顿帧/震屏/红环，不弹回） | `scripts/timeline.gd:78` + `main.gd:171` |
+| Shift 切轴、W/S 推时间、WASD 空间移动 | `scripts/main.gd:141`（轮询，不是事件） |
+| AABB 碰撞 + 分轴滑动（不用物理引擎） | `scripts/timeline.gd:148` |
+| 落进实体就「卡墙虚化」（半透明穿行，A 往里 / D 往外） | `scripts/timeline.gd:96` `step_time()` + `main.gd:409` `_process_phasing()` |
 | 五帧数据驱动（形状/阻挡/检视点全在 JSON） | `data/frames.json` |
-| 时间轴视觉：去饱和 / 色差 / 暗角 | `scripts/world_view.gd:80` |
+| 时间轴视觉：去饱和 / 色差 / 暗角 | `scripts/world_view.gd:157` |
 | 镜头：空间轴跟随、时间轴冻结 | `scripts/camera_rig.gd:42` |
-| 检视文字框（E 键） | `scripts/hud.gd:127` |
+| 检视文字框（E 键） | `scripts/hud.gd:213` |
 | 小窗/全屏（F11，Exclusive Fullscreen） | `scripts/display_manager.gd:35` |
 | 1280×720 + fractional 缩放（canvas_items） | `project.godot` `stretch/mode="canvas_items"` + `scale_mode=0` |
-| 地图四周隐形墙（走不出去） | `scripts/timeline.gd:97` |
+| 地图四周隐形墙（走不出去） | `scripts/timeline.gd:131` `in_world()` |
 | 自检脚本（含可站比例量化） | `_mdtest/greybox_check.gd` |
 | 房屋数据 + 出图器 + 本地编辑器（18 栋） | `_ref/houses/` → `HANDOFF-VILLAGE.md` |
 
@@ -227,28 +227,32 @@ func is_free(at: Vector2) -> bool:
 	return true
 ```
 
-`timeline.gd:86` 推时间时直接用 `frames[target].is_free(char_pos)` 判定——
+`timeline.gd:96` 推时间时直接用 `frames[target].is_free(char_pos)` 判定——
 **目标帧根本没被实例化，也能做重叠检测。** 这是旧方案做不到的。
 
-### 3.4 时间轴移动的碰撞判定
+### 3.4 时间轴移动的碰撞判定（L17 起＝卡墙虚化）
 
 时间模式下角色位置不变，但每推进一步都要检查：
 
-> **如果目标帧里，角色的碰撞盒和固体重叠 → 卡住，推不过去。**
+> **如果目标帧里，角色的碰撞盒和固体重叠 → 进入卡墙虚化（phasing）：人留在墙里，画成半透明。**
 
-**反馈不要「弹回去」**（那是惩罚），要「顶住了」：
-- 轻微顿帧
-- 屏幕轻微震动
-- 低频闷响
+**已实现**（`scripts/timeline.gd:96` `step_time()` + `main.gd:409` `_process_phasing()`，
+2026-11-26 L17 交付，细节见 `docs/FEEDBACK-phasing-exec.md`）：
 
-**已实现**（`scripts/timeline.gd:78` `step_time()` + `main.gd:171` `_on_bump()`）：
-判定失败发 `bump` 信号 → `world_view.kick_shake(2.0)` 震屏 2px + 玩家后仰 `bump_kick` + HUD 刻度红环闪一下。
-**判定是纯数学，同一帧立即反馈**，不需要等物理帧。
+- **推进不再被拒绝**（只有时间轴两头例外）：落进实体只是把 `phasing` 置 true 并发 `phasing_changed`
+  → HUD 换「虚化中」提示、时间轴激活刻度换成虚线光环、玩家变冷色半透明。
+- 虚化期间 `is_walkable()` 只守世界边界，位置走 `move_phasing()`：8px 步进、不查 `is_free()`，
+  **一旦落到自由点立刻自动退出**；A＝往里（`push_in`，最多 48px）、D＝往外（`push_out`，最多 256px，
+  先沿反方向直线退到最近自由点，退不出来再做 16 方向 ≤96px 兜底搜索，仍找不到就原地不动）。
+- 时间轴两头到头只闪一条暖色「已经是这一头了」，没有任何惩罚性反馈（不震屏、不后仰、不红环）。
+- **判定仍是纯数学**，同一帧立即反馈，不等物理帧。
 
-> **注意这条会限制「楼层」玩法。** 现在的判定是「目标帧这个坐标有没有 solid」，
-> 所以「在二楼推时间、回到只有一层的过去、人落到屋顶上」**不会发生**（会被顶住）。
-> 要支持它得改成「查目标帧该坐标不高于当前高度的最高可站表面」——
-> 方案、改动范围、工时都写在 `docs/house-spec.md` §8（用户 11/19 拍板降到 P3，不一定做）。
+> **正常游玩不该触发它。** 空气墙前后一致是地图线的事（`_mdtest/phasing_check.gd` 的 `PAIR_*`
+> 逐对格数盯这个），虚化只是「万一不一致」的兜底。旧版的拒绝推进反馈（bump：拒绝往前、震屏 +
+> 后仰 + 红环）已按用户口径整体删除。
+
+> **楼层不做**（用户 2026-11-26 拍板「时间不够了」，见 `house-spec.md` §8.3）。虚化只在当前帧
+> 的实体范围内兜底，不查高度——「在二楼推时间、落到一楼屋顶」不在支持范围内。
 
 ### 3.5 场景继承链（**已废弃，只留实测数据**）
 
@@ -750,14 +754,15 @@ git push -u origin main
 	  - [x] ~~地图放大 640×360 → **1600×900**（最大的四合院 336×304 px，现在塞不下）~~ → **已完成**：现为 **3200×2400**，四合院 1152×1152 px
 	  - [ ] 三层渲染 base/roof/props + y 排序（原型 `_mdtest/interior_canvas.gd` 已验证）
 - [ ] 过渡帧（每段 4 张）
-- [x] ~~时间轴 UI 条（显示刻度 + 当前帧）~~ → **已完成**（`scripts/hud.gd:96`）
-- [x] ~~残影拖尾~~ → **已完成**（`scripts/player.gd:32`）
-- [x] ~~检视交互（E 键，弹一行描述）~~ → **已完成**（`scripts/main.gd:144`）
+- [x] ~~时间轴 UI 条（显示刻度 + 当前帧）~~ → **已完成**（`scripts/hud.gd:169`）
+- [x] ~~残影拖尾~~ → **已完成**（`scripts/player.gd:146`）
+- [x] ~~检视交互（E 键，弹一行描述）~~ → **已完成**（`scripts/main.gd:316`）
 - [ ] 日记渲染搬进正式项目
 - [ ] **NPC 系统**（详见 `docs/npc.md`）
 	  - [ ] 旁听：2 人以上同站 → 一段对话文字（**代码增量约 5 行**，`hud.gd` 的 `_wrap` 认换行符）
 	  - [ ] 对话：单个 NPC → 主角问一句、NPC 答、转身就忘（**约 200–240 行**，新增 `dialogue.gd`）
 	  - [ ] 主角虚化：与 NPC 重叠时半透明 + 轻微色差（纯视觉，不影响任何判定）
+	        → **绘制通道 L17 已备好**：`player.gd:118` `_phase_color()` + `world_view.set_player_state()` 第 5 位 `phasing`；NPC 版本只需在重叠时置 true，别另写一套
 - [ ] **人声文案**：旁听 21 条 + 对话 5 段（`docs/npc.md` §5）
 
 ### P2 · 决定完成度
