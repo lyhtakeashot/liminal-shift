@@ -5,9 +5,10 @@
   },
   "safe_top": 36,
   "safe_bottom": 3552,
+  "start_frame": "a5_2026",
   "start_pos": [
-    1024,
-    1696
+    2048,
+    1864
   ],
   "frames": [
     {

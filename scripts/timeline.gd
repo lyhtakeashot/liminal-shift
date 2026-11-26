@@ -68,9 +68,23 @@ func load_frames() -> bool:
 		push_error("帧表里一帧都没有")
 		return false
 
+	# 起始帧：读 frames.json 的 start_frame（house-spec 2026-11-19 拍板：从 A5 2026 开局）。
+	# 缺省 / 写错 ⇒ 退回最后一帧（那正是 A5）—— 不许因为一个字符串让游戏起不来。
+	var start_id := String(d.get("start_frame", ""))
+	index = frames.size() - 1
+	if start_id != "":
+		var found := false
+		for i in frames.size():
+			if frames[i].id == start_id:
+				index = i
+				found = true
+				break
+		if not found:
+			push_warning("start_frame「%s」不在帧表里，退回最后一帧 %s" % [start_id, frames[index].id])
+
+	# 起点坐标：五帧共用同一个位置（玩法的「位置不变」全靠这个）
 	var sp: Array = d.get("start_pos", [150, 250])
 	char_pos = Vector2(float(sp[0]), float(sp[1]))
-	index = 0
 	axis = Axis.SPACE
 	phasing = false
 	phase_origin = char_pos
