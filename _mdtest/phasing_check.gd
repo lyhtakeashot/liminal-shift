@@ -9,7 +9,10 @@ const Timeline = preload("res://scripts/timeline.gd")
 
 ## §4.5 第 2 条「A4→A5 必须接近 0」的容差。墙线 / 门洞细化的量级（实测 80 格）不算
 ## 空气墙错位；超过这个数就说明两帧的实体整体没对齐，要红。
-const PAIR_NEAR0_TOL := 100
+## A4→A5 容差 100 → 320：删山是用户点名的改动，A4→A5 差值涨到 ~298 属必然，
+## 且「五帧实体空气墙一致」口径已降级（docs/地图视觉口径.md C6）。
+## 由 docs/PROMPT-map-v5-exec.md §5.1 明确授权改这一处（2026-11-26）。
+const PAIR_NEAR0_TOL := 320
 
 var fails := 0
 var warns := 0
