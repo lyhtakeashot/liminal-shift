@@ -17,6 +17,8 @@ const Timeline = preload("res://scripts/timeline.gd")
 const FrameData = preload("res://scripts/frame_data.gd")
 const EvidenceStore = preload("res://scripts/evidence_store.gd")
 const EvidenceArchive = preload("res://scripts/evidence_archive.gd")
+const DiaryView = preload("res://scripts/diary_view.gd")
+const DiaryTexts = preload("res://scripts/diary_texts.gd")
 
 # 五个年代的时间轴色偏：越往后越冷、越灰
 const YEAR_TINTS: Array = [
@@ -37,6 +39,8 @@ const YEAR_TINTS: Array = [
 var tl: Timeline
 var archive: Control = null          # 证物档案界面（代码动态建，挂 Main 下）
 var _archive_i_down := false          # I 键边沿检测（轮询，不用事件）
+var diary: Control = null            # 双日记对照界面（代码动态建，挂 Main 下）
+var _diary_j_down := false            # J 键边沿检测（临时调试入口，说明见 _make_diary）
 
 var _step_active := false    # 这一轮按住是否已经推过第一帧
 var _repeating := false      # 是否已经进入连发阶段
@@ -66,6 +70,7 @@ func _ready() -> void:
 	# 这里只做注入：让 world_view 拿到节点引用，玩家状态靠 set_player_state() 每帧同步。
 	world.set_player_ref(player)
 	_make_archive()
+	_make_diary()
 	# 读回上次存档的证物（跨启动持久化）。读不到就当空档案。
 	EvidenceStore.load()
 	_refresh_all()
@@ -77,6 +82,41 @@ func _make_archive() -> void:
 	archive = EvidenceArchive.new()
 	archive.name = "EvidenceArchive"
 	add_child(archive)
+
+
+## 建双日记界面：动态挂 Main 下（与档案同层，建在 HUD 之后 → 画在 HUD 上面）。
+## 正常情况下在世界里按 E 翻开书本（见 _try_open_diary）；J 是**临时调试入口**，
+## 因为 frames.json 里还没有「书」热点。内容线往柜台 / 暗龛热点加一行
+## `"diary": "mill"` 之后，把 _process 里的 J 分支删掉即可。
+func _make_diary() -> void:
+	diary = DiaryView.new()
+	diary.name = "DiaryView"
+	add_child(diary)
+	# 入档时让档案闪一下「已收集」
+	diary.set("archive_hook", archive)
+
+
+## 脚下那一格如果是一条「书」热点，就翻开它。返回是否翻开了。
+## 契约：热点字典里加 `"diary": "<书 id>"`；现在只有 "mill"（《水簿》一对）。
+func _try_open_diary() -> bool:
+	if diary == null:
+		return false
+	var f: FrameData = tl.current()
+	if f == null:
+		return false
+	var h: Dictionary = f.hotspot_at(tl.char_pos)
+	if h.is_empty():
+		return false
+	if String(h.get("diary", "")) != "mill":
+		return false
+	var pair := DiaryTexts.mill_pair()
+	diary.show_pair(String(pair.fake), String(pair.raw),
+		String(pair.left_title), String(pair.right_title))
+	# 「获取的时候复刻一份」：翻开这一刻就入档（同一年代只入一次）
+	diary.collect_copy(f.year)
+	diary.open_view()
+	_set_hud_hidden(true)
+	return true
 
 
 ## 档案开着的时候把 HUD 让开。
@@ -137,10 +177,18 @@ func _process(delta: float) -> void:
 		archive.toggle()
 	_archive_i_down = archive_now
 
-	# 档案开着的时候，游戏逻辑全停（不响应行走 / 时间轴推帧 / SHIFT 切时代 / E 检视）。
+	# 双日记：临时调试入口（J）。数据里还没有「书」热点，先用它把界面翻出来看效果。
+	# 开着的时候也由这里合上（下面的停世界 return 挡不到这一段）。
+	var diary_now := Input.is_key_pressed(KEY_J) or Input.is_physical_key_pressed(KEY_J)
+	if diary_now and not _diary_j_down and diary != null:
+		diary.toggle()
+	_diary_j_down = diary_now
+
+	# 档案 / 书本开着的时候，游戏逻辑全停（不响应行走 / 时间轴推帧 / SHIFT 切时代 / E 检视）。
 	# ⚠️ SHIFT 与 E 的处理必须放在这个判断**之后** —— 开着档案时世界是停的，
 	#    否则玩家能一边翻档案一边切时代、顺手把新年代证物也收了。
-	if archive != null and archive.is_open():
+	# 书本的「合上」走 DiaryView._input（E / Esc），不吃这一段。
+	if (archive != null and archive.is_open()) or (diary != null and diary.is_open()):
 		player.walking = false
 		_set_hud_hidden(true)
 		return
@@ -151,9 +199,14 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("shift_axis"):
 		tl.toggle_axis()
 
-	# E 检视：档案开着就跳过（免得关档瞬间误收一件）。
+	# E：脚下有「书」就翻开（顺手入档一份副本），没有就照旧检视。
+	# 书开着时到不了这里（上面那条 return 挡着）；合书由 DiaryView 自己吃 E，
+	# just_closed() 防止同一次按键「合上又被立刻翻开」。
 	if Input.is_action_just_pressed("inspect"):
-		_do_inspect()
+		if diary != null and diary.just_closed():
+			pass
+		elif not _try_open_diary():
+			_do_inspect()
 
 	if tl.axis == Timeline.Axis.SPACE:
 		_process_space(delta)
