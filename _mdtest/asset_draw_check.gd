@@ -46,6 +46,7 @@ func _run() -> void:
 	_check_art_walls()
 	_check_prop_matching()
 	_check_scene_textures()
+	_check_a4a5_wiring()
 	_check_hero_sheet()
 	_check_no_collision_change()
 	_check_sort_invariant()
@@ -214,6 +215,32 @@ func _check_scene_textures() -> void:
 			_ok(tex != null, "%s 有 %s 场景图" % [fid, kind])
 	# A4/A5 没有场景图 → 回 null（优雅降级）
 	_ok(AssetDraw.scene_tex("a4_2001", "river") == null, "a4_2001 无场景图 → null")
+
+	# L8：五帧的 32px 平铺瓦片齐全（ground/road/field/river），且都是 32×32。
+	# 注意这是**独立通路**（TILE_FILES），不动上面 SCENE_FILES 的语义。
+	var missing: Array = []
+	var wrong: Array = []
+	for fid in ["a1_1926", "a2_1951", "a3_1976", "a4_2001", "a5_2026"]:
+		for kind in ["ground", "road", "field", "river"]:
+			var t := AssetDraw.tile_tex(fid, kind)
+			if t == null:
+				missing.append("%s/%s" % [fid, kind])
+			elif t.get_size() != Vector2(AssetDraw.TILE, AssetDraw.TILE):
+				wrong.append("%s/%s=%s" % [fid, kind, str(t.get_size())])
+	_ok(missing.is_empty(), "五帧 × 四类平铺瓦片齐全（缺 %s）" % str(missing))
+	_ok(wrong.is_empty(), "平铺瓦片全是 32×32（不合 %s）" % str(wrong))
+
+
+## ---------- 4b. A4/A5 房屋接线（图未到，只验通路登记） ----------
+func _check_a4a5_wiring() -> void:
+	var ids := ["market", "shen_a4", "zhou_a4", "zheng_a4", "shen_a5", "toyshop", "school"]
+	var unreg: Array = []
+	for sid in ids:
+		if (WorldView.FAMILY.get(sid, []) as Array).size() != 2:
+			unreg.append(sid)
+	_ok(unreg.is_empty(), "A4/A5 七栋房子都登记了族名+帧（未登记 %s）" % str(unreg))
+	# 图还没到 ⇒ 不能有 base 图；哪天美术落地了这条会红，届时把断言改成「有图」
+	_ok(not WorldView._art_walls("shen_a4"), "shen_a4 尚无 base 图 → 走引擎色块降级（美术到位后改断言）")
 
 
 ## ---------- 5. 主角精灵 ----------

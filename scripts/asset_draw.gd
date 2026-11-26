@@ -45,6 +45,57 @@ const SHARED_SCENE := {
 	"stele": "assets/village/scene/stele.png",
 }
 
+## 32px 单方格**平铺**瓦片（L8 · 地图视觉口径 C1/C3）。
+## kind ∈ ground / road / field / river，全部 32×32、100% 不透明，
+## 一律配合 `draw_texture_rect(tex, rect, true, ...)` 用 —— 绝不整帧贴一次大图。
+##
+## ⚠️ 文件名带 `_l8` 的条目是**临时图**（用户 2026-11-26 裁定：A4/A5 美术正式瓦片未到，
+##    先拿既有纹样按帧色重新调色顶上）。美术正式图到位后**只改下面这张表的一行路径**，
+##    `world_view.gd` 一个字不用动。官方文件名（见 `docs/ART-GAP-A4A5.md` §4 B 组）：
+##      ground_a4_tiles.png / ground_a5_tiles.png / road_a4_tiles.png / road_a5_tiles.png
+##      field_a4_tiles.png  / field_a5_tiles.png  / river_a4_tiles.png / river_a5_tiles.png
+##      （A1–A3 的路/田瓦片官方名同构：road_a1..a3_tiles.png / field_a1..a3_tiles.png）
+const TILE_FILES := {
+	"a1_1926": {
+		"ground": "assets/village/scene/ground_a1_tiles.png",
+		"road": "assets/village/scene/road_tiles_l8.png",
+		"field": "assets/village/scene/field_tiles_l8.png",
+		"river": "assets/village/scene/river_tiles_l8.png",
+	},
+	"a2_1951": {
+		"ground": "assets/village/scene/ground_a2_tiles.png",
+		"road": "assets/village/scene/road_tiles_l8.png",
+		"field": "assets/village/scene/field_tiles_l8.png",
+		"river": "assets/village/scene/river_tiles_l8.png",
+	},
+	"a3_1976": {
+		"ground": "assets/village/scene/ground_a3_tiles.png",
+		"road": "assets/village/scene/road_tiles_l8.png",
+		"field": "assets/village/scene/field_tiles_l8.png",
+		"river": "assets/village/scene/river_tiles_l8.png",
+	},
+	"a4_2001": {
+		"ground": "assets/village/scene/ground_a4_tiles_l8.png",
+		"road": "assets/village/scene/road_tiles_l8.png",
+		"field": "assets/village/scene/field_tiles_l8.png",
+		"river": "assets/village/scene/river_tiles_l8.png",
+	},
+	"a5_2026": {
+		"ground": "assets/village/scene/ground_a5_tiles_l8.png",
+		"road": "assets/village/scene/road_a5_tiles_l8.png",
+		"field": "assets/village/scene/field_tiles_l8.png",
+		"river": "assets/village/scene/river_tiles_l8.png",
+	},
+}
+
+## polygon 的 label → TILE_FILES 的 kind（§3.2 按 label 分派）。
+## 表里没有的 label（**岛 / 山**：美术还没交 roundabout_island_soil|green、山地表瓦片）
+## ⇒ 回空串 ⇒ 调用方保留纯色降级，缺口登记在 docs/FEEDBACK-asset-tile-wire-exec.md §2。
+const POLYGON_TILE_KIND := {
+	"河": "river",
+	"路": "road",
+}
+
 static var _tex_cache := {}
 static var _manifest_cache := {}
 static var _prop_index := {}      # short → Array[Dictionary]
@@ -169,3 +220,90 @@ static func scene_tex(frame_id: String, kind: String) -> Texture2D:
 	if m.is_empty():
 		return null
 	return load_asset("res://" + String(m.get(kind, "")))
+
+
+## 32px 平铺瓦片。kind ∈ ground / road / field / river（见 TILE_FILES）。
+## 缺图回 null ⇒ 调用方走纯色降级（C4：降级是容错，缺口必须登记）。
+static func tile_tex(frame_id: String, kind: String) -> Texture2D:
+	var m: Dictionary = TILE_FILES.get(frame_id, {})
+	if m.is_empty():
+		return null
+	var p := String(m.get(kind, ""))
+	if p.is_empty():
+		return null
+	return load_asset("res://" + p)
+
+
+static func ground_tex(frame_id: String) -> Texture2D:
+	return tile_tex(frame_id, "ground")
+
+
+static func road_tex(frame_id: String) -> Texture2D:
+	return tile_tex(frame_id, "road")
+
+
+static func field_tex(frame_id: String) -> Texture2D:
+	return tile_tex(frame_id, "field")
+
+
+static func river_tex(frame_id: String) -> Texture2D:
+	return tile_tex(frame_id, "river")
+
+
+## polygon 按 label 分派瓦片（§3.2）。分派不出来回 null（调用方画纯色）。
+static func polygon_tex(frame_id: String, label: String) -> Texture2D:
+	var kind := String(POLYGON_TILE_KIND.get(label, ""))
+	if kind.is_empty():
+		return null
+	return tile_tex(frame_id, kind)
+
+
+## 点是否在多边形内（射线法，边界算内）。纯逻辑，不依赖节点/渲染，可单测。
+## 格心判定用它 —— **不许拿 polygon 的 bbox 近似**（环道的 bbox 比真实环大一圈，会糊到岛上）。
+static func points_in_poly(poly: PackedVector2Array, p: Vector2) -> bool:
+	var n := poly.size()
+	if n < 3:
+		return false
+	var inside := false
+	var j := n - 1
+	for i in n:
+		var a := poly[i]
+		var b := poly[j]
+		if ((a.y > p.y) != (b.y > p.y)):
+			var x_cross := a.x + (p.y - a.y) / (b.y - a.y) * (b.x - a.x)
+			if p.x < x_cross:
+				inside = not inside
+		j = i
+	return inside
+
+
+## polygon → 32px 格平铺的矩形列表（世界坐标，格对齐）。
+## 先判「格心在多边形内」，再把同一行里连着的格合并成一段：
+## `draw_texture_rect(tex, 段, true, ...)` 的相位天然与逐格贴一致 ⇒ 像素结果相同，
+## 但绘制调用从「几千格」降到「几十段」（A4 河 150×13 格 ⇒ 约 13 段）。
+static func poly_tile_rects(poly: PackedVector2Array, tile: float) -> Array:
+	var out: Array = []
+	if poly.size() < 3 or tile <= 0.0:
+		return out
+	var box := Rect2(poly[0], Vector2.ZERO)
+	for q in poly:
+		box = box.expand(q)
+	var gy0 := int(floor(box.position.y / tile))
+	var gy1 := int(floor((box.end.y - 0.001) / tile))
+	var gx0 := int(floor(box.position.x / tile))
+	var gx1 := int(floor((box.end.x - 0.001) / tile))
+	for gy in range(gy0, gy1 + 1):
+		var run_start := -1
+		for gx in range(gx0, gx1 + 1):
+			var center := Vector2((float(gx) + 0.5) * tile, (float(gy) + 0.5) * tile)
+			var hit := points_in_poly(poly, center)
+			if hit and run_start < 0:
+				run_start = gx
+			elif not hit and run_start >= 0:
+				out.append(Rect2(float(run_start) * tile, float(gy) * tile,
+					float(gx - run_start) * tile, tile))
+				run_start = -1
+		if run_start >= 0:
+			out.append(Rect2(float(run_start) * tile, float(gy) * tile,
+				float(gx1 - run_start + 1) * tile, tile))
+	return out

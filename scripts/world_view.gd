@@ -60,8 +60,8 @@ const TRUNK_COLOR := Color("#5a4433")       # 树干
 # 房子贴图缓存：id → {base, roof}（null = 没有图，只查一次；不每帧 load 刷 ERROR）
 static var _tex_cache := {}
 
-# 场景大图 bbox 缓存：帧 id → {road: Rect2, field: Rect2}
-var _bbox_cache := {}
+# polygon → 32px 平铺段缓存：`帧id|shape下标` → Array[Rect2]（世界坐标、格对齐）
+var _poly_cache := {}
 
 var frame: FrameData = null
 var time_mode := false
@@ -162,7 +162,14 @@ func _draw() -> void:
 	if _shake > 0.0:
 		shake_off = _shake_dir * _shake
 
+	# 地面：先铺整帧地面色（C4 容错 —— 贴图缺失时不能变成透明），再盖 32px 地面瓦片。
+	# 瓦片**只在主通道画这一遍**，不进 _draw_scene 的三遍色差：
+	# 满屏平铺的花纹每 32px 一个接缝，叠三遍 ±1px 会让每条接缝都长出红/青重影。
 	draw_rect(Rect2(Vector2.ZERO, size), _grade(frame.ground), true)
+	var gtex := AssetDraw.ground_tex(frame.id)
+	if gtex != null:
+		draw_texture_rect(gtex, Rect2(Vector2.ZERO, size), true,
+			_grade(Color.WHITE) if time_mode else Color.WHITE)
 
 	if not time_mode:
 		_draw_scene(Vector2.ZERO, Color(1, 1, 1, 1), 1.0, false)
@@ -194,12 +201,10 @@ func _draw_scene(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) ->
 ## 背景层：地面铺装 + 房子的 lot 底色/房间色块。固定顺序，不参与排序。
 func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> void:
 	var sc := _scene_tex_color(tint, alpha_mul, grade)
-	var bboxes := _scene_bboxes()
-	var drew_road := false
-	var drew_field := false
+	var shapes: Array = frame.shapes
 
-	for s in frame.shapes:
-		var sd: Dictionary = s
+	for si in shapes.size():
+		var sd: Dictionary = shapes[si]
 		var c: Color = Color(String(sd.get("color", "#888888")))
 		if grade:
 			c = _grade(c)
@@ -217,16 +222,14 @@ func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> 
 			if _is_standing_rect(sd):
 				pass
 			elif bool(sd.get("road", false)):
-				# 主路：整张路图按整帧路面 bbox 贴一次（不是逐格贴）
-				if not drew_road and bboxes.has("road"):
-					drew_road = true
-					var rtex := AssetDraw.scene_tex(frame.id, "road")
-					if rtex != null:
-						draw_texture_rect(rtex,
-							Rect2(bboxes["road"].position + offset, bboxes["road"].size),
-							false, sc)
-					else:
-						draw_rect(Rect2(bboxes["road"].position + offset, bboxes["road"].size), c, true)
+				# 主路：32px 路面瓦片按**每个 rect** 平铺（C3 —— 不再整帧 bbox 贴一次整张路图）
+				var rr: Array = sd.get("rect", [0, 0, 0, 0])
+				var rrect := Rect2(float(rr[0]), float(rr[1]), float(rr[2]), float(rr[3]))
+				var rtex := AssetDraw.road_tex(frame.id)
+				if rtex != null:
+					draw_texture_rect(rtex, Rect2(rrect.position + offset, rrect.size), true, sc)
+				else:
+					draw_rect(Rect2(rrect.position + offset, rrect.size), c, true)
 			elif label == "坝":
 				# 石坝：一张图对应一个 rect
 				var r: Array = sd.get("rect", [0, 0, 0, 0])
@@ -240,16 +243,16 @@ func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> 
 				# 界碑这类立着的小件 → 前景层（_draw_prop）
 				pass
 			else:
-				# 田：整张田图按整帧田块 bbox 贴一次
-				if not drew_field and bboxes.has("field"):
-					drew_field = true
-					var ftex := AssetDraw.scene_tex(frame.id, "field")
-					if ftex != null:
-						draw_texture_rect(ftex,
-							Rect2(bboxes["field"].position + offset, bboxes["field"].size),
-							false, sc)
-					else:
-						draw_rect(Rect2(bboxes["field"].position + offset, bboxes["field"].size), c, true)
+				# 田块：32px 田瓦片按**每个 rect** 平铺。
+				# 旧实现把全部无 label rect merge 成一个大 bbox 再贴整张田图
+				# ⇒ 田块之间的空隙也被糊上田纹（A1 有 28 块田，合并后是一整片）。
+				var fr: Array = sd.get("rect", [0, 0, 0, 0])
+				var frect := Rect2(float(fr[0]), float(fr[1]), float(fr[2]), float(fr[3]))
+				var ftex := AssetDraw.field_tex(frame.id)
+				if ftex != null:
+					draw_texture_rect(ftex, Rect2(frect.position + offset, frect.size), true, sc)
+				else:
+					draw_rect(Rect2(frect.position + offset, frect.size), c, true)
 		elif stype == "path":
 			var pts: Array = []
 			for p in sd.get("points", []):
@@ -258,10 +261,17 @@ func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> 
 			if pts.size() >= 2:
 				draw_polyline(pts, c, float(sd.get("width", 20)), true)
 		elif stype == "polygon":
-			# 河：整张河图与 frames.json 的河 polygon 同几何（画布 3200×416，锚在 (0,0)）
-			var rtex := AssetDraw.scene_tex(frame.id, "river")
-			if rtex != null:
-				draw_texture_rect(rtex, Rect2(Vector2.ZERO + offset, Vector2(3200, 416)), false, sc)
+			# polygon 按 label 分派贴图（§3.2 事故核心）：
+			#   河 → 水面瓦片；路（环道 / 竖车道）→ 路面瓦片；
+			#   岛 / 山 → 美术还没交图，polygon_tex 回 null ⇒ 保留纯色降级（缺口登记在反馈文档）。
+			# 平铺范围 = 「格心落在多边形内的 32px 格」，按行合并成段后 tile=true 贴，
+			# 相位与逐格贴一致（像素相同），调用数从千级降到几十。
+			# 绝不拿 bbox 近似 —— 环道的 bbox 比真实环大一圈，会糊到内岛上。
+			var ptex := AssetDraw.polygon_tex(frame.id, label)
+			if ptex != null:
+				for span in _poly_rects(si, sd):
+					var sr: Rect2 = span
+					draw_texture_rect(ptex, Rect2(sr.position + offset, sr.size), true, sc)
 			else:
 				var poly: PackedVector2Array = PackedVector2Array()
 				for p in sd.get("points", []):
@@ -271,38 +281,19 @@ func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> 
 					draw_colored_polygon(poly, c)
 
 
-## 整帧的「路面 bbox」「田块 bbox」（世界坐标）。
-## 场景大图（路/田）是一张整图，图上空白处是透明的 —— 必须按整帧 bbox 一次性贴，
-## 不能逐格贴（逐格会丢路缘/田埂）。
-func _scene_bboxes() -> Dictionary:
-	if _bbox_cache.has(frame.id):
-		return _bbox_cache[frame.id]
-	var out := {}
-	var road := Rect2()
-	var field := Rect2()
-	var has_road := false
-	var has_field := false
-	for s in frame.shapes:
-		var sd: Dictionary = s
-		if String(sd.get("type", "")) != "rect":
-			continue
-		var label := String(sd.get("label", ""))
-		if label == "坝" or label == "碑":
-			continue
-		var r: Array = sd.get("rect", [0, 0, 0, 0])
-		var rect := Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))
-		if bool(sd.get("road", false)):
-			road = road.merge(rect) if has_road else rect
-			has_road = true
-		elif label == "":
-			field = field.merge(rect) if has_field else rect
-			has_field = true
-	if has_road:
-		out["road"] = road
-	if has_field:
-		out["field"] = field
-	_bbox_cache[frame.id] = out
-	return out
+## polygon → 32px 格平铺段（缓存，世界坐标、格对齐）。
+## 段 = 同一行里连着的「格心在多边形内」的格子合并而成；tile=true 的相位与逐格贴相同。
+func _poly_rects(idx: int, sd: Dictionary) -> Array:
+	var key := "%s|%d" % [frame.id, idx]
+	if _poly_cache.has(key):
+		return _poly_cache[key]
+	var poly := PackedVector2Array()
+	for p in sd.get("points", []):
+		var pa: Array = p
+		poly.append(Vector2(float(pa[0]), float(pa[1])))
+	var rects := AssetDraw.poly_tile_rects(poly, AssetDraw.TILE)
+	_poly_cache[key] = rects
+	return rects
 
 
 ## 贴图用的调制色：普通帧白，时间轴模式下去饱和 + 年代染色 + 色差叠加。
@@ -670,6 +661,13 @@ const FAMILY := {
 	"shen_a1": ["shen", "a1"], "shen_a2": ["shen", "a2"], "shen_a3": ["shen", "a3"],
 	"mill_a1": ["mill", "a1"], "mill_a2": ["mill", "a2"], "mill_a3": ["mill", "a3"],
 	"zhou_house": ["zhou", "a1"], "zhou_a2": ["zhou", "a2"], "zhou_a3": ["zhou", "a3"],
+	# A4/A5：图还没到（`assets/village/houses/<族>/a4_base.png` 等尚不存在）⇒ 这里只是
+	# **接线通路**：登记好族名+帧，美术 PNG 一落进对应目录就自动接管墙/门，引擎一个字不用改。
+	# 缺图时 `_house_tex` 的 `ResourceLoader.exists` 判空 ⇒ 走引擎色块降级（不刷 ERROR）。
+	# ⚠️ `market` 在 A4/A5 是同一条数据 id ⇒ 只能挂一套图；A5 若要独立一套，得数据侧拆 id。
+	"market": ["market", "a4"],
+	"shen_a4": ["shen", "a4"], "zhou_a4": ["zhou", "a4"], "zheng_a4": ["zheng", "a4"],
+	"shen_a5": ["shen", "a5"], "toyshop": ["toyshop", "a5"], "school": ["school", "a5"],
 }
 
 
