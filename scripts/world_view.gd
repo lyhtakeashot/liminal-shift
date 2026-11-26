@@ -57,6 +57,15 @@ const ROOF_RIDGE := Color("#8f6a56")        # 屋脊：亮一档
 const ROOF_EAVE := Color("#4a342c")         # 檐边：暗一档
 const TRUNK_COLOR := Color("#5a4433")       # 树干
 
+## 屋顶让开的「北侧房檐带」（2026-11-26 用户反馈）。
+## 原来只有「站在 wings 里」才不画屋顶，于是站在房子**北面**（含檐下、北院）时
+## 抬头只有一片屋顶，室内家具完全看不见 —— 「进屋看家具」这条玩法从北侧不可达。
+## 现在：wings 本身 + 其北沿往北 3 格、东西各 1 格，都算「要看进去」。
+## 北侧 96px 是「人站到檐下」的实际距离（檐口只外扩 1px，站得到）；
+## 东西各 32px 是为了沿墙擦身而过时屋顶别一格一格闪。
+const ROOF_APRON_NORTH := 96.0
+const ROOF_APRON_SIDE := 32.0
+
 # 房子贴图缓存：id → {base, roof}（null = 没有图，只查一次；不每帧 load 刷 ERROR）
 static var _tex_cache := {}
 
@@ -826,6 +835,33 @@ static func _prop_box(center: Vector2, rad: float, tex: Texture2D) -> Rect2:
 	return Rect2(center.x - w * 0.5, center.y + rad - h, w, h)
 
 
+## 玩家是否站在这栋房子「要剖开看进去」的范围里：wings 本身 + 北侧房檐带。
+## 与 _player_inside 同一套口径（整块让开、不做 alpha 渐变，house-spec §4.8.4），
+## 只是把范围往北扩出一条檐带 —— 站在房子北面/北院里也能看见室内家具。
+## 仍然逐帧现算（同一坐标换帧后 wings 会变），不缓存布尔。
+func _player_in_roof_apron(data: Dictionary, hpos: Vector2) -> bool:
+	var wings: Array = data.get("wings", [])
+	if wings.is_empty():
+		return false
+	var x0 := INF
+	var y0 := INF
+	var x1 := -INF
+	var y1 := -INF
+	for w in wings:
+		var ww: Array = w
+		var wx := float(ww[0]) * HouseShape.TILE
+		var wy := float(ww[1]) * HouseShape.TILE
+		x0 = minf(x0, wx)
+		y0 = minf(y0, wy)
+		x1 = maxf(x1, wx + float(ww[2]) * HouseShape.TILE)
+		y1 = maxf(y1, wy + float(ww[3]) * HouseShape.TILE)
+	# 矩形：左右各 ROOF_APRON_SIDE，上边再往北 ROOF_APRON_NORTH，下边 = wings 南沿
+	var r := Rect2(
+		Vector2(hpos.x + x0 - ROOF_APRON_SIDE, hpos.y + y0 - ROOF_APRON_NORTH),
+		Vector2(x1 - x0 + ROOF_APRON_SIDE * 2.0, y1 - y0 + ROOF_APRON_NORTH))
+	return r.has_point(player_pos)
+
+
 ## 玩家是否站在这栋房子的屋体（wings）内。
 ## 与时间轴无关、精确判定、不做 alpha 渐变 —— 用户 2026-11-21 拍板（house-spec §4.8.4）。
 ## 必须拿当前帧的 wings 现算，不能缓存「进屋了」布尔（同一位置换帧后 wings 会变）。
@@ -903,7 +939,9 @@ func _draw_roof(data: Dictionary, hpos: Vector2, offset: Vector2, tint: Color,
 	if wings.is_empty():
 		return
 	# 玩家在 wings 内 → 屋顶整块消失（house-spec §4.8.4，娃娃屋剖视，无渐变）
-	if _player_inside(data, hpos):
+	# 2026-11-26：北侧房檐带同样让开 —— 站在房子北面（含檐下、北院）必须看得见室内，
+	# 否则从北侧只能看见一片屋顶，"进去看家具" 这条玩法在北侧完全不可达。
+	if _player_inside(data, hpos) or _player_in_roof_apron(data, hpos):
 		return
 	var roof_col := _shade(ROOF_COLOR, tint, alpha_mul, grade)
 	var ridge_col := _shade(ROOF_RIDGE, tint, alpha_mul, grade)
