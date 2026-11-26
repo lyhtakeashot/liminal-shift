@@ -231,7 +231,7 @@ func _check_scene_textures() -> void:
 	_ok(wrong.is_empty(), "平铺瓦片全是 32×32（不合 %s）" % str(wrong))
 
 
-## ---------- 4b. A4/A5 房屋接线（图未到，只验通路登记） ----------
+## ---------- 4b. A4/A5 房屋接线（2026-11-26 美术已落地，改验「有图 + 尺寸对」） ----------
 func _check_a4a5_wiring() -> void:
 	var ids := ["market", "shen_a4", "zhou_a4", "zheng_a4", "shen_a5", "toyshop", "school"]
 	var unreg: Array = []
@@ -239,8 +239,13 @@ func _check_a4a5_wiring() -> void:
 		if (WorldView.FAMILY.get(sid, []) as Array).size() != 2:
 			unreg.append(sid)
 	_ok(unreg.is_empty(), "A4/A5 七栋房子都登记了族名+帧（未登记 %s）" % str(unreg))
-	# 图还没到 ⇒ 不能有 base 图；哪天美术落地了这条会红，届时把断言改成「有图」
-	_ok(not WorldView._art_walls("shen_a4"), "shen_a4 尚无 base 图 → 走引擎色块降级（美术到位后改断言）")
+	# 旧断言是「shen_a4 尚无 base 图 → 走色块降级」，美术落地（PROMPT-house-art-a4a5-exec.md）
+	# 之后按这条自带的约定翻面：改成「有图」，并顺带验一张的尺寸（其余由
+	# _mdtest/house_art_check.gd 的 C1–C3 全量覆盖）。
+	_ok(WorldView._art_walls("shen_a4"), "shen_a4 已有 base 图 → 走美术通路（不再是色块降级）")
+	var tex = WorldView._house_tex("shen_a4")
+	var sz: Vector2 = (tex.get("base") as Texture2D).get_size() if tex.get("base") else Vector2.ZERO
+	_ok(sz == Vector2(1152, 1184), "shen_a4 base 图 1152×1184（实际 %s）" % str(sz))
 
 
 ## ---------- 5. 主角精灵 ----------
