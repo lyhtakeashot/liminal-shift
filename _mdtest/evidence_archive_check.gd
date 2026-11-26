@@ -522,18 +522,22 @@ func _archive_pauses_world(main) -> void:
 		"开档时 SHIFT 不切时代（just=%s, %d → %d）" % [str(jp2), axis1, main.tl.axis])
 
 	# 对照 2：档案关着时 E 能检视入档
+	# 测点＝A1 的「田」（地标）。原测点「界碑」2026-11-26 已按用户拍板删除；
+	# 语义不变（地标热点可检视、可入档、观察数 +1），只是换一个仍存在的地标。
+	# 不用「老井」：老井卡此时已有 1926 年那条观察，同卡同年会命中去重（观察数不变）。
+	# 不用「坝」：下一段「开档时 E 不检视」正是用坝做对照，两段要留两个不同热点。
 	main.archive.close_archive()
 	main.tl.index = 0
 	main._refresh_all()
-	var stele := {}
+	var farm := {}
 	for h in main.tl.frames[0].hotspots:
-		if String(h.get("house_id", "")) == "" and String(h.get("title", "")) == "界碑":
-			stele = h
-	if stele.is_empty():
-		_ok(false, "A1 帧有界碑地标热点")
+		if String(h.get("house_id", "")) == "" and String(h.get("title", "")) == "田":
+			farm = h
+	if farm.is_empty():
+		_ok(false, "A1 帧有田地标热点")
 	else:
 		var obs_c: int = EvidenceStore.observation_count()
-		main.tl.char_pos = stele["pos"] as Vector2
+		main.tl.char_pos = farm["pos"] as Vector2
 		Input.action_press("inspect")
 		var jp3 := Input.is_action_just_pressed("inspect")
 		main._process(0.016)

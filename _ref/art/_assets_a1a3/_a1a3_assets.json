@@ -3047,20 +3047,6 @@
    "note": "三帧同形同尺寸，共用 1 张"
   },
   {
-   "id": "stele",
-   "code": "S",
-   "name": "界碑（周界半截石碑）",
-   "frame": "A1",
-   "w": 1,
-   "h": 1,
-   "px": [
-    32,
-    32
-   ],
-   "path": "assets/village/scene/stele.png",
-   "note": "原件 16×32 px，装进 1×1 格画布（图上 8px 宽）"
-  },
-  {
    "id": "road_curved",
    "code": "S",
    "name": "主路（宽 2 格）",
@@ -3159,20 +3145,6 @@
    "note": "三帧同形同尺寸，共用 1 张"
   },
   {
-   "id": "stele",
-   "code": "S",
-   "name": "界碑（周界半截石碑）",
-   "frame": "A2",
-   "w": 1,
-   "h": 1,
-   "px": [
-    32,
-    32
-   ],
-   "path": "assets/village/scene/stele.png",
-   "note": "原件 16×32 px，装进 1×1 格画布（图上 8px 宽）"
-  },
-  {
    "id": "road_curved",
    "code": "S",
    "name": "主路（宽 2 格）",
@@ -3269,20 +3241,6 @@
    ],
    "path": "assets/village/scene/dam.png",
    "note": "三帧同形同尺寸，共用 1 张"
-  },
-  {
-   "id": "stele",
-   "code": "S",
-   "name": "界碑（周界半截石碑）",
-   "frame": "A3",
-   "w": 1,
-   "h": 1,
-   "px": [
-    32,
-    32
-   ],
-   "path": "assets/village/scene/stele.png",
-   "note": "原件 16×32 px，装进 1×1 格画布（图上 8px 宽）"
   },
   {
    "id": "road_straight",

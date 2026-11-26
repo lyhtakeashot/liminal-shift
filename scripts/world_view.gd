@@ -12,7 +12,7 @@ extends Control
 ## 2026-11-22 星露谷视觉机制（DECIDE D3/D4 · house-spec §4.8.2）：
 ## 绘制分两层：
 ##   背景层 Back   地面 / 河 / 田 / 路 / 房子 lot 底色 / 房间色块 —— 固定顺序，不排序
-##   前景层 Front  墙 / 屋顶 / 门洞 / 家具 / 树 / 井 / 碑 / 玩家 —— **按 sort_y 排序**
+##   前景层 Front  墙 / 屋顶 / 门洞 / 家具 / 树 / 井 / 玩家 —— **按 sort_y 排序**
 ##
 ## 2026-11-23 渲染修正（PROMPT-render-fix-exec §2）：
 ##   1. 色块树冠**不再上抬**（贴图分支本来就不抬，色块上抬是历史补偿 → A4/A5 的树高一截）。
@@ -240,7 +240,7 @@ func _draw_back(offset: Vector2, tint: Color, alpha_mul: float, grade: bool) -> 
 				else:
 					draw_rect(Rect2(rect.position + offset, rect.size), c, true)
 			elif label != "":
-				# 界碑这类立着的小件 → 前景层（_draw_prop）
+				# 其余带 label 的 rect 是「立着的小件」→ 前景层（_draw_prop），地面层不画
 				pass
 			else:
 				# 田块：32px 田瓦片按**每个 rect** 平铺。
@@ -305,7 +305,7 @@ func _scene_tex_color(tint: Color, alpha_mul: float, grade: bool) -> Color:
 
 
 ## 这个 rect 是不是「立着的物件」（该参与 y-sort）。
-## 规则：solid 且占地小（宽 ≤ 一格、高 ≤ 两格）→ 立着（界碑这类）。
+## 规则：solid 且占地小（宽 ≤ 一格、高 ≤ 两格）→ 立着（这一类小件）。
 ## 地面铺装（road:true 的路、田块、坝）→ 不参与排序，永远在背景层。
 func _is_standing_rect(sd: Dictionary) -> bool:
 	if bool(sd.get("road", false)):
@@ -770,7 +770,7 @@ func _draw_furniture(f: Dictionary, offset: Vector2, tint: Color,
 
 ## 立着的圆物件：树（加树干、树冠抬升）或井/水塘（平画）。
 ##
-## 美术 scene 小件：老井 / 老槐 / 界碑 各有一张图，贴图**按半径居中**、
+## 美术 scene 小件：老井 / 老槐 各有一张图，贴图**按半径居中**、
 ## 底边对齐圆的底边（和现有色块占位同一位置，占位大小不变）。
 ## 缺图 → 回原来的色块画法。
 func _draw_prop(sd: Dictionary, offset: Vector2, tint: Color,
@@ -831,8 +831,6 @@ static func _prop_tex(frame_id: String, label: String, rad: float) -> Texture2D:
 		return AssetDraw.scene_tex(frame_id, "tree")
 	if label.find("井") >= 0:
 		return AssetDraw.scene_tex(frame_id, "well")
-	if label.find("碑") >= 0:
-		return AssetDraw.scene_tex(frame_id, "stele")
 	return null
 
 

@@ -39,10 +39,9 @@ const SCENE_FILES := {
 	},
 }
 
-## 三帧共用的场景小件
+## 三帧共用的场景小件（界碑 2026-11-26 已删除，只剩坝）
 const SHARED_SCENE := {
 	"dam": "assets/village/scene/dam.png",
-	"stele": "assets/village/scene/stele.png",
 }
 
 ## 32px 单方格**平铺**瓦片（L8 · 地图视觉口径 C1/C3）。
@@ -212,7 +211,7 @@ static func prop_draw(short: String, rect: Rect2) -> Dictionary:
 	return {"tex": tex, "dst": dst}
 
 
-## 场景贴图。kind ∈ road/field/river/well/tree/dam/stele。
+## 场景贴图。kind ∈ road/field/river/well/tree/dam。
 static func scene_tex(frame_id: String, kind: String) -> Texture2D:
 	if SHARED_SCENE.has(kind):
 		return load_asset("res://" + String(SHARED_SCENE[kind]))

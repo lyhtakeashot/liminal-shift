@@ -3,7 +3,7 @@ extends SceneTree
 ## 美术资产消费点专项自检（PROMPT-asset-consumption-exec.md）：
 ##   1. 房子 base 图：能加载、画布尺寸 == lot_w×32 × (lot_h+1)×32（D6）
 ##   2. 家具 props 图：按 short + 占地匹配，底部中心锚点（D6），缺图回 null
-##   3. 场景图：河/路/田/井/槐/坝/碑 按帧索引，缺图回 null
+##   3. 场景图：河/路/田/井/槐/坝 按帧索引，缺图回 null
 ##   4. 主角精灵表：36 帧、方向分组齐全
 ##   5. 贴图**不影响**排序不变式与碰撞（y-sort 键、AABB 数量）
 ##
@@ -210,7 +210,7 @@ func _check_prop_matching() -> void:
 ## ---------- 4. 场景图 ----------
 func _check_scene_textures() -> void:
 	for fid in FRAMES:
-		for kind in ["river", "road", "field", "well", "tree", "dam", "stele"]:
+		for kind in ["river", "road", "field", "well", "tree", "dam"]:
 			var tex := AssetDraw.scene_tex(fid, kind)
 			_ok(tex != null, "%s 有 %s 场景图" % [fid, kind])
 	# A4/A5 没有场景图 → 回 null（优雅降级）

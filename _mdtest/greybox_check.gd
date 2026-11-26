@@ -188,10 +188,12 @@ func _init() -> void:
 			doors_passable = false
 	print("DOOR_PASSABLE=%s" % doors_passable)
 
-	# --- 2e. BUILD-A1 §7.1：检视点 >= 10（手写 6 + 自动 clue 家具 ≥4） ---
+	# --- 2e. BUILD-A1 §7.1：检视点 >= 9（手写 4 + 自动 clue 家具 5） ---
+	# 界碑 2026-11-26 按用户拍板删除（界碑删除线）⇒ A1 手写地标 5 → 4，门槛随之 10 → 9。
+	# 门槛的用意是「够不够玩家点着看」，不是「数字必须是 10」，所以跟着数据一起降，别为凑数补热点。
 	var a1_hot: int = tl.frames[0].hotspots.size()
-	print("HOTSPOTS=%d (期望 >=10)" % a1_hot)
-	print("HOTSPOTS_OK=%s" % (a1_hot >= 10))
+	print("HOTSPOTS=%d (期望 >=9)" % a1_hot)
+	print("HOTSPOTS_OK=%s" % (a1_hot >= 9))
 
 	# --- 3. 空间移动（往右走，y=1400 一带是空地） ---
 	tl.char_pos = Vector2(600, 1600)
@@ -321,7 +323,7 @@ func _scan_reach(tl) -> Dictionary:
 ##   1. 落在 A2/A3 某栋房子的 lot 内（历史帧的空地变成建筑，顶住是设计）
 ##   2. 落在 A2 新井 / A3 老井水泥封层圆内（含半径余量）
 ##   3. 距房子 lot 边 ≤16px（角色半径 14 的 probe 贴到墙，边界效应）
-##   4. 落在该帧**手写 solid 形状**内（界碑、坝这类世界级实体，挡路天经地义）
+##   4. 落在该帧**手写 solid 形状**内（坝这类世界级实体，挡路天经地义）
 func _unexplained_blocks(tl) -> Array:
 	var house_rects: Array = []
 	for fi in range(1, tl.frames.size()): # 2026-11-22 收编解释集修复：含将来 A4/A5，避免误判
