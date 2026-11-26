@@ -196,10 +196,13 @@ func _init() -> void:
 	print("HOTSPOTS=%d (期望 >=9)" % a1_hot)
 	print("HOTSPOTS_OK=%s" % (a1_hot >= 9))
 
-	# --- 3. 空间移动（往右走，y=1400 一带是空地） ---
+	# --- 3. 空间移动（往右走，落在主路带内：路面非实体） ---
 	# ⚠️ load_frames 的 index 落在 start_frame(A5)，这两段都测 A1，必须显式切回 0。
+	# 2026-11-26：探测点原为 (600,1600)，v4 把周家 north 移到 lot y49..54 格
+	# （= 1568..1744 px，x 576..928）后那个点正好落在周家院子里会被墙挡住。
+	# 改到主路带中心线 y=1500（路带 1472..1536），与房子无关。
 	tl.index = 0
-	tl.char_pos = Vector2(600, 1600)
+	tl.char_pos = Vector2(600, 1500)
 	var before: Vector2 = tl.char_pos
 	tl.move_space(Vector2(40, 0))
 	print("SPACE_MOVE_DX=%.1f (期望 40)" % (tl.char_pos.x - before.x))
