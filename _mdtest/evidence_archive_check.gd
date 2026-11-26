@@ -340,6 +340,9 @@ func _main_scene_checks() -> void:
 	_ok(EvidenceStore.count() == 0, "主场景检查从空档案开始（卡数 0）")
 
 	# 找 A1 磨坊的账桌热点：直接问帧数据要家具热点
+	# ⚠️ 不能假设开局帧是 a1：2026-11-26 起 data/frames.json 的 start_frame = a5_2026，
+	#    而 a5 的磨坊早拆了（没有账桌热点）。本用例要的是 A1，显式回到第 0 帧再问。
+	main.tl.index = 0
 	var f = main.tl.current()
 	var ledger := {}
 	for h in f.hotspots:
