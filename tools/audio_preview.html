@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>SHIFT · 音效试听（13 条）</title>
+<style>
+  :root { color-scheme: dark; }
+  body { background:#14161a; color:#e8e6e1; font:15px/1.7 "Microsoft YaHei",system-ui,sans-serif; margin:0; padding:32px 20px 64px; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { font-size:20px; font-weight:600; letter-spacing:.04em; margin:0 0 6px; }
+  .hint { color:#8d8f96; font-size:13px; margin:0 0 22px; }
+  .hint b { color:#d8d4c8; }
+  table { width:100%; border-collapse:collapse; }
+  tr { border-bottom:1px solid #23262c; }
+  tr:hover { background:#1a1d22; }
+  td { padding:9px 8px; vertical-align:middle; }
+  td.n { width:34px; color:#5d6068; font-variant-numeric:tabular-nums; }
+  td.f { width:150px; font-family:Consolas,monospace; font-size:13px; color:#a9c4b0; }
+  td.d { color:#b6b3ac; font-size:13.5px; }
+  td.len { width:60px; text-align:right; color:#5d6068; font-size:12.5px; font-variant-numeric:tabular-nums; }
+  button { background:#2a2f38; color:#e8e6e1; border:1px solid #3a4049; border-radius:5px;
+           padding:4px 14px; font-size:13px; cursor:pointer; font-family:inherit; }
+  button:hover { background:#39404a; }
+  button.on { background:#6b7f5a; border-color:#7d935f; }
+  .bar { display:flex; gap:10px; align-items:center; margin:26px 0 30px; }
+  .bar label { font-size:13px; color:#8d8f96; }
+  .grp { color:#6f8b7a; font-size:12px; letter-spacing:.08em; margin:26px 0 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>SHIFT · 音效试听</h1>
+  <p class="hint">合成音效 13 条（22050Hz / 单声道 / 16bit）。<b>按顺序听一遍，觉得难听的把文件名记下来报给 lead。</b><br>
+     重点听这三条：<b>amb_a1</b>（像不像蝉，还是刺耳尖啸）、<b>amb_a4</b>（像不像车流，还是电流嗡声）、<b>amb_a3</b>（像不像广播底噪，还是故障提示音）。</p>
+
+  <div class="bar">
+    <button id="playall">▶ 连播全部</button>
+    <button id="stopall">■ 停</button>
+    <label><input type="checkbox" id="loopchk"> 循环音（amb_*）循环播放</label>
+  </div>
+
+  <div class="grp">环境底噪 · 五个年代</div>
+  <table id="t-amb"></table>
+  <div class="grp">脚步</div>
+  <table id="t-step"></table>
+  <div class="grp">交互</div>
+  <table id="t-sys"></table>
+</div>
+
+<script>
+const CLIPS = [
+  ["amb_a1.wav",   "amb",  "1926 · 蝉 / 田野",       "循环"],
+  ["amb_a2.wav",   "amb",  "1951 · 风 / 村口",       "循环"],
+  ["amb_a3.wav",   "amb",  "1976 · 广播底噪 / 工地","循环"],
+  ["amb_a4.wav",   "amb",  "2001 · 车流 / 街面",     "循环"],
+  ["amb_a5.wav",   "amb",  "2026 · 空调外机 / 远处车","循环"],
+  ["step_1.wav",   "step", "脚步 A",                  ""],
+  ["step_2.wav",   "step", "脚步 B",                  ""],
+  ["shift_fwd.wav","sys",  "时间轴前进一帧",          ""],
+  ["shift_back.wav","sys", "时间轴后退一帧",          ""],
+  ["axis.wav",     "sys",  "切换空间/时间轴",          ""],
+  ["collect.wav",  "sys",  "收集证物",                ""],
+  ["ui_toggle.wav","sys",  "界面开关",                ""],
+  ["ending.wav",   "sys",  "结局 drone",              ""],
+];
+
+const audios = {};
+const tableFor = { amb: "t-amb", step: "t-step", sys: "t-sys" };
+
+CLIPS.forEach(([file, grp, desc], i) => {
+  const a = new Audio("../assets/audio/" + file);
+  a.preload = "auto";
+  audios[file] = a;
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td class="n">${i + 1}</td>
+                  <td class="f">${file}</td>
+                  <td class="d">${desc}</td>
+                  <td class="len"></td>
+                  <td style="width:90px;text-align:right"></td>`;
+  const btn = document.createElement("button");
+  btn.textContent = "▶ 播放";
+  btn.onclick = () => { stopAll(); a.loop = isLoop(file); a.play(); mark(btn, a); };
+  tr.lastElementChild.appendChild(btn);
+  a.addEventListener("loadedmetadata", () => {
+    tr.querySelector(".len").textContent = a.duration.toFixed(2) + "s";
+  });
+  document.getElementById(tableFor[grp]).appendChild(tr);
+});
+
+function isLoop(file) {
+  return document.getElementById("loopchk").checked && file.startsWith("amb_");
+}
+function mark(btn, a) {
+  a.onended = () => { btn.classList.remove("on"); btn.textContent = "▶ 播放"; };
+  btn.classList.add("on"); btn.textContent = "▮ 播放中";
+}
+function stopAll() {
+  for (const k in audios) { audios[k].pause(); audios[k].currentTime = 0; }
+  document.querySelectorAll("button.on").forEach(b => {
+    b.classList.remove("on");
+    b.textContent = "▶ 播放";
+  });
+}
+document.getElementById("stopall").onclick = stopAll;
+
+// 连播：环境音只放 4 秒（短听），其余放完
+document.getElementById("playall").onclick = async () => {
+  stopAll();
+  for (const [file] of CLIPS) {
+    const a = audios[file];
+    a.loop = isLoop(file);
+    a.currentTime = 0;
+    await a.play().catch(() => {});
+    await new Promise(res => {
+      if (a.loop) setTimeout(res, 4000);
+      else a.onended = res;
+    });
+  }
+};
+</script>
+</body>
+</html>
