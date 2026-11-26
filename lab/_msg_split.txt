@@ -1,0 +1,6 @@
+﻿feat(audio): 28 句台词按音色拆成 4 份纯文本，供网页 TTS 站粘贴
+
+普通 TTS 站只吃"文本 + 音色"，不吃角色设定提示词，
+所以把台词从 tools/gen_voice_tts.py 的配音表里拆出来：
+W1.txt(8) / W2.txt(6) / M1.txt(8) / M2.txt(6) + MAP.csv（行号↔输出文件名）+ ALL.txt。
+台词仍由 gen_voice_tts.py 单一来源生成，不手抄。
