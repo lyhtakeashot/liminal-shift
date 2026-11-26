@@ -54,8 +54,8 @@ func _init() -> void:
 
 	# --- 2. BUILD-A1 §7.1：世界 3200×2400，起点在主路上可站 ---
 	# 2026-11-22 世界重构线：H 1800→2400（主路南移到 y=52 格=1664px）
-	print("WORLD=%.0fx%.0f (期望 3200x2400)" % [tl.world_size.x, tl.world_size.y])
-	print("WORLD_OK=%s" % (tl.world_size == Vector2(3200, 2400)))
+	print("WORLD=%.0fx%.0f (期望 4800x3600)" % [tl.world_size.x, tl.world_size.y])
+	print("WORLD_OK=%s" % (tl.world_size == Vector2(4800, 3600)))
 	print("A1_IS_FREE_START=%s (期望 true)" % tl.current().is_free(tl.char_pos))
 	print("START_OK=%s" % tl.current().is_free(tl.char_pos))
 
@@ -288,8 +288,8 @@ func _scan_reach(tl) -> Dictionary:
 	var band_total := 0
 	var band_full := 0
 	var per_step: Array = [0, 0, 0, 0]
-	for y in range(240, 2400, 32): # 2026-11-22 世界重构线：上界 1760→2400（覆盖新主路 1664 + 路南房）
-		for x in range(40, 3160, 32):
+	for y in range(240, 3600, 32): # L14 A5 v5 落地：世界 4800x3600，扫描上界 2400→3600
+		for x in range(40, 4800, 32):
 			var p := Vector2(x, y)
 			if not tl.frames[0].is_free(p):
 				continue
@@ -369,8 +369,8 @@ func _unexplained_blocks(tl) -> Array:
 						hard_solids.append(Rect2(mnx, mny, mxx - mnx, mxy - mny))
 
 	var out: Array = []
-	for y in range(240, 2400, 32): # 2026-11-22 世界重构线：上界 1760→2400
-		for x in range(40, 3160, 32):
+	for y in range(240, 3600, 32): # L14 A5 v5 落地：世界 4800x3600，扫描上界 2400→3600
+		for x in range(40, 4800, 32):
 			var p := Vector2(x, y)
 			if not tl.frames[0].is_free(p):
 				continue

@@ -41,14 +41,14 @@ func _run() -> void:
 	# --- 2. 大地图：空间轴跟随 ---
 	var big = CameraRig.new()
 	root.add_child(big)
-	big.setup_viewport(Vector2(3200, 2400))   # 2026-11-22 世界重构线：1800→2400
+	big.setup_viewport(Vector2(4800, 3600))   # L14 A5 v5 落地：世界 4800x3600
 	# 玩家在 (2400, 1400)，理想 offset = (1760, 1040)
-	# clamp 上限 = (3200-1280, 2400-720) = (1920, 1680) → 不触发 clamp
+	# clamp 上限 = (4800-1280, 3600-720) = (3520, 2880) → 不触发 clamp
 	for i in 5:
 		_step(big, Vector2(2400, 1400), 0.2)
 	_ok(big.offset.x > 1600.0 and big.offset.y > 900.0,
 		"大地图跟随玩家 offset=(%.1f,%.1f)" % [big.offset.x, big.offset.y])
-	_ok(big.offset.x <= 1920.0 and big.offset.y <= 1680.0,
+	_ok(big.offset.x <= 3520.0 and big.offset.y <= 2880.0,
 		"offset 不超地图边界")
 
 	# 玩家回到左上角 → offset 回 0
