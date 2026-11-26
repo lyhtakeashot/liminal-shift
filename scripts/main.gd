@@ -19,6 +19,7 @@ const EvidenceStore = preload("res://scripts/evidence_store.gd")
 const EvidenceArchive = preload("res://scripts/evidence_archive.gd")
 const DiaryView = preload("res://scripts/diary_view.gd")
 const DiaryTexts = preload("res://scripts/diary_texts.gd")
+const EndingForm = preload("res://scripts/ending_form.gd")
 
 # 五个年代的时间轴色偏：越往后越冷、越灰
 const YEAR_TINTS: Array = [
@@ -40,7 +41,8 @@ var tl: Timeline
 var archive: Control = null          # 证物档案界面（代码动态建，挂 Main 下）
 var _archive_i_down := false          # I 键边沿检测（轮询，不用事件）
 var diary: Control = null            # 双日记对照界面（代码动态建，挂 Main 下）
-var _diary_j_down := false            # J 键边沿检测（临时调试入口，说明见 _make_diary）
+var ending_form: Control = null      # 归档表（推理—结案，代码动态建，挂 Main 下）
+var _ending_g_down := false          # G 键边沿检测（轮询，不用事件）
 
 var _step_active := false    # 这一轮按住是否已经推过第一帧
 var _repeating := false      # 是否已经进入连发阶段
@@ -76,6 +78,7 @@ func _ready() -> void:
 	world.set_player_ref(player)
 	_make_archive()
 	_make_diary()
+	_make_ending_form()
 	# 读回上次存档的证物（跨启动持久化）。读不到就当空档案。
 	EvidenceStore.load()
 	_refresh_all()
@@ -90,15 +93,23 @@ func _make_archive() -> void:
 
 
 ## 建双日记界面：动态挂 Main 下（与档案同层，建在 HUD 之后 → 画在 HUD 上面）。
-## 正常情况下在世界里按 E 翻开书本（见 _try_open_diary）；J 是**临时调试入口**，
-## 因为 frames.json 里还没有「书」热点。内容线往柜台 / 暗龛热点加一行
-## `"diary": "mill"` 之后，把 _process 里的 J 分支删掉即可。
+## 正常情况下在世界里按 E 翻开书本（见 _try_open_diary）：磨坊账房的「账桌北头
+## 柜格」那一格在 data/frames.json 里带 `"diary": "mill"`（A1/A2/A3 三帧各一条）。
 func _make_diary() -> void:
 	diary = DiaryView.new()
 	diary.name = "DiaryView"
 	add_child(diary)
 	# 入档时让档案闪一下「已收集」
 	diary.set("archive_hook", archive)
+
+
+## 建归档表界面：动态挂 Main 下（建在日记之后 → 画在最上面）。
+## G 键开关（见 _process）。理由是这张表是跨时代卷宗，随时可翻、随时可填；
+## 填不填得完只影响记述变体，不影响能不能开。
+func _make_ending_form() -> void:
+	ending_form = EndingForm.new()
+	ending_form.name = "EndingForm"
+	add_child(ending_form)
 
 
 ## 脚下那一格如果是一条「书」热点，就翻开它。返回是否翻开了。
@@ -182,18 +193,21 @@ func _process(delta: float) -> void:
 		archive.toggle()
 	_archive_i_down = archive_now
 
-	# 双日记：临时调试入口（J）。数据里还没有「书」热点，先用它把界面翻出来看效果。
-	# 开着的时候也由这里合上（下面的停世界 return 挡不到这一段）。
-	var diary_now := Input.is_key_pressed(KEY_J) or Input.is_physical_key_pressed(KEY_J)
-	if diary_now and not _diary_j_down and diary != null:
-		diary.toggle()
-	_diary_j_down = diary_now
+	# 归档表：G 键开关（边沿检测 + 轮询，和 I / F11 同一套路子）。
+	# 开表时传当前年代进去当「归档员」依据（归档员随帧，见 ending_report.gd）。
+	# ⚠️ 这一段必须留在下面的停世界 return **之前**，否则表开着按 G 关不掉。
+	var ending_now := Input.is_key_pressed(KEY_G) or Input.is_physical_key_pressed(KEY_G)
+	if ending_now and not _ending_g_down and ending_form != null and tl.current() != null:
+		ending_form.toggle(tl.current().year)
+	_ending_g_down = ending_now
 
-	# 档案 / 书本开着的时候，游戏逻辑全停（不响应行走 / 时间轴推帧 / SHIFT 切时代 / E 检视）。
+	# 档案 / 书本 / 归档表开着的时候，游戏逻辑全停（不响应行走 / 时间轴推帧 / SHIFT 切时代 / E 检视）。
 	# ⚠️ SHIFT 与 E 的处理必须放在这个判断**之后** —— 开着档案时世界是停的，
 	#    否则玩家能一边翻档案一边切时代、顺手把新年代证物也收了。
-	# 书本的「合上」走 DiaryView._input（E / Esc），不吃这一段。
-	if (archive != null and archive.is_open()) or (diary != null and diary.is_open()):
+	# 书本的「合上」走 DiaryView._input（E / Esc），不吃这一段；
+	# 归档表自己吃 ↑↓←→ / Tab / Enter / Esc / F（见 ending_form.gd 的 _handle_keys）。
+	if (archive != null and archive.is_open()) or (diary != null and diary.is_open()) \
+			or (ending_form != null and ending_form.is_open()):
 		player.walking = false
 		_set_hud_hidden(true)
 		return
